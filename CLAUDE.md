@@ -1,7 +1,7 @@
 # HackKnight26 — Tradio (built on MarketPulse)
 
 Read this whole file before doing anything. Then ask the user which role they are
-(1, 2 or 3) and read their file in `docs/team/`. Only work in the files your role owns.
+(1, 2, 3 or 4) and read their file in `docs/team/`. Only work in the files your role owns.
 
 ## What we are building this weekend
 
@@ -48,7 +48,8 @@ doc (ask Devesh for the link). This file is the short version.
 |---|---|---|
 | 1 Market data + replay timeline | (name) | `tradio/events.yaml`, `tradio/ingest_markets.py`, `tradio/build_timeline.py`, `tradio/data/` |
 | 2 Reaction analytics | (name) | `tradio/reaction.py`, `tradio/placebo.py`, `tests/test_reaction.py` |
-| 3 Surprise scoring + terminal UI | (name) | `fed_speeches.py` (add speakers only), `tradio/surprise.py`, `web/tradio.html`, `web/tradio.js`, `web/tradio.css` |
+| 3 Surprise scoring + pitch | (name) | `fed_speeches.py` (add speakers only), `tradio/surprise.py`, `tradio/validation/`, `docs/pitch.md` |
+| 4 Visuals (terminal UI) | (name) | `web/tradio.html`, `web/tradio.js`, `web/tradio.css`, `web/data/tradio/mock/` |
 
 Touching someone else's file: ask them first. Shared files (`CLAUDE.md`,
 `docs/team/*`) change only with the whole team's agreement.
@@ -103,6 +104,6 @@ Nothing else (more events, live mode, placebo, scatter plot) until Gate 3 passes
 
 ## Git
 
-Branch per person (`role1-data`, `role2-reaction`, `role3-ui`), small commits, pull
+Branch per person (`role1-data`, `role2-reaction`, `role3-surprise`, `role4-visuals`), small commits, pull
 `main` often, merge through PRs. Never commit `tradio/data/` raw dumps over ~5 MB;
 commit the compact `timeline.json` / `analysis.json`.

@@ -1,30 +1,17 @@
-# Role 3 — Surprise scoring + terminal UI
+# Role 4 — Visuals (terminal UI)
 
-Read `CLAUDE.md` first. You own: speaker additions in `fed_speeches.py`,
-`tradio/surprise.py`, `web/tradio.html`, `web/tradio.js`, `web/tradio.css`.
+Read `CLAUDE.md` first. You own: `web/tradio.html`, `web/tradio.js`,
+`web/tradio.css`, `web/data/tradio/mock/`.
 
-**Your goal:** (a) score Bowman's and Waller's speeches against their own history,
-reusing MarketPulse's `stance_scorer.py` method; (b) build the replay terminal page.
+**Your goal:** the replay terminal judges remember. It reads files the others produce;
+it never computes analytics itself and never calls an API.
 
-## Part A — Surprise (first 8 hours)
+Start immediately with mock files in `web/data/tradio/mock/<event_id>/` that follow the
+`CLAUDE.md` schemas exactly (copy the examples, invent a few dozen quotes, label them
+MOCK on screen). Switch to the real files in `web/data/tradio/<event_id>/` as soon as
+role 1 and role 2 deliver them (Gate 1).
 
-1. Add `"bowman": "michelle_bowman"` and `"waller": "christopher_waller"` to
-   `SPEAKER_KEYS` in `fed_speeches.py`. Download each speaker's speeches from mid-2023
-   up to (not including) the event date, plus the event speeches `bowman20250623a`
-   and `waller20250717a`. Don't change behavior for existing speakers.
-2. `tradio/surprise.py`: build baselines for the two new speakers with the same
-   rubric and model as `stance_scorer.py` (import its functions; don't fork the rubric).
-   Baseline = only speeches **before** the event date. Score every paragraph of the
-   event speech, compute z, mark the top-|z| paragraph and its key sentence, and write
-   them into `timeline.json` → `speech.paragraphs`.
-3. **Validation (must report, whatever the result):**
-   - Roles 1 and 2 hand-label 30 paragraphs (Bowman + Waller mixed) on the −1…+1 scale
-     *before* seeing model scores. Report Spearman and sign agreement (targets ≥ 0.6, ≥ 85%).
-   - Score the same 30 twice; report how many are identical.
-   - Prediction to test: Bowman's top paragraph z ≤ −2, Waller's top |z| < 1. If not,
-     we show the real number and explain it.
-
-## Part B — Terminal page (`web/tradio.html`)
+## The page
 
 Static page in the existing site's style (plain HTML/CSS/JS, no build step). It loads
 `web/data/tradio/<event_id>/timeline.json` and `analysis.json` and replays them
@@ -50,12 +37,17 @@ Layout (1920×1080, dark, dense, monospace numbers):
 Demo beat to support: pause at T0+1 min with Bowman's sentence highlighted; press play
 at 30×; the cut line climbs over ~50 seconds of wall time; then switch to Waller.
 
+Also add the evidence drawer after Gate 2: clicking any number opens the raw rows
+behind it from role 1's `evidence.json`.
+
 ## Done when
 - Bowman replays end to end from real files with correct alarm markers and statuses.
 - Seeking to any time shows the right state within a second.
 - Every number on screen can be traced to a row in role 1's files.
+- Waller can be switched in for the contrast.
 
 ## Don't
 - Don't animate markets reacting sentence by sentence (the text was released whole).
+- Don't compute or tweak numbers in the browser; if something looks wrong, tell role 1 or 2.
 - Don't edit `web/index.html` or the PHP files; link to `tradio.html` from the
   existing nav only if the team agrees.

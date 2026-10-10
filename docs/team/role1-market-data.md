@@ -51,7 +51,11 @@ roles 2 and 3 can build on. You are the source of truth for every price on scree
    - `-C25` candle 14:30: bid 0.21 / ask 0.22. `-H0` candle 14:41: 0.77 / 0.78
    - Waller: `-C25` first trade at 0.05, 2025-07-17T22:35:04Z; `-H0` first 0.94 at 22:35:00Z
 
-6. After Gate 2: help role 3 with the evidence drawer (raw rows behind any number).
+6. After Gate 1: give role 4 a tiny `evidence.json` per event (the raw trade/candle rows
+   behind every number the page shows) for the evidence drawer.
+7. After Gate 3, only if the team agrees: pull data for the next candidate events
+   (Powell Jackson Hole 2025-08-22, Powell 2025-10-29 press conference) and the
+   placebo windows role 2 needs.
 
 ## Done when
 - Both events have `timeline.json` that validates against the schema.
