@@ -32,6 +32,12 @@ and only then added to the training set. That is exactly what happens live. Mode
   logistic    L2 logistic regression on standardized features
   boosting    shallow gradient-boosted trees
   mlp         a small neural net (one hidden layer of 16, strong weight decay)
+  mlp_bag     the same net trained 10 times with different random seeds, averaged
+              (with ~30 reactions a single net is mostly seed noise; bagging cuts that)
+  mlp_tuned   picks its own width and weight decay on the most recent quarter of ITS OWN
+              training events (never the event being predicted), then a bag of 3
+  (mlp_bag and mlp_tuned are in the full build, `python -m tradio.learner`; tests and
+  build(extra_mlps=False) skip them because they cost ~20 extra fits per event)
 The champion is the model with the lowest prequential log loss; it only counts as
 "beats the base rate" if a bootstrap over clusters of overlapping speeches puts its whole
 log-loss gain interval above zero, at 95% split across the four candidate models
@@ -279,7 +285,70 @@ class Sk:
         return [min(max(float(v), 1e-4), 1 - 1e-4) for v in p]
 
 
-def make_models():
+class MLPBag:
+    """Average of several identical small nets that differ only in their random seed."""
+
+    def __init__(self, name="mlp_bag", seeds=10, hidden=(16,), alpha=1.0):
+        self.name, self.seeds, self.hidden, self.alpha = name, seeds, hidden, alpha
+
+    @staticmethod
+    def _net(hidden, alpha, seed):
+        from sklearn.neural_network import MLPClassifier
+        from sklearn.pipeline import make_pipeline
+        from sklearn.preprocessing import StandardScaler
+        # L-BFGS: full-batch, the recommended solver for small datasets (and ~3x faster here)
+        return make_pipeline(StandardScaler(), MLPClassifier(
+            hidden_layer_sizes=hidden, alpha=alpha, solver="lbfgs", max_iter=500, random_state=seed))
+
+    def _fit_bag(self, X, y, hidden, alpha, seeds):
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            return [self._net(hidden, alpha, SEED + s).fit(X, y) for s in range(seeds)]
+
+    def fit(self, X, y, kinds=None):
+        self.fallback = BaseRate().fit(X, y)
+        self.nets = self._fit_bag(X, y, self.hidden, self.alpha, self.seeds) if len(set(y)) == 2 else []
+        return self
+
+    def predict(self, X, kinds=None):
+        if not self.nets:
+            return self.fallback.predict(X)
+        cols = [n.predict_proba(X)[:, 1] for n in self.nets]
+        ps = [sum(float(c[i]) for c in cols) / len(cols) for i in range(len(X))]
+        return [min(max(p, 1e-4), 1 - 1e-4) for p in ps]
+
+
+class MLPTuned(MLPBag):
+    """Chooses width and weight decay on the latest quarter of its own training rows (rows
+    arrive in time order), then refits a small bag on all training rows with that choice.
+    The event being predicted is never part of the choice."""
+    GRID = [((h,), a) for h in (8, 16) for a in (0.3, 1.0, 3.0, 10.0)]
+
+    def __init__(self, name="mlp_tuned", seeds=3):
+        super().__init__(name=name, seeds=seeds)
+        self.chosen = None
+
+    def fit(self, X, y, kinds=None):
+        self.fallback = BaseRate().fit(X, y)
+        self.nets = []
+        if len(set(y)) < 2:
+            return self
+        cut = int(len(y) * 0.75)
+        hidden, alpha = self.hidden, self.alpha
+        if len(set(y[:cut])) == 2 and sum(y[cut:]) > 0:
+            best = None
+            for h, a in self.GRID:
+                net = self._fit_bag(X[:cut], y[:cut], h, a, 1)[0]
+                ll = sum(_logloss(float(p), t) for p, t in zip(net.predict_proba(X[cut:])[:, 1], y[cut:]))
+                if best is None or ll < best[0]:
+                    best = (ll, h, a)
+            _, hidden, alpha = best
+        self.chosen = {"hidden": list(hidden), "alpha": alpha}
+        self.nets = self._fit_bag(X, y, hidden, alpha, self.seeds)
+        return self
+
+
+def make_models(extra_mlps=False):
     from sklearn.ensemble import GradientBoostingClassifier
     from sklearn.linear_model import LogisticRegression
     from sklearn.neural_network import MLPClassifier
@@ -294,7 +363,7 @@ def make_models():
                                                           random_state=SEED)),
         Sk("mlp", lambda: make_pipeline(StandardScaler(), MLPClassifier(
             hidden_layer_sizes=(16,), alpha=1.0, max_iter=2000, random_state=SEED))),
-    ]
+    ] + ([MLPBag(), MLPTuned()] if extra_mlps else [])
 
 
 # ------------------------------------------------------------------ evaluation
@@ -315,9 +384,9 @@ def _avg_precision(ps, ys):
     return float(average_precision_score(ys, ps))
 
 
-def prequential(data, models=None):
+def prequential(data, models=None, extra_mlps=False):
     """Test-then-train over events in time order. Returns per-event scored predictions."""
-    models = models or make_models()
+    models = models or make_models(extra_mlps)
     scored = []
     for ev, rows in data:
         lab = _labeled(rows)
@@ -411,7 +480,7 @@ def _fit_all(data, name):
     for _, rows in data:
         for r in _labeled(rows):
             X.append(r["x"]), y.append(r["label"]), kinds.append(r["kind"])
-    model = next((m for m in make_models() if m.name == name), BaseRate())
+    model = next((m for m in make_models(extra_mlps=True) if m.name == name), BaseRate())
     return model.fit(X, y, kinds) if y else None
 
 
@@ -425,10 +494,10 @@ def logistic_weights(data):
                        key=lambda kv: -abs(kv[1])))
 
 
-def build():
+def build(extra_mlps=False):
     data = dataset()
-    names = [m.name for m in make_models()]
-    scored = prequential(data)
+    names = [m.name for m in make_models(extra_mlps)]
+    scored = prequential(data, extra_mlps=extra_mlps)
     board = scoreboard(scored, names)
     ranked = sorted(board["models"].items(), key=lambda kv: kv[1]["log_loss"]) if board["models"] else []
     champion = ranked[0][0] if ranked else "base_rate"
@@ -495,6 +564,7 @@ def main(argv=None):
     ap.add_argument("step", nargs="?", default="build", choices=("build", "predict"))
     ap.add_argument("event", nargs="?")
     ap.add_argument("--model")
+    ap.add_argument("--fast", action="store_true", help="skip mlp_bag / mlp_tuned (about 5x faster)")
     a = ap.parse_args(argv)
     if a.step == "predict":
         d = a.event if a.event and os.path.isdir(a.event) else os.path.join(DATA_DIR, a.event or "live")
@@ -506,7 +576,7 @@ def main(argv=None):
             p = f"P(react) {r['p_react']:.2f}" if r["p_react"] is not None else r["note"]
             print(f"  {mid:36s} {r['liquidity'] or '':7s} {p}")
         return
-    out = build()
+    out = build(extra_mlps=not a.fast)
     print(f"model.json: {out['n_events']} events ({out['n_history_events']} backfilled), "
           f"{out['n_labeled']} labeled rows, {out['positives']} reacted, "
           f"{out['excluded_not_measurable']} not-active rows left out")
