@@ -97,10 +97,32 @@ class ReactionTests(unittest.TestCase):
         self.assertIsNone(r["alarm_t"])
         self.assertNotIn(r["status"], ("reacted", "candidate_delay"))
 
-    def test_polymarket_suffixed_and_never_delay(self):
+    def test_polymarket_indicative_has_no_timing(self):
         r = self.res["polymarket:cut25"]
-        self.assertTrue(r["status"].endswith(" (indicative)"))
+        self.assertTrue(r["indicative"])
         self.assertEqual(r["liquidity"], "indicative")
+        self.assertTrue(r["reason"].startswith("Indicative:"))
+        for key in ("alarm_t", "t50_min", "t90_min", "cusum_alarm_t", "confirmed_by_trade"):
+            self.assertIsNone(r[key], key)
+        self.assertNotEqual(r["status"], "candidate_delay")
+
+    def test_staircase_move_alarms(self):
+        """Real Bowman shape: 1-tick steps with flat minutes between."""
+        mid = "kalshi:STAIRS"
+        path = lambda o: 0.145 + 0.01 * sum(1 for s in (7, 21, 23, 24, 25, 29, 30) if o >= s)
+        tl = timeline([market(mid)], quotes(mid, path),
+                      trades(mid, range(-59, 91, 3), path))
+        r = reaction.analyze(tl)["markets"][mid]
+        self.assertEqual(r["status"], "reacted")
+        self.assertEqual(r["alarm_t"], "2025-06-23T14:07:00Z")
+        self.assertEqual(r["move_ticks"], 7)
+
+    def test_small_drift_does_not_react(self):
+        mid = "kalshi:DRIFT"
+        tl = timeline([market(mid)], quotes(mid, step(0.95, -1, 6)),
+                      trades(mid, range(-59, 91, 3), lambda o: 0.95))
+        r = reaction.analyze(tl)["markets"][mid]
+        self.assertNotIn(r["status"], ("reacted", "candidate_delay"))
 
     def test_thin_late_mover_never_candidate_delay(self):
         mid = "kalshi:THIN"
@@ -119,7 +141,7 @@ class ReactionTests(unittest.TestCase):
 
     def test_statuses_and_wording(self):
         for r in self.res.values():
-            self.assertIn(r["status"].replace(" (indicative)", ""), reaction.STATUSES)
+            self.assertIn(r["status"], reaction.STATUSES)
             text = r["reason"].lower()
             self.assertNotIn("opportunit", text)
             self.assertNotIn("mispric", text)
@@ -127,6 +149,46 @@ class ReactionTests(unittest.TestCase):
     def test_fixture_file_matches_builder(self):
         with open(FIXTURE, encoding="utf-8") as f:
             self.assertEqual(json.load(f), build_fixture())
+
+
+def _real(event_id):
+    path = os.path.join(ROOT, "tradio", "data", event_id, "timeline.json")
+    if not os.path.isfile(path):
+        return None
+    with open(path, encoding="utf-8") as f:
+        return reaction.analyze(json.load(f))["markets"]
+
+
+class RealDataChecks(unittest.TestCase):
+    """Checks on role 1's real files (skipped if not pulled). These are the role file's
+    "expected on real Bowman data" checks, not targets to tune toward."""
+
+    def test_bowman(self):
+        res = _real("bowman20250623")
+        if res is None:
+            self.skipTest("no Bowman timeline")
+        for k in ("kalshi:KXFEDDECISION-25JUL-C25", "kalshi:KXFEDDECISION-25JUL-H0"):
+            self.assertEqual(res[k]["status"], "reacted", k)
+            alarm = reaction.parse_ts(res[k]["alarm_t"])
+            self.assertTrue(T0 < alarm <= T0 + timedelta(minutes=10), k)
+        self.assertEqual(res["kalshi:KXRATECUTCOUNT-25DEC31-T0"]["status"], "cant_tell_illiquid")
+
+    def test_waller_control_has_no_reaction(self):
+        res = _real("waller20250717")
+        if res is None:
+            self.skipTest("no Waller timeline")
+        for k, r in res.items():
+            self.assertNotIn(r["status"], ("reacted", "candidate_delay"), k)
+
+    def test_contract_fields(self):
+        res = _real("bowman20250623")
+        if res is None:
+            self.skipTest("no Bowman timeline")
+        need = {"liquidity", "pre_mid", "alarm_t", "confirmed_by_trade", "move_ticks",
+                "t50_min", "t90_min", "status", "reason", "placebo_p"}
+        for k, r in res.items():
+            self.assertTrue(need <= set(r), k)
+            self.assertIn(r["status"], reaction.STATUSES)
 
 
 if __name__ == "__main__":

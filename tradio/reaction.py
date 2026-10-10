@@ -6,12 +6,24 @@ call an illiquid market "slow". Method follows docs/team/role2-reaction-analytic
     python -m tradio.reaction bowman20250623 waller20250717
     python -m tradio.reaction --in path/to/timeline.json --out path/to/analysis.json
 
-Choices the role file leaves open (flagged for team review, change only with agreement):
+Reaction time (deviation from the role file, agreed by the team lead 2026-10-09):
+- The role file's CUSUM on 1-minute midpoint CHANGES (k=0.5, h=2 ticks) never alarms on
+  real Bowman data: the July cut moved 0.145 -> 0.215 as single 1-tick steps with flat
+  minutes between, and each flat minute drains the sum. So `alarm_t` now uses a
+  band-exit rule: the first minute after T0 where the midpoint is at least 1 tick
+  outside the pre-event range (T0-60..T0) and stays outside for 2 straight minutes.
+  It passes the role file's three synthetic tests. The role file's CUSUM result is still
+  reported as `cusum_alarm_t` so nobody has to take the change on trust.
+
+Choices the role file leaves open (flagged for team review):
 - CUSUM alarms when S > h (strict), the textbook convention.
 - Liquidity: 0 trades but quotes moved, spread <= 5 ticks -> "thin" (never "active").
-- Polymarket has no trades or spread in our data, so its liquidity is "indicative",
-  it never gets candidate_delay (no timing claims), and its status is suffixed
-  " (indicative)".
+- Polymarket has no trades or spread in our data, so its liquidity is "indicative", and
+  per CLAUDE.md rule 2 it gets NO timing at all (alarm_t, t50/t90, cusum all null) and
+  never candidate_delay. The role file says to suffix its status with "(indicative)",
+  but CLAUDE.md's shared contract fixes status to five values the UI matches on, so
+  status stays clean, every market carries `"indicative": true/false`, and indicative
+  reasons start with "Indicative:".
 - Active direct/partial market with no alarm, or an alarm whose final move is < 2 ticks
   -> expected_no_reaction, with a reason that says what happened.
 - Thin market with alarm and |move| >= 2 ticks -> reacted, reason says timing is rough.
@@ -32,11 +44,13 @@ from datetime import timedelta
 
 if __package__ in (None, ""):
     sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from tradio.common import DATA_DIR, iso, parse_ts  # noqa: E402
+from tradio.common import DATA_DIR, WEB_DATA_DIR, iso, parse_ts  # noqa: E402
 
 # Thresholds from the role file. Tune only with team agreement.
 PRE_MIN, POST_MIN = 60, 90
 CUSUM_K, CUSUM_H = 0.5, 2.0          # ticks
+BAND_EXIT_TICKS = 1                  # how far outside the pre-event range counts
+BAND_PERSIST_MIN = 2                 # consecutive minutes outside to alarm
 MIN_MOVE_TICKS = 2
 DELAY_AFTER_MIN = 10
 SUM_LO, SUM_HI = 0.97, 1.03
@@ -118,6 +132,30 @@ def cusum_alarm(series, t0, tick):
         if s_hi > CUSUM_H or s_lo > CUSUM_H:
             return t
     return None
+
+
+def band_exit_alarm(series, t0, tick):
+    """First minute after T0 where the midpoint sits >= BAND_EXIT_TICKS outside the
+    pre-event (T0-60..T0) range for BAND_PERSIST_MIN straight minutes. Returns
+    (alarm time or None, (band_lo, band_hi) or None)."""
+    pre = [mid for t, mid, _ in series if t0 - timedelta(minutes=PRE_MIN) < t <= t0]
+    if not pre:
+        return None, None
+    lo, hi = min(pre), max(pre)
+    run_start, run = None, 0
+    for t, mid, _ in series:
+        if t <= t0:
+            continue
+        outside = (_ticks(mid - hi, tick) >= BAND_EXIT_TICKS
+                   or _ticks(lo - mid, tick) >= BAND_EXIT_TICKS)
+        if outside:
+            run_start = run_start or t
+            run += 1
+            if run >= BAND_PERSIST_MIN:
+                return run_start, (lo, hi)
+        else:
+            run_start, run = None, 0
+    return None, (lo, hi)
 
 
 def confirming_trade(trades, alarm_t, new_mid, pre_mid, tick):
@@ -205,62 +243,73 @@ def analyze_market(m, series, trades, t0, flags):
     indicative = bool(m.get("indicative"))
     exposure = m.get("exposure", "none")
     liq, detail = liquidity(series, trades, t0, tick, indicative)
-    alarm_t = cusum_alarm(series, t0, tick)
     pre_mid, move, t50, t90 = absorption(series, t0, tick)
     big = move is not None and abs(move) >= MIN_MOVE_TICKS
-    alarm_min = (alarm_t - t0).total_seconds() / 60 if alarm_t else None
-    confirmed = None
-    if alarm_t is not None and pre_mid is not None:
-        new_mid = next(mid for t, mid, _ in series if t == alarm_t)
-        confirmed = confirming_trade(trades, alarm_t, new_mid, pre_mid, tick)
     mv = _fmt_ticks(move) if move is not None else "n/a"
+    alarm_t, band = band_exit_alarm(series, t0, tick)
+    cusum_t = cusum_alarm(series, t0, tick)
+    confirmed = None
 
-    if pre_mid is None:
-        status, reason = "cant_tell_illiquid", "Not enough quotes around T0 to measure anything."
-    elif indicative:
-        if alarm_t is not None and big:
+    if indicative:
+        # CLAUDE.md rule 2: no timing claims from Polymarket history.
+        alarm_t = cusum_t = t50 = t90 = None
+        if pre_mid is None:
+            status, reason = "cant_tell_illiquid", "Indicative: not enough points around T0."
+        elif big:
             status = "reacted"
-            reason = (f"Indicative series moved {mv} ticks after the release; "
+            reason = (f"Indicative: moved {mv} ticks from before T0 to T0+75..90 min; "
                       "Polymarket history is not used for timing.")
         elif exposure in ("weak", "none"):
-            status, reason = "expected_no_reaction", "Weak exposure and no move detected."
+            status, reason = "expected_no_reaction", "Indicative: weak exposure, no move."
         else:
             status = "cant_tell_illiquid"
-            reason = (f"Indicative series, no depth or trade data; final move {mv} ticks. "
-                      "Can't judge speed.")
-    elif liq == "dark":
-        status = "cant_tell_illiquid"
-        reason = (f"Dark before T0 ({detail['trades']} trades, "
-                  f"{detail['quote_change_minutes']} quote changes in 60 min); a quiet tape "
-                  "here says nothing about speed.")
-    elif exposure in ("weak", "none") and alarm_t is None:
-        status, reason = "expected_no_reaction", "Weak exposure; no alarm after T0."
-    elif alarm_t is not None and big:
-        if liq == "active" and exposure in ("direct", "partial") and alarm_min > DELAY_AFTER_MIN:
-            status = "candidate_delay"
-            reason = (f"Active market, no alarm in the first {DELAY_AFTER_MIN} min; first alarm "
-                      f"{_hhmm(alarm_t)} (T0+{alarm_min:g} min), move {mv} ticks. Candidate only.")
-        else:
-            status = "reacted"
-            reason = (f"Alarm {_hhmm(alarm_t)} (T0+{alarm_min:g} min), move {mv} ticks"
-                      + (", confirmed by a trade" if confirmed else "")
-                      + ("; thin market, timing is rough" if liq == "thin" else "") + ".")
-    elif liq == "thin":
-        status = "cant_tell_illiquid"
-        reason = (f"Thin before T0 ({detail['trades']} trades in 60 min) and no clear "
-                  f"reaction (move {mv} ticks); can't tell slow from quiet.")
-    elif alarm_t is not None:
-        status = "expected_no_reaction"
-        reason = (f"Brief alarm {_hhmm(alarm_t)} but final move only {mv} ticks; "
-                  "no lasting reaction.")
+            reason = (f"Indicative: final move {mv} ticks; no depth or trade data, "
+                      "so no judgement on speed.")
     else:
-        status = "expected_no_reaction"
-        reason = f"Active market stayed inside noise; final move {mv} ticks, no alarm."
+        alarm_min = (alarm_t - t0).total_seconds() / 60 if alarm_t else None
+        if alarm_t is not None and pre_mid is not None:
+            new_mid = next(mid for t, mid, _ in series if t == alarm_t)
+            confirmed = confirming_trade(trades, alarm_t, new_mid, pre_mid, tick)
+        if pre_mid is None:
+            status, reason = "cant_tell_illiquid", "Not enough quotes around T0 to measure anything."
+        elif liq == "dark":
+            status = "cant_tell_illiquid"
+            reason = (f"Dark before T0 ({detail['trades']} trades, "
+                      f"{detail['quote_change_minutes']} quote changes in 60 min); a quiet "
+                      "tape here says nothing about speed.")
+        elif exposure in ("weak", "none") and alarm_t is None:
+            status, reason = "expected_no_reaction", "Weak exposure; no alarm after T0."
+        elif alarm_t is not None and big:
+            if (liq == "active" and exposure in ("direct", "partial")
+                    and alarm_min > DELAY_AFTER_MIN):
+                status = "candidate_delay"
+                reason = (f"Active market, no alarm in the first {DELAY_AFTER_MIN} min; "
+                          f"first alarm {_hhmm(alarm_t)} (T0+{alarm_min:g} min), move {mv} "
+                          "ticks. Candidate only.")
+            else:
+                status = "reacted"
+                reason = (f"Alarm {_hhmm(alarm_t)} (T0+{alarm_min:g} min), move {mv} ticks"
+                          + (", confirmed by a trade" if confirmed else "")
+                          + ("; thin market, timing is rough" if liq == "thin" else "")
+                          + ".")
+        elif liq == "thin":
+            status = "cant_tell_illiquid"
+            reason = (f"Thin before T0 ({detail['trades']} trades in 60 min) and no clear "
+                      f"reaction (move {mv} ticks); can't tell slow from quiet.")
+        elif alarm_t is not None:
+            status = "expected_no_reaction"
+            reason = (f"Brief alarm {_hhmm(alarm_t)} but final move only {mv} ticks; "
+                      "no lasting reaction.")
+        elif big:
+            status = "expected_no_reaction"
+            reason = (f"Drifted {mv} ticks by T0+75..90 min without ever leaving the "
+                      "pre-event range for 2 minutes; no reaction time to report.")
+        else:
+            status = "expected_no_reaction"
+            reason = f"Active market stayed inside its pre-event range; final move {mv} ticks."
 
     if flags and status == "expected_no_reaction":
         status, reason = "candidate_inconsistency", flags[0] + "."
-    if indicative:
-        status += " (indicative)"
 
     return {
         "liquidity": liq,
@@ -273,6 +322,9 @@ def analyze_market(m, series, trades, t0, flags):
         "status": status,
         "reason": reason,
         "placebo_p": None,
+        "indicative": indicative,
+        "cusum_alarm_t": iso(cusum_t) if cusum_t else None,
+        "pre_band": [round(band[0], 4), round(band[1], 4)] if band else None,
         "flags": flags,
         "liquidity_detail": detail,
     }
@@ -311,9 +363,16 @@ def main(argv=None):
         with open(inp, encoding="utf-8") as f:
             result = analyze(json.load(f))
         outp = outp or os.path.join(os.path.dirname(inp), "analysis.json")
-        with open(outp, "w", encoding="utf-8") as f:
-            json.dump(result, f, indent=1)
-        print(f"wrote {outp}")
+        targets = [outp]
+        # Same copy role 1's build_timeline.py makes, so the page sees fresh results
+        # without re-running ingest.
+        web_dir = os.path.join(WEB_DATA_DIR, result["event_id"])
+        if not a.inp and os.path.isdir(web_dir):
+            targets.append(os.path.join(web_dir, "analysis.json"))
+        for path in targets:
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump(result, f, indent=1)
+            print(f"wrote {path}")
         for mid, r in result["markets"].items():
             print(f"  {mid:40s} {r['liquidity']:10s} {r['status']:32s} "
                   f"alarm={r['alarm_t']} move={r['move_ticks']} t50={r['t50_min']}")
