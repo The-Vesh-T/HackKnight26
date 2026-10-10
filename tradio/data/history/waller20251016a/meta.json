@@ -1,0 +1,17 @@
+{
+ "speech_id": "waller20251016a",
+ "t0": "2025-10-16T13:00:00Z",
+ "speaker": "christopher_waller",
+ "who": "Governor Christopher J. Waller",
+ "role": "governor",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/waller20251016a.htm",
+ "next_decision": "2025-10-29",
+ "days_to_decision": 13,
+ "flags": [
+  "another Board speech within 90 min (barr20251016a)",
+  "another Board speech within 90 min (bowman20251016a)"
+ ],
+ "paragraphs": 31,
+ "policy_paragraphs": 21
+}

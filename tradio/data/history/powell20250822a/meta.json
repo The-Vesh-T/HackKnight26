@@ -1,0 +1,16 @@
+{
+ "speech_id": "powell20250822a",
+ "t0": "2025-08-22T14:00:00Z",
+ "speaker": "jerome_powell",
+ "who": "Chair Jerome H. Powell",
+ "role": "chair",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/powell20250822a.htm",
+ "next_decision": "2025-09-17",
+ "days_to_decision": 26,
+ "flags": [
+  "T0 at 10:00 ET, when US data releases usually land"
+ ],
+ "paragraphs": 50,
+ "policy_paragraphs": 43
+}

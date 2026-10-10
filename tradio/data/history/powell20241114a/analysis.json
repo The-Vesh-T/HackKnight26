@@ -1,0 +1,80 @@
+{
+ "event_id": "powell20241114a",
+ "markets": {
+  "kalshi:KXFEDDECISION-24DEC-C25": {
+   "liquidity": "thin",
+   "pre_mid": 0.71,
+   "alarm_t": "2024-11-14T20:01:00Z",
+   "confirmed_by_trade": "2024-11-14T20:00:56.929453Z",
+   "move_ticks": -16.25,
+   "t50_min": 7.0,
+   "t90_min": 55.0,
+   "status": "reacted",
+   "reason": "Alarm 20:01 UTC (T0+1 min), move -16.25 ticks, confirmed by a trade; thin market, timing is rough.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": "2024-11-14T20:01:00Z",
+   "pre_band": [
+    0.71,
+    0.715
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 3,
+    "quote_change_minutes": 10,
+    "median_spread_ticks": 3.0,
+    "imputed_minutes": 43
+   }
+  },
+  "kalshi:KXFEDDECISION-24DEC-C26": {
+   "liquidity": "thin",
+   "pre_mid": 0.04,
+   "alarm_t": "2024-11-14T21:21:00Z",
+   "confirmed_by_trade": "2024-11-14T21:20:11.595966Z",
+   "move_ticks": -1.0,
+   "t50_min": null,
+   "t90_min": null,
+   "status": "cant_tell_illiquid",
+   "reason": "Thin before T0 (1 trades in 60 min) and no clear reaction (move -1 ticks); can't tell slow from quiet.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": null,
+   "pre_band": [
+    0.04,
+    0.04
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 1,
+    "quote_change_minutes": 0,
+    "median_spread_ticks": 2.0,
+    "imputed_minutes": 59
+   }
+  },
+  "kalshi:KXFEDDECISION-24DEC-H0": {
+   "liquidity": "thin",
+   "pre_mid": 0.265,
+   "alarm_t": "2024-11-14T20:01:00Z",
+   "confirmed_by_trade": "2024-11-14T20:00:56.925684Z",
+   "move_ticks": 17.5,
+   "t50_min": 7.0,
+   "t90_min": 55.0,
+   "status": "reacted",
+   "reason": "Alarm 20:01 UTC (T0+1 min), move +17.5 ticks, confirmed by a trade; thin market, timing is rough.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": "2024-11-14T20:01:00Z",
+   "pre_band": [
+    0.25,
+    0.265
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 3,
+    "quote_change_minutes": 16,
+    "median_spread_ticks": 3.0,
+    "imputed_minutes": 35
+   }
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "event_id": "kugler20250325a",
+ "markets": {
+  "kalshi:KXFEDDECISION-25MAY-C25": {
+   "liquidity": "thin",
+   "pre_mid": 0.12,
+   "alarm_t": null,
+   "confirmed_by_trade": null,
+   "move_ticks": 1.0,
+   "t50_min": null,
+   "t90_min": null,
+   "status": "cant_tell_illiquid",
+   "reason": "Thin before T0 (0 trades in 60 min) and no clear reaction (move +1 ticks); can't tell slow from quiet.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": null,
+   "pre_band": [
+    0.12,
+    0.125
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 0,
+    "quote_change_minutes": 3,
+    "median_spread_ticks": 2.0,
+    "imputed_minutes": 25
+   }
+  },
+  "kalshi:KXFEDDECISION-25MAY-H0": {
+   "liquidity": "dark",
+   "pre_mid": null,
+   "alarm_t": null,
+   "confirmed_by_trade": null,
+   "move_ticks": null,
+   "t50_min": null,
+   "t90_min": null,
+   "status": "cant_tell_illiquid",
+   "reason": "Not enough quotes around T0 to measure anything.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": null,
+   "pre_band": null,
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 0,
+    "quote_change_minutes": 0,
+    "median_spread_ticks": null,
+    "imputed_minutes": 0
+   }
+  }
+ }
+}

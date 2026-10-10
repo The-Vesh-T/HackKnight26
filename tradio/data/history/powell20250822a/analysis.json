@@ -1,0 +1,130 @@
+{
+ "event_id": "powell20250822a",
+ "markets": {
+  "kalshi:KXFEDDECISION-25SEP-C25": {
+   "liquidity": "active",
+   "pre_mid": 0.625,
+   "alarm_t": "2025-08-22T14:01:00Z",
+   "confirmed_by_trade": "2025-08-22T14:00:30.521301Z",
+   "move_ticks": 18.0,
+   "t50_min": 2.0,
+   "t90_min": 5.0,
+   "status": "reacted",
+   "reason": "Alarm 14:01 UTC (T0+1 min), move +18 ticks, confirmed by a trade.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": "2025-08-22T14:01:00Z",
+   "pre_band": [
+    0.575,
+    0.625
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 60,
+    "quote_change_minutes": 13,
+    "median_spread_ticks": 1.0,
+    "imputed_minutes": 1
+   }
+  },
+  "kalshi:KXFEDDECISION-25SEP-C26": {
+   "liquidity": "active",
+   "pre_mid": 0.035,
+   "alarm_t": "2025-08-22T14:17:00Z",
+   "confirmed_by_trade": "2025-08-22T14:16:06.826689Z",
+   "move_ticks": 2.0,
+   "t50_min": 17.0,
+   "t90_min": 24.0,
+   "status": "candidate_delay",
+   "reason": "Active market, no alarm in the first 10 min; first alarm 14:17 UTC (T0+17 min), move +2 ticks. Candidate only.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": null,
+   "pre_band": [
+    0.035,
+    0.04
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 32,
+    "quote_change_minutes": 4,
+    "median_spread_ticks": 1.0,
+    "imputed_minutes": 14
+   }
+  },
+  "kalshi:KXFEDDECISION-25SEP-H0": {
+   "liquidity": "active",
+   "pre_mid": 0.34,
+   "alarm_t": "2025-08-22T14:01:00Z",
+   "confirmed_by_trade": "2025-08-22T14:00:49.878548Z",
+   "move_ticks": -19.5,
+   "t50_min": 2.0,
+   "t90_min": 5.0,
+   "status": "reacted",
+   "reason": "Alarm 14:01 UTC (T0+1 min), move -19.5 ticks, confirmed by a trade.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": "2025-08-22T14:01:00Z",
+   "pre_band": [
+    0.335,
+    0.395
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 157,
+    "quote_change_minutes": 18,
+    "median_spread_ticks": 2.0,
+    "imputed_minutes": 0
+   }
+  },
+  "kalshi:KXFEDDECISION-25SEP-H25": {
+   "liquidity": "thin",
+   "pre_mid": 0.005,
+   "alarm_t": null,
+   "confirmed_by_trade": null,
+   "move_ticks": 0.0,
+   "t50_min": null,
+   "t90_min": null,
+   "status": "cant_tell_illiquid",
+   "reason": "Thin before T0 (2 trades in 60 min) and no clear reaction (move 0 ticks); can't tell slow from quiet.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": null,
+   "pre_band": [
+    0.005,
+    0.005
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 2,
+    "quote_change_minutes": 0,
+    "median_spread_ticks": 1.0,
+    "imputed_minutes": 43
+   }
+  },
+  "kalshi:KXFEDDECISION-25SEP-H26": {
+   "liquidity": "dark",
+   "pre_mid": 0.005,
+   "alarm_t": null,
+   "confirmed_by_trade": null,
+   "move_ticks": 0.0,
+   "t50_min": null,
+   "t90_min": null,
+   "status": "cant_tell_illiquid",
+   "reason": "Dark before T0 (0 trades, 0 quote changes in 60 min); a quiet tape here says nothing about speed.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": null,
+   "pre_band": [
+    0.005,
+    0.005
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 0,
+    "quote_change_minutes": 0,
+    "median_spread_ticks": 1.0,
+    "imputed_minutes": 44
+   }
+  }
+ }
+}

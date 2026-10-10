@@ -1,0 +1,16 @@
+{
+ "speech_id": "barr20250716a",
+ "t0": "2025-07-16T14:00:00Z",
+ "speaker": "michael_barr",
+ "who": "Governor Michael S. Barr",
+ "role": "governor",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/barr20250716a.htm",
+ "next_decision": "2025-07-30",
+ "days_to_decision": 14,
+ "flags": [
+  "T0 at 10:00 ET, when US data releases usually land"
+ ],
+ "paragraphs": 49,
+ "policy_paragraphs": 4
+}

@@ -1,0 +1,17 @@
+{
+ "speech_id": "miran20260326a",
+ "t0": "2026-03-26T22:30:00Z",
+ "speaker": "stephen_miran",
+ "who": "Governor Stephen I. Miran",
+ "role": "governor",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/miran20260326a.htm",
+ "next_decision": "2026-04-29",
+ "days_to_decision": 34,
+ "flags": [
+  "another Board speech within 90 min (jefferson20260326a)",
+  "another Board speech within 90 min (barr20260326a)"
+ ],
+ "paragraphs": 29,
+ "policy_paragraphs": 25
+}

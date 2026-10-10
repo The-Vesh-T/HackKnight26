@@ -1,0 +1,16 @@
+{
+ "speech_id": "powell20250307a",
+ "t0": "2025-03-07T17:30:00Z",
+ "speaker": "jerome_powell",
+ "who": "Chair Jerome H. Powell",
+ "role": "chair",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/powell20250307a.htm",
+ "next_decision": "2025-03-19",
+ "days_to_decision": 12,
+ "flags": [
+  "another Board speech within 90 min (kugler20250307a)"
+ ],
+ "paragraphs": 10,
+ "policy_paragraphs": 6
+}

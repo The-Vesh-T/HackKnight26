@@ -1,0 +1,17 @@
+{
+ "speech_id": "barr20260326a",
+ "t0": "2026-03-26T23:10:00Z",
+ "speaker": "michael_barr",
+ "who": "Governor Michael S. Barr",
+ "role": "governor",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/barr20260326a.htm",
+ "next_decision": "2026-04-29",
+ "days_to_decision": 34,
+ "flags": [
+  "another Board speech within 90 min (miran20260326a)",
+  "another Board speech within 90 min (jefferson20260326a)"
+ ],
+ "paragraphs": 12,
+ "policy_paragraphs": 9
+}
