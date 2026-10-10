@@ -41,8 +41,12 @@ terminal (`tradio/`, `web/tradio.*`).
 ## Run it
 
 ```bash
-python3 tradio/serve.py          # then open http://localhost:8000/tradio.html
+python3 tradio/serve.py          # opens http://localhost:8000 in your browser — that's the whole app
 ```
+
+One link for everything: **http://localhost:8000** is the Tradio page (replays, Model,
+Playbook, LIVE tab). On a Mac you can also just double-click **`Tradio.command`** in the
+project folder. If port 8000 is busy it picks the next free port and prints that link.
 
 `serve.py` is the website plus **Start/Stop buttons on the LIVE tab**: *Practice* replays
 a past speech as if live (offline); *Real speech* starts transcription, scoring, the
@@ -69,7 +73,7 @@ python live.py --speaker christopher_waller --no-prewarm --mode dry
 # terminal 3: live Kalshi tape + reaction checks -> web/data/tradio/live/
 python tradio/live.py --speaker christopher_waller --t0 now
 # terminal 4: the page
-cd web && python3 -m http.server 8000     # open http://localhost:8000/tradio.html#live
+python3 tradio/serve.py                   # opens the page; click the ● LIVE tab
 # afterwards: keep it as a history event
 python tradio/live.py archive waller20261015 --title "Waller, 2026-10-15"
 
