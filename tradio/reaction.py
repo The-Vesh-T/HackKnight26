@@ -34,6 +34,9 @@ Choices the role file leaves open (flagged for team review):
 - The outcome-sum check runs only on Fed-decision events whose five legs are all in the
   timeline; a partial ladder (e.g. Warsh's Oct 2026 H25/H0) legitimately sums to < 1.
 - move_ticks is signed (positive = price went up).
+- Placebo (tradio/placebo.py): once tradio/data/<event>/placebo.json exists, a reacted or
+  candidate_delay market whose placebo p >= 0.05 becomes expected_no_reaction with the
+  counts in its reason; p from fewer than 20 usable days is shown but changes nothing.
 """
 
 import argparse
@@ -54,6 +57,7 @@ BAND_EXIT_TICKS = 1                  # how far outside the pre-event range count
 BAND_PERSIST_MIN = 2                 # consecutive minutes outside to alarm
 MIN_MOVE_TICKS = 2
 DELAY_AFTER_MIN = 10
+PLACEBO_P = 0.05                     # reacted needs placebo p below this, once it exists
 SUM_LO, SUM_HI = 0.97, 1.03
 XVENUE_TICKS = 2
 INCONSISTENT_FOR_MIN = 5             # must persist MORE than this many minutes
@@ -248,7 +252,7 @@ def inconsistency_flags(markets, series_by_id, t0):
     return flags
 
 
-def analyze_market(m, series, trades, t0, flags):
+def analyze_market(m, series, trades, t0, flags, placebo=None):
     tick = m.get("tick", 0.01)
     indicative = bool(m.get("indicative"))
     exposure = m.get("exposure", "none")
@@ -318,6 +322,21 @@ def analyze_market(m, series, trades, t0, flags):
             status = "expected_no_reaction"
             reason = f"Active market stayed inside its pre-event range; final move {mv} ticks."
 
+    placebo_p = None
+    if placebo is not None and placebo.get("n") and not indicative:
+        placebo_p = placebo.get("p")
+        if placebo_p is not None and status in ("reacted", "candidate_delay"):
+            if placebo.get("low_n"):
+                reason += f" Placebo has too few ordinary days (n={placebo['n']}) to count."
+            elif placebo_p >= PLACEBO_P:
+                status = "expected_no_reaction"
+                reason = (f"Moved {mv} ticks, but {placebo['n_ge']} of {placebo['n']} ordinary "
+                          f"days at this hour moved as much (placebo p={placebo_p:g}); not "
+                          "distinguishable from a normal day.")
+            else:
+                reason += (f" Bigger than {placebo['n'] - placebo['n_ge']} of {placebo['n']} "
+                           f"ordinary days (placebo p={placebo_p:g}).")
+
     if flags and status == "expected_no_reaction":
         status, reason = "candidate_inconsistency", flags[0] + "."
 
@@ -331,7 +350,7 @@ def analyze_market(m, series, trades, t0, flags):
         "t90_min": t90,
         "status": status,
         "reason": reason,
-        "placebo_p": None,
+        "placebo_p": placebo_p,
         "indicative": indicative,
         "cusum_alarm_t": iso(cusum_t) if cusum_t else None,
         "pre_band": [round(band[0], 4), round(band[1], 4)] if band else None,
@@ -340,7 +359,15 @@ def analyze_market(m, series, trades, t0, flags):
     }
 
 
-def analyze(timeline):
+def load_placebo(event_id):
+    path = os.path.join(DATA_DIR, event_id, "placebo.json")
+    if not os.path.isfile(path):
+        return {}
+    with open(path, encoding="utf-8") as f:
+        return json.load(f).get("markets", {})
+
+
+def analyze(timeline, use_placebo=True):
     t0 = parse_ts(timeline["t0"])
     trades_by = {}
     for tr in timeline.get("trades", []):
@@ -351,10 +378,12 @@ def analyze(timeline):
         quotes_by.setdefault(q["market"], []).append(q)
     series = {m["id"]: build_series(quotes_by.get(m["id"], []), t0) for m in timeline["markets"]}
     flags = inconsistency_flags(timeline["markets"], series, t0)
+    placebo = load_placebo(timeline["event_id"]) if use_placebo else {}
     out = {}
     for m in timeline["markets"]:
         trades = sorted(trades_by.get(m["id"], []), key=lambda x: x["t"])
-        out[m["id"]] = analyze_market(m, series[m["id"]], trades, t0, flags[m["id"]])
+        out[m["id"]] = analyze_market(m, series[m["id"]], trades, t0, flags[m["id"]],
+                                      placebo.get(m["id"]))
     return {"event_id": timeline["event_id"], "markets": out}
 
 
