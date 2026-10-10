@@ -404,7 +404,7 @@ mark.key { background: rgba(139, 139, 245, .18); color: inherit; padding: 1px 2p
 .chip.indic { color: #ffc46b; background: var(--hawk-bg); }
 
 /* ---------- markets list ---------- */
-.markets .hint { color: var(--faint); font-size: 12.5px; margin: -6px 0 10px; }
+.markets .hint { color: var(--faint); font-size: 12.5px; line-height: 1.45; margin: -4px 0 14px; }
 .group { margin-bottom: 4px; }
 .group-head {
   display: flex;
@@ -682,3 +682,4 @@ mark.key { background: rgba(139, 139, 245, .18); color: inherit; padding: 1px 2p
 .also-item.hawk .also-tag { color: #ffc46b; }
 .para.flash { animation: paraflash 1.6s var(--ease) 1; }
 @keyframes paraflash { 0%, 30% { background: rgba(139, 139, 245, .18); } 100% { background: transparent; } }
+.mk-price .now-unit { font-size: 15px; font-weight: 600; color: var(--muted); margin-left: -4px; }

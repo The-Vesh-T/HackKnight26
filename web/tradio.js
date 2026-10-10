@@ -128,6 +128,12 @@
     const c = x * 100;
     return (Math.abs(c - Math.round(c)) < 1e-6 ? c.toFixed(0) : c.toFixed(1)) + "¢";
   }
+  // Prices shown as the market's chance, like Kalshi: 0.22 -> "22%". Cents stay for what an order cost.
+  function pct(x) {
+    if (x == null || Number.isNaN(x)) return "—";
+    const c = x * 100;
+    return (Math.abs(c - Math.round(c)) < 1e-6 ? c.toFixed(0) : c.toFixed(1)) + "%";
+  }
   function sgn(x, d = 1, trim = false) {
     if (x == null || Number.isNaN(+x)) return "—";
     const v = +x;
@@ -139,11 +145,11 @@
     if (d == null || Number.isNaN(d)) return "";
     const c = d * 100, a = Math.abs(c);
     if (a < 0.05) return `<span class="flat">unchanged</span>`;
-    const t = (Math.abs(a - Math.round(a)) < 0.05 ? a.toFixed(0) : a.toFixed(1)) + "¢";
+    const t = (Math.abs(a - Math.round(a)) < 0.05 ? a.toFixed(0) : a.toFixed(1)) + "%";
     return `<span class="${c > 0 ? "up" : "dn"}">${c > 0 ? "▲" : "▼"} ${t}</span>`;
   }
   const money = (x) => (x == null ? "—" : (x >= 0 ? "+$" : "−$") + Math.abs(x).toFixed(2));
-  const moveText = (m, ticks) => (ticks == null ? "—" : sgn(ticks, 1, true) + (m.tick === 0.01 ? "¢" : " ticks"));
+  const moveText = (m, ticks) => (ticks == null ? "—" : sgn(ticks, 1, true) + (m.tick === 0.01 ? " percentage points" : " ticks"));
   const niceName = (s) => (s || "").replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
   // the LIVE banner already says "LIVE" / "SIMULATED LIVE", so the cards show just the event name
   const cardTitle = (E) => (E.live ? String(E.tl.title || "").replace(/^(SIMULATED )?LIVE · /, "") : E.tl.title);
@@ -403,7 +409,7 @@
     // grid + y labels
     for (const v of yTicks(y)) {
       g += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="#2A2E34" stroke-dasharray="2 4"/>`;
-      g += `<text x="${W - R + 10}" y="${y(v) + 4}" fill="#8B929B" font-size="12" text-anchor="start" font-family="${mono}">${cents(v)}</text>`;
+      g += `<text x="${W - R + 10}" y="${y(v) + 4}" fill="#8B929B" font-size="12" text-anchor="start" font-family="${mono}">${pct(v)}</text>`;
     }
     // x labels in ET: every 15 min when there's room, else 30 or 60
     const pxPer15 = (W - L - R) / ((E.xe - E.ws) / (15 * MIN));
@@ -727,13 +733,13 @@
     const sw = (style, cls = "") => `<i class="${cls}" style="${style}"></i>`;
     let h = "";
     if (m.isKalshi) {
-      h += row(sw("background:#4C8DFF"), "<b>Price</b>: the midpoint between the best buy and sell offers. A price of 22¢ means the market gives this outcome roughly a 22% chance.");
+      h += row(sw("background:#4C8DFF"), "<b>Chance</b>: what the market thinks the odds of this outcome are, from the midpoint of the buy and sell offers. On Kalshi a 22% chance trades as a 22¢ contract that pays $1 if it happens.");
       h += row(sw("background:rgba(76,141,255,.26)"), "<b>Shaded band around the line</b>: the gap between buy and sell offers.");
       h += row(sw("background:rgba(31,203,138,.65)", "dot") + sw("background:rgba(242,85,90,.65)", "dot"), "<b>Dots</b>: individual trades. Green took the Yes side, red the No side; bigger means more contracts.");
     } else {
       h += row(sw("background:#F0A43A"), "<b>Dashed amber line</b>: the Polymarket price. It is indicative only: its history changed depending on how it was queried, so it shows direction and gets no timing claims.");
     }
-    if (m.a && m.a.pre_band) h += row(sw("background:rgba(255,255,255,.10)"), "<b>Grey band</b>: the price's usual range in the hour before the speech.");
+    if (m.a && m.a.pre_band) h += row(sw("background:rgba(255,255,255,.10)"), "<b>Grey band</b>: the usual range in the hour before the speech.");
     h += row(sw("background:#E8EAED;width:2px"), `<b>Dashed white line</b>: ${E.overTime ? "the moment the speech starts" : "the moment the text was released"}.`);
     if (!m.indicative && m.a && (m.alarm || m.a.t50_min != null)) {
       h += row(sw("background:#1FCB8A;width:2px"), "<b>Green line</b>: a reaction was detected. The price left its usual range and stayed out.");
@@ -745,7 +751,7 @@
     return h + `<p class="src">${source}. Times are Eastern (ET).</p>`;
   }
 
-  const absMove = (m, ticks) => Math.abs(ticks).toFixed(1).replace(/\.0+$/, "") + (m.tick === 0.01 ? "¢" : " ticks");
+  const absMove = (m, ticks) => Math.abs(ticks).toFixed(1).replace(/\.0+$/, "") + (m.tick === 0.01 ? " percentage points" : " ticks");
 
   // One plain sentence per verdict. The analyst's own wording, the timings and the placebo
   // result are in the details bubble; nothing here is computed beyond reading analysis.json.
@@ -765,7 +771,7 @@
     let text;
     switch (a.status) {
       case "reacted":
-        text = moved ? `The price ${moved}.` : "The price moved out of its usual range.";
+        text = moved ? `The chance ${moved}.` : "The chance moved out of its usual range.";
         if (m.indicative) text += " Direction only: Polymarket gets no timing claims.";
         else if (when) text += ` The first clear move came ${when}.`;
         break;
@@ -805,7 +811,7 @@
       if (a.t50_min != null && !m.indicative && now >= E.t0 + a.t50_min * MIN) rows.push(["Halfway there", `${a.t50_min} min`]);
       if (a.t90_min != null && !m.indicative && now >= E.t0 + a.t90_min * MIN) rows.push(["90% of the move", `${a.t90_min} min`]);
       if (a.move_ticks != null) rows.push(["Move over the analysed window", moveText(m, a.move_ticks)]);
-      if (a.pre_mid != null) rows.push(["Price just before the speech", cents(a.pre_mid)]);
+      if (a.pre_mid != null) rows.push(["Chance just before the speech", pct(a.pre_mid)]);
       if (a.liquidity) rows.push(["Trading before the speech", LIQ_TEXT[a.liquidity] || a.liquidity]);
       // no separate placebo row: the analysis's sentence above states it with its own caveats
       // (e.g. "too few ordinary days to count"), which a bare p-value here would lose
@@ -825,15 +831,15 @@
     const pre = a ? a.pre_mid : null;
     const after = now >= E.t0;
     const ind = m.indicative ? `<span class="indic-banner">Indicative: direction only, no timing claims</span>` : "";
-    let price = `<div class="row"><span class="now num">${cur != null ? cents(cur) : "—"}</span>`;
+    let price = `<div class="row"><span class="now num">${cur != null ? pct(cur) : "—"}</span><span class="now-unit">chance</span>`;
     if (after && cur != null && pre != null) {
-      price += `<span class="delta num">${deltaC(cur - pre)}</span></div><span class="before">vs ${cents(pre)} just before the speech</span>`;
+      price += `<span class="delta num">${deltaC(cur - pre)}</span></div><span class="before">vs ${pct(pre)} just before the speech</span>`;
     } else {
-      price += `</div>${q && q.bid != null ? `<span class="before">bid ${cents(q.bid)} · ask ${cents(q.ask)}</span>` : ""}`;
+      price += `</div>${q && q.bid != null ? `<span class="before">Yes costs ${cents(q.ask)} · sells for ${cents(q.bid)}</span>` : ""}`;
     }
     setHtml("mkHead", `
       <div class="mk-id"><div class="mk-title">${esc(displayLabel(m))}</div><div class="mk-sub"><span>${esc(marketSub(m))}</span>${ind}</div></div>
-      <div class="mk-price" title="A price is the market's implied chance of this outcome: 22¢ means roughly 22%.">${price}</div>`);
+      <div class="mk-price" title="The market's chance of this outcome. On Kalshi a 22% chance trades as a 22¢ contract that pays $1 if it happens.">${price}</div>`);
     const evBtn = $("btnEvidence");
     if (evBtn) evBtn.dataset.id = m.id;
     setHtml("legend", legendHtml(E, m));
@@ -950,7 +956,7 @@
     if (hasOdds) tags.push(`model ${pctText(mp.p)}`);
     const tip = [m.status && STATUS_HELP[m.status], hasOdds && `Model, before the release: ${pctText(mp.p)} chance to react.`].filter(Boolean).join(" ");
     return `<div class="mrow ${isFocus ? "focus" : ""} ${fired ? "fired" : ""}" role="button" tabindex="0" data-act="focus" data-id="${esc(m.id)}" aria-pressed="${isFocus}" title="${esc(tip)}">
-      <div class="mrow-top"><span class="lab">${esc(displayLabel(m))}</span><span class="tag">${esc(tags.join(" · "))}</span><span class="px num">${q ? cents(q.mid) : "—"}</span></div>
+      <div class="mrow-top"><span class="lab">${esc(displayLabel(m))}</span><span class="tag">${esc(tags.join(" · "))}</span><span class="px num">${q ? pct(q.mid) : "—"}</span></div>
       <div class="mrow-bot">${sparkline(E, m, now)}<span class="chg num">${chg}</span>${chip}</div>
     </div>`;
   }
@@ -1008,6 +1014,7 @@
           </section>
           <aside class="card markets">
             <div class="card-head"><h2>Markets<span class="count">${E.markets.length}</span></h2><span class="meta">Click one to chart it</span></div>
+            <p class="hint">Each row is a bet on what the Fed will decide. The % is the market's chance it happens; the arrow is the change since just before the speech.</p>
             <div id="marketsList"></div>
           </aside>
         </div>
@@ -1163,7 +1170,7 @@
         const y = yScale(c - r.span / 2, c + r.span / 2, m.tick, T, H - B, 2);
         let g = "";
         for (const v of yTicks(y, 4)) {
-          g += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="#2A2E34"/><text x="${L - 6}" y="${y(v) + 4}" fill="#8B929B" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">${cents(v)}</text>`;
+          g += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="#2A2E34"/><text x="${L - 6}" y="${y(v) + 4}" fill="#8B929B" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">${pct(v)}</text>`;
         }
         for (const mm of [-30, 0, 30, 60, 90]) {
           g += `<text x="${x(E.t0 + mm * MIN)}" y="${H - 5}" fill="#8B929B" font-size="11" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">${mm === 0 ? "release" : (mm > 0 ? "+" : "−") + Math.abs(mm) + "m"}</text>`;
@@ -1179,7 +1186,7 @@
         const chip = shown ? `<span class="chip ${esc(m.status)}" title="${esc(STATUS_HELP[m.status] || "")}">${esc(STATUS_TEXT[m.status] || m.status)}</span>`
           : `<span class="chip watching">${now < E.t0 ? "before speech" : "watching…"}</span>`;
         const mv = shown && m.a ? ` · move <b class="num">${moveText(m, m.a.move_ticks)}</b>` : "";
-        html += `<div class="cmp-chart"><div class="hd"><b>${esc(r.name)}</b>${chip}<span style="color:var(--muted);font-size:12.5px">before ${cents(m.a?.pre_mid)}${mv}</span><span class="px">${q ? cents(q.mid) : "—"}</span></div>${svgEl(W, H, g)}</div>`;
+        html += `<div class="cmp-chart"><div class="hd"><b>${esc(r.name)}</b>${chip}<span style="color:var(--muted);font-size:12.5px">before ${pct(m.a?.pre_mid)}${mv}</span><span class="px">${q ? pct(q.mid) : "—"}</span></div>${svgEl(W, H, g)}</div>`;
       }
       html += `</div>`;
     });
@@ -1221,7 +1228,7 @@
       h += `<h4>Tradio's verdict <small>· from analysis.json</small></h4><table>
         <tr><th>verdict</th><td><span class="chip ${esc(a.status)}">${esc(STATUS_TEXT[a.status] || a.status)}</span></td></tr>
         <tr><th>trading activity</th><td>${esc(a.liquidity)}</td></tr>
-        <tr><th>price before speech</th><td>${cents(a.pre_mid)}</td></tr>
+        <tr><th>chance before speech</th><td>${pct(a.pre_mid)}</td></tr>
         <tr><th>reaction detected</th><td>${a.alarm_t ? esc(a.alarm_t) + " (" + relMin(parseT(a.alarm_t) - E.t0) + ")" : "—"}</td></tr>
         <tr><th>confirming trade</th><td>${esc(a.confirmed_by_trade || "—")}</td></tr>
         <tr><th>move</th><td>${sgn(a.move_ticks, 1, true)} ticks (1 tick = ${cents(m.tick)})</td></tr>
