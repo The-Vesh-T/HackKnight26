@@ -32,10 +32,12 @@
   const LIVE_POLL_MS = 3000;
   const STALE_MS = 90 * 1000;
   const COMPARE_PAIR = ["bowman20250623", "waller20250717"];
-  const COMPARE_SUFFIXES = [["-C25", "July cut 25 bp"], ["-H0", "July hold"]];
+  const COMPARE_SUFFIXES = [["-C25", "July cut 25 basis points"], ["-H0", "July hold"]];
   const SPEEDS = [1, 10, 30, 60];
   const ALARM_STATUSES = new Set(["reacted", "alarm", "candidate_delay", "candidate_inconsistency"]);
   const MIN = 60000;
+  const ALSO_Z = 1.5;     // "other lines that could move prices": passages at least this far from the speaker's usual
+  const ALSO_SHOWN = 4;
   const START_REL = -5 * MIN;
 
   const STATUS_TEXT = {
@@ -106,13 +108,12 @@
   const fmtEtShort = (ms) => etShort.format(new Date(ms));
   const fmtUtc = (ms) => new Date(ms).toISOString().slice(11, 19);
   function fmtRel(ms) {
-    const sign = ms < 0 ? "−" : "+";
     const a = Math.abs(Math.round(ms / 1000));
     const h = Math.floor(a / 3600), m = Math.floor((a % 3600) / 60), s = a % 60;
     const mm = String(m).padStart(2, "0"), ss = String(s).padStart(2, "0");
-    return `T${sign}${h ? h + ":" + mm : mm}:${ss}`;
+    return `${h ? h + ":" + mm : mm}:${ss}`;   // callers say "until" / "since" the release
   }
-  const relMin = (ms) => `+${Math.round(ms / MIN)}m`;
+  const relMin = (ms) => `${Math.round(ms / MIN)} min`;
   function agoText(ms) {
     const s = Math.max(0, Math.round(ms / 1000));
     if (s < 60) return `${s}s ago`;
@@ -147,7 +148,14 @@
   // the LIVE banner already says "LIVE" / "SIMULATED LIVE", so the cards show just the event name
   const cardTitle = (E) => (E.live ? String(E.tl.title || "").replace(/^(SIMULATED )?LIVE · /, "") : E.tl.title);
   const lastName = (s) => (niceName(s) || "the speaker").split(" ").pop();
-  const displayLabel = (m) => String(m.label || m.id).replace(/\s*\(Polymarket\)\s*$/, "");
+  // Spell out trading shorthand for viewers: "25 bp" -> "25 basis points", ">25 bp" -> "more than 25 basis points".
+  const plain = (s) => String(s ?? "")
+    .replace(/>\s*(\d+)\s*bps?\b/gi, "more than $1 basis points")
+    .replace(/(\d+)\s*bps?\b/gi, "$1 basis points")
+    .replace(/\bFOMC\b/g, "Fed");
+  const displayLabel = (m) => plain(String(m.label || m.id).replace(/\s*\(Polymarket\)\s*$/, ""));
+  // How unusual a passage is for this speaker, in words (z = standard deviations from their usual stance).
+  const unusualWords = (z) => (z == null ? "not scored" : Math.abs(z) >= 2 ? "very unusual" : Math.abs(z) >= 1 ? "unusual" : "typical");
   function marketSub(m) {
     const v = m.venue === "kalshi" ? "Kalshi" : "Polymarket";
     const ex = m.exposure === "direct" ? "tied directly to the decision" : m.exposure === "partial" ? "only indirectly related to the decision" : m.exposure;
@@ -369,9 +377,9 @@
     // sit in lanes above the plot so they never cover the price line; lanes are worked out from every
     // mark (revealed or not) so the plot doesn't resize as the replay reveals them.
     const marks = [{ t: E.t0, color: "#E8EAED", label: `${E.overTime ? "Speech starts" : "Text released"} ${fmtEtShort(E.t0)} ET`, dash: "4 3", always: true }];
-    if (m.alarm && !m.indicative) marks.push({ t: m.alarm, color: "#1FCB8A", label: `Reaction ${relMin(m.alarm - E.t0)}`, dash: "0" });
-    if (m.a && m.a.t50_min != null && !m.indicative) marks.push({ t: E.t0 + m.a.t50_min * MIN, color: "#8B929B", label: `Halfway +${m.a.t50_min}m`, dash: "2 3" });
-    if (m.a && m.a.t90_min != null && !m.indicative) marks.push({ t: E.t0 + m.a.t90_min * MIN, color: "#8B929B", label: `90% done +${m.a.t90_min}m`, dash: "2 3" });
+    if (m.alarm && !m.indicative) marks.push({ t: m.alarm, color: "#1FCB8A", label: `Reaction after ${relMin(m.alarm - E.t0)}`, dash: "0" });
+    if (m.a && m.a.t50_min != null && !m.indicative) marks.push({ t: E.t0 + m.a.t50_min * MIN, color: "#8B929B", label: `Halfway at ${m.a.t50_min} min`, dash: "2 3" });
+    if (m.a && m.a.t90_min != null && !m.indicative) marks.push({ t: E.t0 + m.a.t90_min * MIN, color: "#8B929B", label: `90% done at ${m.a.t90_min} min`, dash: "2 3" });
     for (const k of marks) {
       k.w = k.label.length * 6.4 + 14;
       k.x0 = x(k.t) + 6;
@@ -603,10 +611,20 @@
     h += `<div class="label">The line that stood out</div>
       <blockquote class="keyq ${stanceClass(top)}"><span class="${hasKey ? "" : "clamp"}">“${esc(hasKey ? top.key_sentence : top.text)}”</span></blockquote>
       ${scorePill(top, last, "speech")}`;
+    // The speech is released all at once, so these aren't moments in time: they're the other
+    // passages that were also far from the speaker's usual stance, strongest first.
+    const others = ps.filter((p) => p !== top && p.relevant && p.z != null && Math.abs(p.z) >= ALSO_Z)
+      .sort((a, b) => Math.abs(b.z) - Math.abs(a.z));
+    if (others.length) {
+      h += `<div class="label second">Other lines that could move prices <span class="count">${others.length}</span></div><ul class="also">` +
+        others.slice(0, ALSO_SHOWN).map((p) => `<li><button class="also-item ${stanceClass(p)}" data-act="para-jump" data-id="${esc(p.id)}" title="Show this passage in the full speech">
+          <span class="also-text">${esc(plain(p.summary || p.text))}</span>
+          <span class="also-tag">${esc(vsUsual(p.z, last).replace(` than ${last} usually sounds`, " than usual"))}</span></button></li>`).join("") + `</ul>`;
+    }
     const nRel = ps.filter((p) => p.relevant).length;
     const nOther = ps.length - nRel;
     const src = sp.source_url;
-    h += `<button class="linkbtn" data-act="speech-toggle" aria-expanded="${state.speechOpen}">${state.speechOpen ? "Hide" : "Read"} the full speech ${state.speechOpen ? "▴" : "▾"}</button>`;
+    h += `<button class="linkbtn" data-act="speech-toggle" aria-expanded="${state.speechOpen}">${state.speechOpen ? "Hide" : "Read"} the full speech${!state.speechOpen && others.length > ALSO_SHOWN ? ` (${others.length - ALSO_SHOWN} more lines highlighted)` : ""} ${state.speechOpen ? "▴" : "▾"}</button>`;
     if (state.speechOpen) {
       const list = ps.filter((p) => state.showAllParas || p.relevant);
       h += `<div class="fulltext">`;
@@ -614,8 +632,8 @@
       if (nOther) h += `<button class="linkbtn" data-act="paras-toggle">${state.showAllParas ? "Hide" : "Also show"} ${nOther} paragraphs that aren't about policy</button>`;
       h += `<div class="para-key">Blue = more dovish, amber = more hawkish; darker = further from ${esc(last)}'s usual.</div>`;
       h += list.map((p) => {
-        const z = p.relevant && p.z != null ? `z ${sgn(p.z, 1)}` : "not about policy";
-        return `<div class="para ${p.relevant ? "" : "irrelevant"} ${p === top ? "top" : ""}" style="border-left-color:${p.relevant ? tint(p.z) : "var(--line)"}" title="${p.stance != null ? `stance ${sgn(p.stance, 2)} (${stanceWords(p.stance)})` : ""}"><span class="z">${esc(z)}</span>${highlightKey(p)}</div>`;
+        const z = p.relevant && p.z != null ? unusualWords(p.z) : "not about policy";
+        return `<div class="para ${p.relevant ? "" : "irrelevant"} ${p === top ? "top" : ""}" id="para-${esc(p.id)}" style="border-left-color:${p.relevant ? tint(p.z) : "var(--line)"}" title="${p.stance != null ? `stance ${sgn(p.stance, 2)} (${stanceWords(p.stance)})` : ""}"><span class="z">${esc(z)}</span>${highlightKey(p)}</div>`;
       }).join("");
       h += `</div>`;
     }
@@ -648,7 +666,7 @@
     if (state.speechOpen) {
       h += `<div class="fulltext"><div class="para-key">Newest first. Blue = more dovish, amber = more hawkish, grey = reporter or not scored. Scored as it's spoken by Tradio's live desk (<span class="mono">live.py</span>).</div>` +
         heard.slice().sort((a, b) => b._t - a._t).map((p) => {
-          const z = p.z != null ? `z ${sgn(p.z, 1)}` : (p.role && p.role !== "speaker" ? p.role : "not scored");
+          const z = p.z != null ? unusualWords(p.z) : (p.role && p.role !== "speaker" ? p.role : "not scored");
           return `<div class="para ${p.relevant ? "" : "irrelevant"} ${p === top ? "top" : ""}" style="border-left-color:${p.relevant ? tint(p.z) : "var(--line)"}" title="${p.stance != null ? `stance ${sgn(p.stance, 2)} (${stanceWords(p.stance)})` : ""}"><span class="z">${esc(z)}</span><span class="t">${fmtEt(p._t)} ET</span> ${esc(p.text)}</div>`;
         }).join("") + `</div>`;
     }
@@ -716,7 +734,7 @@
       h += row(sw("background:#F0A43A"), "<b>Dashed amber line</b>: the Polymarket price. It is indicative only: its history changed depending on how it was queried, so it shows direction and gets no timing claims.");
     }
     if (m.a && m.a.pre_band) h += row(sw("background:rgba(255,255,255,.10)"), "<b>Grey band</b>: the price's usual range in the hour before the speech.");
-    h += row(sw("background:#E8EAED;width:2px"), `<b>Dashed white line</b>: ${E.overTime ? "the moment the speech starts" : "the moment the text was released"} (T0).`);
+    h += row(sw("background:#E8EAED;width:2px"), `<b>Dashed white line</b>: ${E.overTime ? "the moment the speech starts" : "the moment the text was released"}.`);
     if (!m.indicative && m.a && (m.alarm || m.a.t50_min != null)) {
       h += row(sw("background:#1FCB8A;width:2px"), "<b>Green line</b>: a reaction was detected. The price left its usual range and stayed out.");
       h += row(sw("background:#8B929B;width:2px"), "<b>Dotted grey lines</b>: when half, then 90%, of the final move had happened.");
@@ -888,7 +906,7 @@
     else {
       h += `<div class="orders">` + s.shown.map((t) => `<div class="order" role="button" tabindex="0" data-act="order" data-id="${esc(t.mid)}" title="Show this contract on the chart">
         <span class="mono t">${fmtEtShort(t.t)}</span>
-        <span>BUY <b>${esc(String(t.side).toUpperCase())}</b> ×${esc(t.qty)} ${esc(t.label)} @ <span class="num">${cents(t.cost)}</span></span>
+        <span>BUY <b>${esc(String(t.side).toUpperCase())}</b> ×${esc(t.qty)} ${esc(plain(t.label))} @ <span class="num">${cents(t.cost)}</span></span>
         <span class="pnl">${t.pnl == null ? `<span class="muted">open${t.exitT ? `, exit ${fmtEtShort(t.exitT)}` : ""}</span>` : `${pnlHtml(t.pnl)}${t.closed ? "" : ' <span class="muted">so far</span>'}`}</span>
         ${t.sideFixed ? `<div class="fix">side corrected by the playbook: ${esc(t.sideFixed)}</div>` : ""}
       </div>`).join("") + `</div>`;
@@ -930,7 +948,7 @@
     const mp = modelPrediction(E, m);
     const hasOdds = mp && !mp.none;
     if (hasOdds) tags.push(`model ${pctText(mp.p)}`);
-    const tip = [m.status && STATUS_HELP[m.status], hasOdds && `Model before T0: ${pctText(mp.p)} chance to react.`].filter(Boolean).join(" ");
+    const tip = [m.status && STATUS_HELP[m.status], hasOdds && `Model, before the release: ${pctText(mp.p)} chance to react.`].filter(Boolean).join(" ");
     return `<div class="mrow ${isFocus ? "focus" : ""} ${fired ? "fired" : ""}" role="button" tabindex="0" data-act="focus" data-id="${esc(m.id)}" aria-pressed="${isFocus}" title="${esc(tip)}">
       <div class="mrow-top"><span class="lab">${esc(displayLabel(m))}</span><span class="tag">${esc(tags.join(" · "))}</span><span class="px num">${q ? cents(q.mid) : "—"}</span></div>
       <div class="mrow-bot">${sparkline(E, m, now)}<span class="chg num">${chg}</span>${chip}</div>
@@ -1089,12 +1107,12 @@
     const age = Date.now() - parseT(E.live.updated_at);
     const stale = !sim && age > STALE_MS;
     const badge = sim
-      ? `<span class="chip indic">SIMULATED LIVE · ${esc(E.live.source || "")}</span>`
+      ? `<span class="chip indic">Simulation · ${esc(String(E.live.source || "").replace(/replay of (\S+)/, (x, id) => { const ev = EVENTS.find((e) => e.id === id); return "replay of " + (ev ? ev.short + ", " + ev.sub.split(" · ")[0] : id); }))}</span>`
       : stale ? `<span class="chip candidate_inconsistency">STALE · last update ${Math.round(age / 1000)}s ago, is tradio/live.py running?</span>`
               : `<span class="chip live-chip"><span class="dot"></span>LIVE</span>`;
     const pending = E.markets.some((m) => m.a && m.a.final_status_pending);
     el.innerHTML = `${badge}<b>${esc(E.tl.title)}</b>` +
-      (pending ? `<span class="muted">Verdicts so far are provisional; final verdicts come when the 90-minute window closes (T0+90m).</span>` : "") +
+      (pending ? `<span class="muted">Verdicts so far are provisional; final verdicts come when the 90-minute window closes (90 minutes after the start).</span>` : "") +
       (E.hasAnalysis ? "" : `<span class="chip cant_tell_illiquid">analysis.json missing</span>`);
     el.hidden = false;
   }
@@ -1119,7 +1137,7 @@
     const b = E.baseline;
     const quote = top.key_sentence || top.text.slice(0, 180);
     return `<div class="cmp-speech"><div class="label">Most unusual passage</div><q>${esc(quote)}</q>
-      <div class="why">z = <b class="num">${sgn(top.z, 1)}</b> against ${esc(last)}'s own history · stance <b class="num">${sgn(top.stance, 2)}</b> (${stanceWords(top.stance)})${b && b.mean != null ? ` vs usual <b class="num">${sgn(b.mean, 2)}</b>` : ""}</div></div>`;
+      <div class="why"><b>${esc(vsUsual(top.z, last))}</b> (${Math.abs(top.z).toFixed(1)} standard deviations from ${esc(last)}'s usual) · stance <b class="num">${sgn(top.stance, 2)}</b> (${stanceWords(top.stance)})${b && b.mean != null ? ` vs usual <b class="num">${sgn(b.mean, 2)}</b>` : ""}</div></div>`;
   }
 
   function drawCompare(nowRel) {
@@ -1154,7 +1172,7 @@
         const until = Math.min(now, we);
         g += `<path d="${bandPath(m.q.filter((q) => q.t >= ws), x, y, until)}" fill="rgba(76,141,255,.16)"/>`;
         g += `<path d="${stepPath(m.q.filter((q) => q.t >= ws && q.mid != null).map((q) => ({ t: q.t, v: q.mid })), x, y, until)}" fill="none" stroke="#4C8DFF" stroke-width="2.2"/>`;
-        if (m.alarm && m.alarm <= now) g += `<line x1="${x(m.alarm)}" x2="${x(m.alarm)}" y1="${T}" y2="${H - B}" stroke="#1FCB8A"/><text x="${x(m.alarm) + 4}" y="${T + 11}" fill="#1FCB8A" font-size="11">reaction detected ${relMin(m.alarm - E.t0)}</text>`;
+        if (m.alarm && m.alarm <= now) g += `<line x1="${x(m.alarm)}" x2="${x(m.alarm)}" y1="${T}" y2="${H - B}" stroke="#1FCB8A"/><text x="${x(m.alarm) + 4}" y="${T + 11}" fill="#1FCB8A" font-size="11">reaction after ${relMin(m.alarm - E.t0)}</text>`;
         const q = quoteAt(m, now);
         // same reveal rule as the single-event view: no verdict or final move before its time
         const shown = m.status && now >= verdictAt(E, m);
@@ -1242,15 +1260,15 @@
     mlp_text: "Neural network + speech text (Gemini)", ensemble: "Ensemble (average of models)",
   };
   const FEATURE_TEXT = {
-    uncertainty: "price near 50/50 before T0", policy_share: "speech mostly about the policy outlook",
-    n_flags: "released at a data-release time or next to another speech", quote_changes: "quotes already moving before T0",
-    kind_hike_small: "contract is “hike 25 bp”", kind_cut_small: "contract is “cut 25 bp”", kind_hold: "contract is “hold”",
-    kind_cut_big: "contract is “cut >25 bp”", kind_hike_big: "contract is “hike >25 bp”", abs_z: "bigger stance surprise (|z|)",
-    aligned_z: "surprise points this contract's way", spread_ticks: "wider bid–ask spread", log_trades: "more trades before T0",
+    uncertainty: "price near 50/50 before the release", policy_share: "speech mostly about the policy outlook",
+    n_flags: "released at a data-release time or next to another speech", quote_changes: "quotes already moving before the release",
+    kind_hike_small: "contract is “hike 25 basis points”", kind_cut_small: "contract is “cut 25 basis points”", kind_hold: "contract is “hold”",
+    kind_cut_big: "contract is “cut more than 25 basis points”", kind_hike_big: "contract is “hike more than 25 basis points”", abs_z: "bigger stance surprise",
+    aligned_z: "surprise points this contract's way", spread_ticks: "wider bid–ask spread", log_trades: "more trades before the release",
     role_chair: "speaker is the Chair", role_vice_chair: "speaker is the Vice Chair",
     role_vice_chair_supervision: "speaker is the Vice Chair for Supervision", role_governor: "speaker is a governor",
     has_stance: "speech has a stance score", has_text: "speech text downloaded", after_hours: "released outside market hours",
-    log_days_to_decision: "more days until the FOMC decision", pre_mid: "higher price before T0",
+    log_days_to_decision: "more days until the Fed's rate decision", pre_mid: "higher price before the release",
     overlap_speeches: "another Board speech within 90 min", is_testimony: "testimony to Congress (not a speech)", release_in_window: "jobs/CPI report lands inside the window",
     release_day: "jobs/CPI report day", has_embedding: "speech text embedded",
     novelty_vs_speaker: "speech unlike the speaker's earlier ones", novelty_vs_recent: "speech unlike recent Board speeches",
@@ -1282,10 +1300,10 @@
   }
 
   function modelLine(mp) {
-    if (mp.none) return `<div class="model-line muted">Model: no prediction (not active before T0)</div>`;
+    if (mp.none) return `<div class="model-line muted">Model: no prediction (not active before the release)</div>`;
     const w = Math.max(2, Math.round(mp.p * 100));
     return `<div class="model-line" title="${esc(MODEL_NAMES[mp.model] || mp.model)}, trained on ${mp.trainedOn} earlier speeches${mp.base != null ? `; simple guessing said ${pctText(mp.base)}` : ""}">
-      <span>Model before T0</span><span class="mbar"><i style="width:${w}%"></i></span><b class="num">${pctText(mp.p)}</b><span class="muted">chance to react</span></div>`;
+      <span>Model, before the release</span><span class="mbar"><i style="width:${w}%"></i></span><b class="num">${pctText(mp.p)}</b><span class="muted">chance to react</span></div>`;
   }
 
   async function openModel() {
@@ -1302,7 +1320,7 @@
         return `<span class="skill"><span class="axis"></span><i class="${v < 0 ? "neg" : "pos"}" style="${v < 0 ? `right:50%` : `left:50%`};width:${w}%"></i></span>`;
       };
       let h = `<p class="model-verdict">${esc(M.verdict)}</p>
-        <p class="src note">Learned from <b>${M.n_events}</b> Fed Board speeches (Nov 2024 →), <b>${M.n_labeled}</b> contract windows where the market was active before T0, <b>${M.positives}</b> of which reacted. ${M.excluded_not_measurable} windows were too thin to judge and are left out.</p>
+        <p class="src note">Learned from <b>${M.n_events}</b> Fed Board speeches (Nov 2024 →), <b>${M.n_labeled}</b> contract windows where the market was active before the release, <b>${M.positives}</b> of which reacted. ${M.excluded_not_measurable} windows were too thin to judge and are left out.</p>
         <h4>Scoreboard · each speech predicted before the model saw it (${sb.n_events || 0} speeches)</h4>
         <table class="scoreboard"><tr><th>predictor</th><th>vs simple guessing</th><th class="barcol"></th><th>log loss</th><th>clearly better?</th></tr>` +
         names.sort((a, b) => models[a].log_loss - models[b].log_loss).map((n) => {
@@ -1325,7 +1343,7 @@
       const heroes = EVENTS.map((e) => e.id);
       const hp = (M.predictions || []).filter((e) => heroes.includes(e.event));
       if (hp.length) {
-        h += `<h4>Our replay events: what the model said before T0</h4><table><tr><th>event</th><th>contract</th><th>predicted</th><th>happened</th></tr>` +
+        h += `<h4>Our replay events: what the model said before the release</h4><table><tr><th>event</th><th>contract</th><th>predicted</th><th>happened</th></tr>` +
           hp.map((e) => e.rows.map((r) => `<tr><td>${esc(e.event)}</td><td>${esc(r.market.replace("kalshi:KXFEDDECISION-", ""))}</td><td class="num">${pctText(r[M.champion])}</td><td>${r.label ? "reacted" : "no reaction"}</td></tr>`).join("")).join("") +
           `</table><p class="src note">Each made from earlier speeches only. A low number that reacted is a genuine surprise, not a bug.</p>`;
       }
@@ -1344,7 +1362,7 @@
       const r = pb.rules || {};
       const row = (name, k, fmt) => (r[k] ? `<tr><th>${name}</th><td><b>${esc(fmt ? fmt(r[k].value) : JSON.stringify(r[k].value))}</b><div class="src">${esc(r[k].why)}</div></td></tr>` : "");
       h = `<p class="src">${esc(pb.caveat)} Built ${esc(pb.built_at)}.</p><h4>Rules the desk follows <small>· <span class="mono">python live.py --playbook</span></small></h4><table>
-        ${row("Trade only if |z| ≥", "min_abs_z", (v) => v)}
+        ${row("Trade only if the surprise is at least (standard deviations)", "min_abs_z", (v) => v)}
         ${row("Contract types", "trade_kinds", (v) => v.join(", ").replace(/_/g, " "))}
         ${row("Liquidity", "tradeable_liquidity", (v) => v.join(", "))}
         ${row("Planned exit after", "exit_after_min", (v) => v + " min")}
@@ -1354,9 +1372,9 @@
       </table><h4>What it learned from</h4><table><tr><th>event</th><th>top z</th><th>direction</th><th>market leaning</th><th>reacted</th></tr>` +
         (pb.events || []).map((o) => `<tr><td>${esc(o.event)}</td><td>${sgn(o.top_z, 2)}</td><td>${esc(o.direction)}</td><td>${esc(o.regime || "—")}</td><td>${o.reacted ? "yes" : "no"}</td></tr>`).join("") + `</table>`;
       if (pb.backtests) {
-        h += `<h4>Backtest, leave-one-out <small>· each event traded with rules learned from the others</small></h4><table><tr><th>event</th><th>trades</th><th>P&amp;L</th><th>capital</th></tr>` +
+        h += `<h4>Backtest, leave-one-out <small>· each event traded with rules learned from the others</small></h4><table><tr><th>event</th><th>trades</th><th>profit / loss</th><th>capital</th></tr>` +
           pb.backtests.map((b) => `<tr><td>${esc(b.event)}</td><td>${esc(b.trades)}</td><td>${money(b.total_pnl)}</td><td>$${(b.capital || 0).toFixed(2)}</td></tr>`).join("") +
-          `</table><p class="src">Real Kalshi 1-minute prices; entry 1 min after T0 at the ask, exit at the bid, Kalshi taker fees on both legs. Not trading advice.</p>`;
+          `</table><p class="src">Real Kalshi 1-minute prices; entry 1 min after the release at the ask, exit at the bid, Kalshi taker fees on both legs. Not trading advice.</p>`;
       }
     }
     showDrawer("Playbook · learned from past speeches", h);
@@ -1410,14 +1428,14 @@
     // while LIVE the track ends at "now", so T0 and alarms can still lie ahead of it: leave those off
     const onTrack = (p) => p >= 0 && p <= 100;
     const t0On = onTrack(pct(0));
-    let html = t0On ? `<span class="mark t0" style="left:${pct(0)}%" title="${E && E.overTime ? "The moment the speech starts" : "The moment the speech text is released"}">T0</span>` : "";
+    let html = t0On ? `<span class="mark t0" style="left:${pct(0)}%" title="${E && E.overTime ? "The moment the speech starts" : "The moment the speech text is released"}">Release</span>` : "";
     if (E) {
       const alarms = E.markets.filter((m) => m.alarm && !m.indicative).sort((x, y) => x.alarm - y.alarm);
       // print a label only when it won't touch its neighbours (about 3.3px per character)
       const trackW = Math.max(200, $("scrub").clientWidth);
       const endText = E.live ? "now" : fmtEtShort(E.we) + " ET";
       const endLeft = 0.98 * trackW - endText.length * 3.3;
-      let lastRight = t0On ? (pct(0) / 100) * trackW + 2 * 3.3 : -Infinity;
+      let lastRight = t0On ? (pct(0) / 100) * trackW + 7 * 3.3 : -Infinity;   // "Release" is 7 characters
       const endFits = lastRight + 4 < endLeft; // T0 wins over the end label when they'd collide
       for (const m of alarms) {
         const r = m.alarm - E.t0, p = pct(r);
@@ -1426,7 +1444,7 @@
         const center = (p / 100) * trackW, half = text.length * 3.3;
         const label = center - half > lastRight + 4 && (!endFits || center + half < endLeft - 4) ? text : "";
         if (label) lastRight = center + half;
-        html += `<span class="mark alarm" style="left:${p}%" title="${esc(displayLabel(m))}: reaction detected ${relMin(r)}">${label}</span>`;
+        html += `<span class="mark alarm" style="left:${p}%" title="${esc(displayLabel(m))}: reaction detected ${relMin(r)} after the release">${label}</span>`;
       }
       html += `<span class="mark" style="left:2%">${fmtEtShort(E.ws)} ET</span>${endFits ? `<span class="mark" style="left:98%">${endText}</span>` : ""}`;
     }
@@ -1441,7 +1459,7 @@
   function setClock(now) {
     const el = $("clkRel");
     const mins = Math.floor(state.rel / MIN);
-    el.textContent = `T${mins < 0 ? "−" : "+"}${Math.abs(mins)}m`;
+    el.textContent = mins < 0 ? `${Math.abs(mins)} min before` : `${mins} min after`;
     el.classList.toggle("post", state.rel >= 0);
     $("clkAbs").hidden = now == null;
     if (now != null) $("clkEt").textContent = fmtEtShort(now);
@@ -1583,44 +1601,49 @@
     const box = $("liveControls");
     if (!ctl.ok) {
       ctl.built = false;
-      box.innerHTML = `<span class="muted">Want Start/Stop buttons here? Run the site with <span class="mono">python3 tradio/serve.py</span> instead of <span class="mono">python3 -m http.server</span>.</span>`;
+      box.innerHTML = `<span class="muted">The Start and Stop buttons need Tradio's own server, which isn't running. Start the site with <span class="mono">python tradio/serve.py</span>, then reload this page.</span>`;
       return;
     }
     const st = ctl.status, k = st.keys;
     if (!ctl.built) {
       const opt = (v, t, dis) => `<option value="${esc(v)}" ${dis ? "disabled" : ""}>${esc(t)}</option>`;
       box.innerHTML = `
-        <div class="ctl-group"><b>Practice</b>
-          <select id="ctlEvent">${st.events.map((e) => opt(e, e)).join("")}</select>
-          <select id="ctlSpeed">${st.speeds.map((v) => `<option value="${v}" ${v === 30 ? "selected" : ""}>${v}×</option>`).join("")}</select>
+        <div class="ctl-group"><b>Practice with a past speech</b>
+          <select id="ctlEvent" aria-label="Past speech">${st.events.map((e) => { const ev = EVENTS.find((x) => x.id === e); return opt(e, ev ? `${ev.short} · ${ev.sub}` : e); }).join("")}</select>
+          <select id="ctlSpeed" aria-label="Replay speed">${st.speeds.map((v) => `<option value="${v}" ${v === 30 ? "selected" : ""}>${v}× speed</option>`).join("")}</select>
           <button class="btn" id="ctlPractice">▶ Start practice</button></div>
-        <div class="ctl-group"><b>Real speech</b>
-          <select id="ctlSpeaker">${st.speakers.map((v) => opt(v, v.replace(/_/g, " "))).join("")}</select>
+        <div class="ctl-group"><b>Follow a real speech</b>
+          <select id="ctlSpeaker" aria-label="Speaker">${st.speakers.map((v) => opt(v, niceName(v))).join("")}</select>
           <select id="ctlMode">
             ${opt("dry", "Guide only (no orders)")}
             ${opt("demo", "Trade: Kalshi demo (fake money)" + (k.kalshi_demo ? "" : " · needs demo keys"), !k.kalshi_demo)}
             ${opt("live", "Trade: REAL MONEY" + (!st.allow_live ? " · off (TRADIO_ALLOW_LIVE=1)" : !k.kalshi_live ? " · needs Kalshi keys" : ""), !(st.allow_live && k.kalshi_live))}
           </select>
-          <label><input type="checkbox" id="ctlTranscribe" checked> transcribe</label>
-          <input id="ctlUrl" placeholder="stream (default: Fed live broadcast)" size="28">
+          <label title="Turn the speech audio into text as it's spoken"><input type="checkbox" id="ctlTranscribe" checked> transcribe the audio</label>
+          <input id="ctlUrl" placeholder="video link (default: the Fed's live stream)" size="30" aria-label="Video link">
           <input id="ctlConfirm" placeholder="type LIVE" size="9" hidden>
           <button class="btn" id="ctlLive">▶ Start live</button></div>
         <button class="btn stop" id="ctlStop">■ Stop</button>
+        <div class="ctl-group"><b>Save a finished speech as a replay</b>
+          <input id="ctlArchiveId" placeholder="name, e.g. waller20261015" size="22" aria-label="Replay name">
+          <input id="ctlArchiveTitle" placeholder="title, e.g. Waller, 2026-10-15" size="24" aria-label="Replay title">
+          <button class="btn" id="ctlArchive">Save replay</button></div>
         <div class="ctl-status" id="ctlStatus"></div>`;
       $("ctlMode").addEventListener("change", () => { $("ctlConfirm").hidden = $("ctlMode").value !== "live"; });
       $("ctlPractice").addEventListener("click", () => startSession({ kind: "practice", event: $("ctlEvent").value, speed: +$("ctlSpeed").value }));
       $("ctlLive").addEventListener("click", () => startSession({
         kind: "live", speaker: $("ctlSpeaker").value, mode: $("ctlMode").value, transcribe: $("ctlTranscribe").checked,
         url: $("ctlUrl").value.trim() || undefined, confirm: $("ctlConfirm").value.trim() }));
+      $("ctlArchive").addEventListener("click", () => startSession({ kind: "archive", event_id: $("ctlArchiveId").value.trim(), title: $("ctlArchiveTitle").value.trim() }));
       $("ctlStop").addEventListener("click", async () => { ctl.seq++; try { ctl.status = await api("/api/stop", {}); ctl.error = ""; } catch (e) { ctl.error = e.message; } renderControls(); });
       ctl.built = true;
     }
     const procs = Object.entries(st.processes || {});
-    const missing = [!k.gemini && "gemapi.txt", !k.elevenlabs && "elevenapi.txt", !k.kalshi_demo && "Kalshi demo keys"].filter(Boolean);
+    const missing = [!k.gemini && "Gemini key (needed to score a real speech)", !k.elevenlabs && "ElevenLabs key (needed to transcribe)", !k.kalshi_demo && "Kalshi demo keys (needed only for fake-money trading)"].filter(Boolean);
     $("ctlStatus").innerHTML =
       (ctl.error ? `<div class="err">${esc(ctl.error)}</div>` : "") +
       (procs.length ? procs.map(([n, p]) => `<details><summary><span class="chip ${p.running ? "reacted" : "watching"}">${p.running ? "running" : "stopped" + (p.exit_code ? ` (exit ${p.exit_code})` : "")}</span> <b>${esc(n)}</b> · ${esc(p.label)} <span class="muted mono">${esc((p.log.slice(-1)[0] || "").slice(0, 90))}</span></summary><pre>${esc(p.log.join("\n"))}</pre></details>`).join("")
-        : `<span class="muted">Nothing running.${missing.length ? " Missing: " + missing.join(", ") + "." : ""}</span>`);
+        : `<span class="muted">Nothing running.${missing.length ? " Not set up on this laptop: " + missing.join("; ") + "." : ""}</span>`);
   }
 
   async function startSession(req) {
@@ -1653,7 +1676,7 @@
   }
 
   async function pollLive() {
-    refreshControls();
+    await refreshControls();
     let E;
     try {
       E = await loadEvent("live", true);
@@ -1680,17 +1703,16 @@
   }
 
   function liveIdleHtml() {
+    const buttons = ctl.ok;
     return `<main class="stage"><div class="card idle">
-      <h3>No live session running</h3>
-      <p><b>Use the buttons above</b> (Practice replays a past speech; Real speech listens, scores and, if you pick it, trades). Or run the commands yourself:</p>
-      <p>The LIVE tab shows a Fed speech as it happens: the transcript scored against the speaker's own history, next to Kalshi's live Fed-decision prices, with the same reaction checks as the replays. When it's over, it becomes one more History tab.</p>
-      <ol>
-        <li><b>Score the speech</b> (dry, never trades):<br><span class="mono">python speechtxt.py --url https://www.federalreserve.gov/live-broadcast.htm</span><br><span class="mono">python live.py --speaker christopher_waller --no-prewarm --mode dry</span><br>or let it <b>trade on Kalshi's demo exchange</b> by the learned playbook:<br><span class="mono">python live.py --speaker christopher_waller --fast --playbook --mode demo --venues kalshi</span></li>
-        <li><b>Stream the market tape</b> into this page:<br><span class="mono">python tradio/live.py --speaker christopher_waller --t0 now</span></li>
-        <li><b>Afterwards, keep it</b> as a history event:<br><span class="mono">python tradio/live.py archive waller20261015 --title "Waller, 2026-10-15"</span></li>
-      </ol>
-      <p><b>No speech on right now?</b> Rehearse with a past event replayed as if live (offline, clearly labelled SIMULATED):<br><span class="mono">python tradio/live.py --simulate bowman20250623 --speed 30</span></p>
-      <p class="muted">This page checks for <span class="mono">data/tradio/live/</span> every ${LIVE_POLL_MS / 1000} s and starts by itself.</p>
+      <h3>No live speech running</h3>
+      <p>The Live tab follows a Fed speech as it happens: the words are scored against the speaker's own history while Kalshi's prices update next to them, with the same reaction checks as the replays.</p>
+      ${buttons ? `<ol>
+        <li><b>No speech on right now?</b> Use <b>Practice with a past speech</b> above. It replays one as if it were live, clearly labelled as a simulation.</li>
+        <li><b>A Fed official is speaking?</b> Pick them under <b>Follow a real speech</b> and press <b>Start live</b>. Leave the mode on <i>Guide only</i> to watch without placing any orders.</li>
+        <li><b>When it's over</b>, press <b>Stop</b>, then <b>Save replay</b> to keep it as a tab next to Bowman and Waller.</li>
+      </ol>` : `<p class="pending-note">The buttons for this tab need Tradio's own server. Start the site with <span class="mono">python tradio/serve.py</span> (instead of <span class="mono">python3 -m http.server</span>) and reload this page.</p>`}
+      <p class="muted">This page checks for new live data every ${LIVE_POLL_MS / 1000} seconds and starts showing it by itself.</p>
     </div></main>`;
   }
 
@@ -1741,6 +1763,18 @@
         state.speechOpen = !state.speechOpen;
         draw(true);
         break;
+      case "para-jump": {
+        state.speechOpen = true;
+        draw(true);
+        const para = document.getElementById("para-" + el.dataset.id);
+        if (para) {
+          para.scrollIntoView({ block: "nearest", behavior: "smooth" });
+          para.classList.remove("flash");
+          void para.offsetWidth;
+          para.classList.add("flash");
+        }
+        break;
+      }
       case "paras-toggle":
         state.showAllParas = !state.showAllParas;
         draw(true);

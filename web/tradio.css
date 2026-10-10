@@ -657,3 +657,28 @@ mark.key { background: rgba(139, 139, 245, .18); color: inherit; padding: 1px 2p
 .drawer .src.note { word-break: normal; overflow-wrap: anywhere; }
 .drawer td.nowrap { white-space: nowrap; }
 @media (max-width: 600px) { .drawer .barcol { display: none; } }
+
+/* ---------- other lines that could move prices (speech panel) ---------- */
+.label .count { color: var(--faint); margin-left: 4px; font-variant-numeric: tabular-nums; }
+.also { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.also-item {
+  display: grid;
+  gap: 3px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-left: 2px solid var(--line-2);
+  border-radius: 0 8px 8px 0;
+  padding: 7px 10px 7px 12px;
+  transition: background-color .15s var(--ease), border-color .15s var(--ease);
+}
+.also-item:hover { background: var(--panel-2); }
+.also-item.dove { border-left-color: rgba(139, 139, 245, .7); }
+.also-item.hawk { border-left-color: rgba(240, 164, 58, .7); }
+.also-text { font-size: 13.5px; line-height: 1.45; }
+.also-tag { font-size: 12px; color: var(--faint); }
+.also-item.dove .also-tag { color: #b4b4ff; }
+.also-item.hawk .also-tag { color: #ffc46b; }
+.para.flash { animation: paraflash 1.6s var(--ease) 1; }
+@keyframes paraflash { 0%, 30% { background: rgba(139, 139, 245, .18); } 100% { background: transparent; } }
