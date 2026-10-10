@@ -246,6 +246,16 @@ def write_live(timeline: dict) -> None:
     for d in LIVE_DIRS:
         write_json(os.path.join(d, "timeline.json"), timeline)
         write_json(os.path.join(d, "analysis.json"), analysis)
+    try:                                              # the learner's odds per contract (pre-T0 facts)
+        from tradio import learner
+        odds = learner.live_odds(LIVE_DIRS[0])
+    except Exception as e:
+        odds = None
+        log(f"learner odds unavailable: {e}")
+    if odds:
+        analysis["model"] = odds
+        for d in LIVE_DIRS:
+            write_json(os.path.join(d, "analysis.json"), analysis)
 
 
 def base_timeline(title, speaker, t0: int, start: int, now: int, kind: str, source: str) -> dict:

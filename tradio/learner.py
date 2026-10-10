@@ -32,6 +32,12 @@ and only then added to the training set. That is exactly what happens live. Mode
   logistic    L2 logistic regression on standardized features
   boosting    shallow gradient-boosted trees
   mlp         a small neural net (one hidden layer of 16, strong weight decay)
+  mlp_bag     the same net trained 10 times with different random seeds, averaged
+              (with ~30 reactions a single net is mostly seed noise; bagging cuts that)
+  mlp_tuned   picks its own width and weight decay on the most recent quarter of ITS OWN
+              training events (never the event being predicted), then a bag of 3
+  (mlp_bag and mlp_tuned are in the full build, `python -m tradio.learner`; tests and
+  build(extra_mlps=False) skip them because they cost ~20 extra fits per event)
 The champion is the model with the lowest prequential log loss; it only counts as
 "beats the base rate" if a bootstrap over clusters of overlapping speeches puts its whole
 log-loss gain interval above zero, at 95% split across the four candidate models
@@ -65,9 +71,28 @@ BOOTSTRAP = 1000
 
 FEATURES = (["kind_" + k for k in KINDS.values()]
             + ["pre_mid", "uncertainty", "log_trades", "spread_ticks", "quote_changes"]
-            + ["role_" + r for r in ROLES]
-            + ["log_days_to_decision", "after_hours", "n_flags",
-               "has_text", "policy_share", "has_stance", "abs_z", "aligned_z"])
+            + ["role_" + r for r in ROLES] + ["is_testimony"]
+            + ["log_days_to_decision", "after_hours", "overlap_speeches",
+               "release_in_window", "release_day",
+               "has_text", "policy_share", "has_stance", "abs_z", "aligned_z",
+               "has_embedding", "novelty_vs_speaker", "novelty_vs_recent"])
+EMB_PCA = 8                    # text models compress the speech embedding to this many components
+
+# US data releases that land at 8:30 ET and move rate expectations on their own:
+# BLS Employment Situation and CPI, from bls.gov/bls/news-release/empsit.htm and cpi.htm
+# (read 2026-10-10; the Oct 2025 CPI was not published during the shutdown). If one lands
+# inside a speech's T0-60..T0+90 window, a move may be the data, not the speech.
+RELEASE_DAYS = {
+    "jobs": ["2024-11-01", "2024-12-06", "2025-01-10", "2025-02-07", "2025-03-07", "2025-04-04",
+             "2025-05-02", "2025-06-06", "2025-07-03", "2025-08-01", "2025-09-05", "2025-11-20",
+             "2025-12-16", "2026-01-09", "2026-02-11", "2026-03-06", "2026-04-03", "2026-05-08",
+             "2026-06-05", "2026-07-02", "2026-08-07", "2026-09-04", "2026-10-02"],
+    "cpi": ["2024-11-13", "2024-12-11", "2025-01-15", "2025-02-12", "2025-03-12", "2025-04-10",
+            "2025-05-13", "2025-06-11", "2025-07-15", "2025-08-12", "2025-09-11", "2025-10-24",
+            "2025-12-18", "2026-01-13", "2026-02-13", "2026-03-11", "2026-04-10", "2026-05-12",
+            "2026-06-10", "2026-07-14", "2026-08-12", "2026-09-11"],
+}
+RELEASE_ET = (8, 30)
 
 
 # ------------------------------------------------------------------ dataset
@@ -117,6 +142,65 @@ def _days_to_decision(t0: str, ticker: str, meta: dict):
     return (d - parse_ts(t0).astimezone(history.ET).date()).days if d else None
 
 
+def release_features(t0: str):
+    """(release_in_window, release_day) for a speech T0: was a jobs/CPI report published
+    that day, and did its 8:30 ET release fall inside T0-60..T0+90 min?"""
+    from zoneinfo import ZoneInfo
+    et = ZoneInfo("America/New_York")
+    local = parse_ts(t0).astimezone(et)
+    day = local.date().isoformat()
+    if not any(day in days for days in RELEASE_DAYS.values()):
+        return 0.0, 0.0
+    rel = local.replace(hour=RELEASE_ET[0], minute=RELEASE_ET[1], second=0, microsecond=0)
+    delta = (rel - local).total_seconds()
+    return float(-60 * 60 <= delta <= WINDOW_S), 1.0
+
+
+_EMB = {}
+
+
+def embeddings():
+    """speech_id -> unit vector (history.py embed step), or {} if not built yet."""
+    path = os.path.join(HIST_DIR, "embeddings.json")
+    key = (path, os.path.getmtime(path) if os.path.isfile(path) else None)
+    if key not in _EMB:
+        raw = _read(path) or {}
+        out = {}
+        for sid, v in (raw.get("speeches") or {}).items():
+            n = math.sqrt(sum(a * a for a in v)) or 1.0
+            out[sid] = [a / n for a in v]
+        _EMB.clear()
+        _EMB[key] = out
+    return _EMB[key]
+
+
+def _cos(a, b):
+    return sum(x * y for x, y in zip(a, b))
+
+
+def _mean(vs):
+    n = len(vs)
+    out = [sum(col) / n for col in zip(*vs)]
+    norm = math.sqrt(sum(a * a for a in out)) or 1.0
+    return [a / norm for a in out]
+
+
+def novelty(sid: str, t0: str, speaker: str, speeches: dict):
+    """How different a speech's text is from (a) the same speaker's EARLIER speeches and
+    (b) every Board speech in the 30 days before it. Uses only speeches before T0."""
+    E = embeddings()
+    v = E.get(sid)
+    if v is None:
+        return None
+    t = to_unix(t0)
+    prior = [s for s in speeches.values() if s.get("t0") and s["id"] in E and to_unix(s["t0"]) < t]
+    own = [E[s["id"]] for s in prior if s.get("speaker") == speaker]
+    recent = [E[s["id"]] for s in prior if t - to_unix(s["t0"]) <= 30 * 86400]
+    nv_own = 1 - _cos(v, _mean(own)) if own else None
+    nv_recent = 1 - _cos(v, _mean(recent)) if recent else None
+    return nv_own, nv_recent, v
+
+
 def event_rows(event_dir: str, speeches: dict, for_predict: bool = False):
     """One event folder -> (event dict, rows) or None. for_predict accepts a live,
     still-provisional analysis (only its pre-T0 facts are used)."""
@@ -136,7 +220,12 @@ def event_rows(event_dir: str, speeches: dict, for_predict: bool = False):
         # encoded the same way wherever it came from
         meta = _read(os.path.join(HIST_DIR, sid, "meta.json")) or {}
     info = speeches.get(sid, {})
+    speaker = meta.get("speaker") or info.get("speaker") or tl.get("speaker")
     role = meta.get("role") or info.get("role")
+    if not role and speaker:                  # live sessions: the speaker's latest Board role
+        mine = sorted((s for s in speeches.values() if s.get("speaker") == speaker and s.get("t0")),
+                      key=lambda s: s["t0"])
+        role = mine[-1]["role"] if mine else None
     local = parse_ts(t0).astimezone(__import__("zoneinfo").ZoneInfo("America/New_York"))
     after_hours = int(local.weekday() >= 5 or not (9 * 60 + 30 <= local.hour * 60 + local.minute < 16 * 60))
     z = _top_z(tl, meta)
@@ -155,6 +244,9 @@ def event_rows(event_dir: str, speeches: dict, for_predict: bool = False):
     if not cands:
         return None
     flags = meta.get("flags", [])
+    overlap = sum(1 for f in flags if f.startswith("another Board speech"))
+    rel_win, rel_day = release_features(t0)
+    nov = novelty(sid, t0, speaker, speeches) if sid else None
     days = _days_to_decision(t0, cands[0][1], meta)
     has_text = int(meta.get("policy_paragraphs") is not None)
     policy_share = (meta["policy_paragraphs"] / meta["paragraphs"]
@@ -173,9 +265,15 @@ def event_rows(event_dir: str, speeches: dict, for_predict: bool = False):
         x["quote_changes"] = det.get("quote_change_minutes") or 0
         if role in ROLES:
             x["role_" + role] = 1.0
+        x["is_testimony"] = float((meta.get("kind") or info.get("kind")) == "testimony")
         x["log_days_to_decision"] = math.log1p(days) if days is not None else 0.0
         x["after_hours"] = float(after_hours)
-        x["n_flags"] = float(len(flags))
+        x["overlap_speeches"] = float(overlap)
+        x["release_in_window"], x["release_day"] = rel_win, rel_day
+        if nov is not None:
+            x["has_embedding"] = 1.0
+            x["novelty_vs_speaker"] = nov[0] if nov[0] is not None else 0.0
+            x["novelty_vs_recent"] = nov[1] if nov[1] is not None else 0.0
         x["has_text"] = float(has_text)
         x["policy_share"] = policy_share
         if z is not None:
@@ -188,7 +286,8 @@ def event_rows(event_dir: str, speeches: dict, for_predict: bool = False):
             label = None                      # not measurable either way (see docstring)
         rows.append({"market": mid, "kind": k, "status": st, "liquidity": r.get("liquidity"),
                      "move_ticks": r.get("move_ticks"), "label": label,
-                     "x": [x[f] for f in FEATURES]})
+                     "x": [x[f] for f in FEATURES],
+                     "e": nov[2] if nov is not None else None})
     ev = {"event": an.get("event_id") or os.path.basename(event_dir), "speech_id": sid, "t0": t0,
           "role": role, "source": "history" if os.path.dirname(event_dir) == HIST_DIR else "event",
           "z": z}
@@ -279,22 +378,151 @@ class Sk:
         return [min(max(float(v), 1e-4), 1 - 1e-4) for v in p]
 
 
-def make_models():
+class MLPBag:
+    """Average of several identical small nets that differ only in their random seed."""
+
+    def __init__(self, name="mlp_bag", seeds=10, hidden=(16,), alpha=1.0):
+        self.name, self.seeds, self.hidden, self.alpha = name, seeds, hidden, alpha
+
+    text = False
+
+    def _net(self, hidden, alpha, seed):
+        from sklearn.neural_network import MLPClassifier
+        from sklearn.pipeline import make_pipeline
+        # L-BFGS: full-batch, the recommended solver for small datasets (and ~3x faster here)
+        return make_pipeline(_prep(self.text), MLPClassifier(
+            hidden_layer_sizes=hidden, alpha=alpha, solver="lbfgs", max_iter=500, random_state=seed))
+
+    def _fit_bag(self, X, y, hidden, alpha, seeds):
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            return [self._net(hidden, alpha, SEED + s).fit(X, y) for s in range(seeds)]
+
+    def fit(self, X, y, kinds=None):
+        self.fallback = BaseRate().fit(X, y)
+        self.nets = self._fit_bag(X, y, self.hidden, self.alpha, self.seeds) if len(set(y)) == 2 else []
+        return self
+
+    def predict(self, X, kinds=None):
+        if not self.nets:
+            return self.fallback.predict(X)
+        cols = [n.predict_proba(X)[:, 1] for n in self.nets]
+        ps = [sum(float(c[i]) for c in cols) / len(cols) for i in range(len(X))]
+        return [min(max(p, 1e-4), 1 - 1e-4) for p in ps]
+
+
+class MLPTuned(MLPBag):
+    """Chooses width and weight decay on the latest quarter of its own training rows (rows
+    arrive in time order), then refits a small bag on all training rows with that choice.
+    The event being predicted is never part of the choice."""
+    GRID = [((h,), a) for h in (8, 16) for a in (0.3, 1.0, 3.0, 10.0)]
+
+    def __init__(self, name="mlp_tuned", seeds=3):
+        super().__init__(name=name, seeds=seeds)
+        self.chosen = None
+
+    def fit(self, X, y, kinds=None):
+        self.fallback = BaseRate().fit(X, y)
+        self.nets = []
+        if len(set(y)) < 2:
+            return self
+        cut = int(len(y) * 0.75)
+        hidden, alpha = self.hidden, self.alpha
+        if len(set(y[:cut])) == 2 and sum(y[cut:]) > 0:
+            best = None
+            for h, a in self.GRID:
+                net = self._fit_bag(X[:cut], y[:cut], h, a, 1)[0]
+                ll = sum(_logloss(float(p), t) for p, t in zip(net.predict_proba(X[cut:])[:, 1], y[cut:]))
+                if best is None or ll < best[0]:
+                    best = (ll, h, a)
+            _, hidden, alpha = best
+        self.chosen = {"hidden": list(hidden), "alpha": alpha}
+        self.nets = self._fit_bag(X, y, hidden, alpha, self.seeds)
+        return self
+
+
+class MLPText(MLPBag):
+    """A small bag of nets that also read the speech text: the Gemini embedding of the
+    policy paragraphs, compressed to EMB_PCA components fitted on training rows only."""
+    text = True
+
+    def __init__(self, name="mlp_text", seeds=5):
+        super().__init__(name=name, seeds=seeds, hidden=(16,), alpha=3.0)
+
+
+class Ensemble:
+    """Average of several members' probabilities (usually steadier than any one of them)."""
+
+    def __init__(self, name, members):
+        self.name, self.members = name, members
+
+    def fit(self, X, y, kinds=None):
+        for m in self.members:
+            m.fit(X, y, kinds)
+        return self
+
+    def predict(self, X, kinds=None):
+        cols = [m.predict(X, kinds) for m in self.members]
+        return [sum(c[i] for c in cols) / len(cols) for i in range(len(X))]
+
+
+def _prep(text: bool):
+    """Column front-end: base features standardized; with text, the embedding columns
+    are compressed by PCA (fitted inside the pipeline, so only on training rows)."""
+    from sklearn.compose import ColumnTransformer
+    from sklearn.decomposition import PCA
+    from sklearn.preprocessing import StandardScaler
+    nb = len(FEATURES)
+    parts = [("base", StandardScaler(), list(range(nb)))]
+    if text:
+        parts.append(("text", PCA(n_components=EMB_PCA, random_state=SEED), slice(nb, None)))
+    return ColumnTransformer(parts, remainder="drop")
+
+
+def emb_dim():
+    E = embeddings()
+    return len(next(iter(E.values()))) if E else 0
+
+
+def make_models(extra_mlps=False, text=None):
     from sklearn.ensemble import GradientBoostingClassifier
     from sklearn.linear_model import LogisticRegression
     from sklearn.neural_network import MLPClassifier
     from sklearn.pipeline import make_pipeline
-    from sklearn.preprocessing import StandardScaler
-    return [
+    text = emb_dim() > 0 if text is None else text
+
+    def logistic(t=False):
+        return lambda: make_pipeline(_prep(t), LogisticRegression(C=0.5, max_iter=2000))
+
+    def boosting():
+        return lambda: make_pipeline(_prep(False), GradientBoostingClassifier(
+            n_estimators=100, max_depth=2, learning_rate=0.05, subsample=0.8, random_state=SEED))
+
+    def mlp():
+        return lambda: make_pipeline(_prep(False), MLPClassifier(
+            hidden_layer_sizes=(16,), alpha=1.0, max_iter=2000, random_state=SEED))
+
+    models = [
         BaseRate(),
         PlaybookRule(),
-        Sk("logistic", lambda: make_pipeline(StandardScaler(), LogisticRegression(C=0.5, max_iter=2000))),
-        Sk("boosting", lambda: GradientBoostingClassifier(n_estimators=100, max_depth=2,
-                                                          learning_rate=0.05, subsample=0.8,
-                                                          random_state=SEED)),
-        Sk("mlp", lambda: make_pipeline(StandardScaler(), MLPClassifier(
-            hidden_layer_sizes=(16,), alpha=1.0, max_iter=2000, random_state=SEED))),
-    ]
+        Sk("logistic", logistic()),
+        Sk("boosting", boosting()),
+        Sk("mlp", mlp()),
+    ] + ([MLPBag(), MLPTuned()] if extra_mlps else [])
+    if text:
+        models += [Sk("logistic_text", logistic(True)), MLPText()]
+    members = [Sk("logistic", logistic()), Sk("boosting", boosting()), Sk("mlp", mlp())]
+    if text:
+        members.append(Sk("logistic_text", logistic(True)))
+    models.append(Ensemble("ensemble", members))
+    return models
+
+
+def _matrix(rows):
+    """Feature matrix: base features, then the speech embedding (zeros if none)."""
+    d = emb_dim()
+    return [r["x"] + (r["e"] if r.get("e") is not None and len(r["e"]) == d else [0.0] * d)
+            for r in rows]
 
 
 # ------------------------------------------------------------------ evaluation
@@ -315,22 +543,22 @@ def _avg_precision(ps, ys):
     return float(average_precision_score(ys, ps))
 
 
-def prequential(data, models=None):
+def prequential(data, models=None, extra_mlps=False):
     """Test-then-train over events in time order. Returns per-event scored predictions."""
-    models = models or make_models()
+    models = models or make_models(extra_mlps)
     scored = []
     for ev, rows in data:
         lab = _labeled(rows)
         if not lab:
             continue
         train = _closed_before(data, ev)
-        X = [r["x"] for _, rs in train for r in _labeled(rs)]
+        X = _matrix([r for _, rs in train for r in _labeled(rs)])
         y = [r["label"] for _, rs in train for r in _labeled(rs)]
         kinds = [r["kind"] for _, rs in train for r in _labeled(rs)]
         n_events = sum(1 for _, rs in train if _labeled(rs))
         if n_events < MIN_TRAIN_EVENTS or len(set(y)) < 2:
             continue
-        Xe, ke = [r["x"] for r in lab], [r["kind"] for r in lab]
+        Xe, ke = _matrix(lab), [r["kind"] for r in lab]
         preds = {}
         for m in models:
             m.fit(X, y, kinds)
@@ -407,11 +635,9 @@ def scoreboard(scored, names):
 # ------------------------------------------------------------------ build / predict
 
 def _fit_all(data, name):
-    X, y, kinds = [], [], []
-    for _, rows in data:
-        for r in _labeled(rows):
-            X.append(r["x"]), y.append(r["label"]), kinds.append(r["kind"])
-    model = next((m for m in make_models() if m.name == name), BaseRate())
+    lab = [r for _, rows in data for r in _labeled(rows)]
+    X, y, kinds = _matrix(lab), [r["label"] for r in lab], [r["kind"] for r in lab]
+    model = next((m for m in make_models(extra_mlps=True) if m.name == name), BaseRate())
     return model.fit(X, y, kinds) if y else None
 
 
@@ -425,10 +651,10 @@ def logistic_weights(data):
                        key=lambda kv: -abs(kv[1])))
 
 
-def build():
+def build(extra_mlps=False):
     data = dataset()
-    names = [m.name for m in make_models()]
-    scored = prequential(data)
+    names = [m.name for m in make_models(extra_mlps)]
+    scored = prequential(data, extra_mlps=extra_mlps)
     board = scoreboard(scored, names)
     ranked = sorted(board["models"].items(), key=lambda kv: kv[1]["log_loss"]) if board["models"] else []
     champion = ranked[0][0] if ranked else "base_rate"
@@ -481,7 +707,7 @@ def predict(event_dir: str, model_name: str = None):
         except (OSError, ValueError, KeyError):
             name = "base_rate"
     model = _fit_all(train, name) or BaseRate().fit([], [])
-    ps = model.predict([r["x"] for r in rows], [r["kind"] for r in rows])
+    ps = model.predict(_matrix(rows), [r["kind"] for r in rows])
     return {"event": ev["event"], "model": name, "trained_on_events": len(train),
             "markets": {r["market"]: {"p_react": round(p, 4) if r["liquidity"] == "active" else None,
                                       "kind": r["kind"], "liquidity": r["liquidity"],
@@ -490,11 +716,36 @@ def predict(event_dir: str, model_name: str = None):
                         for r, p in zip(rows, ps)}}
 
 
+_LIVE = {}
+
+
+def live_odds(event_dir: str):
+    """The champion's P(react) for a live (still provisional) event, from pre-T0 facts.
+    The champion is refitted on every finished event at most once per model.json build,
+    so calling this every few seconds is cheap. None if there is no model yet."""
+    M = _read(MODEL)
+    if not M or not M.get("champion"):
+        return None
+    if _LIVE.get("key") != M.get("built_at"):
+        data = dataset()
+        _LIVE.update(key=M.get("built_at"), name=M["champion"], n=len(data),
+                     model=_fit_all(data, M["champion"]) or BaseRate().fit([], []))
+    got = event_rows(event_dir, _speech_index(), for_predict=True)
+    if not got:
+        return None
+    _, rows = got
+    ps = _LIVE["model"].predict(_matrix(rows), [r["kind"] for r in rows])
+    return {"model": _LIVE["name"], "trained_on_events": _LIVE["n"], "built_at": M.get("built_at"),
+            "markets": {r["market"]: (round(p, 4) if r["liquidity"] == "active" else None)
+                        for r, p in zip(rows, ps)}}
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("step", nargs="?", default="build", choices=("build", "predict"))
     ap.add_argument("event", nargs="?")
     ap.add_argument("--model")
+    ap.add_argument("--fast", action="store_true", help="skip mlp_bag / mlp_tuned (about 5x faster)")
     a = ap.parse_args(argv)
     if a.step == "predict":
         d = a.event if a.event and os.path.isdir(a.event) else os.path.join(DATA_DIR, a.event or "live")
@@ -506,7 +757,7 @@ def main(argv=None):
             p = f"P(react) {r['p_react']:.2f}" if r["p_react"] is not None else r["note"]
             print(f"  {mid:36s} {r['liquidity'] or '':7s} {p}")
         return
-    out = build()
+    out = build(extra_mlps=not a.fast)
     print(f"model.json: {out['n_events']} events ({out['n_history_events']} backfilled), "
           f"{out['n_labeled']} labeled rows, {out['positives']} reacted, "
           f"{out['excluded_not_measurable']} not-active rows left out")

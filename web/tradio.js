@@ -698,7 +698,9 @@
   // ---------- model (tradio/learner.py) ----------
   const MODEL_NAMES = {
     base_rate: "Simple guessing (base rate)", playbook: "Playbook rules", logistic: "Logistic regression",
-    boosting: "Boosted trees", mlp: "Neural network",
+    boosting: "Boosted trees", mlp: "Neural network", mlp_bag: "Neural network ×10 (averaged)",
+    mlp_tuned: "Neural network (self-tuning)", logistic_text: "Logistic + speech text (Gemini)",
+    mlp_text: "Neural network + speech text (Gemini)", ensemble: "Ensemble (average of models)",
   };
   const FEATURE_TEXT = {
     uncertainty: "price near 50/50 before T0", policy_share: "speech mostly about the policy outlook",
@@ -710,6 +712,9 @@
     role_vice_chair_supervision: "speaker is the Vice Chair for Supervision", role_governor: "speaker is a governor",
     has_stance: "speech has a stance score", has_text: "speech text downloaded", after_hours: "released outside market hours",
     log_days_to_decision: "more days until the FOMC decision", pre_mid: "higher price before T0",
+    overlap_speeches: "another Board speech within 90 min", is_testimony: "testimony to Congress (not a speech)", release_in_window: "jobs/CPI report lands inside the window",
+    release_day: "jobs/CPI report day", has_embedding: "speech text embedded",
+    novelty_vs_speaker: "speech unlike the speaker's earlier ones", novelty_vs_recent: "speech unlike recent Board speeches",
   };
   const pct = (p) => (p == null ? "—" : p < 0.01 ? "<1%" : p > 0.99 ? ">99%" : Math.round(p * 100) + "%");
 
@@ -721,7 +726,14 @@
   // The champion's prediction for this market, made before the model saw this event.
   function modelPrediction(E, m) {
     const M = state.model;
-    if (!M || m.venue !== "kalshi" || !/^kalshi:KXFEDDECISION-/.test(m.id)) return null;
+    if (m.venue !== "kalshi" || !/^kalshi:KXFEDDECISION-/.test(m.id)) return null;
+    // live (and archived live) sessions: odds written by tradio/live.py from the current model
+    const lo = E.an && E.an.model;
+    if (lo && lo.markets && m.id in lo.markets) {
+      const p = lo.markets[m.id];
+      return p == null ? { none: true } : { p, model: lo.model, trainedOn: lo.trained_on_events, base: null };
+    }
+    if (!M) return null;
     const id = E.tl.event_id;
     const ev = (M.predictions || []).find((e) => e.event === id);
     if (!ev) return null;
@@ -733,7 +745,7 @@
   function modelLine(mp) {
     if (mp.none) return `<div class="model-line muted">Model: no prediction (not active before T0)</div>`;
     const w = Math.max(2, Math.round(mp.p * 100));
-    return `<div class="model-line" title="${esc(MODEL_NAMES[mp.model] || mp.model)}, trained on ${mp.trainedOn} earlier speeches; simple guessing said ${pct(mp.base)}">
+    return `<div class="model-line" title="${esc(MODEL_NAMES[mp.model] || mp.model)}, trained on ${mp.trainedOn} earlier speeches${mp.base != null ? `; simple guessing said ${pct(mp.base)}` : ""}">
       <span>Model before T0</span><span class="mbar"><i style="width:${w}%"></i></span><b class="num">${pct(mp.p)}</b><span class="muted">chance to react</span></div>`;
   }
 
@@ -769,7 +781,7 @@
         const top = Object.entries(w).filter(([, v]) => Math.abs(v) >= 0.15).slice(0, 8);
         h += `<h4>What raises or lowers the odds (logistic regression, all speeches)</h4><table class="weights">` +
           top.map(([f, v]) => `<tr><td>${esc(FEATURE_TEXT[f] || f)}</td><td class="num nowrap">${v > 0 ? "▲ raises" : "▼ lowers"}</td><td class="barcol">${bar(v / Math.max(...top.map(([, x]) => Math.abs(x))) * maxAbs)}</td></tr>`).join("") +
-          `</table><p class="src note">Standardized weights; they show association, not cause. “Data-release time” is a warning sign: at 8:30 and 10:00 ET economic data comes out too, so some of those moves may not be the speech.</p>`;
+          `</table><p class="src note">Standardized weights; they show association, not cause. Jobs and CPI reports (8:30 ET) are tracked from the BLS calendar, so a move caused by the data isn't credited to the speech.</p>`;
       }
       const heroes = EVENTS.map((e) => e.id);
       const hp = (M.predictions || []).filter((e) => heroes.includes(e.event));
