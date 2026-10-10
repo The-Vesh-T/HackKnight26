@@ -1,14 +1,14 @@
 # Role 1 — Market data + replay timeline
 
-Read `CLAUDE.md` first. You own: `shockwave/events.yaml`, `shockwave/ingest_markets.py`,
-`shockwave/build_timeline.py`, `shockwave/data/`, and the copies in `web/data/shockwave/`.
+Read `CLAUDE.md` first. You own: `tradio/events.yaml`, `tradio/ingest_markets.py`,
+`tradio/build_timeline.py`, `tradio/data/`, and the copies in `web/data/tradio/`.
 
 **Your goal:** produce a correct, offline `timeline.json` for Bowman (then Waller) that
 roles 2 and 3 can build on. You are the source of truth for every price on screen.
 
 ## Tasks, in order
 
-1. **`shockwave/events.yaml`** — one entry per event:
+1. **`tradio/events.yaml`** — one entry per event:
    - `bowman20250623`: speaker `michelle_bowman`, t0 `2025-06-23T14:00:00Z`,
      window 13:00–15:30 UTC, speech `https://www.federalreserve.gov/newsevents/speech/bowman20250623a.htm`
    - `waller20250717`: speaker `christopher_waller`, t0 `2025-07-17T22:30:00Z`,
@@ -22,7 +22,7 @@ roles 2 and 3 can build on. You are the source of truth for every price on scree
        50+ bp cut `17028788563275937059830939874003546190073058810431474110375077031370800019934`,
        hike 25+ `100067677053694812730460296850221451830656965871151478092125776330632208052828`
 
-2. **`shockwave/ingest_markets.py`** — cache raw responses to `shockwave/data/<event_id>/raw/`.
+2. **`tradio/ingest_markets.py`** — cache raw responses to `tradio/data/<event_id>/raw/`.
    No auth needed. Base `https://api.elections.kalshi.com/trade-api/v2`.
    - Trades: `GET /historical/trades?ticker=...&min_ts=...&max_ts=...&limit=1000` — newest
      first, paginate with `cursor` until empty. A page can be truncated if the window is
@@ -36,13 +36,13 @@ roles 2 and 3 can build on. You are the source of truth for every price on scree
 
 3. **Verify candle timing** (important): compare each candle's `volume` with the sum of
    trades in the minute before vs after `end_period_ts`. Write the answer in
-   `shockwave/data/NOTES.md`. Expected (verify): the 14:07 candle for `-C25` holds the
+   `tradio/data/NOTES.md`. Expected (verify): the 14:07 candle for `-C25` holds the
    ~129,898 contracts traded 14:06:52–14:06:56.
 
-4. **`shockwave/build_timeline.py`** — merge into `shockwave/data/<event_id>/timeline.json`
+4. **`tradio/build_timeline.py`** — merge into `tradio/data/<event_id>/timeline.json`
    (schema in `CLAUDE.md`), leaving `speech.paragraphs` empty for role 3 to fill.
    Copy the final `timeline.json` (and role 2's `analysis.json`) to
-   `web/data/shockwave/<event_id>/` for the page.
+   `web/data/tradio/<event_id>/` for the page.
 
 5. **Spot-check** (must pass): these values from our earlier pull should appear in your files.
    If any differs, trust your data, write it in `NOTES.md`, and tell the team.

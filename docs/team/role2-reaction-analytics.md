@@ -1,6 +1,6 @@
 # Role 2 — Reaction analytics
 
-Read `CLAUDE.md` first. You own: `shockwave/reaction.py`, `shockwave/placebo.py`,
+Read `CLAUDE.md` first. You own: `tradio/reaction.py`, `tradio/placebo.py`,
 `tests/test_reaction.py`. Input: role 1's `timeline.json`. Output: `analysis.json`.
 
 **Your goal:** say, for every market, whether it reacted, how fast, how fully, and —
@@ -34,7 +34,7 @@ treatment but its status is always suffixed "(indicative)".
    - `candidate_inconsistency`: within one Kalshi event, outcome mids sum outside
      0.97–1.03 for > 5 min; or the same outcome differs > 2 ticks across venues for > 5 min
    Each status gets a one-line `reason` the UI can show verbatim.
-6. **Placebo (`shockwave/placebo.py`, after Gate 3):** 200 random fake T0s at the same
+6. **Placebo (`tradio/placebo.py`, after Gate 3):** 200 random fake T0s at the same
    hour of day on days without Fed events; p = share with |move| ≥ observed. Needs
    role 1 to pull those extra windows.
 

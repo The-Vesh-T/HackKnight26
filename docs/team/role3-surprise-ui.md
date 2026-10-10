@@ -1,7 +1,7 @@
 # Role 3 — Surprise scoring + terminal UI
 
 Read `CLAUDE.md` first. You own: speaker additions in `fed_speeches.py`,
-`shockwave/surprise.py`, `web/shockwave.html`, `web/shockwave.js`, `web/shockwave.css`.
+`tradio/surprise.py`, `web/tradio.html`, `web/tradio.js`, `web/tradio.css`.
 
 **Your goal:** (a) score Bowman's and Waller's speeches against their own history,
 reusing MarketPulse's `stance_scorer.py` method; (b) build the replay terminal page.
@@ -12,7 +12,7 @@ reusing MarketPulse's `stance_scorer.py` method; (b) build the replay terminal p
    `SPEAKER_KEYS` in `fed_speeches.py`. Download each speaker's speeches from mid-2023
    up to (not including) the event date, plus the event speeches `bowman20250623a`
    and `waller20250717a`. Don't change behavior for existing speakers.
-2. `shockwave/surprise.py`: build baselines for the two new speakers with the same
+2. `tradio/surprise.py`: build baselines for the two new speakers with the same
    rubric and model as `stance_scorer.py` (import its functions; don't fork the rubric).
    Baseline = only speeches **before** the event date. Score every paragraph of the
    event speech, compute z, mark the top-|z| paragraph and its key sentence, and write
@@ -24,10 +24,10 @@ reusing MarketPulse's `stance_scorer.py` method; (b) build the replay terminal p
    - Prediction to test: Bowman's top paragraph z ≤ −2, Waller's top |z| < 1. If not,
      we show the real number and explain it.
 
-## Part B — Terminal page (`web/shockwave.html`)
+## Part B — Terminal page (`web/tradio.html`)
 
 Static page in the existing site's style (plain HTML/CSS/JS, no build step). It loads
-`web/data/shockwave/<event_id>/timeline.json` and `analysis.json` and replays them
+`web/data/tradio/<event_id>/timeline.json` and `analysis.json` and replays them
 with a client-side clock. Start with mock files that follow the `CLAUDE.md` schema.
 
 Layout (1920×1080, dark, dense, monospace numbers):
@@ -57,5 +57,5 @@ at 30×; the cut line climbs over ~50 seconds of wall time; then switch to Walle
 
 ## Don't
 - Don't animate markets reacting sentence by sentence (the text was released whole).
-- Don't edit `web/index.html` or the PHP files; link to `shockwave.html` from the
+- Don't edit `web/index.html` or the PHP files; link to `tradio.html` from the
   existing nav only if the team agrees.
