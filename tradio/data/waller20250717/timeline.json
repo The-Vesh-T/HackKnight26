@@ -39,7 +39,7 @@
     "relevant": true,
     "summary": "Supports reducing the policy rate by 25 basis points.",
     "top": true,
-    "key_sentence": "My purpose this evening is to explain why I believe that the Federal Open Market Committee (FOMC) should reduce our policy rate by 25 basis points at our next meeting.1 I used to tell my junior research colleagues that presentations are not murder mysteries—just tell the audience up front \"who did it\" by telling them the main point."
+    "key_sentence": "My purpose this evening is to explain why I believe that the Federal Open Market Committee (FOMC) should reduce our policy rate by 25 basis points at our next meeting."
    },
    {
     "id": "p3",
@@ -47,7 +47,7 @@
     "stance": -0.5,
     "z": -1.279,
     "relevant": true,
-    "summary": "Advocates looking through one-off tariff price increases.",
+    "summary": "Argues to look through tariff price effects, supporting policy easing.",
     "top": false,
     "key_sentence": null
    },
@@ -57,7 +57,7 @@
     "stance": -1.0,
     "z": -2.842,
     "relevant": true,
-    "summary": "Argues monetary policy is too restrictive and should be lowered to neutral.",
+    "summary": "Argues policy is overly restrictive and rates should be cut to neutral.",
     "top": false,
     "key_sentence": null
    },
@@ -67,7 +67,7 @@
     "stance": -1.0,
     "z": -2.842,
     "relevant": true,
-    "summary": "Favors cutting rates now due to downside risks to the labor market.",
+    "summary": "Favors a rate cut due to labor market downside risks.",
     "top": false,
     "key_sentence": null
    },
@@ -87,7 +87,7 @@
     "stance": -0.5,
     "z": -1.279,
     "relevant": true,
-    "summary": "Highlights a slowdown in consumer spending and economic growth momentum.",
+    "summary": "Highlights slowing GDP growth and consumer spending to support easing.",
     "top": false,
     "key_sentence": null
    },
@@ -114,10 +114,10 @@
    {
     "id": "p10",
     "text": "And there is another reason to cite the slowdown in private-sector hiring. A pattern in data revisions in recent years tells us that the private payroll data are being overestimated and will be revised down significantly when the benchmark revision occurs in early 2026. Accounting for the anticipated revision to the level of employment in March 2025 and extrapolating forward, private-sector employment gains last month were much closer to zero.4 This is why I say private-sector payroll gains are near stall speed and flashing red.",
-    "stance": -0.5,
-    "z": -1.279,
+    "stance": -1.0,
+    "z": -2.842,
     "relevant": true,
-    "summary": "Notes that private-sector hiring is near stall speed due to expected revisions.",
+    "summary": "Points to anticipated downward revisions in hiring as reason for concern.",
     "top": false,
     "key_sentence": null
    },
@@ -127,7 +127,7 @@
     "stance": -0.5,
     "z": -1.279,
     "relevant": true,
-    "summary": "Points to rising unemployment among new college graduates as a sign of slowing.",
+    "summary": "Notes indicators of a broader slowdown in hiring and rising graduate unemployment.",
     "top": false,
     "key_sentence": null
    },
@@ -137,7 +137,7 @@
     "stance": -0.5,
     "z": -1.279,
     "relevant": true,
-    "summary": "Labor market slowing, risk of sudden reduction in payrolls.",
+    "summary": "Labor market slowing down, raising risks to employment mandate.",
     "top": false,
     "key_sentence": null
    },
@@ -147,7 +147,7 @@
     "stance": -0.5,
     "z": -1.279,
     "relevant": true,
-    "summary": "Economic momentum has slowed significantly, employment risks have increased.",
+    "summary": "Economic momentum slowed significantly with rising employment risks.",
     "top": false,
     "key_sentence": null
    },
@@ -157,7 +157,7 @@
     "stance": 0.0,
     "z": 0.283,
     "relevant": true,
-    "summary": "Inflation rose due to tariffs with ongoing uncertainty.",
+    "summary": "Discusses recent consumer and producer price inflation data.",
     "top": false,
     "key_sentence": null
    },
@@ -167,7 +167,7 @@
     "stance": 0.0,
     "z": 0.283,
     "relevant": true,
-    "summary": "Imported goods prices show modest increases from tariffs.",
+    "summary": "Examines high-frequency price data to understand tariff impacts.",
     "top": false,
     "key_sentence": null
    },
@@ -177,7 +177,7 @@
     "stance": 0.0,
     "z": 0.283,
     "relevant": true,
-    "summary": "Tariff pass-through to consumers expected to be limited.",
+    "summary": "Assesses modest and temporary consumer price passthrough from tariffs.",
     "top": false,
     "key_sentence": null
    },
@@ -187,7 +187,7 @@
     "stance": 0.0,
     "z": 0.283,
     "relevant": true,
-    "summary": "Slowing economy and substitution limit tariff impacts on consumers.",
+    "summary": "Analyzes factors limiting consumer price impacts from tariffs.",
     "top": false,
     "key_sentence": null
    },
@@ -197,7 +197,7 @@
     "stance": -0.5,
     "z": -1.279,
     "relevant": true,
-    "summary": "Tariffs are one-time price shocks; avoid needlessly tightening policy.",
+    "summary": "Argues for looking through tariff shocks to avoid needlessly tightening.",
     "top": false,
     "key_sentence": null
    },
@@ -207,7 +207,7 @@
     "stance": -0.5,
     "z": -1.279,
     "relevant": true,
-    "summary": "Underlying inflation is close to target after removing tariffs.",
+    "summary": "Underlying inflation excluding tariffs is close to target.",
     "top": false,
     "key_sentence": null
    },
@@ -217,17 +217,17 @@
     "stance": -0.5,
     "z": -1.279,
     "relevant": true,
-    "summary": "Expects inflation around 2% due to slowing labor costs.",
+    "summary": "Expects inflation around target due to slowing wage growth.",
     "top": false,
     "key_sentence": null
    },
    {
     "id": "p21",
     "text": "Two more points support my inflation outlook, and I will only summarize them here since I discussed them at length in my June outlook speech.10 The first addresses the question of whether I could be making the same kind of mistake my FOMC colleagues and I made in 2021 and 2022 in expecting inflation increases to be only transitory when they turned out to be persistent. But unlike then, there is no pandemic disrupting labor, goods, and services supply around the world, and economic growth is now slow and slowing, rather than expanding rapidly. These differences bring me to the second point, which is that unlike in 2021 and 2022, when expectations of future inflation rose, today the measures of expectations I watch remain firmly anchored.11",
-    "stance": 0.0,
-    "z": 0.283,
+    "stance": -0.5,
+    "z": -1.279,
     "relevant": true,
-    "summary": "Argues current inflation outlook differs from 2021-2022 with anchored expectations.",
+    "summary": "Notes unlike 2021, growth is slowing and expectations are anchored.",
     "top": false,
     "key_sentence": null
    },
@@ -237,37 +237,37 @@
     "stance": -0.5,
     "z": -1.279,
     "relevant": true,
-    "summary": "Advises looking through tariff effects as underlying inflation meets target.",
+    "summary": "Policy should look through temporary tariff effects on inflation.",
     "top": false,
     "key_sentence": null
    },
    {
     "id": "p23",
     "text": "As I hope will be evident by now, the evidence of a slowing economy, and all the factors I have cited weighing on economic activity, mean that the risks to the FOMC's employment mandate are greater, and sufficient to warrant an adjustment in the stance of monetary policy. Based on June's Summary of Economic Projections, the current target range for the federal funds rate of 4-1/4 to 4-1/2 percent is 125 to 150 basis points above the participants' median estimates of the longer-run federal funds rate of 3 percent. While I sometimes hear the view that policy is only modestly restrictive, this is not my definition of \"modestly.\"",
-    "stance": -0.8,
-    "z": -2.217,
+    "stance": -1.0,
+    "z": -2.842,
     "relevant": true,
-    "summary": "Employment risks and highly restrictive policy warrant monetary policy adjustment.",
+    "summary": "Employment risks warrant adjusting policy; current rate is highly restrictive.",
     "top": false,
     "key_sentence": null
    },
    {
     "id": "p24",
     "text": "In fact, the distance that must be traveled to reach a neutral policy setting weighs heavily on my judgment that the time has come to resume moving in that direction. In June, a majority of FOMC participants believed it would be appropriate to reduce our policy rate at least two times in 2025, and there are four meetings left. I also believe—and I hope the case I have made is convincing—that the risks to the economy are weighted toward cutting sooner rather than later. If the slowing of economic and employment growth were to accelerate and warrant moving toward a more neutral setting more quickly, then waiting until September or even later in the year would risk us falling behind the curve of appropriate policy. However, if we cut our target range in July and subsequent employment and inflation data point toward fewer cuts, we would have the option of holding policy steady for one or more meetings.",
-    "stance": -0.8,
-    "z": -2.217,
+    "stance": -1.0,
+    "z": -2.842,
     "relevant": true,
-    "summary": "Argues for reducing the policy rate sooner rather than later.",
+    "summary": "Supports cutting rates soon to avoid falling behind the curve.",
     "top": false,
     "key_sentence": null
    },
    {
     "id": "p25",
     "text": "For this reason, I believe it makes sense to cut the FOMC's policy rate by 25 basis points two weeks from now. And looking to later this year, if, as I expect, underlying inflation remains in check—with headline inflation data reporting modest, temporary increases from tariffs that are not unanchoring inflation expectations—and the economy continues to grow slowly, I would support further 25 basis point cuts to move monetary policy toward neutral.",
-    "stance": -0.8,
-    "z": -2.217,
+    "stance": -1.0,
+    "z": -2.842,
     "relevant": true,
-    "summary": "Supports a 25 basis point rate cut soon.",
+    "summary": "Favors a 25 bps rate cut and further reductions ahead.",
     "top": false,
     "key_sentence": null
    },
@@ -277,7 +277,7 @@
     "stance": 0.0,
     "z": 0.283,
     "relevant": true,
-    "summary": "Standard disclaimer regarding personal views versus official FOMC stances.",
+    "summary": "Standard disclaimer regarding personal views of the speaker.",
     "top": false,
     "key_sentence": null
    },
@@ -307,7 +307,7 @@
     "stance": 0.0,
     "z": 0.283,
     "relevant": true,
-    "summary": "Technical footnote on payroll employment benchmark revisions.",
+    "summary": "Technical footnote on payroll employment benchmarking data.",
     "top": false,
     "key_sentence": null
    },
@@ -327,7 +327,7 @@
     "stance": 0.0,
     "z": 0.283,
     "relevant": true,
-    "summary": "Cites methodology working paper on tracking tariff price impacts.",
+    "summary": "Cites working paper on tracking short-run tariff price impacts.",
     "top": false,
     "key_sentence": null
    },
@@ -337,7 +337,7 @@
     "stance": 0.0,
     "z": 0.283,
     "relevant": true,
-    "summary": "References speech rationale regarding tariffs, inflation, and expectations.",
+    "summary": "References speech on effects of tariffs on inflation.",
     "top": false,
     "key_sentence": null
    },
@@ -347,7 +347,7 @@
     "stance": 0.0,
     "z": 0.283,
     "relevant": true,
-    "summary": "Discusses central bank views on price shocks and anchored expectations.",
+    "summary": "Discusses historical central bank views on price shocks and expectations.",
     "top": false,
     "key_sentence": null
    },
@@ -357,7 +357,7 @@
     "stance": 0.0,
     "z": 0.283,
     "relevant": true,
-    "summary": "References methodology for detecting real-time tariff effects on consumer prices.",
+    "summary": "References methodology for detecting tariff effects on consumer prices.",
     "top": false,
     "key_sentence": null
    },
@@ -377,7 +377,7 @@
     "stance": 0.0,
     "z": 0.283,
     "relevant": true,
-    "summary": "Notes market-based inflation expectations remain firmly anchored.",
+    "summary": "Notes that market-based inflation expectations have remained firmly anchored.",
     "top": false,
     "key_sentence": null
    }
