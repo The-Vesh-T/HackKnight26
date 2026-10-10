@@ -1,0 +1,193 @@
+{
+ "date": "20250601",
+ "source": "https://www.federalreserve.gov/newsevents/speech/waller20250601a.htm",
+ "title": "Speech by Governor Waller on the economic outlook",
+ "speaker_key": "christopher_waller",
+ "segments": [
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "At “Structural Shifts and Monetary Policy,” 2025 Bank of Korea International Conference, Bank of Korea, Seoul, South Korea"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Thank you to the conference organizers for inviting me to speak today. I have attended this conference several times and I'm honored to be on the program this year. Today, I will speak on the U.S. economic outlook and the implications for monetary policy.1 I will focus my comments on two issues: first, the effects of tariffs on inflation persistence, and second, the divergence of household inflation expectations and financial market measures of inflation expectations."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "The theme of this conference is structural shifts and monetary policy. The key structural shift that is affecting the economies of both the United States and South Korea is the recent change in U.S. trade policy, and a substantial share of my remarks will address how this shift is affecting the U.S. outlook."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "The variability in tariff announcements this year, including the whipsawing of court rulings and doubling of metal tariffs last week, has created considerable uncertainty about where trade policy will settle. In mid-April, based on how things looked at the time, I proposed two scenarios to consider in framing an outlook and a preferred stance of monetary policy: a large tariff scenario and a smaller tariff scenario.2 In both cases, I assumed that the tariff increases would lead to a one-time boost to prices that would temporarily raise inflation, after which inflation would return to its underlying rate. This temporary increase could play out with a prompt rise in inflation that could recede quickly, or it could occur more gradually with a more modest increase that would recede more slowly. As I will explain, crucial to this judgment is my assumption that longer-term inflation expectations remain anchored."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "The large-tariff scenario I described assumed an average, trade-weighted tariff for goods imports of 25 percent, which is close to where things stood after the 90-day tariff suspensions announced April 9, and my scenario assumed that this would remain in place for some time. In that case, I argued that inflation based on the personal consumption expenditures (PCE) price index could reach a peak of 5 percent on an annualized basis this year if businesses passed through all of the tariff costs to consumers. If firms absorbed some of the tariff increase, then inflation might peak around 4 percent. I also argued that an economic slowdown from these higher costs could push the unemployment rate up from 4.2 percent to 5 percent next year."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "The smaller-tariff scenario assumed a 10 percent average tariff on goods imports would remain in place but that higher country and sector specific tariffs would be negotiated down over time. In this case, inflation may rise to 3 percent on an annualized basis and then dissipate. Growth in output and employment would slow, with the unemployment rate rising but probably not as high as 5 percent."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Reported progress on trade negotiations since that speech leaves my base case somewhere in between these two scenarios. The temporary reduction in China tariffs has significantly decreased the trade-weighted average tariff, since China supplied about 13 percent of U.S. goods imports in 2024. But that reduction is only temporary and is due to increase if a trade agreement is not reached by August 12. Meanwhile, tariffs on other countries were temporarily lowered to 10 percent, but it is unclear where they will end up. Furthermore, the Administration continues to say that it plans additional tariffs on specific industries and sectors of the economy. Last week's court decisions declaring a large share of tariffs illegal introduce additional uncertainty, but there seem to be multiple options for maintaining tariffs, so I will stick with an estimated trade weighted tariff right now of 15 percent on U.S. goods imports, which falls in between my large- and smaller- tariff scenarios. I see the risks of my large tariff scenario having gone down, but there is still considerable uncertainty about the ultimate levels, and thus about the impact on the economic outlook."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "The context for this uncertainty about tariffs is that hard data on the fundamentals of the economy lately has been mostly positive and supportive of the Federal Open Market Committee's (FOMC) economic objectives. There is very little evidence of the effect of trade policy in this data on inflation or economic activity through April, but that may change in the coming weeks. In comparison, there is evidence of tariff effects in the \"soft data\" based on surveys of consumers, businesses, and investors—indications of an expected slowdown in economic activity and an increase in prices. As of today, I see downside risks to economic activity and employment and upside risks to inflation in the second half of 2025, but how these risks evolve is strongly tied to how trade policy evolves."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "A careful examination of the hard data on overall economic activity through April shows it has been, on balance, positive. I say this because, while real gross domestic product contracted slightly in the first quarter, private domestic final demand, a measure of spending by consumers and businesses, grew at a healthy annual rate of 2.5 percent in the quarter. Of course, economic policy uncertainty among businesses is very elevated, and this has affected measures of sentiment and confidence for consumers and businesses, which fell to historically low levels in April. One index of this policy uncertainty compiled from newspaper stories, government reports, and the dispersion of the forecasts of private-sector economists rose in April to nearly twice the level seen during the pandemic and the Global Financial Crisis.3 However, consumer sentiment rebounded with the announcement that the China tariffs had been lowered temporarily. And households' spending should continue to be supported by income from the resilient labor market. In addition, my business contacts have told me that, because of tariff uncertainty, their investment plans are currently on hold but are not canceled. So we may see a slowdown in investment in the near term but a jump back up later this year."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Wherever things end up on a continuum between my \"large\" and \"smaller\" scenarios, I do expect tariffs will result in an increase in the unemployment rate that will, all else equal, probably linger. Higher tariffs will reduce spending, and businesses will respond, in part, by reducing production and payrolls."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "We won't get the jobs report for May until this Friday, but the consensus expectation is that employers added 130,000 jobs and that the unemployment rate remained steady at 4.2 percent. We have seen a reduction in wage pressures over recent months, and the ratio of job vacancies to the number of unemployed people has moderated from as high as 2 a couple of years ago to close to 1 today, which was about where it was before the pandemic. With a balanced labor market, if aggregate demand slows noticeably, businesses will likely look to cut workers. But I believe job cuts would be modest if the smaller-tariff scenario is realized. Most chief executives I have spoken to say that they can maintain their current operations with an effective tariff of 10 percent, looking for efficiencies here and there, and won't have to significantly reduce their workforces."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Inflation Now let me turn to the outlook for inflation. Before the recent shift in U.S. trade policy, inflation had been making consistent, but uneven, progress over the past two years toward our 2 percent goal. While that progress seemed to stall at the beginning of 2025, it has resumed the past two months. The same pattern of higher readings at the start of the year, followed by lower readings the next couple of months, also occurred in 2024 and I expect that research will eventually reveal some residual seasonal effect or other factor that has affected at least some prices early in the year."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Total PCE inflation for April rose 0.1 percent, and core PCE inflation without energy and food prices increased by the same amount. It was the second monthly reading at 0.1 percent or less, and it means that headline PCE inflation was up 2.1 percent over the 12 months through April and that core was up 2.5 percent. In the absence of the tariff increases, I was expecting inflation would continue to be coming down nicely to our 2 percent goal. But now I expect that the effect of higher tariffs will raise inflation in the coming months. The surge in imports to build up inventories ahead of the April 2 announcement makes the timing of price increases somewhat uncertain."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Thinking about the rest of 2025 and 2026, I expect the largest factor driving inflation will be tariffs. As I said earlier, whatever the size of the tariffs, I expect the effects on inflation to be temporary, and most apparent in the second half of 2025. This will be determined not only by the ultimate size of the increase, but also by how exporters and importers respond, something that is highly uncertain. Will foreign exporters discount prices to try and preserve market share? Will domestic importers absorb some of the tariff increases to shore up demand and sales volumes? Will firms simply pass the entire tariff along to consumers? Since about 10 percent of personal spending goes to imported goods, if the ultimate tariff levels are closer to my 10 percent smaller-tariff scenario and if that is fully passed through to consumers, then the tariff would push up prices 1 percent. But based on my conversations with business leaders, I suspect the tariff cost will not be fully passed through and, instead, the burden will be distributed something like 1/3, 1/3, and 1/3 among consumers, importers and exporters. In this case, it would raise inflation three tenths of 1 percent for a short period. However, if the tariffs are higher than 10 percent, more of the increase is likely to be passed on to consumers, as businesses face limits in how much they can absorb and still find a way to remain profitable."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "I have also heard from business contacts that firms may choose to spread the tariff across non-imported goods. This would increase many goods prices a little instead of boosting import prices by a larger amount. But this approach would not affect the total impact of tariffs on the overall price level. Let me illustrate why using an example."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Imagine a firm selling 10 goods with equal sales revenue so that all have an equal weight of 1/10 when aggregating the firm's average price. Now assume one of the goods is imported. A 10 percent tariff on the imported good that is fully passed through raises the price of the imported good by 10 percent, while the prices of the other nine goods remain unchanged. This pricing strategy raises the average price of all goods by 1 percent. Now, instead, suppose the firm chooses a different strategy and decides to spread the tariff cost across all goods by raising all 10 goods prices by 1 percent. As a result, the price of the imported good increases much less, but the prices of the other nine goods now increase a bit even though they are not subject to tariffs. Under this strategy, the average price of the firm's goods still goes up 1 percent, and the tariff is fully passed through. So both pricing strategies have the same total effect on the aggregate price level across the firm and, if repeated, across the economy. The same logic applies to passing along the tariff via a sequence of smaller price increases instead of at a single point in time—in the end, the aggregate price level goes up by the same amount regardless of whether it is gradual or immediate."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "I have heard the concern that some firms may raise prices opportunistically while blaming the tariff increase. There is always a risk that firms blame some purported cost spike for a price increase, but it doesn't happen often because of the risk of losing market share to competitors or squandering the allegiance of loyal customers. So while this may happen in isolated instances, I do not believe it will be a significant source of additional inflation above and beyond the tariff-induced increase."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Inflation Persistence Let me now turn to the first of two issues about inflation that I want to cover in more detail. This is inflation persistence. The economics behind a tariff increase implies it should have a transitory effect on prices—tariffs raise prices once, but those prices don't keep going up. I know that hearing \"transitory\" will certainly remind many people of the consensus on the FOMC in 2021 that the pandemic increases to inflation would be transitory. Inflation turned out to be much more persistent than we thought it would be. Am I playing with fire by taking this position again? It sure looks like it. So why do I believe a tariff-induced inflation spike will not be persistent this time?"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Looking back to how inflation played out in 2021 and 2022, I believe there were three key factors that increased the persistence of the initial burst of inflation in 2021. First, there was a negative labor supply shock that was more persistent than expected. I believed that once the economy reopened, all of this labor would return. However, many workers left the labor market because of illness, or to care for children and family members, or took early retirement. They never returned. And with every wave of COVID-19, the United States experienced additional waves of early retirements that inhibited the labor supply from returning to its pre-pandemic level. Also, with the service sector shut down, demand surged for goods as spending on travel and other services halted and the negative labor supply shock led to a shortage of workers in goods production, delivery, and sales. Goods industries raised wages to attract workers and then once the economy began to reopen, service-sector firms had to pay higher wages to get workers back. This persistent shortage of labor from these several pandemic-related effects continued through 2021 and 2022 as job vacancies skyrocketed and firms had no choice but to pass along escalating wage increases in the form of higher prices."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "The second factor driving inflation after the pandemic was that the supply chain disruptions that many expected to be temporary turned out to be more persistent. There were multiple waves of COVID affecting different regions of the world at different times, so that resolving production and transportation problems was constantly disrupted by the ebbing and flowing of the disease. One notable detail is that China's lockdowns lasted much longer than expected and played an important role in global supply disruptions."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "The last factor was the quite stimulative fiscal response in the United States. There were hundreds of billions of dollars in grants to businesses to pay idled workers and large transfer payments to households. Furthermore, additional fiscal spending bills in 2021 and 2022 further stimulated aggregate demand. I am willing to admit that, at the time, I underappreciated how the large and sustained fiscal response would combine with highly accommodative monetary policy to overstimulate aggregate demand in an economy that quickly recovered from the early effects of the pandemic."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Today I don't see factors like the three I have described here reinforcing the inflationary effects of higher tariffs. There is no longer a shortage of labor and, at least so far, no indication that tariffs are causing big disruptions in supply chains, as the recent surge in imports that I mentioned should attest. While Congress is putting together a tax bill, as it stands now, a large share of that legislation extends tax cuts that have been on the books for eight years and thus would not be stimulative. Finally, monetary policy is in a very different position—we have shrunk our balance sheet by over $2 trillion and our policy rate is north of 4 percent instead of being at the effective lower bound. So I do not believe one can use 2021 and 2022 as a basis for predicting what will happen to the persistence of inflation arising from tariffs."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Inflation Expectations Now let's discuss the second issue of diverging inflation expectations. I have argued that I believe the tariff-induced inflation will be transitory and we should look through it when setting policy as long as longer-term inflation expectations are anchored.4 However, right now, we are seeing a dramatic disparity between household measures of inflation expectations and market-based measures, as well as the inflation expectations of professional forecasters. The University of Michigan's Surveys of Consumers show that both near- and longer-term inflation expectations have increased strikingly, on net, in the past few months and currently stand at 6.6 percent and 4.2 percent respectively. Meanwhile, inflation expectation measures based on prices of nominal versus inflation-adjusted securities have not increased very much, with 2-year Treasury Inflation-Protected Securities inflation compensation around 2.7 percent and 5-year and 10-year around 2.4 percent. Also, the median from the Survey of Professional Forecasters for consumer price inflation 6 to 10 years ahead is at 2.2 percent."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "This highly unusual discrepancy between inflation expectation measures creates problems for policymakers. Whose expectations should we be paying attention to? I prefer to look at market-based measures of inflation compensation and professional forecasters' expectations because they have money on the line. Those buying inflation protected-securities lose money if they are wrong. Professional forecasters have clients and firms making financial decisions based on those forecasts and will lose customers if their predictions are wrong. As I used to teach my students, in a capitalist system, competition will drive firms out of business if they make bad decisions. Forecasting mistakes can be costly for consumers, but households aren't competing with each other and won't be driven out of business if they make bad decisions."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "But, for the sake of argument, let's assume that the household measures of high inflation expectations are correct and financial market participants' expectations are too low. What are the implications of this mismatch?5 If households actually believe inflation will be 7 percent for several years, workers would be expected to demand at least a 7 percent raise to keep their real wages from falling.6 If firms grant those wage demands, then inflation would rise by roughly 7 percent as the wage increases are passed through. Also, job search and the quits rate should increase as workers look for higher-paying jobs."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Is this happening? Although that was the story a few years ago in a tight labor market, I am not now hearing about such an upturn in wage demands from my business contacts, and I don't see it in wage and compensation data. After several years of outsized pay increases and in a labor market that has loosened significantly from a year or two ago, I think workers don't have much leverage to ask for raises and are probably more worried about keeping their jobs right now. Furthermore, instead of increasing, the quits rate is below its pre-pandemic level. Given labor market conditions, it seems hard to believe that the high inflation expectations we are seeing in consumer surveys will lead to large nominal wage increases and a second-round burst of inflation."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "A second point here is that if consumers believed we were about to face high inflation, they would be front-loading purchases, much as importers seem to be front-loading their inventories. But, on the contrary, with the exception of motor vehicles, we haven't seen a broad surge in the consumer spending, which overall is growing more slowly than it did in the second half of 2024."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "For financial businesses, they set interest rates of their loans and financial products based on expected inflation. Their views should be embedded in market-based inflation expectations and those of professional forecasters. If they got the forecast wrong and the nominal interest rates on their loans were too low, then their real returns would be dramatically reduced and their profit margins squeezed. I have a hard time believing interest rates are mis-priced so badly. If they were, then households would think the real interest rate on loans is greatly suppressed. Consequently, loan demand for interest-sensitive products like houses, cars, and durable goods should surge. While loan demand appears to be healthy, there are no reports from banks or other financial firms that loan demand is surging."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "So, based on wage demands, spending patterns, and loan demand, I see no evidence of economic activity that conforms to the inflation views reflected in the University of Michigan household measures, which, like other polling about the economy in recent years, may reflect attitudes about other factors.7"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "In conclusion, given my belief that any tariff-induced inflation will not be persistent and that inflation expectations are anchored, I support looking through any tariff effects on near term-inflation when setting the policy rate. Fortunately, the strong labor market and progress on inflation through April gives me additional time to see how trade negotiations play out and the economy evolves. Assuming that the effective tariff rate settles close to my lower tariff scenario, that underlying inflation continues to make progress to our 2 percent goal, and that the labor market remains solid, I would be supporting \"good news\" rate cuts later this year."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "1. The views expressed here are my own and are not necessarily those of my colleagues on the Federal Reserve Board or the Federal Open Market Committee. Return to text"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "2. See Waller (2025) A Tale of Two Outlooks. Return to text"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "3. See Scott R. Baker, Nick Bloom, and Steven J. Davis (2025), \"Economic Policy Uncertainty,\" webpage, https://www.policyuncertainty.com/us_monthly.html. Return to text"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "4. For an interesting history of monetary policymakers \"looking through\" inflation increases, see Nelson, Edward (2025). \"A Look Back at \"Look Through,\" Finance and Economics Discussion Series 2025-037. Washington: Board of Governors of the Federal Reserve System. Return to text"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "5. In what follows, I am focusing solely on the higher level of inflation expectations and not the higher level of inflation uncertainty. The level of inflation and uncertainty about inflation are highly correlated, so it is difficult to disentangle the effects separately. To see how these two effects can alter household behavior, see Dimitris Georgarakos, Yuriy Gorodnichenko, Olivier Coibion, and Geoff Kenny (2024), \"The Causal Effects of Inflation Uncertainty on Households' Beliefs and Actions (PDF),\" NBER Working Paper Series 33014 (Cambridge, Mass.: National Bureau of Economic Research, October). Return to text"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "6. As documented in Nelson (2025), second round wage effects were a general concern of policymakers in the 1970s and 1990s when discussing oil price shocks or how to respond to changes in value-added taxes and exchange rate shocks. Return to text"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "7. For a discussion of factors that were affecting inflation perceptions during the COVID pandemic, see David Lebow and Ekaterina Peneva (2024), \"Inflation Perceptions during the Covid Pandemic and Recovery,\" FEDS Notes (Washington: Board of Governors of the Federal Reserve System, January 19). Return to text"
+  }
+ ]
+}

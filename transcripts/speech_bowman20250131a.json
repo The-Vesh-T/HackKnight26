@@ -1,0 +1,358 @@
+{
+ "date": "20250131",
+ "source": "https://www.federalreserve.gov/newsevents/speech/bowman20250131a.htm",
+ "title": "Brief remarks by Governor Bowman on the economy, and perspective on mutual and community banks",
+ "speaker_key": "michelle_bowman",
+ "segments": [
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Let me begin by saying my thoughts and prayers are with the families of the passengers and crew who perished in the tragic flight accident in Washington, D.C. Wednesday evening."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Thank you for the invitation to speak to you today.1 It is a pleasure to be with you virtually for your CEO Summit. I always enjoy the opportunity to meet bankers from across the country, especially New England, to learn about the issues that are important to you. The Federal Open Market Committee (FOMC) concluded its January meeting earlier this week, so I will begin by offering some brief remarks on the economy, and then share my views on a number of mutual and community bank issues, before addressing some questions that were submitted by your members in advance of today's meeting."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Update on the Most Recent FOMC Meeting At our FOMC meeting this week, my colleagues and I voted to hold the federal funds rate target range at 4-1/4 to 4‑1/2 percent and to continue to reduce the Federal Reserve's securities holdings. I supported this action because, after recalibrating the level of the policy rate towards the end of last year to reflect the progress made since 2023 on lowering inflation and cooling the labor market, I think that policy is now in a good place to position the Committee to pay closer attention to the inflation data as it evolves."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Looking ahead to 2025, in my view, the current policy stance also provides the opportunity to review further indicators of economic activity and get clarity on the administration's policies and their effects on the economy. It will be very important to have a better sense of the actual policies and how they will be implemented, in addition to greater confidence about how the economy will respond."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Brief Remarks on the Economy The U.S. economy remained strong through the end of last year, with solid growth in economic activity and a labor market near full employment. Core inflation remains elevated, but my expectation is that it will moderate further this year. Even with this outlook, I continue to see upside risks to inflation."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The rate of inflation declined significantly in 2023, but it slowed by noticeably less last year. Without having seen the December data released this morning, I estimate that the 12-month measure of core personal consumption expenditures inflation—which excludes food and energy prices—likely remained unchanged at 2.8 percent in December, only slightly below its 3.0 percent reading at the end of 2023. Progress has been slow and uneven since the spring of last year mostly due to a slowing in core goods price declines."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "After increasing at a solid pace, on average, over the initial three quarters of last year, gross domestic product appears to have risen a bit more slowly in the fourth quarter, reflecting a large drop in inventory investment, which is a volatile category. In contrast, private domestic final purchases, which provide a better signal about underlying growth in economic activity, maintained its strong momentum from earlier in the year, as personal consumption rose robustly again in the fourth quarter."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Some measures of consumer sentiment appear to have improved recently but are still well below pre-pandemic levels, likely because of higher prices. And since housing, food, and energy price increases have far outpaced overall inflation since the pandemic, lower-income households have experienced the negative impacts of inflation hardest, especially as these households have limited options to trade down for lower-cost goods and services."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Payroll employment gains rebounded strongly in December and averaged about 170,000 per month in the fourth quarter, a pace that is somewhat above average gains in the prior two quarters. The unemployment rate edged back down to 4.1 percent in December and has moved sideways since last June, remaining slightly below my estimate of full employment."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The labor market appears to have stabilized in the second half of last year, after having loosened from extremely tight conditions. The rise in the unemployment rate since mid-2023 largely reflected weaker hiring, as job seekers entering or re-entering the labor force are taking longer to find work, while layoffs have remained low. The ratio of job vacancies to unemployed workers has remained close to the pre-pandemic level in recent months, and there are still more available jobs than available workers. The labor market no longer appears to be especially tight, but wage growth remains somewhat above the pace consistent with our inflation goal."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "I hope the revision of the Bureau of Labor Statistics labor data, which will be released next week, will more accurately capture the changing dynamics of immigration and net business creation and bring more clarity on the underlying pace of job growth. It is crucial that U.S. official data accurately capture structural changes in labor markets in real time, such as those in recent years, so we can more confidently rely on these data for monetary and economic policymaking. In the meantime, given conflicting economic signals, measurement challenges, and significant data revisions, I remain cautious about taking signal from only a limited set of real-time data releases."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Assuming the economy evolves as I expect, I think that inflation will slow further this year. Its progress may be bumpy and uneven, and the upcoming inflation data for the first quarter will be an important indication of how quickly this will happen. That said, I continue to see greater risks to price stability, especially while the labor market remains near full employment."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Despite the prospect for some reduction in geopolitical tensions in the Middle East, Eastern Europe, and Asia, global supply chains continue to be susceptible to disruptions, which could result in inflationary effects on food, energy, and other commodity markets. In addition, the release of pent-up demand following the election, especially with improving consumer and business sentiment, could lead to stronger economic activity, which could increase inflationary pressures."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The Path Forward As we enter a new phase in the process of moving the federal funds rate toward a more neutral policy stance, I would prefer that future adjustments to the policy rate be gradual. We should take time to carefully assess the progress in achieving our inflation and employment goals and consider changes to the policy rate based on how the data evolves."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Given the current stance of policy, I continue to be concerned that easier financial conditions over the past year may have contributed to the lack of further progress on slowing inflation. In light of the ongoing strength in the economy and with equity prices substantially higher than a year ago, it seems unlikely that the overall level of interest rates and borrowing costs are exerting meaningful restraint."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "I am also closely watching the increase in longer-term Treasury yields since we started the recalibration of our policy stance at the September meeting. Some have interpreted it as a reflection of investors' concerns about the possibility of tighter-than-expected policy that may be required to address inflationary pressures. In light of these considerations, I continue to prefer a cautious and gradual approach to adjusting policy."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "There is still more work to be done to bring inflation closer to our 2 percent goal. I would like to see progress in lowering inflation resume before we make further adjustments to the target range. We need to keep inflation in focus while the labor market appears to be in balance and the unemployment rate continues to be at historically low levels. By the time of our March meeting, we will have received two inflation and two employment reports. I look forward to reviewing the first quarter inflation data, which, as I noted earlier, will be key to understanding the path of inflation going forward. I do expect that inflation will begin to decline again and that by year-end it will be lower than where it now stands."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Looking forward, it is important to note that monetary policy is not on a preset course. At each FOMC meeting, my colleagues and I will make our decisions based on the incoming data and the implications for and risks to the outlook and guided by the Fed's dual-mandate goals of maximum employment and stable prices. I will also continue to meet with a broad range of contacts as I assess the appropriateness of our monetary policy stance."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Bringing inflation in line with our price stability goal is essential for sustaining a healthy labor market and fostering an economy that works for everyone in the longer run."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Perspective on Mutual and Community Banks Turning to banking, I will start with a brief discussion of the important role of mutual banks in the banking system before addressing other bank regulatory issues. One of the unique characteristics of the U.S. banking system is the broad scope of institutions it includes and the wide range of customers and communities it serves. Given this institutional diversity, regulators must strive to foster a financial system that enables each and every bank, no matter its size, to thrive, supporting a vibrant economy and financial system."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Mutual Bank Issues In the Northeast, everyone is familiar with mutual banks given their significant presence in this region. Since the early 1800s, these banks have been dedicated to serving their local communities.2 Their ownership structure differs from traditional banks in that mutuals are owned by their depositors, rather than by shareholders. Like other community banks, they focus on local issues that are important to their communities and to their depositors."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Many of the challenges mutual banks face are similar to those faced by other financial institutions, including competition from other banks, credit unions, and non-banks. But mutual banks also face unique issues that can add cost and expense to their operations. Two issues I would like to discuss are the challenges mutual institutions face raising capital, and unique procedural hurdles mutuals face in managing the dividend process. While these issues are unique to mutuals, both highlight the challenges of a lack of transparency, and insufficient focus on efficiency.3"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Just as with other community banks, a challenge for many mutuals is the difficulty of raising additional capital. This difficulty is exacerbated by their ownership structure, which typically requires mutuals to rely heavily on retained earnings. Although mutual institutions have historically been more highly capitalized relative to their stock-owned peers, if a mutual capital raise is needed, it would be helpful to provide some regulatory flexibility in the process. Recently, some mutuals have issued subordinated debt as a form of capital, but another form of regulatory capital may be preferable: mutual capital certificates."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "To date, it has been unclear whether mutual capital certificates qualify as regulatory capital. These instruments could provide mutual banks an additional way to raise capital without disrupting their mutual structure. In my view, the banking agencies should be receptive to these kinds of instruments to ensure that mutual banks can both raise capital and maintain their depositor-owned structure. Mutuals need clarity and transparency about the regulatory treatment of these instruments and whether they qualify as regulatory capital."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Another concern for mutuals is the annual requirement to receive regulatory approval for a mutual holding company's waiver of a dividend issued by its subsidiary bank.4 The Board practice is to require a mutual holding company to submit an application each year to implement a waiver. This prior approval requirement is complex and imposes significant costs on these small institutions, reducing the investment they can make in their communities. Because of the time and expense of these waiver requirements, it is possible that the inefficiencies of the required application process erode the value of a mutual holding company structure, which would further constrain a mutual bank's ability to raise capital."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Since the Board has nearly 20 years of experience considering these waiver requests, it seems appropriate to consider whether the applications process for these waivers is efficient. What lessons have we learned? Is the prior approval requirement effective in its review of holding companies waiving receipt of their dividends, or can this be resolved in a more efficient and cost effective manner? In my view, the Board should consider whether this process is effective and efficient in addressing concerns related to dividend waivers."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Mutual banks, like all community banks, are vital to the economic success of their communities. It is critical that our applications process not act as a limit on a particular type of institution simply due to regulatory inaction or lack of clarity and transparency. Regulators must find efficient and effective ways to support a vibrant and diverse banking system that enables these and other small institutions to thrive while supporting and investing in their local economy."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Tailoring Transparency and efficiency are just two of the necessary components of a regulatory approach that promotes a healthy and vibrant banking system. Another component that I speak about frequently is the use of \"tailoring\" in the regulatory framework. For those familiar with my philosophy on bank regulation and supervision, my interest and focus on tailoring will come as no surprise.5 In its most basic form, it is difficult to disagree with the virtue of regulatory and supervisory tailoring—calibrating the requirements and expectations imposed on a firm based on its size, business model, risk profile, and complexity—as a reasonable, appropriate and responsible approach for bank regulation and supervision. In fact, tailoring is embedded in the statutory fabric of the Federal Reserve's bank regulatory responsibilities.6"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The bank regulatory framework inherently includes significant costs—both the cost of operating the banking agencies, and the cost to the banking industry of complying with regulations, the examination process, and supplying information to regulators both through formal information collections and through one-off requests. In the aggregate, these costs can ultimately affect the price and availability of credit, geographic access to banking services, and the broader economy. The cost of this framework—both to regulators and to the industry—reflects layers of policy decisions over many years. But this framework could be more effective in balancing the mandate to promote safety and soundness with the need to have a banking system that promotes economic growth."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "For example, let's consider costs. As regulatory and supervisory demands grow, there is often parallel growth in the staff and budgets of the banking agencies. We should not only be cognizant of these costs, but we should act in a way that requires efficiency while ensuring safety and soundness. Some degree of elasticity in regulator capacity is necessary to respond to evolving economic and banking conditions, as well as emerging risks, but there must be reasonable constraints on growth. Expansion of the regulatory framework is not a cost-free endeavor, and the costs are shouldered by taxpayers, banks, and, ultimately, bank customers."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The bank regulatory framework has great potential to provide significant benefits, including supporting an innovative banking system that enhances trust and confidence in our institutions, and promotes safety and soundness. When we consider the benefits and the costs, we can institute greater efficiencies in both banking regulation and in the banking industry itself. The bank regulatory framework is complex, and the various elements of this framework are intended to work in a complementary way. As banks evolve—by growing larger, or by engaging in new activities—tailoring can help us to quickly recalibrate requirements in light of the new risks posed by the firm."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "But the regulatory framework, especially how supervisors prioritize its application to the banking industry, can pose a serious threat to a bank's viability. For example, imposing the same regulatory requirements on banks with assets of $2 billion to $2 trillion under the new rules implementing the Community Reinvestment Act demonstrated a missed opportunity to promote greater effectiveness and efficiency.7 I question the wisdom of applying the same evaluation standards to banks within such a broad range."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Likewise, supervisory guidance can provide fertile ground to differentiate supervisory expectations under a more tailored approach. While supervisory guidance is not binding on banks as a legal matter, it can signal how regulators think about particular risks and activities, and often drives community banks to reallocate resources in a way that may not be necessary or appropriate. The Fed's guidance on third-party risk management is an example of this. Originally, this guidance was published in a way that applied to all banks, including community banks. Yet, it was acknowledged even at the time of publication that it had known shortcomings, particularly in terms of its administration and lack of clarity for community banks.8"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Tailoring is important for all banks, but it is particularly important for community banks. There are real costs not only to banks, but to communities, when the framework is insufficiently tailored, as community banks faced with excessive regulatory burdens may be forced to raise prices or shut their doors completely. These banks often reach unbanked or underbanked corners of the U.S. economy, not only in terms of the customers they serve but also in terms of their geographic footprint. We are all familiar with banking deserts and the challenges many legitimate and law-abiding businesses and consumers have in accessing basic banking services and credit. It is difficult to imagine that a system with far fewer banks would as effectively serve U.S. banking and credit needs and sufficiently to support economic growth."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "It is imperative that we keep the benefits of tailoring in focus as the bank regulatory framework evolves. A tailored regulatory and supervisory approach can help inform our policies on a wide range of industry issues that are likely to emerge in the coming years."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Problem-Based Solutions One of the most difficult challenges on the regulatory front is prioritization, both for banks managing their businesses and for regulators deciding how to fulfill their responsibilities. At a basic level, the role of regulators is dictated by statute. Congress granted the Federal Reserve and other banking agencies broad statutory powers but has constrained how those powers may be directed through the use of statutory mandates, including to promote a safe and sound banking system, and broader U.S. financial stability. In the execution of these responsibilities, the Federal Reserve must also balance the need to act in a way that enables the banking system to serve the U.S. economy and promote economic growth. While these objectives are not incompatible, they do require us to consider tradeoffs when establishing policy."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "How can regulators best meet these responsibilities? As many of you may already know, I strongly believe in a pragmatic approach to policymaking.9 This requires us to identify the problem we are trying to solve, determine whether we are the appropriate regulator to address the problem based on our statutory mandates and authorities, and explore options for addressing the identified issue."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "As a first step, we must be attuned to the banking system and how regulatory actions affect that system. We oversee a wide range of banks of varying sizes, activities, affiliates, and complexity. These banks interact with a range of service providers, financial market utilities, payments providers, and non-bank partners, regularly competing with non-bank financial intermediaries. The banking system can be a key driver of business formation, economic expansion, and opportunity."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "As we look at the banking system, including the regulatory framework, we must focus on those issues that are most important to advancing statutory priorities. There is always the risk of misidentification and mis-prioritization, and that we fail to take appropriately robust action on key issues or focus on issues that are less material to a bank's safety and soundness. Our goal should be to develop a better filter to promote appropriate and effective prioritization."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Fraud We have seen several instances where this filter did not produce appropriate results, as we have recently seen with fraud. The incidence of fraud, particularly check fraud, has been rising substantially over the past few years, causing harm to banks, damaging the perceived safety of the banking system, and importantly hurting consumers who are the victims of fraudulent activity. Sometimes these efforts target vulnerable populations, like the elderly, who are particularly susceptible to certain forms of fraud."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Despite this known problem, efforts by regulators have been frustratingly slow to advance, and seem to have done little to address the underlying root causes of this increase in fraud. Why has this important issue failed to garner greater attention from all of the appropriate regulatory and law enforcement bodies? Different governmental agencies may share an important role in addressing this problem, but the need for a joint and coordinated solution does not excuse collective inaction."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Climate-Related Financial Risk Of course, not every issue falls within the scope of the Federal Reserve's responsibilities. Even when policymakers identify an issue or priority that they would like to pursue, it is imperative to ask whether that priority falls within the scope of our mandate and authorities. Statutes and regulations, paired with the \"soft\" power of examination, can be deployed in ways that may not be primarily directed towards the priorities mandated for banking regulators. I've noted previously that the banking agencies' climate-related financial risk guidance arguably pushes the boundaries of appropriate regulatory responsibilities. Banks have long been required to manage all material risks, including weather- and climate-related risks. And while this additional guidance seemed to do little to advance the goals of promoting the safe and sound operation of banks it, in effect, posed significant risks of influencing credit allocation decisions. Ultimately, banking regulators should not dictate credit allocation decisions, either by rule or through supervision. Bank regulatory policy should be used to address the needs of the unbanked and expand the availability of banking services. It should not be used to limit or exclude access to banking services for legitimate customers and businesses in a way that is meant to further unrelated policy goals, sometimes referred to as \"de-banking.\""
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Once we have identified problems and determined that they are within the Fed's responsibility, we must consider alternative approaches to address them, focusing on identifying efficient solutions. New technologies and services often require novel regulatory and supervisory approaches, and we recognize that past approaches may not be effective. Often regulators take a \"more is better\" approach to regulation and guidance. Over the past several years, the banking industry has faced an onslaught of proposed and final regulations and guidance, materials that require a significant time commitment to review, to comment on, and to implement. Many times, these require changes to policies and procedures or risk management practices."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "It is critical that in our urgency to address issues in the banking system—particularly for community banks—that we consider not just the direct and indirect effects of regulatory action but also this cumulative burden. Community banks are resilient and dedicated to serving their communities, but at some point, the cumulative burden of the bank regulatory framework can adversely affect the availability and pricing of banking services and threaten the ongoing viability of the community bank model. The community banks in this country are important economically and to their communities, and we should strive to support these institutions and their ongoing viability."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Other Notable Issues and Concerns In preparation for today's event, conference attendees were asked to submit questions in advance. So before concluding my remarks I'd like to address a few of these, since we won't be able to do a live Q&A session in this virtual format. Thank you for submitting your questions in advance."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "As community bankers, we are deeply invested in supporting the growth and resilience of our local economies. With ongoing regulatory pressures, what specific actions can the Federal Reserve take to ensure smaller institutions like ours remain competitive and capable of delivering the personalized service that our communities depend on? One of the things I think is critical in identifying how to support community banks is listening to the industry—which issues are top-of-mind for you? Being an effective regulator requires a degree of humility, and receptiveness to hearing about issues that affect the business of banking, particularly when there are alternative ways that regulators can better promote safety and soundness, or where regulatory actions have resulted in unintended consequences. At the same time, during my conversations with banks, a few themes have emerged that deserve attention. This will be a non-exclusive list, but hopefully will give you a sense of the types of issues and concerns that I hear about most frequently when talking to community banks."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "First, I think there is room to improve the transparency of regulatory communication. Banks should not be left to guess what regulators think about the permissibility of particular activities, or what parameters and rules should apply to those activities. Uncertainty discourages investments in innovation and the expansion of banking activities, products, and services, and can call into question whether internal processes and procedures are consistent with supervisory expectations. Banks already must confront the challenges of dealing with evolving economic and credit conditions, regulators should not compound these challenges through opaque expectations and standards."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Second, I think we need to address shortcomings in the processing of banking applications, employing a more nimble and predictable approach specifically in the de novo formation and mergers and acquisitions (M&A) contexts. Today, the process to obtain regulatory approval can be influenced by many factors under a bank's control—for example, the completeness of the application filed and responsiveness to addressing questions and providing necessary additional information. However, the timeline for application decisions is often uncertain and beyond the bank's control. This can be due to questions about the minimum amount of capital needed and early-stage supervisory expectations (for a de novo bank), or uncertainty about the competitive effects of a transaction, or the filing of a public comment raising concerns about an application in the M&A context."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Finally, I think regulatory and supervisory \"trickle-down\" is real and it has significantly harmed community banks. I am referring to regulators conveying expectations to community banks (for example, during the examination process) that lack a foundation in applicable rules or guidance, or that were designed for larger institutions, or based on a horizontal review of unique banks."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "It is very difficult to insulate community banks from the harmful consequences of \"trickle-down,\" and broader structural changes may be needed to shield them from inapplicable and unreasonable expectations. At the same time, we must preserve strong supervisory standards as banks cross asset thresholds, so banks that grow larger and riskier are subject to appropriately tailored and calibrated requirements and expectations. I would also note that some degree of \"trickle down\" has occurred over time because the regulatory asset \"line\" defining community banks has remained constant at $10 billion in assets for over a decade. During that time, the economy has grown significantly, and inflation has rendered this asset definition obsolete. Many \"community banks\"—as defined by business model and activities rather than asset size—now exceed the threshold and must comply with broader regulatory requirements that may be excessive."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "What support or guidance can community banks expect from the Federal Reserve as we navigate technological innovation and increased cybersecurity threats? Both innovation and cybersecurity are issues that are top of mind for me. Innovation has always been a priority for banks of all sizes and business models. Banks in the U.S. have a long history of developing and implementing new technologies, and innovation has the potential to make the banking and payments systems faster and more efficient, to bring new products and services to customers, and even to enhance safety and soundness."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Regulators must be open to innovation in the banking system. Our goal should be to build and support a clear and sensible regulatory framework that anticipates ongoing and evolving innovation—one that allows the private sector to innovate while also maintaining appropriate safeguards. We must promote innovation through transparency and open communication, including demonstrating a willingness to engage during the development process. By providing clarity and consistency, we can encourage long-term business investment, while also continuing to support today's products and services. A clear regulatory framework would also empower supervisors to focus on safety and soundness, while ensuring a safe and efficient banking and payment system."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "On cybersecurity, banks often note cybersecurity and third-party risk management as areas that raise significant concerns. Cyber-related events, including ransomware attacks and business email compromises, are costly in terms of expense and reputation, and are time-consuming events that pose unique challenges for community banks."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The maintenance of cyber assets and technology resources required to support a successful cybersecurity program are often difficult for smaller banks. Regulators can promote cybersecurity, and stronger cyber-incident \"resilience\" and response capabilities by identifying resources and opportunities, such as exercises, for banks to develop \"muscle memory\" in cyber incident response."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The Federal Reserve plays an important role in supervising banks and supporting risk management practices. For example, the Federal Reserve hosts the Midwest Cyber Workshop, with the Federal Reserve Banks of Chicago, Kansas City, and St. Louis.10 Over the past couple of years, this workshop has provided a forum to discuss cyber risk among community bankers, regulators, law enforcement, and other industry stakeholders. Community banks can also turn to the Federal Financial Institutions Examination Council (FFIEC) website, which includes the FFIEC Cybersecurity Resource Guide and links to other external cybersecurity resources."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "We know well that cyber threats pose real risks to the banking system, and we recognize that community banks may have unique needs in preventing, remediating, and responding to cyber threats. Regulators should, therefore, ensure that a range of resources are available to support banks and seek further opportunities to help build bank resilience against these threats."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Community banks are integral to rural and underserved communities. How can the Federal Reserve support us in maintaining our presence in these areas, particularly amid ongoing consolidation trends? As I noted earlier, it is essential that the U.S. banking system is broad and diverse, including institutions of all sizes serving all the different markets across the country. Community banks play a particularly valuable role in rural and underserved communities, and we need to ensure that the community banking model remains viable into the future."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "To do that, we need to have a regulatory system in which both de novo bank formations and M&A transactions are possible. Viable formation and merger options for banks of all sizes are necessary to avoid creating a \"barbell\" of the very largest and very smallest banks in the banking system, with the number of community banks continuing to erode over time."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "M&A ensures that banks have a meaningful path to transitioning bank ownership. In the absence of a viable M&A framework, there is potential for additional risks, including limited opportunities for succession planning, especially in smaller or rural communities. Uncertainty related to the M&A process also may act as a deterrent to de novo bank formation, as potential bank founders may stay on the sidelines knowing that future exit strategies—like the strategic acquisition of a de novo bank by a larger peer—may face long odds of success."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Another challenge particularly in rural markets are the competitive \"screens\" that are used to evaluate the competitive effects of a proposed merger. Using these screens often results in a finding that M&A transactions in rural markets can have an adverse effect on competition and should therefore be disallowed.11 Even when these transactions are eventually approved, the mechanical approach to analyzing competitive effects often requires additional review or analysis and can lead to extensive delays in the regulatory approval process. Reducing the efficiency of the bank M&A process can be a deterrent to healthy bank transactions—it can reduce the effectiveness of M&A and de novo activity that preserves the presence of community banks in underserved areas, prevent institutions from pursuing prudent growth strategies, and actually undermine competition by preventing firms from growing to a larger scale."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "1. The views expressed here are my own and are not necessarily those of my colleagues on the Federal Reserve Board or the Federal Open Market Committee. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "2. The first mutual banks in the United States were chartered in 1816. The Provident Institution for Savings and the Philadelphia Savings Fund Society were both chartered that year. See https://www.jstor.org/stable/2123609; https://www.mass.gov/info-details/history-of-the-division-of-banks. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "3. Michelle W. Bowman, \"Reflections on 2024: Monetary Policy, Economic Performance, and Lessons for Banking Regulation\" (speech at the California Bankers Association 2025 Bank Presidents Seminar, Laguna Beach, California, January 9, 2025). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "5. See, e.g., Michelle W. Bowman, \"Tailoring, Fidelity to the Rule of Law, and Unintended Consequences (PDF)\" (speech at the Harvard Law School Faculty Club, Cambridge, Massachusetts, March 5, 2024). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "6. See, Economic Growth, Regulatory Relief, and Consumer Protection Act, Pub. L. No. 115-174, § 401(a)(1) (amending 12 U.S.C. § 5365), 132 Stat. 1296 (2018). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "7. See dissenting statement, \"Statement on the Community Reinvestment Act Final Rule by Governor Michelle W. Bowman,\" news release, October 24, 2023. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "8. See \"Statement on Third Party Risk Management Guidance by Governor Michelle W. Bowman,\" news release, June 6, 2023. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "9. Michelle W. Bowman, \"Approaching Policymaking Pragmatically (PDF)\" (remarks to the Forum Club of the Palm Beaches, West Palm Beach, Florida, November 20, 2024). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "10. See Federal Reserve Bank of Chicago, Federal Reserve Bank of St. Louis, and Federal Reserve Bank of Kansas City, \"Midwest Cyber Workshop 2024,\" June 25‑26, 2024. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "11. Michelle W. Bowman, \"The Role of Research, Data, and Analysis in Banking Reforms (PDF)\" (speech at the 2023 Community Banking Research Conference, St. Louis, MO, October 4, 2023); Michelle W. Bowman, \"The New Landscape for Banking Competition (PDF),\" (speech at the 2022 Community Banking Research Conference, St. Louis, MO, September 28, 2022). Return to text"
+  }
+ ]
+}

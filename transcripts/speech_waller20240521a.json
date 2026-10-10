@@ -1,0 +1,128 @@
+{
+ "date": "20240521",
+ "source": "https://www.federalreserve.gov/newsevents/speech/waller20240521a.htm",
+ "title": "Speech by Governor Waller on the economic outlook",
+ "speaker_key": "christopher_waller",
+ "segments": [
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Thank you, Adam, and thank you for the opportunity to speak to you today.1 The Peterson Institute is renowned for its valuable contributions to research and its influence on economic policy. There really is no better place for a central banker to come and talk about the outlook for the U.S. economy and the implications for monetary policy. It truly is a pleasure to be here. Peterson was also the host for my first speech as a governor back in early 2021, which unfortunately, was virtual.2 So, after an eventful three years, it's nice to be back and in person."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "After a run of great data in the latter half of 2023, it seemed that significant progress on inflation would continue and that rate cuts were not far off. However, the first three months of 2024 threw cold water on that outlook, as data on both inflation and economic activity came in much hotter than anticipated. Initially it seemed like the bad data might be simply a \"bump\" in the road, but as the data continued to point in the wrong direction, the narrative quickly turned towards concerns that the economy was not cooling as needed to keep inflation moving down toward the Federal Open Market Committee's (FOMC) 2 percent goal. Progress on inflation appeared to have stalled and there were fears that it might even be accelerating. Suddenly, the public debate became whether monetary policy was restrictive enough and if rate hikes should be back on the table."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "But more recent data on the economy indicate that restrictive monetary policy is helping to cool off aggregate demand and the inflation data for April suggests that progress toward 2 percent has likely resumed. Central bankers should never say never, but the data suggests that inflation isn't accelerating, and I believe that further increases in the policy rate are probably unnecessary."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Now let me turn to the data we have seen since the last FOMC meeting. Real gross domestic product (GDP) grew at about a 4 percent annual pace in the second half of 2023, and that stepped down to 1.6 percent in the first quarter on this year. That looked like the kind of moderation that would support progress on inflation, but it was mostly due to two components that tend to be volatile and not reflect fundamental growth—trade in goods and services and additions to inventories. Private domestic final purchases—which is often a better signal of the underlying strength of demand in the economy—grew 3.1 percent in the first three months of this year, almost exactly the pace in the second half of 2023. I will be watching closely to see whether this measure of economic activity in the first quarter continues in the second. The Blue Chip consensus of private-sector forecasts projects real GDP growth of 2.1 percent this quarter, with only a slight moderation in personal consumption expenditures (PCE) from the first quarter. Others, like the Atlanta Fed's GDPNow model, have a higher forecast."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Nevertheless, there are several reasons why I do expect some moderation in economic activity. One sign of moderation is that retail sales were flat in April and revised down in the previous two months. Retail sales are an important component of consumer spending, so this suggests that consumers may be tempering their purchases. We have also seen credit card and auto loan delinquency rates rise above their pre-pandemic levels, which indicates that some consumer segments are under stress to support their spending levels. That said, services spending data are continuing to look solid and should hold up overall spending in this quarter."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Another sign of moderation in the economy comes from the Institute for Supply Management's (ISM) survey of purchasing managers, those who make spending and investment decisions for businesses. For the first time in four years, the indexes for surveys of both manufacturing and non-manufacturing businesses slipped below 50 in April, indicating that production in these businesses was contracting. This wasn't surprising for manufacturing businesses, since they have been reporting weakness in employment and inventories for some time. The surprise was that the survey of non-manufacturing businesses, representing the lion's share of U.S. output, fell below 50, indicating a deceleration in activity. This has not happened since December 2022. ISM results can move around from month to month, but if these numbers are sustained, it would be indicative of slowing economic activity beyond manufacturing."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "One month does not constitute a trend, but this data suggests that policy is doing its job to moderate aggregate demand, which will support renewed progress in lowering inflation."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Now let me speak about the labor market. The labor market is still relatively strong and supporting a solid pace of job creation, but after progress in bringing demand and supply into better balance in 2023, this rebalancing seemed to stall at the beginning of this year."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Then in the past month or two, the easing of demand, relative to supply seems to have resumed. The hiring rate, reported by the Labor Department, slowed relative to the previous three months. In March, the share of workers who voluntarily quit their jobs declined, with the quits rate falling below pre-pandemic levels. This is a sign that fewer workers are jumping to a new and usually higher-paying job. That means firms are in less need to fill vacancies and offer relatively high starting salaries, something that could support moderating wage increases."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Job creation fell from 315,000 in March to 175,000 in April. A big reason for the decline was a sharp drop in the pace of job creation by state and local governments that is unlikely to be repeated, but private sector job creation also fell, another indication that demand for workers continues to slow. That was also the message I take from the unemployment rate in April, which ticked up to 3.9 percent. It was the 27th consecutive month that unemployment has been below 4 percent, the longest stretch in decades, but it stands noticeably higher than the 3.4 percent rate last April. Meanwhile, the ratio of job vacancies to people looking for work fell to 1.3, just a tenth of a point above the pre-pandemic level and a sign that the relative shortage of workers related to the pandemic is close to over."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Wage growth is still a bit higher than I believe is needed to be consistent with our 2 percent target, but it's not that high and recent average hourly earnings data suggest that wage growth is moderating. And some measures of wage growth that tend to be forward-looking have also continued to slow on balance."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Just like the data on economic activity, I see the labor market data supporting renewed progress in lowering inflation, so now let me turn to the outlook for inflation."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Last week's report on consumer price index (CPI) inflation in April was a welcome relief after three months without progress toward 2 percent. That said, the progress was so modest that it did not change my view that I will need to see more evidence of moderating inflation before supporting any easing of monetary policy. If I were still a professor and had to assign a grade to this inflation report, it would be a C+—far from failing but not stellar either."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Headline CPI inflation rose 0.31 percent month over month. That barely budged the 12-month total CPI inflation reading to 3.4 percent in April from 3.5 percent in March. More importantly for the inflation outlook, core CPI inflation, which excludes food and energy prices, came in at 0.29 percent, down from 0.36 percent in March and 12-month core CPI fell to 3.6 percent from 3.8 percent."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Accounting for price data from the report last week on the producer price index, forecasts are predicting both monthly headline and core inflation based on personal consumption expenditures, the FOMC's preferred gauge, rose a bit less than CPI last month. Most forecasts seem to be in the range of 0.23 to 0.26 percent, which is less than March's monthly increase of 0.32 percent. Although both March and April may round to 0.3 percent, it is good to see monthly inflation falling, even if it requires looking out to the second decimal point."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Looking across these estimates, they suggest three-month annualized core PCE inflation could decline around 1 percentage point to about 3.4 percent as the outsized January increase rolls off the 3-month average. Like the CPI inflation numbers, this is not where I want to see inflation. But, after having these three-month readings accelerate in January, February, and March, I'm happy to see a reversal of this recent pattern. It leaves me hopeful that progress toward 2 percent inflation is back on track."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Before I say more about the implications for policy, this seems like a good moment to make a few points about a bedrock principle of monetary policy—data dependence. The appropriate setting of monetary policy requires understanding how the economy is performing and some idea of where we think it is going. The latter typically means making a forecast or projection, based on standard macroeconomic models, of key variables and what that implies for policy. But that forecast must be validated by the incoming data. The economy is dynamic, and sometimes new or revised data can significantly change one's understanding of economic conditions and the outlook, which has implications for monetary policy. One data point alone should not change one's view of the economy, and that is why changes in one's outlook and the appropriate path for policy tend to emerge gradually and over time. While you may have confidence in your forecast, incoming data may challenge that confidence. You neither want to overreact to incoming data nor do you want to ignore it."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "I am bringing this up because I hear from some quarters the claim that the FOMC has become \"overly data dependent.\" This is a phrase that honestly doesn't make much sense to me but is apparently supposed to mean that we are over-reacting to data and allegedly sending confusing messages about the stance of monetary policy."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "I don't see how that argument applies to the views of the FOMC, if one looks at the Summary of Economic Projections (SEP). Between the March SEP in 2023 and March 2024 SEP, the Committee median was relatively consistent in projecting around three rate cuts in 2024. This was in the face of some pretty dramatic shocks to the economy. There were the bank failures and wider stress in the financial system in the spring of 2023, when it was far from clear what the ultimate effects would be on the economy. There were significant fluctuations in inflation, which was hot in the first half of last year and then dramatically cooler in the second half. There was the revelation, over time and in different data, that a surge in immigration was augmenting labor supply and allowing a surge in job growth with very little upward pressure on wages and inflation. And then there were geopolitical developments, such as the threat that war in the Middle East might spread to become a wider conflict."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Against this backdrop, the median FOMC participant only gradually reduced their expectation for the unemployment rate at the end of 2024 and essentially left inflation unchanged. Associated with this outlook, the median projection for the appropriate level of the federal funds rate at the end of 2024 moved by at most 50 basis points between the four SEPs over 2024, and more or less held to the median of three 25 basis point rate cuts over the past year. This hardly seems like an \"overly data dependent\" Fed to me. For illustration purposes, contrast that with how the private sector reacted to developments in 2023. The implied federal funds rate based on overnight interest swap quotes for the end of 2024 see-sawed between 2 rate cuts and 10 cuts—for a few days, markets even predicted 11 cuts—and by the end of 2023 ended up implying 6 cuts."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "I make this comparison not to denigrate what markets were doing—they were simply revising their forecasts and accompanying risk outlook based on the data to maximize the value of their trading books. My point is that the approach of the FOMC is to set policy appropriately to achieve our dual mandate and typically that requires us to move gradually, extract the signal from noise from the incoming data and then adjust policy accordingly. Based on the evidence over the past year, I see nothing excessive about our data dependence when projecting the appropriate policy path."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Let me now turn to the implications for monetary policy of my outlook for the U.S. economy. With the labor market as strong as it is, my focus remains bringing inflation down toward the FOMC's 2 percent goal. The latest CPI data was a reassuring signal that inflation is not accelerating and data on spending and the labor market suggest to me that monetary policy is at an appropriate setting to put downward pressure on inflation. While the April inflation data represents progress, the amount of progress was small, reflected in the fact that I needed to report the monthly numbers to two decimal places to show progress. The economy now seems to be evolving closer to what the Committee expected. Nevertheless, in the absence of a significant weakening in the labor market, I need to see several more months of good inflation data before I would be comfortable supporting an easing in the stance of monetary policy. What do I mean by good data? What grade do I need to give future inflation reports? I will keep that to myself for now but let's say that I look forward to the day when I don't have to go out two or three decimal places in the monthly inflation data to find the good news."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "1. The views expressed here are my own and are not necessarily those of my colleagues on the Federal Open Market Committee. Return to text"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "2. See Christopher J. Waller (2021), \"Treasury–Federal Reserve Cooperation and the Importance of Central Bank Independence,\" speech delivered at the Peterson Institute for International Economics, Washington, D.C. (via webcast), March 29. Return to text"
+  }
+ ]
+}

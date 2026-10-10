@@ -1,0 +1,173 @@
+{
+ "date": "20250108",
+ "source": "https://www.federalreserve.gov/newsevents/speech/waller20250108a.htm",
+ "title": "Speech by Governor Waller on the economic outlook",
+ "speaker_key": "christopher_waller",
+ "segments": [
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "At Lectures of the Governor, Organization for Economic Cooperation and Development, Paris, France"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Thank you, Alvaro, and thank you for the honor of initiating this new series of lectures from central bankers.1 I will begin with a few words on the U.S. economic outlook and the implications for monetary policy. But on this occasion, I thought it appropriate to then widen my perspective, to address what I see as the leading challenges that OECD economies face that are of particular importance to central bankers in how we approach monetary policy and our other responsibilities."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "I continue to believe that the U.S. economy is on a solid footing. Real gross domestic product (GDP) growth has been above 2 percent for eight of the last nine quarters and is expected to grow above 2 percent in the fourth quarter of 2024. Despite this robust economic growth, the labor market softened over 2024, and employment is now near what I judge to be the Federal Open Market Committee's (FOMC) maximum-employment objective. I have seen nothing in the data or forecasts that suggests the labor market will dramatically weaken over coming months."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "With regard to inflation, after a period of rapid disinflation in 2022 and 2023, progress appears to have stalled in the final months of 2024. Our latest reading of core personal consumption expenditures (PCE) inflation is 2.8 percent for the 12 months ending in November. This is down just a bit from where it was a year earlier, at 3.2 percent. This minimal further progress has led to calls to slow or stop reducing the policy rate. However, I believe that inflation will continue to make progress toward our 2 percent goal over the medium term and that further reductions will be appropriate."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Let me explain why I expect inflation to continue toward our goal. First, as we saw a year ago when inflation briefly increased, progress has been uneven, but disinflation is more apparent if one smooths through the recent upticks. To tease out the underlying trend in inflation, I often look at the six-month percent change in core PCE prices, which is 2.4 percent at an annual rate for November and has mostly been moving down toward 2 percent over the course of the year. Second, the monthly reading for November came in much lower than expected at 0.11 percent after rising 0.26 percent in October. Third, inflation in 2024 has largely been driven by increases in imputed prices, such as housing services and nonmarket services, which are estimated rather than directly observed and I consider a less reliable guide to the balance of supply and demand across all goods and services in the economy. These two categories represent about one-third of the core PCE basket. If you look at the prices associated with the other two-thirds of core PCE, they on average increased less than 2 percent over the past 12 months through November. I don't support ignoring our best measures of prices for housing and non-market services, but I find it notable that imputed prices, rather than observed prices, were driving inflation in 2024 and thus expectations of the policy rate path. Finally, the higher inflation readings from early in 2024 will begin to drop out of inflation numbers in January. This should result in a significant step-down in the 12-month inflation numbers through March."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Looking further forward, geopolitical conflict could boost prices, as it has at times in recent years. In addition, tariff proposals raise the possibility that a new source of upward pressure on inflation could emerge in the coming year. Projections of the economic impact of these possible policy changes vary widely. If, as I expect, tariffs do not have a significant or persistent effect on inflation, they are unlikely to affect my view of appropriate monetary policy. Of course, we need to see what policies are enacted before we can seriously consider their effects."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "So what is my view? If the outlook evolves as I have described here, I will support continuing to cut our policy rate in 2025. The pace of those cuts will depend on how much progress we make on inflation, while keeping the labor market from weakening. Based on the most recent Summary of Economic Projections, the median of policymakers' expected appropriate policy rate this year implies two 25 basis point cuts.2 But the range of views is quite large, from no cuts to as many as five cuts for different FOMC participants. As always, the extent of further easing will depend on what the data tell us about progress toward 2 percent inflation, but my bottom-line message is that I believe more cuts will be appropriate."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Let me now turn to what I consider some of the leading challenges that will frame monetary policy actions for OECD members in 2025 and beyond. Each of the issues I raise are sizable challenges for all OECD countries, but some are bigger challenges in some places than others. I have not tried to rank these challenges in importance, so please don't take any signal from the order in which they are raised."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "I will start with the ongoing challenge all central banks face in reaching our targets for inflation. While 12-month measures of headline inflation are close to target in most jurisdictions, most central banks target inflation in the medium term, and indicators of the trajectory of future price changes, such as core inflation, are still running persistently above target. Like the Federal Reserve, most central banks in OECD economies are gradually easing monetary policy as inflation falls. I believe policy is still restrictive in most cases, which should support the goals of policymakers to have inflation at their targets going forward."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "This common challenge, in the months ahead, has its roots, as we all know, in the common experience of the COVID-19 pandemic. Economic conditions before and during the pandemic varied widely across OECD economies, as did the focus, timing, and forcefulness of policy responses. The surge in inflation during the pandemic was the result of both supply and demand factors, and while the timing of the inflation surge varied across countries, the COVID inflation was largely a global phenomenon, as shown by research conducted by Federal Reserve staff.3"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "A common factor that drove inflation across our economies was the disruption of goods production and delivery.4 Shortages of key components and waves of COVID variants repeatedly disrupted supply chains, causing inflation to persist. Fortunately, these disruptions have receded, and delivery times have returned to pre-pandemic levels. That said, there are many geopolitical factors that are still keeping deliveries of supplies volatile, which potentially could affect economic activity and inflation."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Another common experience has been the fiscal response to the pandemic. The extent to which the fiscal policies rolled out in support of households and businesses during the pandemic contributed to inflation is the subject of ongoing debate.5 Regardless of their effects on inflation, fiscal policy actions across OECD countries led to a doubling and tripling of budget deficits as a percentage of GDP with even larger percentages in some places. Those deficits have steadily fallen since then but are still higher in many countries than before the pandemic, and debt levels have grown for many OECD members."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Another recent challenge for OECD economies is the widespread weakness in manufacturing. Manufacturing boomed in many places with the onset of the pandemic, when consumers switched their spending from in-person services to goods. But as businesses and economies reopened with the easing of pandemic-related restrictions, the swing to service spending by consumers began what has been a sustained slide in manufacturing in OECD economies. This slide has been compounded by three other factors. First, because manufacturing is capital intensive, interest rate increases over the past couple of years raised capital costs in this sector. As monetary policy eases across countries, this effect may unwind. Also, higher energy costs after Russia's attack on Ukraine have hurt manufacturing more than other sectors. And lastly, China's push to reduce its reliance on imports and expand its global market share in sectors such as autos has had a big impact across OECD economies. While the manufacturing sector is a smaller share of economic activity in the United States than in some other OECD countries, we shall see whether the weakness in global manufacturing is affected by the prospect of changes in trade policy in the U.S. and elsewhere. The extent and timing of tariffs are highly uncertain, as are the effects. Overall, the evolution of manufacturing adds uncertainty to the forecasts of central bankers' outlooks."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "A short-to-medium-term challenge that is and will remain widespread among OECD countries is geopolitical risk. Indexes of geopolitical risk suggest that risks are elevated, but not nearly as high as they were when Russia invaded Ukraine in February 2022. Today however, you certainly can't see much evidence for geopolitical risk affecting financial markets. But geopolitical risk will nevertheless remain a challenge that central bankers will need to keep in mind. The outbreak of war in Europe and, more recently, in the Middle East were shocking developments that continue to reverberate, as we have seen recently in Syria. It is unclear how these events will ultimately affect security, trade, and migration flows around the world. The fact that these conflicts have not affected the global economy to a greater extent than they have so far doesn't mean they can't and won't. Research shows that higher levels of geopolitical risk, and economic uncertainty more broadly, tend to foreshadow lower investment and employment.6 I expect that central bankers in OECD economies will continue to consider geopolitical risk in the medium term."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "The next challenge for central bankers that I would like to address also has both shorter and long-term dimensions to it, and that is something that I will refer to as a \"rethink of globalization.\" For close to a decade now, many countries have been reexamining the costs and benefits from steadily freer global movement in capital, labor, and goods that was the norm over previous decades. Although global trade has not decreased in the last decade, we have clearly seen changes in trade patterns, with more countries and firms putting greater emphasis on rerouting trade flows and shortening supply chains to avoid geopolitical risk and tariffs. This isn't simply the result of some failed ministerial meeting or bilateral conflict. Rather, it has been a persistent and widespread trend that has been under way for some time. The presumption that the increasingly tighter global integration of our economies and financial markets would inevitably continue is no longer as safe as it long was."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "At the same time, I have refrained from calling this development, as some have, the \"end of globalization,\" because I don't believe that this will be the outcome. As I think about the 38 governments represented by the OECD and consider how this organization has grown in size and in the depth of its engagement on different issues, I would say that globalization is not going away. What I do expect, however, is there will be more thought and consideration among our leaders for how globalization affects the people we serve, with a more careful weighing of both the potential costs of closer integration and the potential benefits. As these decisions by governments are made, central bankers will need to be prepared to respond appropriately in setting monetary policy and promoting financial stability."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Another longer-term challenge involves demographic trends. What I mean here is the aging of populations in OECD countries, and, to some extent, everywhere else. While this is mainly a problem for fiscal authorities, it does have some ramifications for central bankers in terms of long-run growth rates, productivity, and asset prices."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "In the United States, those between the ages of 16 and 54 were 72 percent of the population in 2003, 62.7 percent in 2023, and are projected to be 61 percent in 2033. Aging is happening even more quickly in some other OECD countries. This is a slow-moving development but, as populations age and move from working to retirement, employment and economic output fall. This by itself lowers per capita GDP, which can affect consumption, investment and inflation. As aging populations sell accumulated assets to support consumption, asset prices and interest rates will adjust as well, with the latter potentially affecting the central bank's estimate of the neutral policy rate. There are mitigants to soften the effect of aging populations, such as an increase in retirement age, immigration and higher productivity growth for younger workers. Again, these demographic factors are more important for fiscal policy, but there are spillovers to monetary policy."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Productivity growth is another issue facing central bankers and I know has been the subject of conversations at OECD gatherings this past year. According to one set of estimates, labor productivity growth is responsible for more than half of the cumulative GDP growth in the United States since the end of 2019, compared to much smaller shares in other countries. Productivity growth is notoriously volatile and, even years later, it is hard to say exactly what technological and other factors caused it.7 Having some understanding of the trajectory of productivity growth is helpful for policymakers thinking about how fast their economies can grow without inducing inflation. Central bankers must keep their eyes on productivity in judging whether wages can grow quickly without igniting inflation or whether potential growth has increased. Productivity growth also plays a role in assessing the real neutral policy rate, otherwise known as r*. Higher productivity growth is often associated with a higher value of r* for some policymakers and thus has implications for the interpretation of the degree of monetary accommodation or restrictiveness for policy.8"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "One way to try to understand some of the factors affecting productivity is to compare the United States to other OECD countries. While it is not particularly new for productivity to grow faster in the U.S. than in other advanced economies, some differences in our economies may have been particularly salient during and after the pandemic.9 First, there was more disruption in employment in the United States during COVID than in many other OECD countries and after the pandemic subsided this may have led to better matching of workers with new jobs at which they could be more productive. Second, during the acute U.S. labor shortages in 2022 and 2023, I heard numerous anecdotes that firms had to invest more in worker training to raise skill levels to what was necessary for positions. This raises labor productivity with a delay, and it may have been an important factor recently. Third, business creation is, by all evidence, easier in the United States, and new firms often are more productive than existing firms. There was a surge in U.S. business creation after COVID, which could reasonably have led to a more productive re-allocation of labor."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "There may have been other factors. I don't think that artificial intelligence (AI) was one of them. AI investment will take place over many years and most likely has not done much yet to add to productive capacity. While it is possible AI could increase longer-run productivity growth, that remains to be seen. But the other possible reasons—the flexibility of labor rules, ease of business entry, barriers to innovation, lower regulatory hurdles—would sound familiar to people attending OECD discussions a decade ago. The barriers to innovative risk-taking are probably lower—and the rewards higher—in the United States."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "So while I am skeptical that AI is already making significant contributions to productivity growth, I have little doubt that it will do so. AI and allied innovations in computing have the potential to bring productivity advances to high-skill labor-intensive services, akin to the way robotics transformed high-skill manufacturing. If such advances do occur, one challenge for governments will be fostering an economy in which those dislocated by such a shift can obtain new skills and find productive and meaningful employment. As ever, prudent regulation should be balanced with support for innovation that has the potential to deliver widespread improvements in living standards. But regulatory policy should not strangle innovation in its infancy."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "So, at the end of this list of challenges, how should central banks meet them? There will always be new challenges, but the right approach to monetary policy hasn't changed, nor should it. In every case, the answer begins with sticking to our mandates and resisting the temptation to go beyond them. We must closely monitor economic and financial conditions and look in every direction, and down the road, for emerging risks. In keeping to our mandates, we concede that seeing all these risks clearly is hard, so we need to remain focused."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "We also need to be nimble in responding to unfamiliar risks and be prepared to use our monetary policy tools in new ways to prepare for unprecedented challenges that may present themselves. When conditions are uncertain, as they often are, we must move deliberately but also be ready to act quickly and decisively when the situation demands it, as we did in subduing inflation. Effective monetary policy depends on clearly communicating our intentions so that the public will act on those intentions. That also requires credibility, and this is most effectively maintained when monetary policy decisions are made according to our mandates and in the longer-term interest of a healthy economy and stable financial system. Guided by these basic principles, I believe that central bankers are up to the considerable challenges of today, and those we will face in the years ahead."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "1. The views expressed here are my own and are not necessarily those of my colleagues on the Federal Reserve Board or the Federal Open Market Committee. Return to text"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "2. The most recent Summary of Economic Projections is available on the Board's website at https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm. Return to text"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "3. For example, Cascaldi-Garcia and others (2024) document that both the core and noncore components of headline inflation measures co-moved strongly across countries during the pandemic and inflation episode; see Danilo Cascaldi-Garcia, Luca Guerrieri, Matteo Iacoviello, and Michele Modugno (2024), \"Lessons from the Co-movement of Inflation around the World,\" FEDS Notes (Washington: Board of Governors of the Federal Reserve System, June 28). Return to text"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "4. For an early account of the role of supply chain disruptions in fueling the global rise in producer and consumer prices, see Ozge Akinci, Gianluca Benigno, Ruth Cesar Heymann, Julian di Giovanni, Jan J.J. Groen, Lawrence Lin, and Adam I. Noble (2022), \"The Global Supply Side of Inflationary Pressures,\" Federal Reserve Bank of New York, Liberty Street Economics (blog), January 28. On the transmission of supply disruptions to global value chains, see François de Soyres, Alexandre Gaillard, Ana Maria Santacreu, and Dylan Moore (2024), \"Supply Disruptions and Fiscal Stimulus: Transmission through Global Value Chains,\" AEA Papers and Proceedings, vol. 114 (May), pp. 112–17. Return to text"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "5. See, for example, Robert J. Barro and Francesco Bianchi (2023), \"Fiscal Influences on Inflation in OECD Countries, 2020-2023,\" NBER Working Paper Series 31838 (Cambridge, Mass.: National Bureau of Economic Research, November; revised January 2025). Domenico Giannone and Giorgio Primiceri (2024), \"The Drivers of Post-Pandemic Inflation,\" NBER Working Paper Series 32859 (Cambridge, Mass.: National Bureau of Economic Research, August); and Karen Dynan and Doug Elmendorf (2024), \"Fiscal Policy and the Pandemic-Era Surge in US Inflation: Lessons for the Future,\" PIIE Working Papers 24-22 (Washington: Peterson Institute for International Economics, December), https://www.piie.com/publications/working-papers/2024/fiscal-policy-and-pandemic-era-surge-us-inflation-lessons-future. Return to text"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "6. See Dario Caldara and Matteo Iacoviello (2022), \"Measuring Geopolitical Risk,\" American Economic Review, vol. 112 (April), pp. 1194–225; and Juan M. Londono, Sai Ma, and Beth Anne Wilson (forthcoming), \"The Global Transmission of Real Economic Uncertainty,\" Journal of Money, Credit and Banking. Return to text"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "7. For a discussion of factors affecting productivity growth in the U.S. and whether they can contribute to sustained growth, see Christopher J. Waller (2024), \"There's Still No Rush,\" speech delivered at the Economic Club of New York, New York, March 27. Return to text"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "8. For a discussion of the relationship between these series, see Thomas Laubach and John C. Williams (2003), \"Measuring the Natural Rate of Interest,\" Review of Economics and Statistics, vol. 85 (November), pp. 1063–70; and Kathryn Holston, Thomas Laubach, and John C. Williams (2023), \"Measuring the Natural Rate of Interest after COVID‑19 (PDF),\" Staff Reports 1063 (New York: Federal Reserve Bank of New York, June). Return to text"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "9. For a discussion of factors explaining faster real GDP growth in the U.S. than Europe post COVID, which includes many factors affecting productivity, see Francois de Soyres, Joaquin Garcia-Cabo Herrero, Nils Goernemann, Sharon Jeon, Grace Lofstrom, and Dylan Moore (2024), \"Why Is the U.S. GDP Recovering Faster than Other Advanced Economies?\" FEDS Notes (Washington: Board of Governors of the Federal Reserve System, May 17). Return to text"
+  }
+ ]
+}

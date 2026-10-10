@@ -1,0 +1,173 @@
+{
+ "date": "20250414",
+ "source": "https://www.federalreserve.gov/newsevents/speech/waller20250414a.htm",
+ "title": "Speech by Governor Waller on the economic outlook",
+ "speaker_key": "christopher_waller",
+ "segments": [
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "At the Certified Financial Analysts Society of St. Louis, St. Louis, Missouri"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Thank you, Jack and thank you to the CFA of St. Louis for the opportunity to speak to you today. It's a pleasure to be back home here in the city where I worked for nearly 12 years before becoming a Governor at the Federal Reserve Board."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "I am here to discuss my favorite topic, which is the outlook for the U.S. economy and the implications for monetary policy.1 I speak publicly on the outlook every few weeks or so, and usually the most exciting thing to happen in between these appearances is a monthly data release from the Bureau of Labor Statistics or the Commerce Department."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "This time, of course, is different. The tariff increases announced April 2 were dramatically larger than I anticipated, adding on to other tariffs announced in March, along with retaliatory actions from some countries. Combining all of these actions to date, it is clear that tariffs this large and broadly applied could significantly affect the economy and the Federal Open Market Committee's (FOMC) pursuit of our economic objectives. Given that there is still so much uncertainty about how trade policy will play out and how businesses and households will respond, I have struggled, like many others I have talked with, to fit these varying possibilities into a single coherent view of the outlook."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "It is an understatement to say that financial markets did not respond well to the April 2 tariff announcement. Then last Wednesday, a substantial proportion of the newest tariffs were suspended for 90 days pending negotiations to lower them, reportedly in exchange for lower barriers to U.S. exporters. This left in place a 10 percent tariff on all imports, the pre-existing tariffs on some products and countries, and a sharp increase in import and export tariffs on China trade. More sector-specific tariffs are promised, and much uncertainty remains about whether tariff negotiations will lead to deals or whether the April 2 tariffs will be implemented in 90 days."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Uncertainty about trade or fiscal policy decisions is precisely why you won't hear me talking about such actions very often. It is why I avoided speaking in detail about proposed tariffs earlier this year. I do not judge such policy actions. But I must base my policy decisions on the actions taken. Tariffs are the elephant in the room, so let's talk about them."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "As I said a moment ago, I struggled after April 2 to come up with a single coherent view of how the tariff increases would affect my outlook and views on monetary policy. That difficulty did not end after the 90-day tariff suspensions announced on April 9, which, if anything, may have widened the range of possible outcomes and effects and made the timing even less certain. Friday's exemptions for some tariffs on some electronics imports from China only complicated the picture. Considering all this uncertainty, it is impossible to forecast how the economy will evolve very far into the future. In such circumstances, I tend to think in terms of scenarios and managing the associated risks. So, for the balance of my remarks, I will try to lay out some possible tariff scenarios and how they will affect my thinking about the appropriate path for monetary policy in the coming months."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "But before I get to this exercise, it is essential to understand how the economy was faring leading up to this big change in trade policy. As I will detail, in my view, the economy was on a fairly solid footing in the first quarter of 2025. While the evidence suggests real gross domestic product (GDP) growth slowed from a 2.4 percent annual pace in the fourth quarter, I believe the economy did grow modestly in the first quarter and that growth would have been stronger except for some special factors that are unlikely to continue."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "A variety of \"soft\" data—reports from business contacts and a range of consumer and business surveys—hinted at a substantial slowdown. The \"hard\" data, which includes actual measurement and estimates of aggregate economic conditions, have tended to show that the economy grew modestly. While monthly readings through February show consumer spending slowed from the fourth quarter, that may have reflected unusual seasonal factors that weighed on spending in the first two months of this year, including harsh winter weather. We will get March retail sales later this week, and that should provide some helpful evidence of the pace of consumer spending. Another factor counted against measured GDP growth in the first quarter was a surge in imports, likely an anticipatory effect caused by the prospect of the new tariffs, which probably won't continue. In the labor market, employment grew 228,000 in March, exceeding expectations, and job openings through February indicated that the labor market remained roughly in balance. In light of the continuing strength of the labor market and factors that probably temporarily lowered GDP growth, I think the U.S. economy was in good shape in the first quarter."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Inflation has had a bumpy path down toward our 2 percent goal, and progress seemed to stall last year. But after some high inflation readings in January and February, we got some encouraging news last Thursday on consumer price index (CPI) inflation. Headline CPI prices fell 0.1 percent in March, bringing the 12-month measure of CPI inflation down to 2.4 percent. A drop in energy prices—which has continued so far this month—was a big reason for the step-down. Core CPI inflation, which excludes volatile energy and food prices and is a good guide to future inflation, rose just a tenth of a percent last month, which brought the 12-month change down to 2.8 percent, its lowest 12-month reading since March 2021."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "When CPI data is supplemented with the producer price data that we received last week, we estimate that the price index for personal consumption expenditures (PCE), the FOMC's preferred inflation gauge, was roughly unchanged in March bringing the 12-month change to 2.3 percent. Core PCE prices are estimated to have risen less than 0.1 percent for the month, leaving core PCE inflation at 2.7 percent over the previous 12 months. Both measures of total and core PCE inflation were above the FOMC's 2 percent goal."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Looking across the first-quarter data, I see the economy growing modestly with a labor market that was still solid and inflation that was still too high but was making slow progress toward our goal of 2 percent."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Let me now return to tariffs and my scenarios. To level set the discussion of tariffs, as of December 2024, the effective average trade-weighted tariff for all imports into the United States was under 3 percent. Earlier this year, targeted tariffs brought the average to 10 percent. The April 2 tariffs would have pushed that to 25 percent or more. Even with the pause on implementing those tariffs, retaining the new 10 percent tariff on most imports and a tariff on Chinese imports of well over 100 percent, estimates are that the average effective tariff today is still around 25 percent. This estimate is rough, and we have seen that policy can change quickly, but the point is that even after the 90-day pause, the current tariff rate is a sharp increase to a level that the United States has not experienced for at least a century."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "The primary challenge in analyzing the economic effects of the tariff increases is the considerable uncertainty that remains about their size and permanence. So I have decided to focus on two scenarios for tariff policy when thinking about the economic response. One possibility is that they will remain very high and be long-lasting, near the current average of 25 percent or more, as part of a committed effort by the Administration to engineer a fundamental shift in the U.S. economy toward producing more goods domestically and reducing trade deficits. The second scenario is that the suspensions are the beginning of a concerted effort to negotiate reductions in foreign barriers faced by U.S. exporters that will result in the removal of most of the announced import tariffs, which would reduce the average tariff rate to around 10 percent. This latter scenario had been my base case up until March 1. While there is a range of possibilities that could combine these objectives for tariff policy, these two approaches would yield significantly different outcomes for the economy and monetary policy, so I would like to discuss them today as two separate scenarios."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "In doing so, I am not here to judge the objectives for the tariff increases. I am a central banker, and, as I said earlier, that means I take fiscal and other policy decisions made by others as a given when setting monetary policy."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Before I summarize my two scenarios, let me emphasize that neither of them are forecasts and that I am employing scenarios as a way to frame my thinking about managing the risks of decision making when the outlook is as uncertain as it is. The \"large tariff\" scenario assumes that average tariffs around 25 percent will remain in place for some time. Let's assume they remain at that level until at least the end of 2027, which is the horizon for economic projections made by FOMC participants. In my view, keeping the large tariffs in place this long would be necessary if the primary goal is remaking the U.S. economy, which is now mostly services, into one that produces a larger share of the goods it consumes. Such a shift, if it is possible, would be a dramatic change for the United States and would surely take longer than three years."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "In the second scenario, it is assumed that the primary goal would be to use the tariffs as leverage to negotiate reductions in trade barriers faced by U.S. exporters. In this case, while I would expect that the announced minimum 10 percent tariff on all goods from all countries would remain in place, I would also expect that substantially all other tariffs would be eliminated over time. I will call this the \"smaller tariff\" scenario."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Let me begin with the large tariff scenario and the implications for inflation. As I have noted in past speeches, the textbook view of tariffs is that they are a one-time increase in prices and would not be expected to be a persistent source of inflationary pressure.2 While the tariffs after April 9 were very large, I still believe they would have only a temporary effect on inflation."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Private sector forecasts expect tariff increases of this magnitude to increase inflation by 1-1/2 to 2 percentage points over the next year or so, which I think is a reasonable estimate. If underlying core PCE inflation were to continue at its estimated 12-month pace of 2.7 percent in March, that would mean inflation could reach a peak close to 5 percent on an annualized basis in coming months if businesses quickly and completely passed through the cost of the tariff. Even if the tariffs were only partially passed on to consumers, inflation could move up to around 4 percent. These outcomes would obviously be a reversal of the progress we have made on bringing inflation down over the past few years."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "It will be important to watch inflation expectations and make sure they remain anchored during this process. Surveys of consumers have shown big increases in inflation expectations for this year. However, I tend to discount survey-based measures of inflation and prefer those based on the spread between nominal and inflation-indexed securities, since investors have more skin in the game than survey respondents. These market-based measures have not increased significantly, which implies market participants view tariffs as a one-time change to the price level. So I don't think expectations have become unanchored."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "There are other factors that may limit the increase in inflation. I continue to believe that monetary policy is meaningfully restricting economic activity and hope that underlying inflation may moderate over the course of the year, separate from the tariff effects. Also, competitive forces, including the desire to hold on to customers, may induce businesses to pass along only a fraction of higher costs from tariffs. Finally, if the economy slows substantially, then weaker demand will put downward pressure on inflation after tariffs take effect."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "In terms of output growth, with large tariff increases, I would expect the U.S. economy to slow significantly later this year and this slower pace to continue into next year. Higher prices from tariffs would reduce spending, and uncertainty about the pace of spending would deter business investment. I have heard this repeatedly from business contacts around the country—tariff uncertainty is freezing capital spending. Productivity growth, an important source of GDP increases in recent years, would slow as investment is allocated according to trade policy and not towards its most productive and profitable uses. A fall in productivity would likely lower estimates of the neutral policy rate, making the current policy rate more restrictive than it is currently. Any trade retaliation from U.S. trading partners would reduce U.S. exports, which would be a drag on growth. There is a long list of factors that can lower growth in this scenario."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Along with slower economic growth would come higher unemployment. With large tariffs remaining in place, I expect the unemployment rate, which was 4.2 percent in March, would rise by several tenths of a percentage point this year and approach 5 percent next year. Even as the economy has moderated over the past year, the unemployment rate has stayed remarkably stable and close to estimates of its long-term rate—in other words, close to the FOMC's goal. But a verifiable fact about the unemployment rate, based on history, is that when it starts to rise, as I expect it would under this scenario, it often rises significantly."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "In summary, under the large tariff scenario, economic growth is likely to slow to a crawl and significantly raise the unemployment rate. I do expect inflation to rise significantly, but if inflation expectations remain well anchored, I also expect inflation to return to a more moderate level in 2026. Inflation could rise starting in a few months and then move back down toward our target possibly as early as by the end of this year."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Yes, I am saying that I expect that elevated inflation would be temporary, and \"temporary\" is another word for \"transitory.\" Despite the fact that the last surge of inflation beginning in 2021 lasted longer than I and other policymakers initially expected, my best judgment is that higher inflation from tariffs will be temporary. If this inflation is temporary, I can look through it and determine policy based on the underlying trend. I can hear the howls already that this must be a mistake given what happened in 2021 and 2022. But just because it didn't work out once does not mean you should never think that way again. Let me use a football analogy to characterize my thoughts. You are the Philadelphia Eagles and it is fourth down and a few inches from the goal line. You call for the Tush Push but fail to convert by running the ball. Since it didn't work out the way you expected, does that mean that you shouldn't call for the Tush Push the next time you face a similar situation? I don't think so. With the history of 2021 and 2022 still in my mind, I believe my analysis of the effect of tariffs is the right call, and I am going to stick with my best judgment."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "While I expect the inflationary effects of higher tariffs to be temporary, their effects on output and employment could be longer-lasting and an important factor in determining the appropriate stance of monetary policy. If the slowdown is significant and even threatens a recession, then I would expect to favor cutting the FOMC's policy rate sooner, and to a greater extent than I had previously thought. In my February speech, I referred to this as the world of \"bad news\" rate cuts. With a rapidly slowing economy, even if inflation is running well above 2 percent, I expect the risk of recession would outweigh the risk of escalating inflation, especially if the effects of tariffs in raising inflation are expected to be short lived.3"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Let me now turn to the second scenario, in which tariffs are lower. In this case, I would expect the 10 percent across-the-board tariff to be the baseline for the average trade weighted tariff. Under this scenario the effect on inflation would be significantly smaller than if larger tariffs remained. Here, the peak effect on inflation could be around 3 percent on an annualized basis. Since it may take some time for tariff-related price increases to work their way through production chains, the peak may be lower but still dissipate slowly. As trade negotiations proceed, I would expect that expectations of future inflation would remain anchored and short-term measures could even fall over time, helping keep overall inflation in check."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "At the same time, the fact that there is still an increase in tariffs means the smaller tariff scenario would surely have a negative effect on output and employment growth, but smaller than the larger tariff scenario. The new tariffs are hitting an economy in good standing, which leaves me encouraged that households and businesses would continue to spend and hire during trade negotiations that lead to substantially reduced import tariffs and possibly remove barriers to U.S. exporters over time."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "As a result of these limited effects on inflation and economic activity from steadily diminishing tariffs, I would support a limited monetary policy response. Anchored or even lower inflation expectations as the economy slows, combined with the view that smaller tariff effects are temporary, gives the FOMC room to adjust policy as progress on the underlying trend in inflation is revealed in price data. With the threat of a sharp slowdown or recession diminished, pressure to reduce rates based on falling demand would diminish also. That is, the policy response in this scenario could allow for more patience. The preemptive policy cuts we did last fall can allow us some time to wait and see if the hard data catch up to the soft data or vice versa and how much of the tariff will be passed through to the consumer. In such a scenario, the outlook for monetary policy might not look much different than it did before March 1. With a fairly small tariff effect on inflation, I would expect inflation to continue on its path down towards our 2 percent target. In this case, \"good news\" rate cuts are very much on the table in the latter half of this year."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Let me conclude with two essential points. The first is that the new tariff policy is one of the biggest shocks to affect the U.S. economy in many decades. The second is that the future of that policy, as well as its possible effects, is still highly uncertain. This makes the outlook also highly uncertain and demands that policymakers remain flexible in considering the wide range of outcomes. In the end, the United States is a dynamic, resilient capitalist system that responds well to shocks and always has. I suspect that will continue to be the case now."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "1. The views expressed here are my own and are not necessarily those of my colleagues on the Federal Open Market Committee. Return to text"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "2. See Christopher J. Waller (2025), \"Disinflation Progress Uneven but Still on Track Rate Cuts on Track as Well,\" speech delivered at the University of New South Wales Macroeconomic Workshop, Sydney, New South Wales, Australia, February 17. Return to text"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "3. Recent research from the Federal Reserve Bank of Minneapolis shows that this action is the optimal monetary policy response in a standard macroeconomic model. See Javier Bianchi and Louphou Coulibaly \"The Optimal Monetary Policy Response to Tariffs\" Working Paper 810, Federal Reserve Bank of Minneapolis, March 7, 2025. Return to text"
+  }
+ ]
+}

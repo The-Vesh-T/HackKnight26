@@ -1,0 +1,203 @@
+{
+ "date": "20240627",
+ "source": "https://www.federalreserve.gov/newsevents/speech/bowman20240627a.htm",
+ "title": "Remarks by Governor Bowman on the economy, monetary policy, and bank regulation",
+ "speaker_key": "michelle_bowman",
+ "segments": [
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "At the Idaho, Nevada, Oregon, and Washington Bankers Associations 2024 Annual Convention, Stevenson, Washington"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "I would like to thank the Idaho, Nevada, Oregon, and Washington Bankers Associations for the invitation to join you this morning.1 It's a pleasure to be here in Washington State to speak with your members. Direct interactions like this, outside of Washington, D.C., enable me to develop a deeper understanding of what is happening in the banking industry and the regional economy. Before sharing some thoughts about the current trajectory of regulatory approvals and bank merger policy, I will discuss my views on the economy and monetary policy."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Update on the Economy and Monetary Policy Outlook Over the past two years, the Federal Open Market Committee (FOMC) has significantly tightened the stance of monetary policy to address high inflation. At our meeting earlier this month, the FOMC voted to continue to hold the federal funds rate target range at 5-1/4 to 5‑1/2 percent and to continue to reduce the Federal Reserve's securities holdings."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "After seeing considerable progress on slowing inflation last year, we have seen only modest further progress this year. The 12-month measures of total and core personal consumption expenditures inflation have moved roughly sideways or slightly down since December and remained elevated at 2.7 percent and 2.8 percent, respectively, in April. The consumer price index (CPI) report for May showed 12-month core CPI inflation slowing to 3.4 percent from 3.6 percent in April. However, with average core CPI inflation this year through May running at an annualized rate of 3.8 percent, notably above average inflation in the second half of last year, I expect inflation to remain elevated for some time."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The recent pickup in inflation in the first several months of 2024 was evident across many goods and services categories, suggesting that inflation was temporarily lower in the latter half of last year. Prices continue to be much higher than before the pandemic, which is weighing on consumer sentiment. Inflation has hit lower-income households hardest since food, energy, and housing services price increases far outpaced overall inflation throughout this episode."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Economic activity increased at a strong pace last year but appears to have moderated early this year. First-quarter gross domestic product growth was slower than in the second half of last year, though private domestic final purchases continued to rise at a solid pace. Continued softness in consumer spending and weaker housing activity early in the second quarter also suggest less momentum in economic activity so far this year."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Payroll employment continued to rise at a solid pace in April and May, though slightly slower than in the first quarter, partly reflecting increased immigrant labor supply. Despite some further rebalancing between supply and demand, the labor market remains tight. The unemployment rate edged up to 4.0 percent in May, while the number of job openings relative to unemployed workers declined further to near its pre-pandemic level. Labor force participation dropped back to 62.5 percent in May, which suggests no further improvement in labor supply along this margin, as labor force participation among those aged 55 or older has been persistently low."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "At its current setting, our monetary policy stance appears to be restrictive, and I will continue to monitor the incoming data to assess whether monetary policy is sufficiently restrictive to bring inflation down to our target. As I've noted recently, my baseline outlook continues to be that inflation will decline further with the policy rate held steady. And should the incoming data indicate that inflation is moving sustainably toward our 2 percent goal, it will eventually become appropriate to gradually lower the federal funds rate to prevent monetary policy from becoming overly restrictive. However, we are still not yet at the point where it is appropriate to lower the policy rate, and I continue to see a number of upside risks to inflation."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "First, much of the progress on inflation last year was due to supply-side improvements, including easing of supply chain constraints; increases in the number of available workers, due in part to immigration; and lower energy prices. It is unlikely that further improvements along this margin will continue to lower inflation going forward, as supply chains have largely normalized, the labor force participation rate has leveled off in recent months below pre-pandemic levels, and an open U.S. immigration policy over the past few years, which added millions of new immigrants in the U.S., may become more restrictive."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Geopolitical developments could also pose upside risks to inflation, including the risk that spillovers from regional conflicts could disrupt global supply chains, putting additional upward pressure on food, energy, and commodity prices. There is also the risk that the loosening in financial conditions since late last year, reflecting considerable gains in equity valuations, and additional fiscal stimulus could add momentum to demand, stalling any further progress or even causing inflation to reaccelerate."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Finally, there is a risk that increased immigration and continued labor market tightness could lead to persistently high core services inflation. Given the current low inventory of affordable housing, the inflow of new immigrants to some geographic areas could result in upward pressure on rents, as additional housing supply may take time to materialize. With labor markets remaining tight, wage growth has been elevated at around or above 4 percent, still higher than the pace consistent with our 2 percent inflation goal given trend productivity growth."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "In light of these risks, and the general uncertainty regarding the economic outlook, I will continue to watch the data closely as I assess the appropriate path of monetary policy. The frequency and extent of data revisions over the past few years make the task of assessing the current state of the economy and predicting how the economy will evolve even more challenging. I will remain cautious in my approach to considering future changes in the stance of policy."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "It is important to note that monetary policy is not on a preset course. In my view, we should consider a range of possible scenarios that could unfold when considering how the FOMC's monetary policy decisions may evolve. My colleagues and I will make our decisions at each FOMC meeting based on the incoming data and the implications for and risks to the outlook. While the current stance of monetary policy appears to be at a restrictive level, I remain willing to raise the target range for the federal funds rate at a future meeting should the incoming data indicate that progress on inflation has stalled or reversed. Restoring price stability is essential for achieving maximum employment over the longer run."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Regulatory Approvals in the Banking System Before turning directly to regulatory approvals in the banking system and merger and acquisition policy, it is important to consider these issues in the broader context. Regulatory approvals and bank mergers and acquisitions do not occur in a vacuum. The choices that regulators make on regulatory and supervisory policy issues have profound implications for mergers and acquisitions and for the appetite of bank management to engage in those transactions. In recent months, the banking agencies have issued or finalized a large number of regulatory changes. These changes are shaping the future of the banking system. From bank capital requirements to liquidity reform, significant revisions to the Community Reinvestment Act, a regulatory attack on banks charging fees for services (including debit card interchange fees), the trend of dialing supervision up to \"11\" for banks of all sizes, and the ongoing erosion of tailoring all shape the contours of the banking system, including bank size, the activities in which they engage, and where activities occur within the broader financial system.2 These policy decisions also create incentives and impacts that we must acknowledge and understand. When policymakers flatten and standardize regulations and supervisory expectations, we create strong incentives for banks to achieve greater economies of scale through merger and make it harder for new banks to successfully compete with existing banks."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Actually implementing clear merger standards would reduce the number of necessary application denials and withdrawals. Where clear standards exist, those seeking regulatory approval will only file for approval of those transactions that will meet the banking agency standards. In my mind, this would be responsible and effective public policy."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "De Novo Bank Formation I continue to be concerned about the decline in the number of banks in the U.S. As I have noted in the past, there are several indications that there is an unmet demand for new bank creation demonstrated by the ongoing preference for \"charter strip\" acquisitions, the ongoing shift of activities out of the banking system, and the rising demand for banking-as-a-service partnerships.3"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "For the past decade, de novo bank formation has been largely stagnant, even as the banking industry has rapidly evolved over the same time. Many factors influence the pursuit of de novo bank charters, including the interest rate environment, business opportunities, the intense competition for qualified bank management and staff, and potentially less onerous alternatives for financial services to be provided outside of the regulated banking system."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The decision to form a de novo bank is also informed by normal business considerations, including identifying investors, establishing a viable business plan, and ensuring the ability to navigate the \"start-up\" phase of a new bank and manage upfront operational costs, all while being subjected to intense supervisory oversight over the first several years of operation. Yet perhaps the most important factor that influences de novo bank formation is the regulatory and supervisory framework. This includes the application process and receipt of regulatory approval."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "This application process can be a significant obstacle to de novo bank formation. Applications often experience significant delays between the initial charter application filing with the chartering authority and the Federal Deposit Insurance Corporation application for deposit insurance. It often takes well in excess of a year to receive all of the required regulatory approvals to open for business. Of course, this uncertainty remains after the initial capital has been raised, shareholders identified, and a management team is ready to begin work. These delays present unique challenges for de novo founders, including incurrence of more start-up expenses, difficulty recruiting and retaining qualified management to obtain approval, and challenges in raising additional start-up capital investment."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "In my view, the absence of de novo bank formation over the long run will create a void in the banking system, a void that could contribute to a decline in the availability of reliable and fairly priced credit, the absence of financial services in underserved markets, and the continued shift of banking activities outside the banking system."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Bank Mergers and Acquisitions Another pressing area of concern is the rapidly shifting approach to bank mergers and acquisitions (M&A) by some prudential regulators.4 M&A transactions allow banks to evolve and thrive in our dynamic banking system and can promote the long-term health and viability of banks. M&A also ensures that banks have a meaningful path to transitioning bank ownership. The absence of a viable M&A framework increases the potential for additional risks, including limited opportunities for succession planning, especially in smaller or rural communities, and zombie banks that continue to exist but have no competitive viability or exit strategy."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The impact of a more restrictive M&A framework affects institutions of all sizes, including larger institutions that are vying to compete with the very largest global systemically important banks. They may choose to pursue M&A to remain competitive with larger peers who can achieve growth organically through sheer scale."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "M&A is an important part of a healthy banking system. So when considering changes to the framework, I think we need to first identify the problem that needs to be solved and then ask whether any proposed solution is fair, transparent, and consistent with applicable statutes—and, critically, whether the proposed solution has the potential to damage the long-term viability of the banking system."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Are there identified shortcomings in the current process or standards, and are the proposed reforms targeted and effective to address these shortcomings? One argument I have heard about the M&A regulatory approval process is that the lack of application denials demonstrates that regulators are failing to meaningfully review and pressure-test proposals and have effectively become a rubber stamp. I think this argument lacks a strong foundation. There is ample evidence that undermines this argument, including the resource demands on institutions pursuing M&A activity and the extended time it takes to complete the regulatory review and approval process (and the not insignificant failure rate we see represented in withdrawn applications)."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "We also have to acknowledge that choosing the path of a merger or acquisition is not undertaken lightly. These transactions require significant upfront and ongoing investment and commitment of resources. At the outset, this includes finding an appropriate acquisition target, conducting due diligence, and negotiating the terms of the transaction. Once a target is identified, the banks must prepare appropriate regulatory filings, engage with regulators during the application process, and prepare for post-approval business processes, including scheduling necessary and costly systems conversions and customer transition. This is an expensive and reputationally risky process that bankers and their boards of directors take extremely seriously."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "One would also expect to see different patterns emerging if regulators were truly acting as a rubber stamp for banking applications. We know from data published by the Federal Reserve that filing an application does not guarantee approval, even in the absence of a regulatory denial. The Federal Reserve's most recent report on banking applications activity identifies a significant portion of bank M&A transactions in which applications have been withdrawn.5"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The processing timelines we see also seem inconsistent with a process that is operating truly as a rubber stamp. To be clear, I think we have room to do better when it comes to timely regulatory action, while maintaining a rigorous review of applications. But extended review periods are not uncommon, particularly when you include preliminary discussions and pre-filings with regulators in the published processing timelines."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Some contemplated regulatory reform efforts will likely make the M&A application process slower and less efficient. One of the key risks to an effective process is a lack of timely regulatory action. The consequences of delays can significantly harm both the acquiring institution and the target, causing greater operational risk (including the risk of a failed merger), increased expenses, reputational risk, and staff attrition in the face of prolonged uncertainty."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Reducing the efficiency of bank M&A can be a deterrent to healthy bank transactions. This inefficiency limits activity that ensures the value of community banks located in underserved areas, prevents institutions from pursuing prudent growth strategies, and undermines competition by preventing firms from growing to a larger scale, effectively creating a \"protected class\" of larger institutions."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "At the same time some federal regulatory agencies are imposing more onerous requirements, credit unions have increased their acquisitions of banks.6 While this could solve some succession planning concerns, it is not clear how these acquisitions will ultimately impact the banking system going forward. Could these acquisitions reduce the availability of certain products and services? Will these institutions have the same incentives to serve all of the consumers in a particular community? If there are fewer banks and more credit unions, how will this data impact the competitive analysis of traditional banks merging? Historically, credit unions have had limited membership requirements and have not engaged in the same wide range of activities as banks. But in recent years, their memberships have expanded, and they are offering more of the same products and services that banks provide. Yet, unlike banks, credit unions are not required to meet the requirements of the Community Reinvestment Act or other laws that apply to banks. As some prudential regulators continue to increase the regulatory scrutiny of bank M&A, it may increase the incentives for credit unions to acquire banks if there are fewer delays and more regulatory certainty related to those transactions."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Unfortunately, the past year has shown that regulatory attention is increasingly focused on other issues, with the timeliness of processing regulatory applications by banking regulators appearing to be lower on the list of priorities."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Closing Thoughts The bank regulatory reform agenda has many implications for banks of all sizes. As regulators continue to propose and make changes to the regulatory and supervisory processes, it is vital that policymakers understand the tradeoffs between the costs and benefits of what they are changing. It is equally important that policymakers also understand the unintended consequences of their decisions. While some of the proposed changes may be designed to address particular issues, they will have broader follow-on consequences. Because of these potentially broader consequences, we must address policy from a holistic perspective rather than in a piecemeal fashion. One way to better understand the outcomes of our decisions is to hear directly from you and other stakeholders about the specific impacts—intended and unintended—of changes to the bank regulatory framework. Your feedback helps us to understand the real-world impacts of regulatory and supervisory reforms."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Thank you, and I look forward to discussing these and other important issues with you today."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "1. The views expressed here are my own and are not necessarily those of my colleagues on the Federal Reserve Board or the Federal Open Market Committee. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "2. See Michelle W. Bowman (2024), \"The Path Forward for Bank Capital Reform (PDF),\" speech delivered at Protect Main Street, sponsored by the Center for Capital Markets at the U.S. Chamber of Commerce, Washington, January 17; Michelle W. Bowman (2024), \"Reflections on the Economy and Bank Regulation (PDF),\" speech delivered at the Florida Bankers Association Leadership Luncheon Events, Miami, February 27; Michelle W. Bowman (2024), \"Reflections on the Economy and Bank Regulation (PDF),\" speech delivered at the New Jersey Bankers Association Annual Economic Leadership Forum, Somerset, N.J., March 7; and Michelle W. Bowman (2024), \"Tailoring, Fidelity to the Rule of Law, and Unintended Consequences (PDF),\" speech delivered at the Harvard Law School Faculty Club, Cambridge, Mass., March 5. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "3. See Michelle W. Bowman (2023), \"The Consequences of Fewer Banks in the U.S. Banking System (PDF),\" speech delivered at the Wharton Financial Regulation Conference, Philadelphia, April 14. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "4. See Jonathan Kanter (2023), \"Merger Enforcement Sixty Years after Philadelphia National Bank,\" speech delivered at the Brookings Institution's Center on Regulation and Markets Event \"Promoting Competition in Banking,\" Washington, June 20; Office of the Comptroller of the Currency (2024), \"Business Combinations under the Bank Merger Act: Notice of Proposed Rulemaking,\" OCC Bulletin 2024-4, January 29; and Federal Deposit Insurance Corporation (2024), \"FDIC Seeks Public Comment on Proposed Revisions to Its Statement of Policy on Bank Merger Transactions,\" press release, March 21. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "5. See Board of Governors of the Federal Reserve System (2023), Banking Applications Activity Semiannual Report, January 1–June 30, 2023 (PDF) (Washington: Board of Governors, September). This report notes that in the first half of 2023, 46 M&A applications were approved by the Federal Reserve, while 12 such applications were withdrawn. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "6. See Alex Graf, Zuhaib Gull, and Gaby Villaluz (2024), \"Credit Unions Dominate Early-Year Bank M&A in Washington State,\" S&P Global, April 15; and Arizent (2024), \"15 Credit Unions That Have Acquired Banks since 2023,\" American Banker, February 12. Return to text"
+  }
+ ]
+}
