@@ -683,3 +683,24 @@ mark.key { background: rgba(139, 139, 245, .18); color: inherit; padding: 1px 2p
 .para.flash { animation: paraflash 1.6s var(--ease) 1; }
 @keyframes paraflash { 0%, 30% { background: rgba(139, 139, 245, .18); } 100% { background: transparent; } }
 .mk-price .now-unit { font-size: 15px; font-weight: 600; color: var(--muted); margin-left: -4px; }
+.also-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 18px;
+  padding: 9px 12px;
+  background: var(--panel-2);
+  border: 0;
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  transition: background-color .15s var(--ease);
+}
+.also-toggle:hover { background: #20242a; }
+.also-toggle .count { color: var(--faint); font-weight: 500; font-variant-numeric: tabular-nums; }
+.also-toggle .chev { margin-left: auto; font-size: 9px; color: var(--faint); transition: transform .18s var(--ease); }
+.also-toggle[aria-expanded="true"] .chev { transform: rotate(90deg); }
+.also-toggle + .also { margin-top: 6px; animation: rise .18s var(--ease); }

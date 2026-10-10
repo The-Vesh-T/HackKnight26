@@ -86,6 +86,7 @@
     lastFit: 0,
     touched: false,      // the viewer has used a control: hides the "press play" prompt
     speechOpen: false,   // full speech text expanded
+    alsoOpen: false,     // "other lines that could move prices" expanded
     showAllParas: false, // include paragraphs that aren't about policy
     groupOpen: {},       // "<view>:<group id>" -> bool, set once the viewer toggles a group
     info: null,          // which details bubble is open: speech | speechTop | verdict | desk | chart
@@ -622,7 +623,8 @@
     const others = ps.filter((p) => p !== top && p.relevant && p.z != null && Math.abs(p.z) >= ALSO_Z)
       .sort((a, b) => Math.abs(b.z) - Math.abs(a.z));
     if (others.length) {
-      h += `<div class="label second">Other lines that could move prices <span class="count">${others.length}</span></div><ul class="also">` +
+      h += `<button class="also-toggle" data-act="also-toggle" aria-expanded="${state.alsoOpen}"><span>Other lines that could move prices</span><span class="count">${others.length}</span><span class="chev">▶</span></button>`;
+      if (state.alsoOpen) h += `<ul class="also">` +
         others.slice(0, ALSO_SHOWN).map((p) => `<li><button class="also-item ${stanceClass(p)}" data-act="para-jump" data-id="${esc(p.id)}" title="Show this passage in the full speech">
           <span class="also-text">${esc(plain(p.summary || p.text))}</span>
           <span class="also-tag">${esc(vsUsual(p.z, last).replace(` than ${last} usually sounds`, " than usual"))}</span></button></li>`).join("") + `</ul>`;
@@ -630,7 +632,7 @@
     const nRel = ps.filter((p) => p.relevant).length;
     const nOther = ps.length - nRel;
     const src = sp.source_url;
-    h += `<button class="linkbtn" data-act="speech-toggle" aria-expanded="${state.speechOpen}">${state.speechOpen ? "Hide" : "Read"} the full speech${!state.speechOpen && others.length > ALSO_SHOWN ? ` (${others.length - ALSO_SHOWN} more lines highlighted)` : ""} ${state.speechOpen ? "▴" : "▾"}</button>`;
+    h += `<button class="linkbtn" data-act="speech-toggle" aria-expanded="${state.speechOpen}">${state.speechOpen ? "Hide" : "Read"} the full speech${!state.speechOpen && state.alsoOpen && others.length > ALSO_SHOWN ? ` (${others.length - ALSO_SHOWN} more lines highlighted)` : ""} ${state.speechOpen ? "▴" : "▾"}</button>`;
     if (state.speechOpen) {
       const list = ps.filter((p) => state.showAllParas || p.relevant);
       h += `<div class="fulltext">`;
@@ -701,7 +703,7 @@
     }
     const released = now >= E.t0;
     // re-render only when what's shown changes, so the open transcript keeps its scroll position
-    const sig = [released, E.paragraphs.length, E.top && E.top.id, state.speechOpen, state.showAllParas].join();
+    const sig = [released, E.paragraphs.length, E.top && E.top.id, state.speechOpen, state.showAllParas, state.alsoOpen].join();
     if (state.sig.speech !== sig) {
       state.sig.speech = sig;
       pane.innerHTML = speechHtml(E, released);
@@ -1768,6 +1770,10 @@
       }
       case "speech-toggle":
         state.speechOpen = !state.speechOpen;
+        draw(true);
+        break;
+      case "also-toggle":
+        state.alsoOpen = !state.alsoOpen;
         draw(true);
         break;
       case "para-jump": {
