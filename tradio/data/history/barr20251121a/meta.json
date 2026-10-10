@@ -13,5 +13,20 @@
   "another Board speech within 90 min (jefferson20251121a)"
  ],
  "paragraphs": 12,
- "policy_paragraphs": 5
+ "policy_paragraphs": 5,
+ "kind": "speech",
+ "stance": {
+  "n": 5,
+  "scores": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "mean": 0.0,
+  "top_z": -0.039,
+  "baseline": "pooled",
+  "model": "gemini-3.5-flash-lite"
+ }
 }

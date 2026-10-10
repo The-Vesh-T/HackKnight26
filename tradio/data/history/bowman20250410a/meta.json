@@ -1,0 +1,29 @@
+{
+ "speech_id": "bowman20250410a",
+ "kind": "testimony",
+ "t0": "2025-04-10T14:00:00Z",
+ "speaker": "michelle_bowman",
+ "who": "Governor Michelle W. Bowman",
+ "role": "governor",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/testimony/bowman20250410a.htm",
+ "next_decision": "2025-05-07",
+ "days_to_decision": 27,
+ "flags": [
+  "T0 at 10:00 ET, when US data releases usually land"
+ ],
+ "paragraphs": 11,
+ "policy_paragraphs": 3,
+ "stance": {
+  "n": 3,
+  "scores": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "mean": 0.0,
+  "top_z": -0.467,
+  "baseline": "speaker",
+  "model": "gemini-3.5-flash-lite"
+ }
+}

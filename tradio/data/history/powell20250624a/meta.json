@@ -1,0 +1,35 @@
+{
+ "speech_id": "powell20250624a",
+ "kind": "testimony",
+ "t0": "2025-06-24T12:30:00Z",
+ "speaker": "jerome_powell",
+ "who": "Chair Jerome H. Powell",
+ "role": "chair",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/testimony/powell20250624a.htm",
+ "next_decision": "2025-07-30",
+ "days_to_decision": 36,
+ "flags": [
+  "T0 at 08:30 ET, when US data releases usually land"
+ ],
+ "paragraphs": 13,
+ "policy_paragraphs": 9,
+ "stance": {
+  "n": 9,
+  "scores": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.5,
+   0.5,
+   0.5,
+   0.5,
+   0.0
+  ],
+  "mean": 0.222,
+  "top_z": 2.178,
+  "baseline": "speaker",
+  "model": "gemini-3.5-flash-lite"
+ }
+}

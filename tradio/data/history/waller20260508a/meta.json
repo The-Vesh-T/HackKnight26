@@ -12,5 +12,18 @@
   "another Board speech within 90 min (bowman20260508a)"
  ],
  "paragraphs": 17,
- "policy_paragraphs": 3
+ "policy_paragraphs": 3,
+ "kind": "speech",
+ "stance": {
+  "n": 3,
+  "scores": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "mean": 0.0,
+  "top_z": 0.283,
+  "baseline": "speaker",
+  "model": "gemini-3.5-flash-lite"
+ }
 }

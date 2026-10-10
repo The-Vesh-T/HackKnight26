@@ -12,5 +12,23 @@
   "another Board speech within 90 min (waller20260224a)"
  ],
  "paragraphs": 19,
- "policy_paragraphs": 8
+ "policy_paragraphs": 8,
+ "kind": "speech",
+ "stance": {
+  "n": 8,
+  "scores": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.5,
+   0.5,
+   0.0,
+   0.0
+  ],
+  "mean": 0.125,
+  "top_z": 1.454,
+  "baseline": "pooled",
+  "model": "gemini-3.5-flash-lite"
+ }
 }

@@ -10,5 +10,9 @@
  "days_to_decision": 24,
  "flags": [],
  "paragraphs": 22,
- "policy_paragraphs": 0
+ "policy_paragraphs": 0,
+ "kind": "speech",
+ "stance": {
+  "n": 0
+ }
 }

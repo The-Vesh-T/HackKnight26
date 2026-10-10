@@ -12,5 +12,23 @@
   "T0 at 08:30 ET, when US data releases usually land"
  ],
  "paragraphs": 22,
- "policy_paragraphs": 8
+ "policy_paragraphs": 8,
+ "kind": "speech",
+ "stance": {
+  "n": 8,
+  "scores": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "mean": 0.0,
+  "top_z": -0.467,
+  "baseline": "speaker",
+  "model": "gemini-3.5-flash-lite"
+ }
 }
