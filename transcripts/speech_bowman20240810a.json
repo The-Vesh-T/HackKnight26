@@ -1,0 +1,313 @@
+{
+ "date": "20240810",
+ "source": "https://www.federalreserve.gov/newsevents/speech/bowman20240810a.htm",
+ "title": "Speech by Governor Bowman on the economic outlook, and perspective on bank culture, M&A, and liquidity",
+ "speaker_key": "michelle_bowman",
+ "segments": [
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "At the 2024 CEO and Senior Management Summit and Annual Meeting, sponsored by the Kansas Bankers Association, Colorado Springs, Colorado"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Thank you for the invitation to join you again this year.1 Just as banking and economic conditions continue to evolve, so too do bank regulatory and supervisory standards. I look forward to learning your perspectives on the evolving banking and economic conditions, and the banking agencies' approaches to regulation and supervision."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Economic and Monetary Policy Outlook Before discussing my thoughts on bank regulatory matters, and in light of our recent Federal Open Market Committee (FOMC) meeting, I will begin by sharing my current views on the economy and monetary policy."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Over the past two years, the FOMC has significantly tightened the stance of monetary policy to address high inflation. At our July meeting, the FOMC voted to continue to hold the federal funds rate target range at 5-1/4 to 5‑1/2 percent and to continue to reduce the Federal Reserve's securities holdings."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "After seeing considerable progress last year, we have seen some further progress on lowering inflation in recent months. The 12-month measures of total and core personal consumption expenditures (PCE) inflation, which I prefer relative to more volatile higher-frequency readings, have moved down since April, although they have remained somewhat elevated and stood at 2.5 percent and 2.6 percent in June, respectively. The progress in lowering inflation during May and June is a welcome development, but inflation is still uncomfortably above the Committee's 2 percent goal."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Despite the recent good data reports, core PCE inflation averaged an annualized 3.4 percent over the first half of the year. And given that supply constraints have now largely normalized, I am not confident that inflation will decline in the same way as in the second half of last year. More importantly, prices continue to be much higher than before the pandemic, which continues to weigh on consumer sentiment. Inflation has hit lower-income households hardest, since food, energy, and housing services price increases far outpaced overall inflation over the past few years."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Economic activity moderated in the first half of this year after increasing at a strong pace last year. Gross domestic product (GDP) growth moved up in the second quarter, following a soft reading in the first quarter, while private domestic final purchases (PDFP) increased at a solid pace in both quarters. During the first half of 2024, PDFP slowed much less than GDP, as the slowdown in GDP growth was partly driven by volatile categories such as net exports, suggesting that underlying economic growth was stronger than GDP indicated. Unusually strong consumer goods spending last year softened in the first quarter of this year, largely accounting for the step-down in PDFP growth."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Although consumer spending strengthened in the second quarter, consumers appear to be pulling back on discretionary items and expenses, as evidenced in part by a decline in restaurant spending since late last year. Low- and moderate-income consumers no longer have savings to support this type of spending, and we've seen a normalization of loan delinquency rates as they have risen from historically low levels during the pandemic."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The labor market continues to loosen, as the number of available workers has increased and the number of available jobs has declined—showing signs that the labor market is coming into better balance. After slowing in the second quarter, payroll employment gains eased to a more modest pace in July, even as job openings are being filled by the increased immigrant labor supply. The latest labor market report shows that the unemployment rate stood at 4.3 percent in July. Although notably higher than a year ago, this is still a historically low unemployment rate. In addition, the ratio of job vacancies to unemployed workers has declined to its pre-pandemic level. We are also seeing a slowing in wage growth, which now stands at just under 4 percent as measured by the employment cost index. However, given trend productivity, wage gains are still above the pace consistent with our inflation goal."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "My baseline outlook is that inflation will decline further with the current stance of monetary policy. Should the incoming data continue to show that inflation is moving sustainably toward our 2 percent goal, it will become appropriate to gradually lower the federal funds rate to prevent monetary policy from becoming overly restrictive on economic activity and employment. But we need to be patient and avoid undermining continued progress on lowering inflation by overreacting to any single data point. Instead, we must view the data in their totality as the risks to the Committee's employment and price-stability mandates continue to move into better balance. That said, I still see some upside risks to inflation."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "First, as I noted earlier, much of the progress on inflation last year was due to supply-side improvements, including easing of supply chain constraints; increases in the number of available workers, due both to increased labor force participation and strong immigration; and lower energy prices. It is unlikely that further improvements along this margin will continue to lower inflation going forward, as supply chains have largely normalized, the labor force participation rate has leveled off in recent months below pre-pandemic levels, and significantly higher U.S. immigration over the past few years may decrease going forward."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Geopolitical developments could also pose upside risks to inflation, as the recent surge in container shipping costs originating in Asia suggest that global supply chains remain susceptible to disruptions, which could put upward pressure on food, energy, and commodity prices. There is also the risk that additional fiscal stimulus could add momentum to demand, impeding further progress on reducing inflation."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Finally, there continues to be a risk that the increased immigration could lead to persistently high housing services inflation. Given the current low inventory of affordable housing, the inflow of new immigrants to some geographic areas could result in upward pressure on rents, as additional housing supply may take time to materialize."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "There are also risks that the labor market has not been as strong as the payroll data have been indicating, but it also appears that the recent rise in unemployment may be exaggerating the degree of cooling in labor markets. The Q4 Quarterly Census of Employment and Wages (QCEW) report implies that job gains have been consistently overstated in the establishment survey since March of last year, while the household survey unemployment data have become less accurate as response rates have appreciably declined since the pandemic.2 Moreover, the rise in the unemployment rate this year largely reflects weaker hiring, as job searchers entering the labor force are taking longer to find a job, while layoffs remain low. It is also likely that some temporary factors contributed to the soft July employment report. The rise in the unemployment rate in July was centered in workers experiencing a temporary layoff, who are more likely to be rehired in coming months, and Hurricane Beryl likely contributed to weaker job gains, as the number of workers not working due to bad weather increased significantly last month."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "In light of upside risks to inflation and uncertainty regarding labor market conditions and the economic outlook, I will continue to watch the data closely as I assess the appropriate path of monetary policy. Increased measurement challenges and the frequency and extent of data revisions over the past few years make the task of assessing the current state of the economy and predicting how it will evolve even more challenging. I will remain cautious in my approach to considering adjustments to the current stance of policy."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "It is important to note that monetary policy is not on a preset course. In my view, we should consider a range of possible scenarios that could unfold when assessing how the FOMC's monetary policy decisions may evolve. My colleagues and I will make our decisions at each FOMC meeting based on the incoming data and the implications for and risks to the outlook, with a focus on the dual-mandate goals of maximum employment and stable prices. By the time of our September meeting, we will have seen a range of additional economic data and information, including one employment and two inflation reports. We will also have a wider view of how developments in broader financial conditions might influence the economic outlook. In particular, equity prices have been volatile recently but are still higher than at the end of last year."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "I will continue to closely monitor the data and visit with a broad range of contacts as I assess economic conditions and the appropriateness of our monetary policy stance. As I noted earlier, I continue to view inflation as somewhat elevated. And with some upside risks to inflation, I still see the need to pay close attention to the price-stability side of our mandate while watching for risks of a material weakening in the labor market. My view continues to be that restoring price stability is essential for achieving maximum employment over the longer run."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Banking Regulation and Supervision I will turn now to bank regulation and supervision. Today I would like to address a few topics that I expect will be of interest to those in this room, starting with the issue of culture both within banks and at bank and other financial regulatory agencies. I will then briefly discuss mergers and acquisitions (M&A) activity in the banking industry, and the current and expected outlook for bank transactions. I will close with a discussion on bank liquidity regulation."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The Role of Culture at Banks and at Regulators In recent years, regulatory approaches have included regulators seeking to influence the culture within banks, specifically large banks, focusing on matters like building a culture that promotes compliance or effective risk management, including operational risk. A bank's culture drives its sense of ownership and a collective purpose that is common among many successful organizations, where a bank's board, management, and employees all work together in support of the bank's business purpose and mission. Bank culture can have a strong influence on both business outcomes and on compliance and risk-management outcomes."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Bank culture starts with bank leadership, the so-called tone from the top. Strong bank culture demands accountability for bank leadership teams and for the entire workforce. A bank's management is responsible for setting the strategic direction of the company, including which business lines to pursue, expand, or eliminate. But bank leaders also have a responsibility to empower employees to raise issues and concerns, allowing them to identify and escalate emerging business, risk-management, or compliance matters that may require management's attention or intervention. While regulators have sought to influence bank culture over time, ultimately culture is most heavily influenced and shaped by the example set by bank leaders and by the actions of each bank employee."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Regulatory agency culture can be similarly impactful in shaping bank regulation and supervision to promote safety and soundness and consumer compliance in an effective and efficient manner. In contrast to regulators, bank management may choose to modify or reshape their mission and objectives over time—evolving their business goals, risk-management policies and processes, and compliance standards as conditions change. For regulators, the overarching regulatory and supervisory mission and related institutional goals are prescribed by statute. While bank regulators lack the flexibility to change the mission, they have significant flexibility in the execution of that mission. This often involves broad policy goals—for example, promoting the safety and soundness of the banking system, and the stability of the financial system."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Similar to bank culture, regulatory agency culture begins with its leadership and is then carried out by the individual members of the organization's workforce. Culture plays a significant role in how well bank regulators pursue their statutory objectives and the manner in which they perform the related mission. Have regulators created a culture that allows the staff to identify and escalate issues of concern? Have regulators oriented the mission of the institution around core statutory goals and avoided the temptation to stray from this mission into other matters of public policy? Have regulators created a culture of accountability for leaders and employees, where shortcomings can be fairly identified and actions can be taken to remediate problems?"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "While the value of culture is widely acknowledged, both among banks and among bank regulators, we have seen some recent high-profile examples of culture falling short, and with serious consequences.3 Responsible banking involves not only finding and pursuing opportunities to serve customers and grow the business, but also balancing these business priorities with a firm commitment to risk management and compliance, including consumer compliance. While banks are free to pursue growth, in some instances this growth has come without accompanying development of and investment in risk management and legal compliance, to the detriment of the bank and its customers."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "In the case of Silicon Valley Bank's (SVB) failure in 2023, rapid growth was certainly a factor that contributed to the firm's fragility. The bank's management failed to properly manage its development of contingent liquidity planning, funding, and risk-management capabilities in light of its rapid growth. While this failure revealed problems with bank leadership in promoting a compliance and risk-management culture commensurate with growth, supervisors directly overseeing the bank's expansion were also late to act in the face of emerging firm risks."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "I think we should question whether we have learned all of the right lessons from SVB's failure. We know that rapid growth is a known risk factor that should result in additional supervisory scrutiny. But some of the post-failure SVB reviews conducted internally by Federal Reserve staff cited rapid growth as a contributing factor for the inadequacy of the supervisory approach.4 Among other things, these internal reports suggested that the shift of SVB from one supervisory portfolio to another somehow frustrated appropriate supervision. We need to ask whether supervisors are empowered to appropriately supervise firms that experience rapid growth and other emerging risks."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Each regulatory agency has an obligation to facilitate an environment that can help the agency best fulfill its mission. It must take care to maintain a positive and productive culture over time by listening intently to concerns that are raised, ensuring that employees are empowered to raise issues of concern (including reporting of personnel issues), and taking appropriate actions to remediate those concerns. Regulators are certainly not immune from problems arising with institutional culture."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Recently, we have seen a high-profile example of problems with the culture at the Federal Deposit Insurance Corporation (FDIC). I commend the FDIC for engaging an independent third party to assist them in their investigation; this is an important first step toward accountability and addressing these issues."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "We must not lose sight of the lesson that cultural problems at both banks and regulators can compound cyclical downturns in the banking environment and pose more serious risks to the banking system. Cultivating a positive culture, one that values accountability and the contributions of both management and staff to an organization's mission, can serve as a buffer against future stresses."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Bank Mergers and Acquisitions Another area of ongoing interest among regulators is the approach to banking industry M&A transactions.5 The significant shift in regulatory approaches is concerning. As a threshold matter, any discussion of regulatory approval standards should begin with an understanding of the critical role bank M&A transactions play in a healthy banking system."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "M&A transactions allow banks to evolve and thrive in our dynamic banking system and can promote their long-term health and viability. M&A also ensures that banks have a meaningful path to transitioning bank ownership. The absence of a viable M&A framework increases the potential for additional risks, including limited opportunities for succession planning, especially in smaller or rural communities, and leaving zombie banks that have no competitive viability or exit strategy to continue operations."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The impact of a more restrictive M&A framework affects institutions of all sizes, including larger institutions that are vying to compete with the very largest global systemically important banks (G-SIBs). Banks of all sizes may choose to pursue M&A to pursue strategic growth opportunities and to remain competitive with larger peers that can achieve growth organically through sheer scale. The consequence of limiting the growth options for any bank hoping to compete with the largest G-SIBs has the perverse, and unintended, consequence of actually further insulating the very largest institutions from competition."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Against this backdrop, and while recognizing the value of M&A to the banking system, regulators must be pragmatic and thoughtful about reforms. As first steps, we must define the desired end state we are seeking to achieve with any changes. We must then identify the problem that needs to be solved and proffer a solution that is fair, transparent, consistent with applicable statutes, tailored for each bank category, and efficient. We should not propose a cure without first identifying an ailment and a reasoned basis for the prescribed outcome."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The primary argument raised by proponents of reform is that the regulatory approval process has become a rubber stamp, one in which regulators do not conduct a meaningful review against the statutory factors laid out by Congress. Bankers who have been through the M&A approval process would almost certainly disagree with the notion that regulators take a light-touch approach in reviewing banking transactions."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "There is ample evidence to undermine this argument. Let's consider just the process of filing an application. It begins with identifying an M&A target, conducting due diligence, and negotiating the terms of the transaction. The next steps are preparing and filing the application, and engaging with regulators throughout the review process and beyond approval, in anticipation of post-approval business processes, including systems conversions and customer transitions."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The costs of M&A can be substantial, and banks do not enter into transactions without significant preparation and planning, including an informed analysis that any proposal would be likely to result in regulatory approval. The demands of the process act as a self-selection mechanism, with only institutions that see both value in the transaction and a strong likelihood of regulatory approval going through the process. This is an expensive and reputationally risky process that bankers and their boards of directors take extremely seriously."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Federal Reserve data support the view that even for the self-selected population who files an application, the process does not always lead to approval. To the contrary, based on the most recent data reported for 2023, a significant portion of M&A applications were withdrawn before approval, and the average processing time in the second half of 2023 was 87 days.6 The number of approved M&A transactions was also significantly lower in 2023 than it was in 2020, 2021, or 2022.7"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "When we talk about M&A process reform, it can feel like bankers and regulators are living in different worlds. Bankers seek to conclude the process in a timely way, enabling them to move forward from the uncertainty of the application process to the important work of integrating the banks' operations as quickly as possible. One of the key risks to an effective process is a lack of timely regulatory action. The consequences of delays can significantly harm both the acquiring institution and the target, causing greater operational risk (including the risk of a failed merger), increased expenses, reputational risk, and staff attrition in the face of prolonged uncertainty. In contrast, some regulators feel pressure to revisit well-established regulatory approval standards relating to statutory factors, such as the effect of a transaction on competition, or to even expand the use of M&A review to accomplish other objectives, like forcing banks to adopt regulatory standards that would not otherwise apply by regulation as a condition of approval.8"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Regulatory reforms should promote a healthy banking system and must acknowledge the important role M&A activity plays in keeping the system healthy. Unfortunately, reform efforts, and the existing record of performance on banking M&A transactions, show a concerning trend that the barriers to bank M&A activity remain substantial."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Liquidity Since last spring, regulators have also focused on revisiting bank liquidity requirements. Last month, the Federal Reserve Banks of Dallas and Atlanta hosted a research conference to discuss the Federal Reserve's traditional role as a \"lender of last resort,\" the payments infrastructure, deposit insurance reform, and the sources of bank liquidity.9 The discussions included a broad range of views on all of these topics, highlighting the need for a thorough understanding of all of the issues before moving forward with any proposals for solutions."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The failures of SVB, Signature Bank, and First Republic Bank have prompted discussion among policymakers about the need for even more regulation. It's important to emphasize here that the conditions for failure, and the subsequent banking stress, could not have occurred without bank management and supervisory failures. Therefore, identifying and remediating these known and identifiable issues to the greatest extent possible should continue to be a priority as we engage in serious discussions about regulatory reforms."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Those events also highlighted the need to revisit bank liquidity and funding as part of our review of the regulatory framework. When we consider the Federal Reserve's operational infrastructure, including Fedwire® and discount window lending, we must ask if the Federal Reserve's tools were effective and complementary to other funding sources (including Federal Home Loan Bank funding) during times of stress, and if not, we must ask how they could be improved. Reform discussions should include not only thinking about new and revised requirements and expectations that would apply to individual banks, but also identifying opportunities to remediate deficiencies and overlapping requirements within the regulatory framework."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "One area in need of attention is considering how to operationally enhance and optimize tools like the discount window to meet banking system liquidity needs more effectively. The payments infrastructure that supports bank funding mechanisms must be prepared to operate effectively both during business-as-usual conditions and during stress events. Yet during the banking stress in 2023 and the unprecedented speed of the bank runs that occurred, some banks experienced frictions in using the discount window and limits on the availability of payment services. These issues may have interfered with liquidity management activity and exacerbated the banking stress."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The Fed must continue to enhance the technology, operational readiness, and services underpinning discount window loans and payment services to ensure that they are available when needed. On this front, I would note that the Federal Reserve recently published a proposal to expand the operating hours of the Fedwire Funds Service and the National Settlement Service, to operate 22 hours per day, 7 days per week, on a year-round basis.10 The proposal also requested feedback on whether the discount window should operate during these same expanded hours. Expanded service hours are a concrete example of a change that is responsive to the issues experienced last spring, but my hope is that these changes are accompanied by other important operational improvements, including improved technology and operational readiness within the Federal Reserve System."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Bank liquidity has also been a prominent feature in reform discussions, focusing on whether the calibration and scope of the regulatory framework is appropriate. This includes the discussion of possible revisions to liquidity-related regulatory requirements, including liquidity stress testing and the liquidity coverage ratio, as well as shifting supervisory expectations for contingent funding plans and the availability of alternative liquidity sources."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "As we consider the requirements and expectations for banks, we should also consider the availability of funding and liquidity sources and mechanisms—for example, the role of repo (repurchase agreement) markets and the standing repo facility, extension of credit from the Federal Home Loan Banks, and, of course, the role of the Fed's discount window. While the Federal Reserve considers reforms specifically to the discount window, it is important to frame these discussions within a broader context of other sources, and in light of the unique position of the discount window in this framework. The discount window is a critical tool, but it does not operate in isolation. It is intended to be a source of liquidity as a last resort and at a penalty rate, not as a primary funding resource in the normal course of business at a market rate. In evaluating the bank liquidity framework, it is imperative that we consider and understand the interrelationships among these resources, liquidity requirements and regulations, and bank liquidity planning.11"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Some policymakers have stated that a potential response to the 2023 banking stress would be to require banks to preposition collateral at the Fed's discount window, and while policymakers have discussed potential regulatory reforms to implement this change, supervisory communications have already begun directing collateral prepositioning as a supervisory best practice. As a policy reform, the notion is that forcing banks to preposition collateral in this way will create a ready pool of liquidity those banks can draw from during times of stress. This compulsory requirement to preposition collateral, it is argued, could also mitigate some of the stigma associated with using the discount window and thereby improve its effectiveness."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The effectiveness of a prepositioning requirement as a solution to perceived stigma concerns remains to be seen, but one can reasonably question if compulsory prepositioning or compulsory use of the discount window would materially change market perceptions and resolve bank concerns about stigma. There is no reason for a bank to take a loan at a penalty rate or to preposition collateral during periods of calm if the discount window operates effectively and communicates with banks on a regular basis. If the issue is that the window does not operate in an effective manner, requirements to use it more frequently will not address these underlying operational issues. To the contrary, investments must be made to address its operational shortcomings."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Some reforms, like encouraging bank readiness to borrow from the discount window if that is part of banks' contingency funding plans, could be explored more thoroughly. If a bank includes the discount window in these plans and intends to use it during stress, the bank should be prepared to do so. But if we are honest, we must recognize that our prior efforts to reduce discount window stigma, as during the COVID period, have not been durable or successful, and that perhaps resources would be better devoted to making sure the discount window is prepared to act in a timely way, rather than adding even more regulatory requirements or supervisory expectations to banks that may complicate day-to-day liquidity management, with uncertain liquidity benefits during stress."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "When it comes to the next steps in liquidity reform, it is imperative that we tackle known and identified issues that were exposed during the banking stress last year. This must include updating discount window operations and technology and making sure that payment services are available when needed. But for other reforms, a number of important questions remain unanswered, including understanding both where there are frictions and weaknesses in the current bank funding landscape, and what the potential impact (including intended and unintended consequences) of these reforms on the banking industry could be. In my view, remediation of known issues must remain a key priority."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Closing Thoughts The federal banking agencies' reform agenda has recently been directed toward rapid and transformational change, rather than deliberate and incremental change. Just as a bank's rapid growth may increase the risks of outgrowing risk-management and compliance frameworks, rapid regulatory reforms increase the risk of regulation resulting in harmful unintended consequences to the banking and financial system. Banks are already experiencing the effects of this \"rapid change\" approach through the supervisory process. And it will become increasingly clear as the reform agenda continues on its current path."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Bankers should be concerned about significant swings of the regulatory pendulum, swings that increase financial system uncertainty and instability and that complicate day-to-day operations and long-term planning. Deliberate, thoughtful change allows the Federal Reserve to demonstrate that it executes its duties in an independent manner, focusing on its statutory obligations, and helps build public support and trust."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "1. The views expressed here are my own and not necessarily those of my colleagues on the Federal Open Market Committee or the Board of Governors. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "2. The Q4 Quarterly Census of Employment and Wages (QCEW) administrative data show employment gains that are about 110,000 per month lower than what the Current Employment Statistics (CES) survey reported from March 2023 to December 2023. Although the Bureau of Labor Statistics benchmarks CES payroll employment based on the Q1 QCEW, to be released on August 21, the Q4 QCEW data point to a substantial downward revision to CES employment gains last year. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "3. Board of Governors of the Federal Reserve System, Consent Order with Green Dot Bank and Green Dot Corporation (PDF) (July 19, 2024); Consent Order with Silvergate Capital Corporation and Silvergate Bank (PDF) (June 4, 2024); Consent Order with Evolve Bancorp, Inc. and Evolve Bank & Trust (PDF) (June 11, 2024). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "4. See Vice Chair for Supervision Barr, \"Review of the Federal Reserve's Supervision and Regulation of Silicon Valley Bank (PDF)\" at 35 (April 28, 2023); Material Loss Review of Silicon Valley Bank (PDF) at 38 (September 25, 2023). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "5. See Jonathan Kanter (2023), \"Merger Enforcement Sixty Years after Philadelphia National Bank,\" speech delivered at the Brookings Institution's Center on Regulation and Markets Event \"Promoting Competition in Banking,\" Washington, June 20; Office of the Comptroller of the Currency (2024), \"Business Combinations under the Bank Merger Act: Notice of Proposed Rulemaking,\" OCC Bulletin 2024-4, January 29; and Federal Deposit Insurance Corporation (2024), \"FDIC Seeks Public Comment on Proposed Revisions to Its Statement of Policy on Bank Merger Transactions,\" press release, March 21. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "6. See Board of Governors of the Federal Reserve System (2023), Banking Applications Activity Semiannual Report, July 1–December 31, 2023 (Washington: Board of Governors, April 2024) Table 2 (\"Semiannual Applications Report\"). While average processing times in 2023 showed a decrease as compared to 2022, the report notes that this was primarily due to fewer proposals receiving adverse public comments. Semiannual Applications Report, at 3. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "8. See, e.g., FRB Order No. 2022-22 (October 14, 2022), U.S. Bancorp, Minneapolis, Minnesota, Order Approving the Acquisition of a Bank (PDF); Statement by Governor Michelle W. Bowman on advance notice of proposed rulemaking on resolution requirements for large Banks and application by U.S. Bancorp (October 14, 2022) (expressing concern about the potential accelerated imposition of regulatory standards on a firm that would not otherwise apply by operation of existing applicability thresholds). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "9. See Federal Reserve Bank of Dallas, \"Exploring Conventional Bank Funding Regimes in an Unconventional World\" (July 18-19, 2024, Dallas, Texas). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "10. Federal Reserve System, Request for Comment, \"Expansion of Fedwire® Funds Service and National Settlement Service Operating Hours,\" 89 Fed. Reg. 39,613 (May 9, 2024). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "11. Michelle W. Bowman, \"Bank Liquidity, Regulation, and the Fed's Role as Lender of Last Resort\" (speech at The Roundtable on the Lender of Last Resort: The 2023 Banking Crisis and COVID, sponsored by the Committee on Capital Markets Regulation, Washington, D.C., April 3, 2024). Return to text"
+  }
+ ]
+}

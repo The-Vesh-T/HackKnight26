@@ -1,0 +1,228 @@
+{
+ "date": "20250307",
+ "source": "https://www.federalreserve.gov/newsevents/speech/bowman20250307a.htm",
+ "title": "Remarks by Governor Bowman on \"Monetary Policy Transmission to Real Activity\" and the recent experience",
+ "speaker_key": "michelle_bowman",
+ "segments": [
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Thank you for the invitation to participate at this year's U.S. Monetary Policy Forum conference. It is a pleasure to be here to discuss the conference report and present my views on the transmission of monetary policy to real activity in recent years.1 I would like to start by thanking the authors of the paper for their thoughtful and comprehensive analysis of the effects of monetary policy on economic activity. As you all may know, my background is in banking and bank regulation, so my experience with and interest in understanding the transmission and effects of monetary policy stems from my responsibilities as a Member of the Federal Open Market Committee (FOMC)."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Turning to the discussion, I will begin with a few comments and suggestions on the paper and then focus on how monetary policy and other factors influenced U.S. economic performance during the tightening cycle that started in March 2022. I will then conclude with some thoughts on the relevance of the results in the paper for monetary policy going forward."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Comments and Suggestions on \"Monetary Policy Transmission to Real Activity\" The paper's stated purpose is to estimate how monetary policy shocks affect gross domestic product (GDP) and employment through the use of a range of models. The evidence is generally similar to previous studies, supporting the broader principle that monetary policy exerts its effects with long lags and has a limited contribution to changes in real activity when the shock is small and not very persistent. We should keep in mind, however, that many other shocks hit the economy and that at times it may be hard to see the effects of monetary policy actions estimated in the paper as they work through the actual economy."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The paper notes that a 1 percentage point increase in the federal funds rate that retraces gradually, taking five to six quarters to reach half of its initial size, has persistent negative effects on GDP and employment. At maximum, this shock lowers GDP by 0.4 percent in about 18 months and employment by 0.3 percent in about two years, on average across the models considered in the paper. However, there is a wide range of estimated responses, as they depend on each model specification and the data used. The most sensitive components of GDP are residential investment, business fixed investment, and durable goods consumption, which is consistent with employment in the construction and durable goods manufacturing industries being highly interest-rate sensitive."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The paper analyzes the transmission of monetary policy to real activity, but it would have been very interesting to go one step further and also see the effects of monetary policy on inflation. This is especially relevant because the FOMC has been focused on bringing inflation down to its 2 percent target over the past few years. Of course, higher interest rates lower inflation by dampening aggregate demand and real activity, thereby removing pressure on resource utilization, wages, and prices."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The authors use several models to analyze the transmission of monetary policy. They use two well-known structural models created by Federal Reserve Board staff that have been used in Tealbook, the FRB/US and EDO models, in addition to two reduced-form VAR models, the New York Fed Bayesian VAR model and a simple four-variable proxy VAR model. It is reassuring that the estimated responses to a federal funds rate shock in the two models that I am most familiar with, the Board FRB/US and EDO models, seem consistent with previous findings.2"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "One small issue is that neither of the VAR models directly includes the federal funds rate. The authors acknowledge this limitation in the analysis and address it by roughly estimating that a 100-basis points shock to the policy rate boosts the 1-year and 2‑year Treasury yields by 45 and 40 basis points, respectively. This approach may have resulted in the implied monetary policy shock in the two VAR models looking more persistent than in the two structural models. I would suggest the authors take another look at this aspect of their exercise, so that the contours of the monetary policy shocks look more similar across the different models."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "An alternative approach would have been to take the 1- and 2-year averages of the federal funds rate from the FRB/US and EDO impulse responses and possibly add a small term premium. This approach would have suggested larger effects of the federal funds rate shock on the 1- and 2-year Treasury yields than estimated by the authors. Another approach, especially in the proxy VAR setting, would have been to use a measure of the shadow federal funds rate, which provides a gauge of the overall monetary policy stance and is not constrained by the zero lower bound.3"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The paper focused on the effect of changes in the policy rate, but an important channel for the transmission of monetary policy is how it affects private interest rates that are relevant for households and businesses consumption and investment decisions. Private rates include interest rates charged on outstanding credit card balances, rates on auto and other durable goods loans, mortgage rates, and corporate bond yields. Although credit card rates move closely in line with the policy rate and include a time-varying spread that depends on the default risk profile of the borrower, longer-term private fixed rates on mortgages and corporate bonds depend on the expected path of the federal funds rate, the term premium embedded in longer-term Treasury yields, and risk spreads relative to Treasury securities of comparable maturity. Accordingly, monetary policy tools other than the policy rate, including forward guidance and the amount of securities holdings in the central bank's balance sheet, are also important for the transmission of monetary policy since they can more forcefully affect the expected path of the federal funds rate, term premiums, and risk spreads."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The authors analyze the contribution of major aggregate demand components to the overall effect of a monetary policy shock on GDP. One minor issue is that not all the models treat business investment equally. In particular, the EDO model includes inventory investment under business investment, while all other models do not appear to do so. This difference may contribute to the much larger initial reaction of business investment in the EDO model compared to the other models, as inventory investment reacts quickly to a shock in the federal funds rate."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "I would like to offer one last comment on the relatively small effect of monetary policy on real activity. Although I do not disagree with the authors' assessment, I think that the estimated effects can cumulate to be quite sizable even for the transient unexpected shock considered. The FOMC quickly raised interest rates to fight surging inflation between March 2022 and July 2023 by a cumulative 5-1/4 percentage points. According to the average impulse responses, a shock of this magnitude would lead to declines of about 2 percent on the level of real GDP and 1.5 percent on the level of employment, which would translate into a similarly large increase in the unemployment rate if those who lost their jobs mostly remained in the labor force. This seems to suggest the potential for fairly large effects on real activity, especially when the monetary policy shock has more persistent effects on the policy rate and results in larger increases in term premiums and risk spreads."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The Recent Tightening Cycle The FOMC started raising the federal funds rate in March 2022 to combat rising inflation. Although the initial rate hike was a mere 1/4 percentage point, the pace of tightening was faster over the remainder of the year, with an overall increase of more than 4 percentage points in the policy rate by the end of 2022. Rate hikes continued in smaller 1/4 percentage point steps the following year, adding to 1 additional percentage point increase by July 2023. As the authors note in the paper, the rapid pace of monetary policy tightening was somewhat surprising, especially as the FOMC was initially slow to react to signs that the rise in inflation during 2021 was not merely transitory and required more aggressive action."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "As financial conditions tightened rapidly and the yield curve inverted in 2022, fears of an impending recession started to rise, with Federal Reserve Board staff mentioning downside risks to real activity and that a mild recession seemed equally likely to the baseline Tealbook projection for sluggish economic growth over the next year.4 The staff eventually predicted a mild recession in the Tealbook forecast after the bank failures and banking system stress in the spring of 2023.5 Such recession was widely predicted and, in hindsight, it never materialized. As you well know, the yield curve inversion has not been the only predictor of recessions that has failed in recent years."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "On a Q4-over-Q4 basis, GDP growth slowed considerably in 2022 to a modest pace of only 1.3 percent. The components of GDP that exerted the most drag on growth that year were residential investment, goods consumption, and inventory investment, subtracting a total of 1‑1/2 percentage points from real GDP growth in 2022."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Residential investment weakened rather quickly and fell more than 16 percent in 2022. The sharp decline in this category seems largely explained by higher mortgage rates, which surged more than 3 percentage points over the course of the year as the FOMC aggressively tightened monetary policy. In addition to higher interest rates, the 1-1/2 percent drop in goods consumption in 2022 likely reflected the imprint of higher inflation on real disposable income and the unwinding of previous fiscal stimulus."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Somewhat at odds with the empirical results in the paper, business fixed investment continued to rise appreciably as special factors led to a delayed response to the rise in interest rates. A broader measure of business investment that includes inventories did show a slowdown in growth, but even this broad measure continued to rise appreciably in 2022. Business fixed investment was likely supported by construction of new microchip and battery plants, the continued boost to software investment following the switch to remote work, and a rebound in nonresidential structures and transportation equipment investment after their protracted decline over the pandemic."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Payroll employment increased strongly in 2022 as labor force participation rose, the unemployment rate declined, and the labor market tightened considerably. Payroll employment moved back up to its pre-pandemic level and approached its trend as social distancing receded. The recovery dynamics in employment largely masked any effects from rising interest rates in 2022. The effect from higher interest rates on employment also tends to lag and be more persistent than the effect on GDP, so any effects likely showed up in 2023, an outcome that is consistent with the findings in the paper."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Some Reasons Why the Economy Outperformed The economy outperformed in 2023 as widespread predictions of an impending recession never materialized and instead growth picked up. From the point of view of the models in the paper, the stronger economy in 2023 also seems surprising, but this likely reflected other factors that influenced the economy and that are not accounted for in the model simulations."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Despite significant tightening in broad financial conditions in 2023, GDP growth strengthened notably as fiscal policy turned from a drag into a meaningful boost to growth and potential output accelerated further due to increased immigration and strong productivity growth. These favorable supply developments allowed for stronger economic activity along with easing of inflationary pressures. Although growth surprised to the upside in 2023, labor market tightness eased with the unemployment rate edging up over the year and payroll employment growth slowing markedly."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Faster GDP growth in 2023 was driven by a rebound in goods consumption, some recovery in residential investment, and stronger government spending. Goods consumption was boosted by strong gains in real compensation and personal income, including from declining inflation. Despite continued drag from higher mortgage rates, residential investment started recovering in 2023 as other factors supported demand. In particular, the labor market remained strong and household balance sheets were still healthy. The sharp rise in mortgage rates also created a lock‑in effect that increased demand for new housing and construction activity."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The marked deceleration in employment in 2023 seems consistent with the longer lags in the response of employment to the rise in interest rates relative to that of GDP, especially as a significant portion of employment gains reflected increased labor supply from immigration, which allowed the labor market to come into better balance. Also consistent with the paper results, employment gains in the construction and durable goods manufacturing industries were more noticeably below their 2015-2019 trends than employment gains for the aggregate economy."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "As the authors argue, another reason why real activity was more resilient in the face of higher interest rates may have been the healthy balance sheets of households and businesses at the start of the tightening cycle. Households had accumulated excess savings during the pandemic, reflecting both increased fiscal stimulus and reduced consumption due to social distancing and supply bottlenecks.6 In fact, data from the Financial Accounts of the U.S. indicate that in the two years between the end of 2019 and the end of 2021, household bank deposits rose by nearly $4 trillion.7"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "In addition, many households and nonfinancial businesses were able to refinance their mortgages and corporate bonds at very low rates during the pandemic. Although higher interest rates likely held back additional consumption expenditures and investment spending, they had less of an effect on households' and nonfinancial businesses' net cash flows as the average interest rates on household mortgages and business debt remained low.8"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "With historically low borrowing costs during the pandemic era, mortgage originations and refinancing activity reached very high levels. As a result, the share of outstanding mortgages with an interest rate below 4 percent increased to nearly 70 percent by 2022 and it remains well above pre-pandemic levels today. Similarly, nonfinancial businesses issued record amounts of corporate bonds and extended the maturity of their debt to avoid new debt issuance earlier in the subsequent rate hiking cycle. Between 2020 and 2021, the fraction of triple-B corporate bonds maturing within three years fell to its lowest levels in nearly 20 years."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Fiscal policy also reentered expansionary territory in 2023, with above-trend stimulus partly driven by strong state and local government spending. Although the unwinding of COVID-19 fiscal support continued in 2023, the federal budget deficit turned back up and rose to near 6 percent of GDP, while the primary deficit inched up towards 4 percent of GDP. These deficit levels are unusual for an expansion, especially as fiscal policy seems to have contributed to the degree of tightness in the economy."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "One way to describe the resiliency of real activity to higher interest rates during the recent tightening cycle is to say that some of the previously noted factors led to a rise in r-star. Higher population growth, from the influx of new immigrants, and higher productivity growth, arguably from the use of new technologies like artificial intelligence and the surge in new business formations, especially in high-tech industries, have likely boosted investment demand. In addition, the lack of significant fiscal consolidation has also increased demand for savings. An economy with stronger investment demand and very little household savings likely requires a higher equilibrium interest rate relative to pre-pandemic norms."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Relevance of Results for Monetary Policy Going Forward The U.S. economy has been experiencing major shocks and structural changes since the pandemic, which may have influenced or masked the transmission of monetary policy to real activity. It is, therefore, not straightforward to see how the impulse responses shown in this paper have translated in practice. And, as the paper acknowledges, a large portion of the fluctuations in real activity are driven by shocks other than those to monetary policy. Although the FOMC has been focused on lowering inflation in the past few years, as we continue to make progress on approaching our 2 percent target, I expect that the labor market and economic activity will become a larger factor in the FOMC's policy discussions. Accordingly, the stylized results on real activity effects in the paper will prove especially useful going forward."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Conclusion I will conclude by saying that I enjoyed the paper, and that I appreciate the opportunity to be here to share my views on this topic. I look forward to the discussion and to hearing feedback from other participants and the perspective of my FOMC colleague and fellow discussant."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "References Aladangady, Aditya, David Cho, Laura Feiveson, and Eugenio Pinto (2022). \"Excess Savings during the COVID-19 Pandemic,\" FEDS Notes. Washington: Board of Governors of the Federal Reserve System, October 21."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Brayton, Flint, Thomas Laubach, and David Reifschneider (2014). \"The FRB/US Model: A Tool for Macroeconomic Policy Analysis,\" FEDS Notes. Washington: Board of Governors of the Federal Reserve System, April 3."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Board of Governors of the Federal Reserve System (2022). \"Minutes of the Federal Open Market Committee, November 1-2, 2022,\" press release, November 23, 2022."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Board of Governors of the Federal Reserve System (2023). \"Minutes of the Federal Open Market Committee, March 21-22, 2023,\" press release, April 12, 2023."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Castro, Andrew, Michele Cavallo, and Rebecca Zarutskie (2022). \"Understanding Bank Deposit Growth during the COVID-19 Pandemic,\" FEDS Notes. Washington: Board of Governors of the Federal Reserve System, June 6."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Chung, Hess, Michael Kiley, and Jean-Philippe Laforte (2010). \"Documentation of the Estimated, Dynamic, Optimization-based (EDO) Model of the U.S. Economy: 2010 Version (PDF),\" Federal Reserve Board Finance and Economics Discussion Series 2010-29. Washington: Board of Governors of the Federal Reserve System, May."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Eichenbaum, Martin, Sergio Rebelo, and Arlene Wong (2022). \"State-Dependent Effects of Monetary Policy: The Refinancing Channel,\" American Economic Review, vol. 112 (March), pp. 721‑61."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Fabiani, Andrea, Falasconi, Luigi, and Heineken, Janko (2024). \"Monetary Policy and the Maturity Structure of Corporate Debt,\" unpublished paper, available at SSRN: http://dx.doi.org/10.2139/ssrn.3945615."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Jungherr, Joachim, Matthias Meier, Timo Reinelt, and Immo Schott (2024). \"Corporate Debt Maturity Matters for Monetary Policy,\" International Finance Discussion Papers 1402. Washington: Board of Governors of the Federal Reserve System, December 6."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Wu, J. Cynthia and F. Dora Xia (2016). \"Measuring the Macroeconomic Impact of Monetary Policy at the Zero Lower Bound,\" Journal of Money, Credit, and Banking, vol. 48 (March-April), pp. 253-91, https://doi.org/10.1111/jmcb.12300."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "1. The views expressed here are my own and are not necessarily those of my colleagues on the Federal Reserve Board or the Federal Open Market Committee. I would like to thank Eugenio Pinto and Michele Cavallo for their assistance in preparing these remarks. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "2. See Brayton et al. (2014) and Chung et al. (2010). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "3. The estimated measure of the shadow federal funds rate is based on the work by Wu and Xia (2016). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "4. See Board of Governors of the Federal Reserve System FOMC Minutes (November 2022). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "5. See Board of Governors of the Federal Reserve System FOMC Minutes (March 2023). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "8. The effectiveness of monetary policy can be substantially reduced both during a long period of low interest rates and for a long period after interest rates renormalize. See Eichenbaum et al. (2022) for the mortgage refinancing channel and Fabiani et al. (2024) and Jungherr et al. (2024) for the corporate debt maturity channel. Return to text"
+  }
+ ]
+}

@@ -1,0 +1,353 @@
+{
+ "date": "20240405",
+ "source": "https://www.federalreserve.gov/newsevents/speech/bowman20240405a.htm",
+ "title": "Speech by Governor Bowman on risks and uncertainty in monetary policy",
+ "speaker_key": "michelle_bowman",
+ "segments": [
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "At “Frameworks for Monetary Policy, Regulation, and Bank Capital” Spring 2024 Meeting of the Shadow Open Market Committee, hosted by the Manhattan Institute, New York, New York"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Thank you for the invitation to speak to the Shadow Open Market Committee (SOMC).1 The SOMC has a distinguished reputation for fostering substantive analysis and debate regarding independent, transparent, and systematic approaches to central bank policymaking. It's a pleasure to join you today and to discuss some of the current issues facing central banks and monetary policymakers."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "In my remarks today, I will review some of the notable developments in the U.S. economy and financial system—as well as review key monetary policy actions and communications—since I joined the Board of Governors of the Federal Reserve System and became a permanent voting member of the Federal Open Market Committee (FOMC) in late November 2018. As I look back over these five-plus years, I will consider how a range of uncertainties and risks regarding the macroeconomy and its measurement have affected monetary policy decisions and communications. I will also highlight some considerations regarding financial stability risks and monetary policy. I will conclude with my own views on the near-term economic outlook, some of the prominent risks and uncertainties surrounding my outlook, and my views on the implications for monetary policy."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Setting Monetary Policy amid a Wide Range of Uncertainties and Risks An omni-present challenge monetary policymakers face is how to account for uncertainties surrounding the current state of the economy and the economic outlook when setting monetary policy. Macroeconomic models that can help guide the setting of monetary policy often invoke unobservable concepts such as the natural rate of unemployment, potential output, or the neutral real interest rate. These unobservable concepts can be estimated but only with a considerable degree of uncertainty, and the estimates may vary over time—for example, because of structural changes in the economy. Macroeconomic models are also subject to uncertainty, since they must make simplifying assumptions regarding the complex set of relationships and interactions among households, businesses, governments, and the financial system that also evolve and change. Moreover, the data that are used to estimate model parameters and to formulate the economic outlook are inherently uncertain and are often revised as the statistical agencies refine their estimates or gather more information."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "In addition to uncertainties surrounding macroeconomic models and measurement, there are a number of risks that, if realized, could shock the economy and financial system, making it more difficult for policymakers to confidently assess the economy and the economic outlook. Despite these challenges, monetary policymaking requires a forward-looking approach, since its actions affect the economy, labor markets, and inflation with a lag.2"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The post–financial crisis economy and monetary policy at the zero lower bound When I joined the FOMC in late 2018, despite nearly a decade of accommodative monetary policy following the financial crisis and subsequent recession, one of the primary concerns was that inflation had persistently been running slightly below the Committee's 2 percent inflation target. There was a recognition that the \"natural rate of unemployment\" may have been lower than many on the FOMC had estimated, and that inflation may have become less responsive to reductions in the unemployment rate.3 This recognition meant that preemptive increases in the federal funds rate based on expected reductions in the unemployment rate alone may not have been needed to keep inflation and inflation expectations aligned with the Committee's 2 percent target."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "A central topic of FOMC meeting discussions throughout 2019 was how monetary policy strategies and tools could best achieve the Committee's dual mandate of price stability and maximum employment when structurally low interest rates and disinflationary forces kept inflation persistently under the Committee's inflation target. There was also a concern that the federal funds rate, the FOMC's key policy rate, was too close to the \"zero lower bound.\" And that this proximity could limit the Committee's ability to respond effectively to an adverse shock by using our primary monetary policy tool of lowering the target range for the federal funds rate. More broadly, many central banks around the world were grappling with the prospect of structurally lower interest rates due to a variety of factors, including demographic changes and higher savings rates, lower potential output and productivity growth, and greater investor demand for safe assets like Treasury securities."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "At the time, the FOMC assessed that downward risks to both employment and inflation were likely to remain prominent due to the proximity of interest rates to the zero lower bound. In August 2020, the FOMC significantly revised its Statement on Longer-Run Goals and Monetary Policy Strategy to reflect this assessment.4 A notable change relative to the initial statement adopted in 2012 was a change in the language addressing how the FOMC would conduct monetary policy. The new statement noted that the Committee would seek \"to mitigate shortfalls [emphasis added]\"—rather than \"deviations\"—\"of employment from the Committee's assessment of its maximum level and deviations of inflation from its longer-run goal.\"5 By replacing the word \"deviations\" with \"shortfalls\" when describing employment and the Committee's reaction to changes in employment relative to estimates of its maximum level, the Committee indicated that it would not act preemptively to curb inflation based only on the perception of labor market tightness."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Another notable change to the strategy statement was the adoption of what some refer to as \"asymmetric flexible average inflation targeting\" or \"temporary price level targeting.\"6 Specifically, the new statement noted that \"in order to anchor longer-term inflation expectations at [its 2 percent goal], the Committee seeks to achieve inflation that averages 2 percent over time, and therefore judges that, following periods when inflation has been running persistently below 2 percent, appropriate monetary policy will likely aim to achieve inflation moderately above 2 percent for some time.\"7"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The revisions to the FOMC's statement focused on monetary policy in a world of structurally low interest rates, disinflationary forces, and an apparent insensitivity of inflation to low levels of unemployment. Although the revised statement reaffirmed the commitment to the Committee's inflation target, it did not describe how the Committee would respond if inflation were to run persistently above its 2 percent goal.8"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Given the timing of its implementation, the revised strategy guided how the FOMC responded to one of the largest shocks experienced by the U.S. economy in recent years—the COVID-19 pandemic. This shock—combined with the policy responses of governments and central banks around the world—disrupted many of the dynamics that had influenced the economy over the previous several decades and the post–2008 financial crisis approach to monetary policy. These impacts will affect how we think about monetary policy going forward, but let's first put the COVID-19 event and response into better context."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The COVID-19 shock and monetary policy response Toward the latter part of the FOMC's monetary policy framework review, in March 2020, the COVID-19 pandemic created an unprecedented shock to the global economy and financial system. Widespread economic lockdowns and social distancing, combined with other pandemic effects, caused the swiftest and deepest contraction in employment and economic activity since the Great Depression. Many critical parts of the U.S. financial system experienced significant disruption or completely ceased to function. The Federal Reserve responded forcefully to mitigate the financial market turmoil and the economic effects of the rapid shutdown of the U.S. economy (and I'll have more to say on this topic later)."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "As a part of its response, the FOMC quickly lowered the target range for the federal funds rate back to 0 to 1/4 percent and began purchasing large amounts of Treasury and agency mortgage-backed securities. These purchases were initially designed to support the smooth functioning of securities markets and the flow of credit to businesses and households. Later, the purchases provided additional monetary policy accommodation to support economic activity and labor markets.9"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Following the return to the zero lower bound, in addition to conducting asset purchases, the FOMC used forward guidance to provide additional monetary policy accommodation to keep both short- and longer-term interest rates low. In its March 15, 2020, statement, the FOMC noted that it expected to maintain the target range for the federal funds rate at 0 to 1/4 percent \"until it [was] confident that the economy [had] weathered recent events and [was] on track to achieve its maximum employment and price stability goals.\"10 Following the release of the revised framework in August 2020, the FOMC revised the forward guidance in its September post-meeting statement to be more explicitly outcome-based to state that the target range would remain at 0 to 1/4 percent \"until labor market conditions have reached levels consistent with the Committee's assessments of maximum employment and inflation has risen to 2 percent and is on track to moderately exceed 2 percent for some time.\"11 In its December 2020 post-meeting statement, the FOMC added forward guidance regarding its asset purchases by noting that it expected that the current pace of asset purchases would continue until \"substantial further progress has been made toward the Committee's maximum employment and price stability goals.\"12"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "This explicit outcome-based forward guidance, like the revised monetary policy framework, was very focused on supporting the economy following the COVID-19 shock amid the risks of persistently low inflation and disinflationary forces with structurally low interest rates. The guidance was also quite restrictive in the criteria for slowing the pace of asset purchases, especially since the FOMC would stop asset purchases before it would raise the federal funds rate.13"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "One could argue the December forward guidance made it much more difficult for the FOMC to react to new information suggesting that risks and uncertainties had evolved in response to pandemic-related changes in the economy. Other uncertainties such as the accuracy of real-time economic measurements also presented challenges, as did significant supply-side disruptions and the uncertainty about the timing of progress toward their resolution, which I will discuss next."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The post-pandemic economy, the resurgence of inflation, and the rapid tightening in monetary policy In the early phases of the pandemic, fiscal authorities around the world implemented support programs for labor markets and households and businesses.14 These generous policies, combined with very accommodative monetary policies, bolstered private-sector and state and local government balance sheets. In particular, they led to what has come to be known as \"excess savings\"—above-normal household savings from extraordinary levels of fiscal support and a limited ability to freely spend it due to economic lockdowns, supply chain disruptions, and other pandemic- and recession-related factors."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "In 2021, novel medical treatments, reduced social distancing, and innovative business approaches in adapting to the restrictive pandemic environment led to a sharp economic rebound. Strong demand (supported by stimulative fiscal and monetary policies), a reduced labor supply (due in part to early retirements, childcare responsibilities, and concerns about COVID-19), and a mismatch between available jobs and workers all contributed to a very tight labor market. The unusually rapid rebound in economic activity, pandemic-driven shift to consumer goods spending, supply chain fragilities, and manufacturing component shortages led to crippling bottlenecks for a number of industries. These supply and demand imbalances, likely amplified by fiscal and monetary policies, led to a sharp rise in inflation over a period of just a few months."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "By the second half of 2021, inflationary pressures intensified and became more broad- based. Labor markets were extremely tight, though it was difficult to assess the true extent of tightness, given the decrease in labor force participation and mixed data signals at the time, which all were later revised. Of the many difficult issues the Committee faced, one of the most important was whether inflation would persist or would resolve as supply-side issues eventually eased."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The September 2021 Summary of Economic Projections (SEP) showed the median FOMC expectation for personal consumption expenditures (PCE) inflation of 4.2 percent at the end of 2021, largely reflecting high inflation readings in the first half of 2021. But for year-end 2022, the median expectation was for PCE inflation to decline to 2.2 percent.15 Private-sector forecasters expected higher inflation of 5.1 percent at year-end 2021 but also projected a slowing to just over 2 percent by the end of 2022.16 With the benefit of hindsight, we now know that most forecasters, ourselves included, vastly misjudged the persistence of inflation at that time, with 5.9 percent PCE inflation for both 2021 and 2022. This example underscores the challenge we faced in identifying which factors were driving inflation and how long those forces would persist."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "In the second half of 2021, it became clear that the FOMC's monetary policy stance was too accommodative in the presence of growing inflationary pressures and that the Committee needed to move toward a tighter policy stance. It seems likely to me that the experience of the years leading up to the pandemic, when inflation was persistently low, made it hard for many to foresee how quickly that situation could change. Of course, the inflation and labor data did not accurately reflect the economic conditions prevailing at the time and were subsequently substantially revised.17 Together, these factors, combined with the FOMC's forward guidance discussed earlier, contributed to a delay in the removal of monetary policy accommodation in 2021."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The shift in the Committee's forward guidance toward the end of 2021 and in early 2022 was effective in moving longer-dated interest rates higher and in tightening financial conditions, even before the FOMC raised the federal funds rate.18 At our November 2021 meeting, we announced that we would begin to slow the pace of purchases later that month. At the December 2021 meeting, we doubled the pace of tapering, which accelerated the end of purchases to the following March. At the March 2022 FOMC meeting, the FOMC raised the target range for the federal funds rate by 25 basis points. And in May, the FOMC announced its plan to reduce the size of the Federal Reserve's securities holdings—which then stood at around $8.5 trillion—starting in June and at a pace much faster than in the previous episode of balance sheet reduction.19 The FOMC also continued to increase the target range for the federal funds rate over the course of 2022 at a pace much faster than in previous tightening cycles, as it became clear that inflation was higher and more persistent than many forecasters had expected. By July 2023, the FOMC had increased the federal funds rate to 5-1/4 percentage points, and into restrictive territory, where it has remained. And we have continued to reduce the size of our securities holdings."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The monetary policy experience during the pandemic highlights how difficult it can be to assess the current state of the economy and to predict how it will evolve in the presence of major supply- and demand-side shocks, possible structural changes in the economy, and real-time data and measurement uncertainty. An important question I will be thinking about going forward is how to make monetary policy decisions and communications more robust to these types of risks."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Separate tools for monetary policy and financial stability We know that monetary policy transmission is most effective during periods of stable financial conditions, and that financial stability risks, if realized, can affect the economic outlook. While monetary policy and financial stability are connected, financial stability vulnerabilities and risks are most appropriately addressed using macro- and micro-prudential regulation and bank supervision. During periods of extreme financial stress, well-calibrated lending and liquidity programs can be used to address such conditions. Of course, where risks impact the outlook for economic activity, employment, and inflation, a monetary policy response may also be required."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The Federal Reserve's use of liquidity and lending programs during the early stages of the pandemic demonstrated the effectiveness of emergency lending tools as backstops to support market functioning and the flow of credit in times of stress.20 Lending programs are most effective as backstops when loans are offered at a penalty rate and are of short duration. When appropriately calibrated, they can help promote market functioning and the effective transmission of monetary policy but limit the Federal Reserve's overall footprint in financial markets in the longer term. This experience also highlights the importance of clearly distinguishing monetary policy actions from temporary central bank asset purchase programs used to promote core financial market functioning, like those created to support Treasury markets in the spring of 2020.21"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "More recently, the bank failures last spring highlight that responsive, efficient, and effective bank supervision is a strong mitigant for financial system risks and vulnerabilities. The failures revealed that shortcomings in bank supervision can heighten financial stability risks. The primary focus of supervision should be to address a bank's critical shortcomings in a timely way.22 To effectively support financial stability, bank supervision cannot simply rely on pinpointing compliance issues, failed processes, or rule violations. It must go further to examine a bank's risk exposures, including anticipating how the evolving economic environment may influence a bank's financial condition and its assessment of risks. If the supervisory process fails to identify and escalate critical risks, or to hold management accountable for known deficiencies, like excess interest rate risk and disproportionately large levels of uninsured deposits, this raises the potential for safety and soundness concerns."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Last year's bank stress also revealed that the Fed's bank liquidity and payments tools—including the Fed's discount window operations and FedWire®—should be available for extended operating hours and prepared to provide support during times of stress. We should also consider what further steps may be needed to ensure that banks have access to liquidity support. In addition, we should encourage, but not mandate, the exercise of contingency funding plans and testing capabilities, requiring bank management to ensure adequate plans are in place.23 But there is a fine line between bank supervision and interfering in the decisions of bank management. Some measure of risk is inherent and necessary in the business of banking."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "While some changes to the regulatory framework may be appropriate to promote financial stability, we should be cautious that these changes do not impair the long-term viability of banks, especially mid-sized and smaller banks.24 In my view, regulatory reform can pose significant financial stability risks, particularly if those regulatory changes fail to take sufficient account of the incentive effects and potential consequences, like pushing activity into the more opaque nonbank financial sector.25 Poorly calibrated regulatory actions can also negatively affect economic activity and reduce the availability of credit by limiting the offering of other financial products or services. These concerns are most acute when the reforms may be inefficient or poorly targeted. As an example, policymakers should carefully consider whether the significant capital increases included in the U.S. Basel III proposal meet this standard of being efficient and appropriately targeted.26"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "What's Next for the Economy and Monetary Policy? Looking ahead, the FOMC will continue to face a number of risks and uncertainties as it seeks to return inflation to its 2 percent goal. It will be important to evaluate how these uncertainties and risks affect our monetary policy decisions going forward. As this audience knows, members of the FOMC consult a range of models that consider several scenarios and their potential economic outcomes using different benchmark monetary policy rules.27 This type of analysis can provide helpful input in informing my own views on the appropriate path of monetary policy. Given the importance of transparency, it is also necessary that our communications explain not only how the economic outlook affects our monetary policy decisions, often referred to as the FOMC's \"reaction function,\" but also how the risks and uncertainties surrounding the economic outlook matter for those decisions."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "With that in mind, I will conclude my remarks with my own views on the near-term economic outlook, including some prominent risks and uncertainties, and the implications for monetary policy."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "At our most recent FOMC meeting, I supported keeping the target range for the federal funds rate at 5-1/4 to 5-1/2 percent and continuing to reduce our securities holdings. At its current setting, our monetary policy stance is restrictive and appears to be appropriately calibrated to reduce inflationary pressures. We have seen significant progress on lowering inflation over the past year while economic activity and the labor market have remained strong. Consumer services spending has shown continued strength through February, and payroll employment increased at a very strong pace in the first quarter."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "However, most employment gains over the past year have been in part-time employment, and some of the recent strength in job gains may reflect stronger labor supply due to increased immigration. The 12-month readings of total and core PCE inflation through February printed at 2.5 and 2.8 percent, respectively, much lower than a year ago. However, with the annualized 3‑month PCE inflation readings moving well-above the 12‑month measures in February, I expect further progress in bringing inflation down to 2 percent will be slower this year."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Still, my baseline outlook continues to be that inflation will decline further with the policy rate held steady at its current level, and that the labor market will remain strong but with labor demand and supply gradually rebalancing as the number of job openings relative to unemployed workers declines. And should the incoming data continue to indicate that inflation is moving sustainably toward our 2 percent goal, it will eventually become appropriate to gradually lower the federal funds rate to prevent monetary policy from becoming overly restrictive. However, we are still not yet at the point where it is appropriate to lower the policy rate, and I continue to see a number of upside risks to inflation."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "First, much of the progress on inflation last year was due to supply-side improvements, including easing of supply chain constraints; increases in the number of available workers, due in part to immigration; and lower energy prices. It is unclear whether further supply-side improvements will continue to lower inflation. For example, the rebound in labor productivity last year may have reflected an unwinding of temporary pandemic-related labor market dynamics, such as a slowing in the high levels of employee turnover during that time. Therefore, if wage gains remain elevated going forward, these effects may no longer contribute to lower price inflation in the future."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Geopolitical developments could also pose upside risks to inflation, including the risk of spillovers from geopolitical conflicts and the extent to which food and energy markets and supply chains remain exposed to these influences."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Another upside inflation risk I see is from additional fiscal stimulus or a higher spend-out rate from existing and new appropriations. Although some of the recent policies may increase productive capacity in the medium term, they may add to inflationary pressures by boosting aggregate demand."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "I also see upside risks to housing services inflation. Given the current low inventory of available and affordable housing, the inflow of new immigrants to certain regions could result in upward pressure on rents, as additional housing supply may take time to materialize. There is also a risk that continued labor market tightness and continued strong services demand could lead to persistently higher core services inflation. Inflation readings over the past two months suggest progress may be uneven or slower going forward, especially for core services."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Finally, there is uncertainty regarding whether the federal funds rate will need to remain at a higher level than before the pandemic in order to effectively foster low and stable inflation and support full employment. In my view, given potential structural changes in the economy, like higher investment demand relative to available savings, it is quite possible that the level of the federal funds rate consistent with low and stable inflation will be higher than before the pandemic. If that is the case, fewer rate cuts will eventually be appropriate to return our monetary policy stance to a neutral level. In the most recent SEP, some FOMC participants indicated that they now see fewer rate cuts over 2024 and over the next two years than in December. Some also included a higher longer-run level of the federal funds rate than in the past.28"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "While it is not my baseline outlook, I continue to see the risk that at a future meeting we may need to increase the policy rate further should progress on inflation stall or even reverse. Given the risks and uncertainties regarding my economic outlook, I will continue to watch the data closely as I assess the appropriate path of monetary policy, and I will remain cautious in my approach to considering future changes in the stance of policy. Reducing our policy rate too soon or too quickly could result in a rebound in inflation, requiring further future policy rate increases to return inflation to 2 percent over the longer run."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Closing Thoughts To conclude, the experience over the past five years highlights the enduring challenge of setting forward-looking monetary policy amid a wide and evolving range of risks and uncertainties. Taking into account this experience and the lessons I have learned over my tenure on the FOMC, an important question I will be considering is how to make monetary policy strategy and its related communications durable to a wide range of possible shocks and changes in the macroeconomy. We will continue to learn about the post-pandemic economy, and, if history is any guide, new shocks to and changes in the economy will eventually and inevitably occur. While the future is full of risks and uncertainties, the FOMC's mandate of fostering price stability and maximum employment remains very clear. Restoring price stability is essential for achieving maximum employment over the longer run."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Thank you again for the opportunity to speak with you today. I look forward to our conversation."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "1. The views expressed here are my own and are not necessarily those of my colleagues on the Federal Reserve Board or the Federal Open Market Committee. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "2. Greenspan (2004), Bernanke (2007), and Powell (2018) offer discussions of how risk and uncertainty may influence monetary policy in practice. See Alan Greenspan (2004), \"Risk and Uncertainty in Monetary Policy,\" American Economic Review, vol. 94 (May), pp. 33–40; Ben S. Bernanke (2007), \"Monetary Policy under Uncertainty,\" speech delivered at the 32nd Annual Economic Policy Conference, Federal Reserve Bank of St. Louis, St. Louis (via videoconference), October 19; and Jerome H. Powell (2018), \"Monetary Policy in a Changing Economy,\" speech delivered at \"Changing Market Structure and Implications for Monetary Policy,\" a symposium sponsored by the Federal Reserve Bank of Kansas City, held in Jackson Hole, Wyo., August 24. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "3. For example, the range of estimates of the longer-run level of the unemployment rate in the Summary of Economic Projections (SEP) in March 2013 was 5.0 to 6.0 percent. This range shifted lower over time. In the most recent (March 2024) SEP, the range of estimates of the longer-run unemployment rate was 3.7 to 4.3 percent. The March 2013 and March 2024 SEPs are available on the Board's website at https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "4. For an overview of these revisions and their rationale, see Jerome H. Powell (2020), \"New Economic Challenges and the Fed's Monetary Policy Review,\" speech delivered at \"Navigating the Decade Ahead: Implications for Monetary Policy,\" a symposium sponsored by the Federal Reserve Bank of Kansas City, held in Jackson Hole, Wyo. (via webcast), August 27; and Richard H. Clarida (2020), \"The Federal Reserve's New Monetary Policy Framework: A Robust Evolution,\" speech delivered at the Peterson Institute for International Economics, Washington, August, 31. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "5. See the most recent Statement on Longer-Run Goals and Monetary Policy Strategy, available on the Board's website at https://www.federalreserve.gov/monetarypolicy/files/FOMC_LongerRunGoals.pdf (quoted text in paragraph 5). Previous versions of the statement had noted that the Committee would seek to mitigate \"deviations of inflation from its longer-run goal and deviations [emphasis added] of employment from the Committee's assessments of its maximum level\" (paragraph 5). For a more detailed look at the changes in the 2020 strategy statement relative to the earlier statement first adopted in 2012, see Board of Governors of the Federal Reserve System (2021), \"Review of Monetary Policy Strategy, Tools, and Communications,\" webpage. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "6. See Richard H. Clarida, \"The Federal Reserve's New Framework and Outcome-Based Forward Guidance,\" speech delivered at \"SOMC: The Federal Reserve's New Policy Framework,\" a forum sponsored by the Manhattan Institute's Shadow Open Market Committee, New York, New York (via webcast), April 14, 2021. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "7. See the latest Statement on Longer-Run Goals and Monetary Policy Strategy, in note   (quoted text in paragraph 4). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "8. The statement did note that if the Committee's employment and inflation objectives were no longer complementary, the Committee would take into account both employment shortfalls and inflation deviations as well as the time horizons over which employment and inflation were projected to return to levels judged consistent with its mandate. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "9. The Federal Reserve implemented 13 emergency lending and liquidity facilities under its emergency lending authorities and undertook supervisory and regulatory actions to support the flow of credit to households, businesses, and local governments. See Board of Governors of the Federal Reserve System (2023), \"Coronavirus Disease 2019 (COVID-19): Funding, Credit, Liquidity, and Loan Facilities,\" webpage; and Board of Governors of the Federal Reserve System (2023), \"Coronavirus Disease 2019 (COVID-19): Supervisory and Regulatory Actions in Response to COVID-19,\" webpage. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "10. The March 15, 2020, FOMC statement is available on the Board's website at https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm (quoted text in paragraph 2). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "11. The September 2020 FOMC statement is available on the Board's website at https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm (quoted text in paragraph 4). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "12. The December 2020 FOMC statement is available on the Board's website at https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm (quoted text in paragraph 4). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "13. See, for example, the discussion of policy normalization principles in the December 2021 FOMC minutes, which can be found on the Board's website at https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "14. In the U.S., fiscal programs and policies included stimulus checks, expanded unemployment insurance, the Paycheck Protection Program, and other CARES Act (Coronavirus Aid, Relief, and Economic Security Act) and ARP Act (American Rescue Plan Act) programs designed to support businesses, households, and state and local governments. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "15. See the SEP released following the September 2021 FOMC meeting, which is available on the Board's website at https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "16. Private-sector forecasts reflect the consensus estimate in the Blue Chip survey of business forecasters in June 2021. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "17. For example, both the August and September 2021 employment reports suggested much lower job growth than did consensus forecasts, and these initial estimates were subsequently sizably increased. Similarly, total PCE inflation for nearly all quarters in 2021 has been revised higher than initially reported. See the real-time data on the Federal Reserve Bank of St. Louis's ALFRED website at https://alfred.stlouisfed.org/series/downloaddata?seid=PAYEMS (job growth) and https://alfred.stlouisfed.org/series/downloaddata?seid=PCECTPI (PCE inflation). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "18. See the November 2021 FOMC statement, available on the Board's website at https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "19. See the May 2023 FOMC statement, available on the Board's website at https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "20. For details on these programs, see Board of Governors, \"Coronavirus Disease 2019 (COVID-19): Funding, Credit, Liquidity, and Loan Facilities,\" in note  . The Federal Reserve also took a number of other actions, including easing terms on discount window lending and supervisory and regulatory actions, to encourage banks to lend and act as market intermediaries. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "21. See Michelle W. Bowman (2023), \"Panel on 'Design Issues for Central Bank Facilities in the Future,\" speech delivered at the Chicago Booth Initiative on Global Markets Workshop on Market Dysfunction, Chicago, March 3. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "22. See Michelle W. Bowman (2023), \"Remarks on the Economy and Prioritization of Bank Supervision and Regulation,\" speech delivered at the New York Bankers Association's Financial Services Forum, Palm Beach, Fla., November 9. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "23. See Michelle W. Bowman (2023), \"Financial Stability in Uncertain Times,\" speech delivered at the Reinventing Bretton Woods Committee and Policy Center for the New South Marrakech Economic Festival, Marrakech, Morocco, October 11. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "24. See Michelle W. Bowman (2024), \"The Future of Banking,\" speech delivered at the 157th Assembly for Bank Directors, Southwestern Graduate School of Banking, Maui, Hawaii, February 2. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "25. See Bowman, \"Financial Stability in Uncertain Times,\" in note  . Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "26. See Michelle W. Bowman (2024), \"The Path Forward for Bank Capital Reform,\" speech delivered at Protect Main Street, sponsored by the Center for Capital Markets at the U.S. Chamber of Commerce, Washington (virtual), January 17. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "27. See, for example, the box \"Monetary Policy Rules in the Current Environment\" in Board of Governors of the Federal Reserve System (2024), Monetary Policy Report (PDF) (Washington: Board of Governors, March), pp. 41–43; and Federal Reserve Bank of Cleveland (2024), \"Simple Monetary Policy Rules,\" webpage. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "28. See the March 2024 and December 2023 SEPs, available on the Board's website at https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm. Return to text"
+  }
+ ]
+}

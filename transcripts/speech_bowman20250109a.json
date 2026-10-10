@@ -1,0 +1,268 @@
+{
+ "date": "20250109",
+ "source": "https://www.federalreserve.gov/newsevents/speech/bowman20250109a.htm",
+ "title": "Speech by Governor Bowman on monetary policy, economic performance, and lessons for banking regulation",
+ "speaker_key": "michelle_bowman",
+ "segments": [
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "At the California Bankers Association 2025 Bank Presidents Seminar, Laguna Beach, California"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Let me begin by recognizing the devastation caused by the fires in the Los Angeles area. My thoughts and prayers are with those who have been impacted and the first responders who are fighting to bring the fires under control."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "I would like to thank the California Bankers Association for the invitation to speak to you today.1 I appreciate the opportunity to reflect on the past year, on both the path of monetary policy and the economy and on how this past experience can inform the bank regulatory agenda as we look ahead to a new year."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "In light of the policy decisions at the last few Federal Open Market Committee (FOMC) meetings, I will begin by providing some perspective on my votes and then discuss my current views on the economy and monetary policy."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Update on the Most Recent FOMC Meetings At the September meeting last year, the FOMC voted to lower the target range for the federal funds rate, for the first time since we began tightening monetary policy to combat inflation, by 1/2 percentage point to 4-3/4 to 5 percent. Although I was unable to support such a large cut at that time, I did agree with the Committee's assessment that it was appropriate to begin the process of recalibrating policy to reflect the progress in both lowering inflation and cooling the labor market since the middle of 2023."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "My dissent favored a smaller initial cut to begin the recalibration process and was the first FOMC dissent by a Board member in nearly 20 years. I explained my reasoning in a statement published after the meeting that noted that moving the policy rate down too quickly would carry the risk of unnecessarily stoking demand and potentially reigniting inflationary pressures. In addition, since inflation continues to hover well above our 2 percent goal, there was a real risk that the Committee's large policy action could be interpreted as a premature declaration of victory on our price-stability mandate."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "At both our November and December meetings, the Committee lowered the target range for the federal funds rate by 1/4 percentage point, bringing it to 4-1/4 to 4-1/2 percent. I supported the December policy action because, in my view, it represented the Committee's final step in the policy recalibration phase. The target range now reflects 100 basis points of cuts since September, and the policy rate is now closer to my estimate of its neutral level, which is higher than before the pandemic. But given the lack of continued progress on lowering inflation and the ongoing strength in economic activity and in the labor market, I could have supported taking no action at the December meeting. Still, I am pleased that the post-meeting statement continued to reference a flexible and data-dependent approach for considering future policy adjustments. It is important that we remain focused on returning inflation to 2 percent."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "I expect that the coming months should bring clarity on the incoming administration's policies and the carry over of inflationary pressures from 2024, reflecting private spending decisions and an apparent faster spend-out of existing federal government appropriations in recent months. It will be very important to understand how these factors will affect economic activity and inflation going forward."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The Economy Towards the End of 2024 and Risks to the Outlook The U.S. economy remained strong through the end of last year, with solid growth in economic activity and a labor market near full employment. However, core inflation remains elevated, and I continue to see upside risks to inflation."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The rate of inflation declined significantly in 2023, but this progress appears to have stalled last year with core inflation still uncomfortably above the Committee's 2 percent goal. The 12-month measure of core personal consumption expenditures inflation—which excludes food and energy prices—moved back up to 2.8 percent in October and November, only slightly below its 3.0 percent reading at the end of 2023. Progress has stalled since the spring of last year mostly due to a slowing in core goods price declines. Persistently elevated core inflation continues to reflect pressures on housing services prices, possibly due to an increase in demand for affordable housing amid an inelastic supply. It also appears to be originating from a few other major components in recent months, such as in goods and in services with imputed prices."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Gross domestic product increased at a solid pace in the third quarter, maintaining the momentum from the previous four quarters. Growth continued to be driven by private domestic final purchases, as personal consumption, and retail sales in particular, strongly increased in the third quarter, more than offsetting further weakness in housing activity due to high mortgage rates. The latest data suggest continued strength in consumer spending in the fourth quarter as retail sales and sales of light vehicles continued to rise appreciably."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Post-election consumer sentiment appears to be improving, but it remains well below pre-pandemic levels likely because of higher prices. And since housing, food, and energy price increases have far outpaced overall inflation since the pandemic, lower-income households have experienced the negative impacts of inflation hardest, especially as these households have limited options to trade down for lower-cost goods and services."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The most recent labor market report shows that payroll employment gains rebounded in November, following a temporary drag in October from hurricanes Helene and Milton and the Boeing strike. On balance, job gains averaged about 130,000 over those two months, a pace only slightly below the average gains in the second and third quarters. The unemployment rate rose to a still low 4.2 percent in November, but it has moved sideways since July. While unemployment is notably higher than in 2023, it is still at a historically low level and below my and the Congressional Budget Office's estimates of full employment, and we will receive the December employment report tomorrow."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The labor market has loosened from the extremely tight conditions of the past few years. The ratio of job vacancies to unemployed workers has remained close to the historically elevated pre-pandemic level in recent months. But there are still more available jobs than available workers, a condition that before 2018 had only occurred twice for a prolonged period since World War II, further signaling ongoing labor market strength. Wage growth remains indicative of a tight labor market and above the pace consistent with our inflation goal."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The rise in the unemployment rate last year largely reflected weaker hiring, as job seekers entering or re-entering the labor force took longer to find work, while layoffs remained low. Although there has been some cooling in labor demand and the labor force participation rate declined a bit further in November, the household survey may have failed to capture the usual seasonal hiring ahead of the holidays due to the unusually early survey week and the late Thanksgiving holiday."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "More concerningly, the labor market data have become increasingly difficult to interpret, as surveys and other measurements struggle to incorporate large numbers of new workers and to accurately account for other influences. As the dynamics of immigration and business creation and closures continue to change, it has become increasingly difficult to interpret the monthly data from the payroll and household surveys. It is crucial that U.S. official data accurately capture structural changes in labor markets in real time, such as those in recent years, so we can more confidently rely on these data for monetary and economic policymaking. In the meantime, given conflicting economic signals, measurement challenges, and significant data revisions, I remain cautious about taking signal from only a limited set of real-time data releases."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Turning to the risks to achieving our dual mandate, I continue to see greater risks to price stability, especially while the labor market remains near full employment, but it is possible that we could see a deterioration in labor market conditions. Global supply chains continue to be susceptible to shocks, including labor strikes and increased geopolitical tensions, namely in the Middle East, Eastern Europe, and Asia, which could result in inflationary effects on food, energy, and other commodity markets."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The potential release of pent-up demand following the election, especially with improving consumer and business sentiment, could also present inflationary risks, as could an increased demand for housing given the long-standing limited supply, especially of affordable housing. While it is not my baseline outlook, I cannot rule out the risk that progress on inflation could continue to stall."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The Path Forward Looking ahead, we should be cautious in considering changes to the policy rate as we move toward a more neutral setting. Future actions should be based on a careful assessment of ongoing and sustained progress in achieving our goals, and we must be clear in our communication about how further changes are intended to affect economic conditions. We should also refrain from prejudging the incoming administration's future policies. Instead, we should wait for more clarity and then seek to understand the effects on economic activity, the labor market, and inflation."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "I also continue to be concerned that the current stance of policy may not be as restrictive as others may see it. Given the ongoing strength in the economy, it seems unlikely that the overall level of interest rates and borrowing costs are providing meaningful restraint. With equity prices more than 20 percent higher than a year ago, easier financial conditions may be contributing to the lack of further progress on slowing inflation. In fact, concerns about inflation risks seem to partly explain the recent notable increase in the 10-year Treasury yield back to values last seen in the spring of 2024. In light of these considerations, I continue to prefer a cautious and gradual approach to adjusting policy."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Looking forward, it is important to note that monetary policy is not on a preset course. At each FOMC meeting, my colleagues and I will make our decisions based on the incoming data and the implications for and risks to the outlook and guided by the Fed's dual-mandate goals of maximum employment and stable prices. By the time of our next meeting later this month, we will have seen new reports on consumer and producer price inflation. In addition to closely watching the incoming data and broader financial conditions, I will continue to meet with a broad range of contacts as I assess the appropriateness of our monetary policy stance."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "It is also important to clearly explain how we consider progress in meeting our inflation and employment goals in our policy deliberations. Restoring price stability is essential for fostering a strong labor market and an economy that works for everyone in the longer term."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Approach to Bank Regulatory Policy Turning to banking, I will start by sharing my thoughts on bank supervision and regulation. This year will see a transition in leadership at the banking agencies, and I expect that this will translate into a shift in priorities and approach. I am optimistic that by working collaboratively to focus on our statutory mandates, the banking agencies can improve how we fulfill our responsibilities in a fair, efficient, and accountable way. Adopting a more pragmatic approach to policymaking, one that imposes discipline in the exercise of the extensive powers and important responsibilities granted by Congress, would be most effective.2"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Public debates about the bank regulatory framework routinely focus on whether regulators are being \"hard enough\" on banks, or whether the framework is too \"lenient.\" Framing the debate this way suggests a binary approach that ignores the known tradeoffs in any regulatory action—like raising capital requirements or downgrading a bank's management rating for minor issues to show \"toughness.\" This approach interprets a rational prioritization of regulatory matters as being too bank friendly. While policy views may differ, policy debates should not misinterpret the dynamic of how banks and regulators should operate. In short, bank regulation and supervision need not be an adversarial system, with banks and regulators acting in opposition. Rather, banks and regulators often have the shared goal of a banking system that is safe, sound, and effective, with each serving an important role in furthering these objectives."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "As we move away from this type of binary thinking, that leaves the question of how regulators can best accomplish their statutory objectives. As a starting point, we must identify the objectives we are trying to achieve. In conducting bank regulation and supervision, the Federal Reserve has the important responsibility of promoting the safe and sound operation of individual banks and the stability of the broader financial system. In many cases, these goals are complementary. When individual banks operate in a safe and sound manner, the banking system generally promotes the stability of the U.S. financial system."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Of course, these objectives require a degree of balance if we want the banking system to serve the U.S. economy and facilitate economic growth. When we promote safety and soundness—for example by raising capital requirements—that has an effect on the aggregate lending capacity of the banking system and the availability of credit, particularly for less qualified borrowers. We must approach the task of bank regulation with an understanding and appreciation of these tradeoffs, coupled with an affirmative acknowledgment that the banking system is an important driver of business formation, economic expansion, and opportunity. We have the same responsibility to understand and appreciate the tradeoffs when we exercise our supervisory authority."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "I am optimistic about the future of banking in the United States and believe that the banking regulators can support the banking system by adopting a more pragmatic approach. While this is a non-exclusive list, I continue to believe the areas that we should focus on should include (1) prioritizing safety and soundness, (2) renewing our commitment to regulatory tailoring, and (3) increasing transparency.3"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Prioritization of Safety and Soundness In 2024, bank regulators were still operating under the shadow of the 2023 bank failures, particularly the failure of Silicon Valley Bank (SVB). The risks facing SVB—interest rate and funding risks, rapid growth, and the idiosyncratic business model and concentrated customer base of the bank—have long been important issues that have been prioritized during examinations. At its root, SVB's failure exposed significant flaws not only in the bank's management but also in the approach to oversight and supervision."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "As we approach regulatory and supervisory reform from the perspective of pragmatism, we need to take a close look at what went wrong and what could be fixed. Regulatory tools to improve management are imperfect and may be limited in their effectiveness before a bank has failed, but we have great latitude to modify our approach to supervision. One pragmatic change would be to prioritize safety and soundness and deprioritize matters that are not essential to—or that are tangential to—our statutory obligations. After SVB's failure, we saw a wide range of regulatory proposals. These have included substantial increases in bank capital requirements and pushing down global systemically important bank (G-SIB) and large bank requirements to much smaller firms. They have also included finding supervisory deficiencies in the management of well-capitalized and financially sound firms and considering widespread changes to the funding and liquidity requirements and expectations that apply to all banks."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Many of these proposals have targeted concerns well beyond remediating issues identified during the 2023 banking stress but have been justified in a generic way—at least in part—as a \"response\" to the failure of SVB. In many cases, the nexus between a proposed reform and how that reform would remediate any of the underlying issues that caused the failure of SVB or caused stress in the broader banking system is not clearly articulated."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "When the agencies pursue reforms, it is critical that the problem is clearly identified and that an explanation is given for how each proposal would address the problem. We should not characterize all reforms as \"crisis response\" actions, as doing so does not relieve us of the responsibility to analyze and justify the tradeoffs and alternatives of any particular measure."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "There is substantial room for agreement and consensus. We all want a banking system that can effectively provide credit, including to underserved consumers and businesses. We all want a banking system that is resilient in the face of changing economic conditions. We all want a banking system in which banks are free to experiment and innovate to better serve their customers. And we all want a banking system in which banks are held to high but economically reasonable standards in terms of capital, risk management and compliance."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The process of any reform or change to the bank regulatory framework should begin with an identification of the problem, followed by an analysis of whether proposed solutions are within the agency's statutory authorities, and an evaluation of whether targeted changes could result in improvements, remediation of gaps, or elimination of redundant and unnecessary requirements. The resulting framework will better promote safety and soundness in a more durable and consistent way over time, while also continuing to support economic growth."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Renewed Commitment to Tailoring Like you, I firmly believe in the virtues of tailoring not only as a statutory responsibility but as a key to forming sensible and effective bank regulatory policy.4 Tailoring can help ensure regulators focus on the most critical risks over time and avoid the over-allocation of resources or imposition of unnecessary costs on the banking system. Tailoring also allows us to allocate limited supervisory resources to most effectively support safety and soundness of the banking system and U.S. financial stability. The Federal Reserve has not only statutory responsibilities established by Congress, but a responsibility to use our resources efficiently and effectively in the execution of our duties."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Over the past two years, we have seen proposals that would materially reduce the tailoring of regulatory requirements, particularly as it relates to capital (the so-called Basel III \"endgame\" reforms) and new long-term debt requirements that would apply to all banks with over $100 billion in assets. Both proposals raise significant policy questions as to whether the costs are justified by the benefits—questions not sufficiently addressed in the proposals—and pose significant risks of unintended consequences."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Essentially, this type of approach to capital \"flattens\" requirements across large banks. And coupled with other potential reforms to liquidity and funding requirements, this approach could lead to substantial industry consolidation as medium-sized banks weigh the benefits and costs to comply with an aggregate set of requirements more suitable for the largest banks. We should be cautious of these types of piecemeal regulatory proposals and instead think more holistically about the aggregate impacts as part of our process."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Tailoring also plays an important role in supervision, an area that historically has differentiated expectations for firms based on size, business model, risk profile, and complexity. These criteria provide a reasonable basis to take a different approach based on the unique characteristics of each bank, and as banks shift in size and evolve in business model and risk, it is appropriate to recalibrate expectations. However, I see a growing risk that under the veil of supervision, there has been an erosion of a risk-based approach, and effectively a \"push-down\" of regulatory requirements designed and calibrated for larger firms to apply to smaller firms."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "I continue to believe that tailoring should be a central tenet of our regulatory and supervisory approach and framework and believe that we must renew our commitment to this philosophy going forward. I am confident that going forward, regulators will return to regulatory tailoring, particularly for community banks with straightforward business models."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Increasing Transparency Regulators should operate in a transparent way and carefully and meticulously follow administrative procedures when making revisions to the regulatory framework. We should take a similar approach to shifts in supervisory focus. Doing so promotes trust and accountability to the public and should be integral to the important work we do promoting the safe and sound operation of the banking system and financial stability. Transparency also promotes innovation in the financial system by enabling banks to understand how to engage in new activities. This is especially important as digital assets and artificial intelligence are becoming increasingly more prevalent in the financial system."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "A deliberate, transparent, and fact-based approach to pursuing statutory objectives helps us \"show our work,\" that we are focused on pursuing our policy goals, and are avoiding straying into political concerns outside of statutory purposes or functions. Promoting safety, soundness, and financial stability should not devolve into an exercise of regulatory allocation of credit—picking winners and losers—or promoting an ideological position through more open-ended processes like bank supervision and examination."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Transparency promotes fairness, as regulated entities and the public can better understand why and how our actions further our goals. When we identify areas that suffer from a lack of transparency, we should act promptly to address those concerns. Take, for example, the Federal Reserve's supervisory stress testing process. On December 23, the Fed announced that it would soon seek public comment on \"significant changes\" to the stress testing process designed to improve transparency of the tests and reduce volatility of the resulting stress capital buffers that apply to large financial institutions.5 Given my longstanding support for revisiting the stress testing framework to promote transparency and reduce volatility, I am pleased with this development.6"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Transparency can lead to better public engagement and outcomes and should be a central part of the regulatory and supervisory approach, even when not legally mandated, such as in supervision. Supervision involves examiners probing bank operations and assessing a bank's approach to risk and risk management. Much of this information is confidential and commercially sensitive and, therefore, not available to the public or released without risking some degree of harm to the institution."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "But the confidential nature and approach to supervision tends to result in a wide range of information being categorized as confidential supervisory information (CSI) and subject to restrictions on sharing. This information ends up being shielded from public scrutiny and becomes a barrier to banks engaging in discussion with peers and other regulators to better understand supervisory expectations. Supervisory expectations should not surprise regulated firms, and yet changes in supervisory expectations often arise in the course of an ongoing examination. As a result, the ability of a financial institution to be proactive—to work to meet any new expectations—is impossible until they have received supervisory feedback, often in the form of a supervisory finding or matter requiring attention or, in extreme cases, in a formal or informal supervisory action."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "I am not suggesting that there are always simple solutions to improve transparency, and certainly it is appropriate that much of the information developed in the supervisory process remains shielded as confidential supervisory information. But regulators must also acknowledge the new world in which we operate, one in which administrative law increasingly demands greater transparency and accountability to act as a check on regulatory overreach."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Closing Thoughts Thank you for the opportunity to share my thoughts on the economy and bank regulatory matters with you today. In the coming months, I look forward to seeing the impacts of the new administration's policies on the economy and assessing how monetary policy should respond going forward. Today, the U.S. economy begins the new year on a strong footing, with still elevated inflation and a solid labor market."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The new year brings an opportunity to reflect on the experience and lessons learned in the past few years and to take a critical look at improving the bank regulatory framework, including both supervision and regulation. And while I have laid out a few broad areas that I think deserve special attention—focusing on safety and soundness, renewing our commitment to tailoring, and improving transparency—my hope is that the steps we take to improve the regulatory framework in the future focus on pragmatism as a guiding principle."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "1. The views expressed here are my own and are not necessarily those of my colleagues on the Federal Reserve Board or the Federal Open Market Committee. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "2. Michelle W. Bowman, \"Approaching Policymaking Pragmatically (PDF)\" (speech at the Forum Club of the Palm Beaches, West Palm Beach, Florida, November 20, 2024). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "3. See Michelle W. Bowman, \"New Year's Resolutions for Bank Regulatory Policymakers (PDF)\" (speech at the South Carolina Bankers Association 2024 Community Bankers Conference, Columbia, South Carolina, January 8, 2024). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "4. See Economic Growth, Regulatory Relief, and Consumer Protection Act, Pub. L. No. 115-174, 132 Stat. 1296 (2018); Michelle W. Bowman, \"Tailoring, Fidelity to the Rule of Law, and Unintended Consequences (PDF)\" (speech at the Harvard Law School Faculty Club, Cambridge, Massachusetts, March 5, 2024). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "5. Board of Governors of the Federal Reserve System, \"Due to Evolving Legal Landscape & Changes in the Framework of Administrative Law, Federal Reserve Board Will Soon Seek Public Comment on Significant Changes to Improve Transparency of Bank Stress Tests & Reduce Volatility of Resulting Capital Requirements,\" press release, December 23, 2024. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "6. Michelle W. Bowman, \"The Future of Stress Testing and the Stress Capital Buffer Framework (PDF)\" (speech at the Executive Council of the Banking Law Section of the Federal Bar Association, Washington, D.C., September 10, 2024). Return to text"
+  }
+ ]
+}

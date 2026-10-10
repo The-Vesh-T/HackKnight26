@@ -1,0 +1,138 @@
+{
+ "date": "20240717",
+ "source": "https://www.federalreserve.gov/newsevents/speech/waller20240717a.htm",
+ "title": "Speech by Governor Waller on the economic outlook",
+ "speaker_key": "christopher_waller",
+ "segments": [
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Thank you, Jeff, and thank you to the Federal Reserve Bank of Kansas City for the opportunity to speak to you today.1 So far, 2024 has been a challenging year for economic forecasters, and for monetary policymakers. After significant progress in 2023 toward the Federal Open Market Committee's (FOMC) price-stability goal, inflation jumped in the first quarter. At the same time, both the labor market and economic growth ran strong enough that some commentators wondered whether monetary policy was restrictive enough and whether rate hikes should be back on the table. These twists and turns in the economic data shifted everyone's expectations back and forth as to when the FOMC might begin lowering its policy interest rate and how many cuts there would be this year. During this time, my consistent view was that there was no urgency to cut rates until the Committee is confident that inflation is returning sustainably to 2 percent."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Then, in the second quarter, data on inflation and the labor market moderated in a way that suggests progress toward price stability has resumed. The data over the past couple months shows the economy growing at a more moderate pace, labor supply and demand apparently in balance, and inflation slowing from earlier this year. These are all developments that support progress toward achieving the FOMC's dual-mandate goals. For reasons that I will elaborate on later, I believe current data are consistent with achieving a soft landing, and I will be looking for data over the next couple months to buttress this view. So, while I don't believe we have reached our final destination, I do believe we are getting closer to the time when a cut in the policy rate is warranted."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Before turning to the economic outlook, let me say a word about central bank communication—in particular, communication about the policy path. Central bankers use communications to try, as much as possible, to describe the extent of progress, and even more importantly, the remaining path to the ultimate destination. The problem is that there may not be just one path to the ultimate destination—it depends on the incoming data. For example, when leaving work, you have a normal route to get home, and that is the base case for your estimated commuting time. But that day's traffic conditions will dictate whether you should take that route or an alternative to get home. You need to think about the alternative routes to get home and how long they will take if you are confronted with unexpected congestion. And, most likely, you will also have to communicate these alternative travel plans to family members so they have an idea of when you will arrive and how you will get the kids to after school activities."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Central bankers face the same problem: How will you set policy if the data come in different than you expected? It is important to not only lay out your base case, but also alternative paths for policy if your base case is disrupted by incoming data. And for monetary policy, it is even more important to communicate those alternative policy paths to the public so that they can also make plans. So, after reviewing the economic outlook, I will explore three possible data scenarios about inflation for the second half of 2024 and how those differing scenarios affect my view of the appropriate stance of policy."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Economic Activity Let me start with the economic outlook. Real gross domestic product (GDP) grew at about a 4 percent annual pace in the second half of 2023 and then significantly slowed to a 1.4 percent rate in the first quarter. Recent forecasts indicate that output grew a little faster in the second quarter. We will get an initial estimate of second-quarter GDP next week, but the Blue Chip average of private-sector forecasts estimates that GDP grew at a 1.8 percent pace in the second quarter, and the Atlanta Fed's GDPNow model estimates growth at 2.5 percent. A big reason for the higher GDPNow estimate is because it was updated after yesterday's retail sales report. Digging into that report, one finds that the data directly informing the Bureau of Economic Analysis's estimate of consumer spending posted solid gains for June and revised up sales for both April and May. I suspect that this moderate consumption growth may continue in the second half of the year because personal income data is holding up."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "A signal of possible slowing in economic activity comes from the Institute for Supply Management's (ISM) survey of purchasing managers for non-manufacturing firms. Nonmanufacturing firms constitute the large majority of businesses in the economy. The non-manufacturing index fell below 50 in June, suggesting a contraction in activity. As a part of that survey, \"business activity,\" corresponding to production or sales, fell below 50 for the first time since May 2020. The index for new orders fell especially sharply and the employment index fell further into contractionary territory. Clearly, economic activity among these businesses is slowing, but it is too soon to say by how much. Previous months when the overall index fell below 50 were followed by sustained periods above that threshold, so we will have to wait and see what this current reading means for a slowing in this sector. Meanwhile activity among manufacturing businesses has been fairly steady this year after contracting from late 2022 through 2023. New orders and most other readings are close to 50."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "The Labor Market One development in the past few months with significant implications for monetary policy is that labor supply and demand have finally come into rough balance. Demand of workers exceeded supply for several years, contributing significantly to high wage inflation, which inevitably fed through into services inflation. Supply was damaged after the pandemic, as many people left the workforce to care for family, older workers retired, and immigration fell significantly. At the same time, the economy grew solidly, and labor demand rose at a brisk pace. The imbalance in the labor market was reflected in a surge in job openings, with two vacant jobs for each worker counted as looking for work, nearly double the rate prior to the pandemic. There was also a surge in the number of people quitting their jobs, most of them to take a higher-paying job elsewhere."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "But now that situation has changed dramatically. Labor supply has improved, with a higher labor force participation rate and much higher rates of immigration. Not long ago, I would have been concerned that the high levels of job creation reported recently were inconsistent with a labor market coming into better balance, but the high pace of immigration in recent quarters helped accommodate the strong demand. And, more recently, as restrictive monetary policy has put downward pressure on aggregate demand, the demand for labor has moderated."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "The unemployment rate has risen from a 50-year low to 4.1 percent, still low in historical terms but the highest since late 2021. In May, the ratio of job vacancies to unemployed people stood at 1.2, which was the average in the year before the pandemic. The share of workers who quit their jobs is now slightly below the pre-pandemic level. One indication that this is a loosening, rather than a weakening, of the labor market is that layoff rates have been more or less steady at the low rate of around 1 percent. To me, this is all evidence of labor supply and demand in balance."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Back in 2022, I wrote a research note with Fed economist Andrew Figura on the Beveridge curve, which is the relationship between unemployment and the job vacancy rate.2 In that research, we projected that, if layoffs were steady, the unemployment rate would rise to around 4.5 percent if the job vacancy rate dropped back to its pre-pandemic level of 4.6 percent. The latest data estimated the vacancy rate in May as 4.9 percent, pretty close to the pre-pandemic level. There were some prominent skeptics, but this data tells us that if inflation continues to moderate as it has since May, then we may achieve the soft landing in the labor market that I said back then was possible, with even less of a tradeoff in terms of unemployment."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Another sign of balance in the labor market is that wage growth has continued to slow. The twelve-month change in average hourly earnings has slowed from its peak of about 6 percent in March 2022, to 4.3 percent by December 2023, and is down to 3.9 percent as of June. The three-month increase through June was running at an annual pace of 3.6 percent, which is close to what I judge is the rate needed to support inflation running at 2 percent in a sustained way. And this interpretation is consistent with other measures that suggest wage growth is back to its pre-pandemic level."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "So what lies ahead for the labor market? Right now, the labor market is in a sweet spot—employment growth is not excessive when accounting for immigration, nominal wage growth is near the rate consistent with price stability, the unemployment rate is close to what is thought of as its long run value, the job vacancy rate is near its pre-pandemic level and the involuntary layoff rate has held steady at 1 percent for over 2 years. In terms of the employment leg of the dual mandate, we may well be able to achieve the soft landing."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "But we need to keep the labor market in this sweet spot. As my research note highlighted, the history of the Beveridge curve indicates that, given the normalization of the labor market, a continued decline in the job vacancy rate and the vacancy-to-unemployment ratio may lead to a larger increase in unemployment than we have seen the past two years. In short, one implication of a balanced labor market is that the risk of it becoming too loose is more closely balanced with the risk of it being too tight. This is a policy challenge that we have not faced for the past couple years. As of today, I see there is more upside risk to unemployment than we have seen for a long time."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Inflation Let me now turn to the outlook for inflation. After making progress last year toward our 2 percent goal, early this year I was concerned that progress might have stalled. But data in recent months has been reassuring. Last week's consumer price index (CPI) report was the second month of very good news. It showed that total consumer prices fell in June, after staying flat in May. This means that CPI inflation for the 12-months through June declined to 3 percent, while the 3-month annualized change dropped to 1.1 percent. For consumers who have been dealing with prices that are still significantly higher than before the pandemic, this is good news, and with continuing solid gains in wages and other income, over time I hope it will begin to feel like the level of prices is becoming more manageable."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "For policymakers, this was also welcome news. Factoring out energy and food prices, which tend to be volatile, core CPI inflation rose only 0.1 percent last month, the slowest pace since the pandemic. This brings 3-month annualized core inflation down to an annual rate of 2.1 percent. Based on the consumer and producer price data reported last week, private sector forecasters are predicting that the FOMC's preferred inflation gauge based on personal consumer expenditures (PCE) rose 0.1 percent in June and that core PCE inflation rose 0.2 percent."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "So, after disappointing data to begin 2024, we now have a couple of months of data that I view as being more consistent with the steady progress we saw last year in reducing inflation, and also consistent with the FOMC's price stability goal. The evidence is mounting that the first quarter inflation data may have been an aberration and that the effects of tighter monetary policy have corralled high inflation. To see this, consider the average monthly rate of core PCE inflation over the past 18 months. In the first quarter of 2023 it averaged 0.4 percent, and then 0.3 percent, 0.2 percent and 0.1 percent over the remaining quarters of the year. Core PCE inflation jumped to a monthly average of 0.4 percent in the first quarter of this year but is now estimated to be back to 0.2 percent last quarter. Most importantly, I don't have to look at the second decimal place to see progress! The recent data are making me more confident we will achieve the inflation goal of our dual mandate."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Monetary Policy Now let me turn to the implications of this data for monetary policy. As I noted earlier, the changes in the data this year have made it hard to formulate an outlook for policy that would apply to the range of possible paths the economy may take. That range of possibilities must consider two risks."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "On the one hand, it is essential that monetary policy get inflation down to a sustained level of 2 percent. If we start to loosen policy too soon, and allow inflation to flare up again, we risk losing credibility with the public and allowing expectations of future inflation to become unanchored. That credibility has helped inflation fall as quickly as it has in the past 18 months and squandering it would be a grave mistake. Monthly PCE inflation has very recently been running near 2 percent at an annual rate, but I need to see a bit more evidence that this will be sustained. The other risk is that we wait too long to ease monetary policy and contribute to a significant economic slowdown or a recession, with unemployment rising notably."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "With those two risks in mind, let me lay out three scenarios for the economy this year that would result in leading me to different views about appropriate policy. One assumption I make is that there is no significant deterioration in the labor market in the next several months—that we are able to keep the labor market in its current sweet spot. While I believe this is likely, I will be paying close attention to the employment side of our mandate."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "The first scenario is the optimistic one. Here we continue to receive more very favorable CPI inflation reports, with implications for very favorable PCE inflation readings as well. This would give us a nice run of inflation data starting in May. I see a significant but not high probability of this scenario occurring. And, in that circumstance, I would have much greater confidence in inflation moving sustainably toward 2 percent. In this scenario, I could envision a rate cut in the not-too-distant future."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "The second scenario is a bit less optimistic but probably more likely to occur. In this case, the inflation data comes in uneven—not as good as the previous few months but still consistent overall with progress on bringing inflation down toward 2 percent. Here, with the uneven data, it would be a matter of timing as to when I thought we are making sustainable progress to 2 percent inflation. In this case, a rate cut in the near future is more uncertain."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "The final scenario is the one that I certainly don't want to see but have to worry about. In this case, if we were to see a significant resurgence in inflation in the second half of 2024, it would be tough to conclude we were making sustainable progress on inflation this year. While this pessimistic outcome is possible, I put a low probability on it happening given the recent data we have received."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "These scenarios highlight that the data will influence how my confidence in inflation returning sustainably to 2 percent could evolve over time. And this will then influence my view of the appropriate path of policy. This all goes to say that my view of the appropriate path of policy is data dependent."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "In laying out these scenarios, I don't mean to suggest that I will ignore other data and what they tell us about economic and financial conditions. As always, my judgments about appropriate policy will consider the totality of the data, including importantly the signals we receive about the state of the labor market, which has eased and now looks to be in balance. But for the purpose of clearly communicating my thinking about the stance of policy over the next several months, I think these scenarios are helpful. And given that I believe the first two scenarios have the highest probability of occurring, I believe the time to lower the policy rate is drawing closer."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "1. The views expressed here are my own and are not necessarily those of my colleagues on the Board of Governors or the Federal Open Market Committee. Return to text"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "2. See Andrew Figura and Chris Waller (2022), \"What Does the Beveridge Curve Tell Us about the Likelihood of a Soft Landing?\" FEDS Notes (Washington: Board of Governors of the Federal Reserve System, July 29). Return to text"
+  }
+ ]
+}

@@ -1,0 +1,123 @@
+{
+ "date": "20241202",
+ "source": "https://www.federalreserve.gov/newsevents/speech/waller20241202a.htm",
+ "title": "Speech by Governor Waller on the economic outlook",
+ "speaker_key": "christopher_waller",
+ "segments": [
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "At \"Building a Better Fed Framework,\" American Institute for Economic Research Monetary Conference, Washington, D.C."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Thank you, Lydia, and thank you for the opportunity to speak to you today. I thought I might use my time with you to address the Federal Open Market Committee's (FOMC) ongoing effort to return inflation to our 2 percent target while keeping the labor market and the economy strong.1"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "After significant progress in reducing inflation and evident moderation in the labor market, in September the Committee judged that the time had come to begin easing monetary policy toward a more neutral setting to limit the risk of unduly weakening the labor market as progress continues toward 2 percent inflation. After reducing the policy rate 75 basis points since our September meeting, I believe that monetary policy is still restrictive and putting downward pressure on inflation without creating undesirable weakness in the labor market. I expect rate cuts to continue over the next year until we approach a more neutral setting of the policy rate."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "But recent data have raised the possibility that progress on inflation may be stalling at a level meaningfully above 2 percent. This risk has raised concerns that the FOMC should consider holding the policy rate constant at our upcoming meeting to collect more information about the future path of inflation and the economy. Based on the economic data in hand today and forecasts that show that inflation will continue on its downward path to 2 percent over the medium term, at present I lean toward supporting a cut to the policy rate at our December meeting. But that decision will depend on whether data that we will receive before then surprises to the upside and alters my forecast for the path of inflation."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Let me turn to the economic outlook. Real gross domestic product (GDP) grew at a strong annual pace of 2.8 percent in the third quarter of 2024, and indications are that growth in the fourth quarter will be a bit slower. An average of private sectors forecasts predicts 2.2 percent, while based on fairly limited data so far, the Atlanta Fed’s GDPNow model currently predicts 3.2 percent."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "On the consumer side of the economy, real personal consumption expenditures (PCE) increased 0.1 percent in October after a 0.5 percent rise in September. Given the recent volatility in these numbers, I won't read too much into the monthly swing. The modest increase in October might partially reflect some payback to the stronger growth in September. Overall, household balance sheets continue to be in generally good shape, and this position should help maintain spending going forward."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "On the business side of the economy, the S&P Global U.S. manufacturing purchasing managers index (PMI) rose slightly in November but still stands at a level indicating a slight deterioration in overall business conditions among manufacturers for the fifth straight month. Today's Institute for Supply Management manufacturing survey had a similar leaning. These readings are consistent with industrial production data for manufacturing remaining flat, as it has been for the past several months."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "But these aggregate data mask quite different performances for interest-sensitive sectors and other businesses not so affected by rates. In the spring of 2022, when the FOMC began raising interest rates, production by more interest rate–sensitive manufacturers, such as business equipment, grew at about the same rate as production by less rate-sensitive manufacturers. But starting around the middle of 2023, when the policy rate hit its peak, those stories diverged, and production by interest-sensitive manufacturing declined, while other manufacturing rose, driving a sizable gap between the two types of industries. This divergence is an indication to me that, even after the Committee cut rates 75 basis points, restrictive policy is working the way it is intended to, affecting production in sectors where rates matter. It is also a reminder that there is still some distance to go in reducing the policy rate to neutral. As that occurs, I expect the gap between the two types of industries will narrow. As for the service sector, which is the larger share of business activity, the November S&P Global U.S. PMI continued to increase, extending the strong momentum for services over the past year or two."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "While the picture for economic activity is pretty clear right now across the major data that we look at, things aren't as clear in recent data on the labor market. As expected, the October employment report showed very little increase in the number of jobs, but likely because of the temporary effects of the recent hurricanes and the strike at Boeing, which also affected businesses serving Boeing and its workers. The strike is over, and it is likely that most of the job losses from the hurricane have reversed. So I do expect a rebound in payroll data in the November employment report that is due out later this week, but it may take more time for the full swings in the payroll data to fully wash out."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "For that reason, I am leaning on other metrics to reveal what is really going on in the labor market. And when I look at a broader range of data, it tells a fairly consistent story over the past year about moderating demand relative to supply, consistent with continued progress toward 2 percent inflation and without an undesirable weakening in the labor market."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "The unemployment rate started 2024 at 3.7 percent and climbed gradually, briefly hitting 4.3 percent before falling back down to 4.1 percent in September and October. While that is still quite low in historical terms, it indicates a labor market significantly looser than we saw from the middle of 2022 to the middle of 2023, when unemployment was close to 3.5 percent and fast wage growth contributed to high inflation. Other data sharpen this image of a looser but still-strong labor market. The share of workers voluntarily quitting their jobs, an indication of tightness in the labor market, has trended down to levels lower than before the pandemic. The number of job openings continues to gradually fall, another sign of moderating demand relative to supply, but the number of layoffs is still low, consistent with a healthy labor market."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Growth in wages and other forms of compensation has moderated at the same time that labor productivity has grown strongly. This story is very different than a couple of years ago when, for example, average hourly wages grew at an annual rate above 5 percent in 2022, at the same time that the productivity of workers was declining. This double whammy put significant upward pressure on inflation. But over the second and third quarters of 2024, average hourly wages have grown at less than a 4 percent annual rate, while productivity has grown around 2 percent. The math is pretty simple—4 percent wage growth minus the 2 percent gain from higher productivity tells you that wage growth is consistent with bringing inflation down to 2 percent.2"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "While I am pleased at how well the labor market has held up under restrictive monetary policy, I am less pleased about what the data have been telling us the past couple of months about inflation. After making a lot of progress over the past year and a half, the recent data indicate that progress may be stalling. Inflation based on the Commerce Department's measure of prices for PCE rose more than expected in September and October and so did \"core\" PCE inflation, which excludes more volatile food and energy prices and is a better guide to future inflation. Three-month annualized core PCE inflation has risen over the past two months, while six-month annualized inflation has made only a small improvement. These rates now stand at 2.8 percent and 2.3 percent, respectively. These recent readings have contributed to 12-month core PCE inflation of 2.8 percent in October."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "If we compare components of core inflation this October with last October, we see 12-month housing services inflation has softened and goods inflation has moved to slight deflation, but there has been an increase in nonmarket core services excluding housing. Overall, I feel like an MMA fighter who keeps getting inflation in a choke hold, waiting for it to tap out yet it keeps slipping out of my grasp at the last minute. But let me assure you that submission is inevitable—inflation isn't getting out of the octagon."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "While the recent increase and the level of inflation raise concerns that it may be getting stuck above the FOMC's 2 percent goal, let me emphasize that this is a risk but not a certainty. I take the recent inflation data seriously, but we saw a similar uptick in inflation a year ago that was followed by a continued decline, so I also don't want to overreact. And I expect housing services inflation to continue to moderate and I do not take much signal from the elevated inflation for other non-market services."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Now let me turn to the implications for monetary policy based on my assessment of the underlying economic outlook. While some near-term aspects of the outlook may be a little unclear, something that is clear is the direction for monetary policy and our policy rate over the medium term, which is down. This downward trajectory reflects the fact that the level of aggregate demand in the economy, relative to supply, has moderated significantly over the past year—it is plainly visible in the data on spending and the labor market. Inflation over that time is also significantly lower, so it makes sense to be moving policy rates toward a more neutral setting."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "And there is a ways to go. In September, the median of the projections of FOMC participants was that the federal funds rate would be 3.4 percent at the end of next year, which is about 100 basis points lower than it is today. That number can and probably will change over time, but whatever the destination, there will be a variety of ways to get there, with the speed and timing of cuts determined by economic conditions we encounter on the way."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "The motivation for continuing to cut the policy rate at the FOMC's next meeting begins with how restrictive the current setting is. After we cut by 75 basis points, I believe the evidence is strong that policy continues to be significantly restrictive and that cutting again will only mean that we aren't pressing on the brake pedal quite as hard. Although monthly core inflation has flattened out in recent months, there is no indication that the pace of price increases for key service categories such as housing and nonmarket services should remain at their current levels or increase. Another factor that supports a further rate cut is that the labor market appears to finally be in balance, and we should aim to keep it that way."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "Conversely, based on what we know today, one could argue that there is a case for skipping a rate cut at the next meeting. Monthly readings on inflation have moved up noticeably recently, and we don't know whether this uptick in inflation will persist, or reverse, as we saw a year ago. Due to strikes and hurricanes, recent labor market data are giving us a cloudy view of the true state of the labor market that won't be clearer for a couple of months. As a result, one could advocate for not changing the policy rate at our upcoming meeting and adjusting our policy stance in a measured way going forward. In fact, if policymakers' estimates of the target range at the end of next year are close to correct, then the Committee will most likely be skipping rate cuts multiple times on the way to that destination."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "In deciding which of these two approaches to take at the FOMC's next meeting, I will be watching additional data very closely. Tomorrow, we get the Labor Department's Job Openings and Labor Turnover Survey. On Friday, we get the employment report, which, as I noted, may have misleading payroll data. Then next week, we get consumer and producer price indexes for November, which will allow a good estimate of PCE inflation for the month. Finally, on the first day of the FOMC meeting, we receive retail sales data for November that will give us an idea of how consumer spending is holding up."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "All of that information will help me decide whether to cut or skip. As of today, I am leaning toward continuing the work we have started in returning monetary policy to a more neutral setting. Policy is still restrictive enough that an additional cut at our next meeting will not dramatically change the stance of monetary policy and allow ample scope to later slow the pace of rate cuts, if needed, to maintain progress toward our inflation target. That said, if the data we receive between today and the next meeting surprise in a way that suggests our forecasts of slowing inflation and a moderating but still-solid economy are wrong, then I will be supportive of holding the policy rate constant. I will be watching the incoming data closely over the next couple weeks to help me make my decision as to what path to take."
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "1. The views expressed here are my own and are not necessarily those of my colleagues on the Federal Open Market Committee. Return to text"
+  },
+  {
+   "speaker": "CHRISTOPHER_WALLER",
+   "role": "chair",
+   "text": "2. A similar story holds true if one looks at growth in labor productivity and hourly compensation from the Productivity and Cost release. Here the wedge between the two series has narrowed over this time period. Return to text"
+  }
+ ]
+}
