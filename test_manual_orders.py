@@ -37,7 +37,7 @@ class ManualOrderTests(unittest.TestCase):
     def test_preview_is_owner_bound_single_use_and_real_send_is_mocked(self):
         trader = Mock(create_order=Mock(return_value={"order_id": "exchange-1", "fill_count": "1"}))
         with patch.object(mo, "_quote", return_value=self.quote), patch.object(mo, "_trader", return_value=trader), \
-             patch.dict(os.environ, {"MARKETPULSE_ALLOW_LIVE": "1"}):
+             patch.dict(os.environ, {"TRADIO_ALLOW_LIVE": "1"}):
             preview = mo.preview(self.order, "owner-a")
             with self.assertRaises(ValueError):
                 mo.submit(preview["preview_id"], "owner-b")
@@ -51,7 +51,7 @@ class ManualOrderTests(unittest.TestCase):
 
     def test_local_opt_in_blocks_send(self):
         with patch.object(mo, "_quote", return_value=self.quote), \
-             patch.dict(os.environ, {"MARKETPULSE_ALLOW_LIVE": ""}):
+             patch.dict(os.environ, {"TRADIO_ALLOW_LIVE": ""}):
             preview = mo.preview(self.order, "owner")
             with self.assertRaisesRegex(RuntimeError, "local|Local"):
                 mo.submit(preview["preview_id"], "owner")
@@ -66,7 +66,7 @@ class ManualOrderTests(unittest.TestCase):
     def test_unknown_exchange_result_stays_reserved_and_is_not_retried(self):
         trader = Mock(create_order=Mock(side_effect=TimeoutError("no receipt")))
         with patch.object(mo, "_quote", return_value=self.quote), patch.object(mo, "_trader", return_value=trader), \
-             patch.dict(os.environ, {"MARKETPULSE_ALLOW_LIVE": "1"}):
+             patch.dict(os.environ, {"TRADIO_ALLOW_LIVE": "1"}):
             preview = mo.preview(self.order, "owner")
             with self.assertRaisesRegex(RuntimeError, "outcome is unknown"):
                 mo.submit(preview["preview_id"], "owner")

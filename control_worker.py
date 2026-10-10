@@ -2,7 +2,7 @@
 
     python control_worker.py
 
-The hosted MarketPulse page (web/index.html + web/control.php) queues commands;
+The hosted Tradio page (web/index.html + web/control.php) queues commands;
 this worker polls for them over HTTPS and runs everything on this laptop:
 
   * Start/Stop a live session from the laptop microphone, an uploaded recording,
@@ -13,7 +13,7 @@ this worker polls for them over HTTPS and runs everything on this laptop:
   * Publishes data/archive.json (replays + order/signal history) every minute.
 
 Real-money (live) mode requires both typed confirmation on the website and
-MARKETPULSE_ALLOW_LIVE=1 in the local worker environment.
+TRADIO_ALLOW_LIVE=1 in the local worker environment.
 """
 
 import argparse
@@ -80,8 +80,8 @@ def clean_options(raw) -> dict:
     if mode == 'live':
         if raw.get('confirm_live') != 'LIVE':
             raise ValueError('LIVE mode requires typed LIVE confirmation')
-        if os.environ.get('MARKETPULSE_ALLOW_LIVE') != '1':
-            raise ValueError('LIVE mode requires local MARKETPULSE_ALLOW_LIVE=1 opt-in')
+        if os.environ.get('TRADIO_ALLOW_LIVE') != '1':
+            raise ValueError('LIVE mode requires local TRADIO_ALLOW_LIVE=1 opt-in')
     speaker = raw.get('speaker') if raw.get('speaker') in known_speakers() else 'kevin_warsh'
     try:
         qty = max(1, min(5, int(raw.get('qty', 2))))
@@ -342,7 +342,7 @@ class Worker:
         except Exception as exc:
             message = f'{type(exc).__name__}: {exc}'[:300]
             if str(job.get('kind', '')).startswith('order_'):
-                safe = ('Local MARKETPULSE_ALLOW_LIVE=1', 'Order outcome is unknown',
+                safe = ('Local TRADIO_ALLOW_LIVE=1', 'Order outcome is unknown',
                         'Sell quantity exceeds', 'Preview expired', 'Invalid preview',
                         'Market is not open', 'Limit is more than', 'daily cap:',
                         'STOP_TRADING', 'No YES', 'Missing Kalshi keys',
@@ -389,7 +389,7 @@ class Worker:
     def _download(self, upload_id):
         if not isinstance(upload_id, str) or len(upload_id) > 40 or '/' in upload_id or '\\' in upload_id:
             raise ValueError('Invalid upload id')
-        self.tempdir = tempfile.TemporaryDirectory(prefix='marketpulse_controls_')
+        self.tempdir = tempfile.TemporaryDirectory(prefix='tradio_controls_')
         path = Path(self.tempdir.name) / upload_id
         with self.request('GET', '/control_worker.php', params={'download': upload_id}, stream=True, timeout=120) as r:
             size = 0
@@ -575,7 +575,7 @@ class Worker:
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Local worker for the hosted MarketPulse page')
+    parser = argparse.ArgumentParser(description='Local worker for the hosted Tradio page')
     parser.add_argument('--url', default=os.environ.get('HOSTINGER_URL') or _read_secret('hostinger_url.txt', 'HOSTINGER_URL'))
     args = parser.parse_args()
     token = _read_secret('hostinger_token.txt', 'HOSTINGER_TOKEN')
@@ -584,7 +584,7 @@ def main():
     with SingleWorkerLock():
         _kill_owned()
         worker = Worker(args.url, token)
-        print(f'MarketPulse worker polling {args.url} (Ctrl+C to stop)')
+        print(f'Tradio worker polling {args.url} (Ctrl+C to stop)')
         try:
             while True:
                 if time.monotonic() - worker.last_archive > ARCHIVE_SECONDS:

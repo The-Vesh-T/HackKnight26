@@ -30,7 +30,7 @@ def download_pdf_text(date: str) -> str:
     from pypdf import PdfReader
 
     url = FED_PDF_URL.format(date=date)
-    resp = requests.get(url, timeout=60, headers={"User-Agent": "andhacks-research"})
+    resp = requests.get(url, timeout=60, headers={"User-Agent": "tradio-research"})
     resp.raise_for_status()
     reader = PdfReader(io.BytesIO(resp.content))
     pages = []

@@ -39,7 +39,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 RESULTS_DIR = os.path.join(SCRIPT_DIR, "results")
 ALLOWED_TRADERS = {e.strip().lower() for e in os.environ.get("ALLOWED_TRADERS", "").split(",") if e.strip()}
 
-st.set_page_config(page_title="MarketPulse", page_icon="📈", layout="wide")
+st.set_page_config(page_title="Tradio", page_icon="📈", layout="wide")
 
 
 # ------------------------------------------------------------------ #
@@ -180,7 +180,7 @@ def show_record(rec: dict):
 logged_in, email = current_user()
 
 with st.sidebar:
-    st.header("MarketPulse")
+    st.header("Tradio")
     if auth_configured():
         if logged_in:
             st.write(f"Signed in as **{email}**")
@@ -434,7 +434,7 @@ def _save_uploaded_audio(uploaded) -> str:
     suffix = Path(uploaded.name).suffix.lower()
     if suffix not in {".aac", ".flac", ".m4a", ".mp3", ".mp4", ".ogg", ".wav", ".webm"}:
         raise ValueError("Unsupported audio file type.")
-    folder = Path(tempfile.mkdtemp(prefix="andhacks12_audio_"))
+    folder = Path(tempfile.mkdtemp(prefix="tradio_audio_"))
     path = folder / ("recording" + suffix)
     path.write_bytes(uploaded.getvalue())
     return str(path)

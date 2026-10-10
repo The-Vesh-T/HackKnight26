@@ -186,8 +186,8 @@ def preview(raw, owner):
 def submit(preview_id, owner):
     if not isinstance(preview_id, str) or not re.fullmatch(r"[a-f0-9]{32}", preview_id):
         raise ValueError("Invalid preview")
-    if os.environ.get("MARKETPULSE_ALLOW_LIVE") != "1":
-        raise RuntimeError("Local MARKETPULSE_ALLOW_LIVE=1 opt-in is required")
+    if os.environ.get("TRADIO_ALLOW_LIVE") != "1":
+        raise RuntimeError("Local TRADIO_ALLOW_LIVE=1 opt-in is required")
     with tc.trade_lock():
         previews = _load_previews()
         p = previews.pop(preview_id, None)

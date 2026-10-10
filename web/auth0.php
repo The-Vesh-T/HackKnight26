@@ -14,7 +14,7 @@ function auth0_fail(string $message, int $status = 403): never {
     header('Content-Type: text/html; charset=utf-8');
     echo '<!doctype html><meta charset="utf-8"><body style="background:#0b0e13;color:#e8edf5;font:16px system-ui;padding:40px">'
        . htmlspecialchars($message, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')
-       . '<p><a style="color:#8fb9ff" href="/">Back to MarketPulse</a></p>';
+       . '<p><a style="color:#8fb9ff" href="/">Back to Tradio</a></p>';
     exit;
 }
 

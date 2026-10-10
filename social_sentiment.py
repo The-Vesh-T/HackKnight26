@@ -25,7 +25,7 @@ import requests
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 CACHE_PATH = os.path.join(SCRIPT_DIR, "social_cache.json")
-UA = {"User-Agent": "MarketPulse/1.0 (andhacks hackathon research; contact omofkmg@gmail.com)"}
+UA = {"User-Agent": "Tradio/1.0 (HackKnight26 hackathon research; contact omofkmg@gmail.com)"}
 DEFAULT_QUERIES = ["Fed rate", "Warsh", "FOMC"]
 REDDIT_SUBS = "economics+investing+stocks+wallstreetbets+finance+Kalshi+Polymarket"
 PROMPT = """You rate social media posts about the US Federal Reserve.

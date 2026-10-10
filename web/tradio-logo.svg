@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1408 768" role="img" aria-label="Tradio logo">
+  <defs>
+    <linearGradient id="g" gradientUnits="userSpaceOnUse" x1="400" x2="1010" y1="0" y2="0">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#84f04f"/>
+    </linearGradient>
+    <radialGradient id="bg" cx="0.5" cy="0.45" r="0.7">
+      <stop offset="0" stop-color="#1c2a2f"/>
+      <stop offset="1" stop-color="#11161a"/>
+    </radialGradient>
+  </defs>
+  <rect width="1408" height="768" fill="url(#bg)"/>
+  <g fill="url(#g)">
+    <rect x="430" y="345" width="16" height="60" rx="2"/><rect x="436" y="325" width="4" height="20"/>
+    <rect x="466" y="320" width="16" height="45" rx="2"/><rect x="472" y="300" width="4" height="20"/>
+    <rect x="502" y="290" width="16" height="50" rx="2"/><rect x="508" y="266" width="4" height="24"/>
+  </g>
+  <path d="M406 442 Q470 380 520 352 T610 360 Q650 352 690 300 L715 398 L740 196 L768 390 L800 292 L822 375 L840 345 L900 345 Q930 345 950 310 Q965 288 1000 288"
+        fill="none" stroke="url(#g)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="704" y="580" text-anchor="middle" font-family="Montserrat, Inter, 'Helvetica Neue', Arial, sans-serif"
+        font-size="150" font-weight="600" fill="url(#g)" letter-spacing="2">Tradio</text>
+</svg>

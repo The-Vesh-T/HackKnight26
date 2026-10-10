@@ -42,13 +42,31 @@ doc (ask Devesh for the link). This file is the short version.
 8. **Don't break MarketPulse.** Existing files keep working. New code goes in
    `tradio/` and `web/tradio.html` unless your role file says otherwise.
 
+## Setup and what's already done
+
+- **Done:** `fed_speeches.py` knows Bowman and Waller; `python fed_speeches.py --tradio`
+  downloads both event speeches and their baseline speeches (ids in
+  `fed_speeches.TRADIO_SPEAKERS`, all checked to exist). `tradio/build_baselines.py`
+  builds both baselines with the same rubric/model as `stance_scorer.py`, scoring only
+  paragraphs about the policy outlook (dry run found 289 Bowman and 196 Waller baseline
+  paragraphs).
+- **Not done yet:** running it. It needs `gemapi.txt` and internet access to
+  federalreserve.gov. Whoever holds the Gemini key runs
+  `python fed_speeches.py --tradio && python tradio/build_baselines.py`, then commits
+  `stance_baselines.json` and the new `transcripts/speech_*.json` files.
+- **Keys:** only the Gemini key matters for Tradio. Kalshi/Polymarket historical data is
+  public. All keys live in gitignored `*.txt` files; never commit them.
+- **Renamed:** user-facing MarketPulse text is now Tradio, the live-trading opt-in is
+  `TRADIO_ALLOW_LIVE=1`, and the logo is `web/tradio-logo.svg` / `web/tradio-mark.svg`.
+  The Auth0 app in `docs/HOSTED_CONTROLS.md` keeps its real name.
+
 ## Who owns what
 
 | Role | Person | Owns |
 |---|---|---|
 | 1 Market data + replay timeline | (name) | `tradio/events.yaml`, `tradio/ingest_markets.py`, `tradio/build_timeline.py`, `tradio/data/` |
 | 2 Reaction analytics | (name) | `tradio/reaction.py`, `tradio/placebo.py`, `tests/test_reaction.py` |
-| 3 Surprise scoring + pitch | (name) | `fed_speeches.py` (add speakers only), `tradio/surprise.py`, `tradio/validation/`, `docs/pitch.md` |
+| 3 Surprise scoring + pitch | (name) | `fed_speeches.py` (add speakers only), `tradio/build_baselines.py`, `tradio/surprise.py`, `tradio/validation/`, `docs/pitch.md` |
 | 4 Visuals (terminal UI) | (name) | `web/tradio.html`, `web/tradio.js`, `web/tradio.css`, `web/data/tradio/mock/` |
 
 Touching someone else's file: ask them first. Shared files (`CLAUDE.md`,

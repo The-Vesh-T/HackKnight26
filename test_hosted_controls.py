@@ -37,7 +37,7 @@ class HostedControlTests(unittest.TestCase):
              patch.object(worker, 'stop'), patch.object(worker, '_download', return_value='C:/private/audio.mp3'), \
              patch.object(worker, '_launch', side_effect=lambda name, args: commands.append((name, args)) or fake_process), \
              patch.object(worker, 'request', return_value=Mock(json=Mock(return_value={'command': {'id': 'one'}}))), \
-             patch.object(worker, 'status'), patch.dict(os.environ, {'MARKETPULSE_ALLOW_LIVE': ''}):
+             patch.object(worker, 'status'), patch.dict(os.environ, {'TRADIO_ALLOW_LIVE': ''}):
             worker.start({'id': 'one', 'action': 'start', 'source_type': 'upload', 'upload_id': 'audio.mp3',
                           'options': {'speaker': 'attacker', 'qty': 999}})
         desk = commands[0][1]
@@ -48,20 +48,20 @@ class HostedControlTests(unittest.TestCase):
 
     def test_worker_accepts_live_only_with_local_opt_in_and_confirmation(self):
         requested = {'mode': 'live', 'confirm_live': 'LIVE'}
-        with patch.dict(os.environ, {'MARKETPULSE_ALLOW_LIVE': '1'}):
+        with patch.dict(os.environ, {'TRADIO_ALLOW_LIVE': '1'}):
             self.assertEqual(control_worker.clean_options(requested)['mode'], 'live')
             with self.assertRaisesRegex(ValueError, 'typed LIVE confirmation'):
                 control_worker.clean_options({'mode': 'live'})
         for value in ('', 'true', '0'):
-            with self.subTest(local_opt_in=value), patch.dict(os.environ, {'MARKETPULSE_ALLOW_LIVE': value}):
-                with self.assertRaisesRegex(ValueError, 'local MARKETPULSE_ALLOW_LIVE=1'):
+            with self.subTest(local_opt_in=value), patch.dict(os.environ, {'TRADIO_ALLOW_LIVE': value}):
+                with self.assertRaisesRegex(ValueError, 'local TRADIO_ALLOW_LIVE=1'):
                     control_worker.clean_options(requested)
 
     def test_worker_rejects_live_before_launch_without_local_opt_in(self):
         worker = control_worker.Worker('https://example.test', 'existing-token')
-        with patch.dict(os.environ, {'MARKETPULSE_ALLOW_LIVE': ''}), \
+        with patch.dict(os.environ, {'TRADIO_ALLOW_LIVE': ''}), \
              patch.object(worker, 'stop'), patch.object(worker, '_launch') as launch:
-            with self.assertRaisesRegex(ValueError, 'local MARKETPULSE_ALLOW_LIVE=1'):
+            with self.assertRaisesRegex(ValueError, 'local TRADIO_ALLOW_LIVE=1'):
                 worker.start({'id': 'one', 'source_type': 'mic',
                               'options': {'mode': 'live', 'confirm_live': 'LIVE'}})
         launch.assert_not_called()
@@ -69,7 +69,7 @@ class HostedControlTests(unittest.TestCase):
     def test_analyze_job_is_always_dry_even_when_live_is_requested(self):
         import pipeline
         import stance_scorer
-        with patch.dict(os.environ, {'MARKETPULSE_ALLOW_LIVE': ''}), \
+        with patch.dict(os.environ, {'TRADIO_ALLOW_LIVE': ''}), \
              patch.object(stance_scorer, 'score_statement', return_value={'score': 1}), \
              patch.object(pipeline, 'act_on', return_value={'statement': 'test'}) as act_on, \
              patch.object(pipeline, 'save'):

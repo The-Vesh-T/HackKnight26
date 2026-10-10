@@ -102,10 +102,10 @@ def signal_hash(signal: dict) -> str:
 def prove_signal(signal: dict) -> dict:
     """Hash the signal, put hash + a readable summary on-chain.
 
-    Memo looks like:  andhacks|kevin_warsh|HAWKISH|z=+3.0|<sha256>
+    Memo looks like:  tradio|kevin_warsh|HAWKISH|z=+3.0|<sha256>
     """
     digest = signal_hash(signal)
-    memo = (f"andhacks|{signal.get('speaker', '')}|{signal.get('direction', '')}|"
+    memo = (f"tradio|{signal.get('speaker', '')}|{signal.get('direction', '')}|"
             f"z={float(signal.get('z', 0)):+.1f}|{digest}")
     sig = send_memo(memo)
     return {"cluster": SOLANA_CLUSTER, "signature": sig, "sha256": digest, "memo": memo,

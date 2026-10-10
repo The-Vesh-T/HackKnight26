@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MarketPulse</title>
+<title>Tradio</title>
 <meta name="description" content="Live Fed-speech surprise detection and prediction-market trading.">
 <style>
   :root {
@@ -108,7 +108,7 @@
   a { color: var(--accent); }
   .brand { display: flex; align-items: center; gap: 14px; }
   .brand-mark { width: 76px; height: 62px; overflow: hidden; border-radius: 12px; background: #151c21; position: relative; }
-  .brand-mark img { width: 172px; height: 94px; max-width: none; position: absolute; left: -48px; top: -16px; }
+  .brand-mark img { width: 100%; height: 100%; display: block; }
   .entry { max-width: 920px; margin: 7vh auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
   .entry-hero { padding: 10px 4px; }
   .entry-hero img { width: 100%; border-radius: 18px; display: block; }
@@ -139,13 +139,13 @@
 <div class="wrap">
   <main id="entry" class="entry">
     <div class="entry-hero">
-      <img src="marketpulse-logo.jpeg" alt="MarketPulse logo: a cyan to green market chart and heartbeat">
+      <img src="tradio-logo.svg" alt="Tradio logo: a cyan to green market chart and heartbeat">
       <h1>Hear the market move.</h1>
       <p>Sign in to control your local listening desk, review the transcript, and follow markets as the speaker changes topics.</p>
       <div class="notice">This installation controls one team laptop and its connected trading account. Approved operators should keep that laptop worker running while listening or replaying a speech.</div>
     </div>
     <div>
-      <div class="card"><h2>Sign in to MarketPulse</h2>
+      <div class="card"><h2>Sign in to Tradio</h2>
         <div class="muted" id="entry-status">Checking sign-in…</div>
         <div id="control-login" hidden>
           <div class="row"><a class="btn" id="auth0-login" href="auth0.php" style="text-decoration:none" hidden>Sign in with Auth0</a></div>
@@ -155,7 +155,7 @@
       </div>
       <div class="card"><h2>Set up your local keys</h2>
         <ol class="setup-steps">
-          <li>Get the <a href="https://github.com/milesbhall/andhacks12" target="_blank" rel="noopener noreferrer">MarketPulse project</a> on the team laptop, then run <code>pip install -r requirements.txt</code> in its folder.</li>
+          <li>Get the <a href="https://github.com/The-Vesh-T/HackKnight26" target="_blank" rel="noopener noreferrer">Tradio project</a> on the team laptop, then run <code>pip install -r requirements.txt</code> in its folder.</li>
           <li>Put each API key in its matching local file in that folder: <code>gemapi.txt</code> (Gemini) and <code>elevenapi.txt</code> (ElevenLabs) are needed for live listening and scoring.</li>
           <li>Add <code>hostinger_url.txt</code> with this site's URL and <code>hostinger_token.txt</code> with the site's private upload token. The local worker uses them to publish updates.</li>
           <li>For optional features, add <code>fredapi.txt</code>, <code>socialcrawlapi.txt</code>, <code>backboardapi.txt</code>, and <code>tigerdb.txt</code>. Venue credentials belong in <code>kalshikey.txt</code> with <code>privkey.txt</code>, or <code>polymarketkey.txt</code> with <code>polymarketsecret.txt</code>.</li>
@@ -167,8 +167,8 @@
   </main>
   <div id="app" hidden>
   <header>
-    <div class="brand"><div class="brand-mark"><img src="marketpulse-logo.jpeg" alt=""></div><div>
-      <h1>Market<span>Pulse</span></h1>
+    <div class="brand"><div class="brand-mark"><img src="tradio-mark.svg" alt=""></div><div>
+      <h1>Tra<span>dio</span></h1>
       <div class="sub" id="sub">Live Fed-speech surprise detection → prediction-market orders</div>
     </div></div>
     <div><span class="pill" id="mode">—</span> <span class="pill off" id="conn">connecting…</span><span class="muted" id="conn-detail"></span></div>

@@ -23,7 +23,8 @@ import requests
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 TRANSCRIPT_DIR = os.path.join(SCRIPT_DIR, "transcripts")
 SPEECH_URL = "https://www.federalreserve.gov/newsevents/speech/{id}.htm"
-SPEAKER_KEYS = {"warsh": "kevin_warsh", "powell": "jerome_powell"}
+SPEAKER_KEYS = {"warsh": "kevin_warsh", "powell": "jerome_powell",
+                "bowman": "michelle_bowman", "waller": "christopher_waller"}
 APP_URL = "https://www.presidency.ucsb.edu/documents/{slug}"
 # Presidential remarks on the economy (American Presidency Project, UC Santa Barbara)
 PRESIDENT_REPLAYS = [
@@ -47,7 +48,52 @@ DEFAULT_SPEECHES = [
     "powell20251014a",  # Powell, Understanding the Fed's Balance Sheet
 ]
 CHAIR_NAMES = {"kevin_warsh": "Chair Kevin Warsh", "jerome_powell": "Chair Jerome Powell",
-               "president_trump": "President Trump"}
+               "president_trump": "President Trump",
+               "michelle_bowman": "Governor Michelle Bowman",
+               "christopher_waller": "Governor Christopher Waller"}
+
+# Tradio: the two replay events and each speaker's baseline speeches.
+# Baselines use only speeches BEFORE the event date and only speeches mainly about
+# the economy / monetary policy (bank-supervision speeches would score as neutral
+# and shrink the spread). Ids are from federalreserve.gov's speech list (Apr 2024
+# onward; earlier 2023 speeches were not in the feed we read and can be added).
+# One copy of Bowman's repeated Sept 2024 "Recent Views on Monetary Policy" speech
+# is used so the same text isn't counted three times.
+TRADIO_SPEAKERS = {
+    "michelle_bowman": {
+        "event": "bowman20250623a",
+        "baseline": [
+            "bowman20240405a",  # Risks and Uncertainty in Monetary Policy
+            "bowman20240503a",  # Brief Remarks on the Economy and Monetary Policy
+            "bowman20240517a",  # Brief Remarks on the Economy, Monetary Policy, and Bank Regulation
+            "bowman20240625a",  # Perspectives on U.S. Monetary Policy and Bank Capital Reform
+            "bowman20240627a",  # Brief Remarks on the Economy, Monetary Policy, and Bank Regulation
+            "bowman20240810a",  # Update on the Economic Outlook...
+            "bowman20240820a",  # Remarks on the Economic Outlook and Financial Inclusion
+            "bowman20240920a",  # Statement (dissent on the 50 bp cut)
+            "bowman20240924a",  # Recent Views on Monetary Policy and the Economic Outlook
+            "bowman20241120a",  # Approaching Policymaking Pragmatically
+            "bowman20250109a",  # Reflections on 2024: Monetary Policy, Economic Performance...
+            "bowman20250131a",  # Brief Remarks on the Economy...
+            "bowman20250217a",  # Brief Remarks on the Economy and Accountability...
+            "bowman20250307a",  # Monetary Policy Transmission to Real Activity
+        ],
+    },
+    "christopher_waller": {
+        "event": "waller20250717a",
+        "baseline": [
+            "waller20240521a",  # Little by Little, Progress Seems to be Resuming
+            "waller20240717a",  # Getting Closer
+            "waller20240906a",  # The Time Has Come
+            "waller20241014a",  # Thoughts on the Economy and Policy Rules at the FOMC
+            "waller20241202a",  # Cut or Skip?
+            "waller20250108a",  # Challenges Facing Central Bankers
+            "waller20250217a",  # Disinflation Progress Uneven but Still on Track...
+            "waller20250414a",  # A Tale of Two Outlooks
+            "waller20250601a",  # The Effects of Tariffs on the Three I's
+        ],
+    },
+}
 
 
 def fetch_president(slug: str) -> dict:
@@ -55,7 +101,7 @@ def fetch_president(slug: str) -> dict:
     President's own paragraphs about the economy, rates or prices are marked as his
     (role 'chair', i.e. scored); reporters' questions and off-topic remarks are 'other'."""
     url = APP_URL.format(slug=slug)
-    r = requests.get(url, timeout=30, headers={"User-Agent": "Mozilla/5.0 (andhacks research)"})
+    r = requests.get(url, timeout=30, headers={"User-Agent": "Mozilla/5.0 (Tradio research)"})
     r.raise_for_status()
     page = r.content.decode("utf-8", "replace")
     title = re.search(r"<h1>(.*?)</h1>", page, re.S)
@@ -80,7 +126,7 @@ def fetch_president(slug: str) -> dict:
 
 def fetch_speech(speech_id: str) -> dict:
     url = SPEECH_URL.format(id=speech_id)
-    r = requests.get(url, timeout=30, headers={"User-Agent": "Mozilla/5.0 (andhacks research)"})
+    r = requests.get(url, timeout=30, headers={"User-Agent": "Mozilla/5.0 (Tradio research)"})
     r.raise_for_status()
     page = r.content.decode("utf-8", "replace")
     title = re.search(r'<h3 class="title">\s*<em>(.*?)</em>', page, re.S) or re.search(r"<title>(.*?)</title>", page, re.S)
@@ -137,7 +183,11 @@ def main():
     parser.add_argument("ids", nargs="*", default=DEFAULT_SPEECHES)
     parser.add_argument("--president", action="store_true",
                         help="Download the presidential remarks (replays + baseline set)")
+    parser.add_argument("--tradio", action="store_true",
+                        help="Download Tradio's event speeches and Bowman/Waller baseline speeches")
     args = parser.parse_args()
+    if args.tradio:
+        args.ids = [sid for cfg in TRADIO_SPEAKERS.values() for sid in [cfg["event"], *cfg["baseline"]]]
     if args.president:
         for n, slug in enumerate(PRESIDENT_REPLAYS + PRESIDENT_BASELINE):
             try:
