@@ -12,5 +12,9 @@
   "another Board speech within 90 min (powell20251009a)"
  ],
  "paragraphs": 1,
- "policy_paragraphs": 0
+ "policy_paragraphs": 0,
+ "kind": "speech",
+ "stance": {
+  "n": 0
+ }
 }

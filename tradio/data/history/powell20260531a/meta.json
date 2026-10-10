@@ -10,5 +10,20 @@
  "days_to_decision": 17,
  "flags": [],
  "paragraphs": 18,
- "policy_paragraphs": 5
+ "policy_paragraphs": 5,
+ "kind": "speech",
+ "stance": {
+  "n": 5,
+  "scores": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "mean": 0.0,
+  "top_z": 0.357,
+  "baseline": "speaker",
+  "model": "gemini-3.5-flash-lite"
+ }
 }

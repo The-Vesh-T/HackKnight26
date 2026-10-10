@@ -1,0 +1,39 @@
+{
+ "speech_id": "warsh20260714a",
+ "kind": "testimony",
+ "t0": "2026-07-14T12:30:00Z",
+ "speaker": "kevin_warsh",
+ "who": "Chairman Kevin Warsh",
+ "role": "chair",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/testimony/warsh20260714a.htm",
+ "next_decision": "2026-07-29",
+ "days_to_decision": 15,
+ "flags": [
+  "T0 at 08:30 ET, when US data releases usually land"
+ ],
+ "paragraphs": 24,
+ "policy_paragraphs": 13,
+ "stance": {
+  "n": 13,
+  "scores": [
+   0.0,
+   0.0,
+   0.0,
+   0.5,
+   0.5,
+   0.5,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "mean": 0.115,
+  "top_z": 1.132,
+  "baseline": "speaker",
+  "model": "gemini-3.5-flash-lite"
+ }
+}

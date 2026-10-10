@@ -12,5 +12,9 @@
   "T0 at 08:30 ET, when US data releases usually land"
  ],
  "paragraphs": 1,
- "policy_paragraphs": 0
+ "policy_paragraphs": 0,
+ "kind": "speech",
+ "stance": {
+  "n": 0
+ }
 }

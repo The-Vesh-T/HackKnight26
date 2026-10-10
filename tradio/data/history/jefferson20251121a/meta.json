@@ -12,5 +12,22 @@
   "another Board speech within 90 min (barr20251121a)"
  ],
  "paragraphs": 36,
- "policy_paragraphs": 7
+ "policy_paragraphs": 7,
+ "kind": "speech",
+ "stance": {
+  "n": 7,
+  "scores": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "mean": 0.0,
+  "top_z": -0.039,
+  "baseline": "pooled",
+  "model": "gemini-3.5-flash-lite"
+ }
 }

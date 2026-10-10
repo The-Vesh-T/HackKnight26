@@ -1,0 +1,28 @@
+{
+ "speech_id": "bowman20251202a",
+ "kind": "testimony",
+ "t0": "2025-12-02T21:30:00Z",
+ "speaker": "michelle_bowman",
+ "who": "Vice Chair for Supervision Michelle W. Bowman",
+ "role": "vice_chair_supervision",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/testimony/bowman20251202a.htm",
+ "next_decision": "2025-12-10",
+ "days_to_decision": 8,
+ "flags": [],
+ "paragraphs": 23,
+ "policy_paragraphs": 4,
+ "stance": {
+  "n": 4,
+  "scores": [
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "mean": 0.0,
+  "top_z": -0.467,
+  "baseline": "speaker",
+  "model": "gemini-3.5-flash-lite"
+ }
+}

@@ -12,5 +12,34 @@
   "another Board speech within 90 min (cook20241120a)"
  ],
  "paragraphs": 46,
- "policy_paragraphs": 19
+ "policy_paragraphs": 19,
+ "kind": "speech",
+ "stance": {
+  "n": 19,
+  "scores": [
+   0.0,
+   0.5,
+   0.0,
+   0.0,
+   0.0,
+   0.5,
+   0.5,
+   0.5,
+   0.0,
+   0.0,
+   0.5,
+   0.5,
+   0.0,
+   0.0,
+   -0.5,
+   -0.5,
+   0.0,
+   0.5,
+   0.0
+  ],
+  "mean": 0.132,
+  "top_z": -1.984,
+  "baseline": "speaker",
+  "model": "gemini-3.5-flash-lite"
+ }
 }
