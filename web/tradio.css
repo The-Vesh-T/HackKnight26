@@ -148,9 +148,9 @@ dialog.guide::backdrop { background: rgba(5, 9, 12, .7); }
 .released-line { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; color: var(--muted); font-size: 13px; margin-bottom: 12px; }
 .released-line .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 3px rgba(132, 240, 79, .18); }
 .released-line b { color: var(--text); }
-.speech-body { display: grid; gap: 16px; }
-.speech-body .label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 6px; }
-.paragraph-ctx { margin: 8px 0 0; padding: 10px 14px; background: var(--panel-2); border-radius: 10px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+.label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 6px; }
+.label.second { margin-top: 18px; }
+.paragraph-ctx { margin: 0; padding: 10px 14px; background: var(--panel-2); border-radius: 10px; color: var(--muted); font-size: 14px; line-height: 1.6; }
 .keyq {
   margin: 0;
   padding: 10px 14px;
@@ -171,10 +171,97 @@ mark.key {
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;
 }
-.keyq.dove mark.key { background: rgba(79, 157, 255, .28); }
-.keyq.hawk mark.key { background: rgba(240, 180, 41, .28); }
-.why { margin-top: 10px; color: var(--muted); }
-.why b { color: var(--text); font-weight: 600; }
+/* long passages are cut to a few lines on the card (the clamp sits on an inner element, so the box's
+   padding can't show a sliver of the next line); the full text is in the transcript or the bubble */
+.keyq .clamp { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 6; line-clamp: 6; overflow: hidden; }
+.keyq.small { font-size: 14px; }
+.keyq.small .clamp { -webkit-line-clamp: 3; line-clamp: 3; }
+.paragraph-ctx mark.key { background: rgba(255, 255, 255, .14); }
+.unscored { margin-top: 10px; color: var(--faint); font-size: 13px; }
+
+/* The plain-language reading of a passage; pressing it opens the scores behind it. */
+.score-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 12px;
+  padding: 7px 12px 7px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+  background: var(--panel-2);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  line-height: 1.3;
+}
+.score-pill .pip { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); flex: none; }
+.score-pill.dove { border-color: rgba(79, 157, 255, .55); background: rgba(79, 157, 255, .1); }
+.score-pill.dove .pip { background: var(--dove); }
+.score-pill.hawk { border-color: rgba(240, 180, 41, .55); background: rgba(240, 180, 41, .1); }
+.score-pill.hawk .pip { background: var(--hawk); }
+.score-pill .i { color: var(--muted); font-weight: 400; }
+.score-pill:hover .i, .score-pill.on .i { color: var(--cyan); }
+.score-pill.on { box-shadow: 0 0 0 2px rgba(34, 211, 238, .35); }
+
+/* "ⓘ Details": the small button on each summary that opens the bubble. */
+.info-btn {
+  flex: none;
+  background: transparent;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  padding: 2px 10px;
+  color: var(--muted);
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+.info-btn:hover { color: var(--text); border-color: var(--muted); }
+.info-btn.on { color: var(--cyan); border-color: var(--cyan); }
+
+/* ---------- details bubble ---------- */
+.bubble {
+  position: fixed;
+  z-index: 16;
+  display: flex;
+  flex-direction: column;
+  background: var(--panel-3);
+  border: 1px solid var(--line-2);
+  border-radius: 12px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, .6);
+  outline: none;
+}
+.bubble::before {
+  content: "";
+  position: absolute;
+  left: var(--arrow-x, 40px);
+  top: -7px;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  transform: rotate(45deg);
+  background: var(--panel-3);
+  border-left: 1px solid var(--line-2);
+  border-top: 1px solid var(--line-2);
+}
+.bubble.above::before { top: auto; bottom: -7px; border: 0; border-right: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
+.bubble-head { display: flex; align-items: center; gap: 10px; padding: 10px 12px 8px 14px; border-bottom: 1px solid var(--line); }
+.bubble-head b { font-size: 14px; }
+.bubble-head .btn { margin-left: auto; padding: 2px 8px; }
+.bubble-body { padding: 4px 14px 14px; overflow: auto; min-height: 0; font-size: 13.5px; }
+.bubble-body h4 { margin: 14px 0 6px; font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; }
+.bubble-body p { margin: 6px 0; }
+.bubble-body .src { color: var(--muted); font-size: 12.5px; }
+.bubble-body .reason { color: var(--text); }
+.bubble-body .muted { color: var(--faint); }
+.kv { width: 100%; border-collapse: collapse; }
+.kv th, .kv td { padding: 4px 0; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.kv th { color: var(--muted); font-weight: 500; padding-right: 14px; width: 46%; }
+.key-row { display: grid; grid-template-columns: 34px 1fr; gap: 8px; align-items: start; padding: 5px 0; border-bottom: 1px solid var(--line); }
+.key-row .sw { display: flex; gap: 3px; align-items: center; height: 20px; }
+.key-row i { display: inline-block; width: 16px; height: 8px; border-radius: 2px; }
+.key-row i.dot { width: 9px; height: 9px; border-radius: 50%; }
+.key-row i.diamond { width: 9px; height: 9px; background: #fff; transform: rotate(45deg); border-radius: 0; }
+.key-row i.sq { width: 9px; height: 9px; background: #fff; border-radius: 0; }
+.key-row i.tri { width: 0; height: 0; background: none; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 9px solid var(--hawk); border-radius: 0; }
 .gauge { width: 100%; height: auto; display: block; }
 .gauge-legend { display: grid; gap: 4px; color: var(--muted); font-size: 12.5px; margin-top: 4px; }
 .gauge-legend i { display: inline-block; vertical-align: middle; margin-right: 6px; }
@@ -219,7 +306,7 @@ mark.key {
 .flat { color: var(--muted); font-weight: 500; }
 
 .chart-stage { position: relative; }
-.chart-wrap { height: clamp(280px, calc(100vh - 580px), 520px); }
+.chart-wrap { height: clamp(280px, calc(100vh - 456px), 560px); }
 .chart-wrap svg { width: 100%; height: 100%; display: block; }
 .cta {
   position: absolute;
@@ -241,30 +328,24 @@ mark.key {
 .cta b { display: block; font-size: 16px; }
 .cta small { color: var(--muted); font-size: 13px; }
 
-.legend { display: flex; gap: 6px 18px; flex-wrap: wrap; color: var(--muted); font-size: 12.5px; margin-top: 8px; }
+.legend { display: flex; gap: 6px 18px; flex-wrap: wrap; align-items: center; color: var(--muted); font-size: 12.5px; margin-top: 8px; }
 .legend i { display: inline-block; width: 16px; height: 8px; margin-right: 6px; vertical-align: middle; border-radius: 2px; }
-.legend i.dot { width: 9px; height: 9px; border-radius: 50%; }
-.verdict {
-  margin-top: 12px;
-  padding: 12px 14px;
+.legend i.dot { width: 9px; height: 9px; border-radius: 50%; margin-right: 3px; }
+.legend .info-btn { margin-left: auto; }
+/* One line each: the verdict in a sentence, and what the desk did. "Details" opens the rest. */
+.verdict, .desk {
+  padding: 10px 12px 10px 14px;
   background: var(--panel-2);
   border: 1px solid var(--line);
   border-radius: 10px;
   display: flex;
-  gap: 8px 14px;
-  flex-wrap: wrap;
-  align-items: baseline;
+  gap: 10px;
+  align-items: center;
 }
-.verdict .why-text { flex: 1 1 260px; }
-/* Verdict and desk share a row when the chart card is wide enough, so the card stays short enough to pin. */
-#marketCard { container-type: inline-size; }
-.below-chart { display: grid; gap: 10px; margin-top: 12px; align-items: start; grid-template-columns: minmax(0, 1fr); }
-.below-chart .verdict, .below-chart .desk { margin-top: 0; }
-@container (min-width: 820px) {
-  .below-chart.has-desk { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
-}
-.verdict .facts { display: flex; gap: 4px 18px; flex-wrap: wrap; width: 100%; color: var(--muted); font-size: 13px; }
-.verdict .facts b { color: var(--text); font-weight: 600; }
+.verdict .why-text, .desk .why-text { flex: 1; min-width: 0; }
+.gain { color: var(--green); }
+.loss { color: var(--red); }
+.below-chart { display: grid; gap: 8px; margin-top: 10px; grid-template-columns: minmax(0, 1fr); }
 .indic-banner {
   display: inline-block;
   font: 600 10.5px var(--mono);
@@ -347,9 +428,9 @@ mark.key {
   border-top: 1px solid var(--line-2);
   box-shadow: 0 -8px 24px rgba(0, 0, 0, .35);
 }
-.dock-main { max-width: 1600px; margin: 0 auto; display: flex; align-items: center; gap: 18px; padding: 10px 20px 2px; }
-.transport { display: flex; gap: 6px; align-items: center; }
-.btn.play { min-width: 98px; background: var(--cyan); border-color: var(--cyan); color: #04222a; font-weight: 700; font-size: 14px; padding: 8px 16px; }
+.dock-main { max-width: 1600px; margin: 0 auto; display: flex; align-items: center; gap: 16px; padding: 8px 20px 3px; }
+.transport { display: flex; gap: 8px; align-items: center; }
+.btn.play { min-width: 96px; background: var(--cyan); border-color: var(--cyan); color: #04222a; font-weight: 700; font-size: 14px; padding: 7px 16px; }
 .btn.play.on { background: transparent; color: var(--cyan); }
 .scrub { flex: 1; min-width: 180px; position: relative; }
 .scrub input { width: 100%; margin: 0; accent-color: var(--cyan); }
@@ -365,16 +446,24 @@ mark.key {
 .scrub .mark::before { content: ""; display: block; width: 1px; height: 5px; margin: 0 auto 1px; background: currentColor; }
 .scrub .mark.t0 { color: var(--text); }
 .scrub .mark.alarm { color: var(--green); }
-.speed { display: flex; align-items: center; gap: 8px; }
-.speed .lbl { color: var(--muted); font-size: 12px; }
-#speeds { display: inline-flex; gap: 4px; }
-.clock { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.2; min-width: 170px; }
-.clock .rel { font: 700 24px var(--mono); color: var(--text); }
+/* speed: one small segmented switch */
+.speed { display: flex; align-items: center; }
+#speeds { display: inline-flex; border: 1px solid var(--line-2); border-radius: 7px; overflow: hidden; }
+#speeds .btn { border: 0; border-radius: 0; background: transparent; padding: 3px 7px; font-size: 11.5px; color: var(--muted); }
+#speeds .btn + .btn { border-left: 1px solid var(--line-2); }
+#speeds .btn:hover { color: var(--text); }
+#speeds .btn.on { background: rgba(34, 211, 238, .14); color: var(--cyan); }
+/* clock: the time at the replay position and minutes from T0, on one line (hover for the rest) */
+.clock { display: flex; align-items: baseline; justify-content: flex-end; gap: 10px; white-space: nowrap; cursor: default; }
+.clock .abs { color: var(--muted); font-size: 12.5px; }
+.clock .abs b { font: 700 18px var(--mono); color: var(--text); }
+.clock .rel { min-width: 6ch; text-align: right; font: 600 13px var(--mono); color: var(--muted); }
 .clock .rel.post { color: var(--cyan); }
-.clock .cap { color: var(--muted); font-size: 11.5px; }
-.clock .abs { color: var(--muted); font-size: 12px; white-space: nowrap; }
-.dock-note { max-width: 1600px; margin: 0 auto; padding: 2px 20px 8px; display: flex; gap: 16px; flex-wrap: wrap; color: var(--faint); font-size: 12px; }
-.dock-note .keys { margin-left: auto; }
+.clock.rel-only .rel { font: 700 18px var(--mono); }
+.dock-note { max-width: 1600px; margin: 0 auto; padding: 0 20px 7px; display: flex; gap: 16px; flex-wrap: wrap; color: var(--faint); font-size: 12px; }
+/* "Verified on Solana": the data receipt, next to the other statements about the data */
+.dock-note .receipt { margin-left: auto; color: var(--cyan); text-decoration: none; white-space: nowrap; }
+.dock-note .receipt:hover { text-decoration: underline; }
 
 /* ---------- compare ---------- */
 .cmp-lede { color: var(--muted); margin: 0; max-width: 90ch; }
@@ -444,8 +533,6 @@ mark.key {
 .chip.alarm { color: var(--green); border-style: dashed; }
 .live-banner { display: flex; align-items: center; gap: 10px 14px; flex-wrap: wrap; padding: 10px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
 .live-banner .muted { color: var(--muted); font-size: 13px; }
-.live-meta { color: var(--muted); font-size: 13px; margin-bottom: 10px; }
-.live-list-label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .07em; margin-top: 14px; }
 .para-key { color: var(--muted); font-size: 12.5px; }
 .para .t { font: 11.5px var(--mono); color: var(--faint); margin-right: 4px; }
 .card.idle { max-width: 860px; margin: 8px auto; padding: 22px 28px; color: var(--muted); }
@@ -454,29 +541,24 @@ mark.key {
 .idle .mono { color: var(--text); background: var(--panel-2); padding: 1px 5px; border-radius: 4px; font-size: 12px; display: inline-block; margin-top: 3px; }
 .idle .muted { color: var(--faint); font-size: 12px; }
 
-/* ---------- desk: what the playbook traded, under the chart ---------- */
-.desk { margin-top: 10px; padding: 10px 14px; background: var(--panel-2); border: 1px solid var(--line-2); border-radius: 10px; }
-.desk-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
-.desk .px { margin-left: auto; font: 600 14px var(--mono); }
-.desk .order { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: baseline; padding: 6px 0; border-top: 1px solid var(--line); cursor: pointer; }
-.desk .order:hover { background: rgba(255, 255, 255, .03); }
-.desk .order .t { color: var(--faint); font-size: 12px; }
-.desk .order .pnl { font-family: var(--mono); }
-.desk .order .fix { grid-column: 2 / -1; color: #f4d68a; font-size: 12px; }
-.desk .up { color: var(--green); }
-.desk .down { color: var(--red); }
-.desk .muted { color: var(--faint); }
-.desk .small { font-size: 12px; margin-top: 6px; }
-.desk details { margin-top: 6px; color: var(--muted); font-size: 12.5px; }
-.desk details summary { cursor: pointer; }
-.desk .skip { padding: 2px 0 2px 10px; }
-.legend i.diamond { width: 9px; height: 9px; background: #fff; transform: rotate(45deg); border-radius: 0; }
-.legend i.sq { width: 9px; height: 9px; background: #fff; border-radius: 0; }
-.legend i.tri { width: 0; height: 0; background: none; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 9px solid var(--hawk); border-radius: 0; }
+/* ---------- desk details (in the bubble): the orders and what the playbook skipped ---------- */
+.order { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: baseline; padding: 6px 4px; border-bottom: 1px solid var(--line); border-radius: 4px; cursor: pointer; }
+.order:hover { background: rgba(255, 255, 255, .05); }
+.order .t { color: var(--faint); font-size: 12px; }
+.order .pnl { font-family: var(--mono); }
+.order .fix { grid-column: 2 / -1; color: #f4d68a; font-size: 12px; }
+.skip { padding: 3px 0; color: var(--muted); }
+.skip b { color: var(--text); font-weight: 600; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1500px) {
   .brand-text span { display: none; }
+}
+/* laptop widths: tighten the top bar so every tab stays in view */
+@media (max-width: 1420px) {
+  .topbar { gap: 12px; padding: 10px 14px; }
+  .tab { padding: 6px 9px; }
+  .tab small { font-size: 11px; }
 }
 /* Narrow screens (e.g. a side panel): chart and desk first, speech last and scrollable. */
 @media (max-width: 1100px) {
@@ -484,20 +566,17 @@ mark.key {
   #marketCard { position: static; }
   #speechCard { max-height: 520px; overflow: auto; }
   .step { display: none; }
-  .speech-body { grid-template-columns: minmax(0, 1fr) 380px; align-items: start; gap: 24px; }
   .chart-wrap { height: clamp(280px, 42vh, 460px); }
   .dock-main { flex-wrap: wrap; gap: 10px 14px; }
   .scrub { order: 5; flex-basis: 100%; }
   .clock { margin-left: auto; }
 }
 @media (max-width: 900px) {
-  .speech-body { grid-template-columns: minmax(0, 1fr); }
   .guide-inner { grid-template-columns: 1fr; gap: 16px; }
   .compare-grid { grid-template-columns: 1fr; }
   .chart-wrap { height: 300px; }
   .mk-price { margin-left: 0; text-align: left; }
   .mk-price .row { justify-content: flex-start; }
-  .dock-note .keys { display: none; }
   .tabs { flex-basis: 100%; order: 3; }
 }
 
@@ -525,7 +604,6 @@ mark.key {
 .model-line { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; color: var(--muted); margin-top: 5px; }
 .model-line b { color: var(--text); }
 .model-line.muted, .model-line .muted { color: var(--faint); }
-.verdict .model-line { width: 100%; margin-top: 0; }
 .mbar { position: relative; width: 60px; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
 .mbar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--cyan); border-radius: 0 3px 3px 0; }
 .drawer .model-verdict { font-size: 14px; margin: 4px 0 8px; }

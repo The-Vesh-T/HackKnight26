@@ -16,7 +16,6 @@
     <nav class="tabs" id="tabs" aria-label="Choose a replay"></nav>
     <button class="btn ghost" id="btnPlaybook" title="Trading rules learned from past speeches">Playbook</button>
     <button class="btn ghost" id="btnModel" title="Predictor learned from past Fed speeches: which markets react">Model</button>
-    <a class="btn ghost" id="solanaBadge" hidden target="_blank" rel="noopener"></a>
     <button class="btn ghost" id="btnGuide" aria-expanded="false" aria-controls="guide">? Guide</button>
   </header>
 
@@ -33,8 +32,9 @@
         <h3>How to use it</h3>
         <ol>
           <li>Pick an event at the top.</li>
-          <li>Press <b>&#9654; Play</b> (or space), or drag the timeline. <b>Jump to T0</b> (key 0) skips to one minute after release.</li>
+          <li>Press <b>&#9654; Play</b> (or space), or drag the timeline. <b>Jump to T0</b> (key 0) skips to one minute after release, and the &larr; and &rarr; keys step one minute. Hover the clock for seconds and UTC.</li>
           <li>Click any market in the list to put it on the chart. <b>See the data</b> opens the raw rows behind its numbers.</li>
+          <li>The page keeps to plain language. Any <b>&#9432;</b> button opens the numbers behind it: the scores for a passage, the timings behind a verdict, the desk's orders, or the chart key.</li>
         </ol>
       </div>
       <div>
@@ -53,26 +53,30 @@
     <div class="dock-main">
       <div class="transport">
         <button class="btn play" id="btnPlay" title="Play / pause (space)">&#9654; Play</button>
-        <button class="btn" id="btnBack" title="Back 1 minute (&larr;)">&minus;1m</button>
-        <button class="btn" id="btnFwd" title="Forward 1 minute (&rarr;)">+1m</button>
         <button class="btn" id="btnT0" title="Jump to T0 + 1 minute: just after the text is released (0)">Jump to T0</button>
       </div>
       <div class="scrub">
-        <input type="range" id="scrub" min="0" max="1" step="1000" value="0" aria-label="Replay time">
+        <input type="range" id="scrub" min="0" max="1" step="1000" value="0" aria-label="Replay time (arrow keys step one minute)">
         <div class="marks" id="marks"></div>
       </div>
-      <div class="speed" id="speedBox"><span class="lbl">Speed</span><span id="speeds"></span></div>
-      <div class="clock">
-        <span class="rel num" id="clkRel">T&minus;00:00</span>
-        <span class="cap" id="clkCap">until the text is released</span>
-        <span class="abs" id="clkAbs"><span class="num" id="clkEt">--:--:--</span> ET &middot; <span class="num" id="clkUtc">--:--:--</span> UTC</span>
+      <div class="speed" id="speedBox" role="group" aria-label="Replay speed"><span id="speeds"></span></div>
+      <!-- clock time at the replay position, and minutes from T0; hover for seconds and UTC -->
+      <div class="clock" id="clock">
+        <span class="abs" id="clkAbs"><b class="num" id="clkEt">--:--</b> ET</span>
+        <span class="rel num" id="clkRel">T&minus;0m</span>
       </div>
     </div>
     <div class="dock-note">
       <span>Cached historical data or live Kalshi tape &middot; Polymarket series indicative (no timing claims) &middot; trades default to Kalshi's demo exchange &middot; not trading advice</span>
-      <span class="keys">space play &middot; &larr;/&rarr; 1 min &middot; 0 jump to T0 &middot; esc close</span>
+      <a class="receipt" id="solanaBadge" hidden target="_blank" rel="noopener"></a>
     </div>
   </footer>
+
+  <!-- The one details bubble: each "ⓘ" button fills it with the numbers behind its plain-language summary. -->
+  <div class="bubble" id="bubble" role="dialog" aria-labelledby="bubbleTitle" tabindex="-1" hidden>
+    <div class="bubble-head" id="bubbleHead"><b id="bubbleTitle">Details</b><button class="btn small" id="bubbleClose" aria-label="Close details">&#10005;</button></div>
+    <div class="bubble-body" id="bubbleBody"></div>
+  </div>
 
   <aside class="drawer" id="drawer" aria-hidden="true">
     <header><h3 id="drawerTitle">Evidence</h3><button class="btn" id="drawerClose">Close &#10005;</button></header>
