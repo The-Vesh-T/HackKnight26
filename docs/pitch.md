@@ -1,7 +1,7 @@
 # Tradio pitch (3 minutes)
 
 Draft by role 3. Screen steps match the controls in `web/tradio.html`. Rehearse
-them with role 4 before the demo. Start the page with `cd web && python3 -m http.server 8000`,
+them with role 4 before the demo. Start the page with `python tradio/serve.py` (it also powers the Live tab's buttons),
 then open `http://localhost:8000/tradio.html#bowman20250623`. The replay speed defaults
 to 30×, so one replay minute takes 2 seconds. Every number here comes from
 `tradio/data/<event>/analysis.json`, `timeline.json`, or `tradio/validation/`.

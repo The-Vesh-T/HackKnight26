@@ -16,23 +16,23 @@
     <nav class="tabs" id="tabs" aria-label="Choose a replay"></nav>
     <button class="btn ghost" id="btnPlaybook" title="Trading rules learned from past speeches">Playbook</button>
     <button class="btn ghost" id="btnModel" title="Predictor learned from past Fed speeches: which markets react">Model</button>
-    <button class="btn ghost" id="btnGuide" aria-expanded="false" aria-controls="guide">? Guide</button>
+    <button class="btn ghost" id="btnGuide" aria-expanded="false" aria-controls="guide">Guide</button>
   </header>
 
   <dialog class="guide" id="guide" aria-label="How to read this page">
-    <div class="guide-head"><h2>How to read this page</h2><button class="btn" id="guideClose">Close &#10005;</button></div>
+    <div class="guide-head"><h2>How to read this page</h2><button class="btn small" id="guideClose">Close</button></div>
     <div class="guide-inner">
       <div>
         <h3>What this shows</h3>
-        <p>Tradio scores each paragraph of a Fed speech against <b>that speaker's own past speeches</b>: a hawk sounding dovish is news, a dove sounding dovish isn't. It then replays real Kalshi and Polymarket prices around the moment the text was released (<b>T0</b>) to see which markets reacted, how fast, and which were too thin to judge.</p>
-        <p>A price of 22&cent; is the market's implied chance of that outcome: roughly 22%.</p>
-        <p>The <b>&#9679; LIVE</b> tab shows a speech as it happens, or a past one replayed as practice. <b>Playbook</b> lists the trading rules learned from past speeches, and the <b>Desk</b> panel under the chart shows what those rules traded or would have traded. Trades default to Kalshi's demo exchange (fake money). <b>Model</b> shows a predictor trained on past speeches and how well it scores; each market's &ldquo;chance to react&rdquo; is what it said before T0.</p>
+        <p>Tradio scores each paragraph of a Fed speech against <b>that speaker's own past speeches</b>: a hawk sounding dovish is news, a dove sounding dovish isn't. It then replays real Kalshi and Polymarket prices around the moment the text was released to see which markets reacted, how fast, and which were too thin to judge.</p>
+        <p>Each market is a yes/no bet on the Fed's decision. The % is the market's chance it happens, like on Kalshi; a 22% chance trades as a 22&cent; contract that pays $1 if it does.</p>
+        <p>The <b>&#9679; LIVE</b> tab shows a speech as it happens, or a past one replayed as practice. <b>Playbook</b> lists the trading rules learned from past speeches, and the <b>Desk</b> panel under the chart shows what those rules traded or would have traded. Trades default to Kalshi's demo exchange (fake money). <b>Model</b> shows a predictor trained on past speeches and how well it scores; each market's &ldquo;chance to react&rdquo; is what it said before the release.</p>
       </div>
       <div>
         <h3>How to use it</h3>
         <ol>
           <li>Pick an event at the top.</li>
-          <li>Press <b>&#9654; Play</b> (or space), or drag the timeline. <b>Jump to T0</b> (key 0) skips to one minute after release, and the &larr; and &rarr; keys step one minute. Hover the clock for seconds and UTC.</li>
+          <li>Press <b>&#9654; Play</b> (or space), or drag the timeline. <b>Jump to release</b> (key 0) skips to one minute after release, and the &larr; and &rarr; keys step one minute. Hover the clock for seconds and UTC.</li>
           <li>Click any market in the list to put it on the chart. <b>See the data</b> opens the raw rows behind its numbers.</li>
           <li>The page keeps to plain language. Any <b>&#9432;</b> button opens the numbers behind it: the scores for a passage, the timings behind a verdict, the desk's orders, or the chart key.</li>
         </ol>
@@ -42,7 +42,7 @@
         <dl class="legend-list" id="legendList"></dl>
       </div>
     </div>
-    <p class="guide-foot">Prices are Kalshi 1-minute candles (time = candle end). Nothing is calculated in your browser: verdicts, reaction times and moves come from the cached <span class="mono">analysis.json</span>, speech scores from <span class="mono">timeline.json</span>, orders and P&amp;L from <span class="mono">backtest.json</span> or the live desk. Polymarket series are indicative and get no timing claims.</p>
+    <p class="guide-foot">Prices are Kalshi 1-minute candles (time = candle end). Nothing is calculated in your browser: verdicts, reaction times and moves come from the cached <span class="mono">analysis.json</span>, speech scores from <span class="mono">timeline.json</span>, orders and profit/loss from <span class="mono">backtest.json</span> or the live desk. Polymarket series are indicative and get no timing claims.</p>
   </dialog>
 
   <div class="controls-bar" id="liveControls" hidden></div>
@@ -53,7 +53,7 @@
     <div class="dock-main">
       <div class="transport">
         <button class="btn play" id="btnPlay" title="Play / pause (space)">&#9654; Play</button>
-        <button class="btn" id="btnT0" title="Jump to T0 + 1 minute: just after the text is released (0)">Jump to T0</button>
+        <button class="btn" id="btnT0" title="Jump to one minute after the text is released (key 0)">Jump to release</button>
       </div>
       <div class="scrub">
         <input type="range" id="scrub" min="0" max="1" step="1000" value="0" aria-label="Replay time (arrow keys step one minute)">
@@ -63,7 +63,7 @@
       <!-- clock time at the replay position, and minutes from T0; hover for seconds and UTC -->
       <div class="clock" id="clock">
         <span class="abs" id="clkAbs"><b class="num" id="clkEt">--:--</b> ET</span>
-        <span class="rel num" id="clkRel">T&minus;0m</span>
+        <span class="rel num" id="clkRel"></span>
       </div>
     </div>
     <div class="dock-note">
@@ -79,7 +79,7 @@
   </div>
 
   <aside class="drawer" id="drawer" aria-hidden="true">
-    <header><h3 id="drawerTitle">Evidence</h3><button class="btn" id="drawerClose">Close &#10005;</button></header>
+    <header><h3 id="drawerTitle">Evidence</h3><button class="btn small" id="drawerClose">Close</button></header>
     <div class="body" id="drawerBody"></div>
   </aside>
 

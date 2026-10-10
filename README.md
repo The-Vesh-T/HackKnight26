@@ -45,8 +45,9 @@ python3 tradio/serve.py          # then open http://localhost:8000/tradio.html
 ```
 
 `serve.py` is the website plus **Start/Stop buttons on the LIVE tab**: *Practice* replays
-a past speech as if live (offline); *Real speech* starts transcription, scoring, the
-market tape and (optionally) the trading desk. Modes: Guide only (no orders), Kalshi demo
+a past speech as if live (offline); *Follow a real speech* starts transcription, scoring, the
+market tape and (optionally) the trading desk; *Save replay* keeps a finished real session
+as a new tab (`tradio/live.py archive`). Modes: Guide only (no orders), Kalshi demo
 (fake money, needs `kalshikey_demo.txt` + `privkey_demo.txt`), or real money (only if the
 server was started with `TRADIO_ALLOW_LIVE=1`, the real Kalshi keys exist, and you type
 LIVE; the desk's $10/order and $50/day limits still apply). It listens on localhost only

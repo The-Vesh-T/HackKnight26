@@ -10,6 +10,7 @@ LIVE tab uses to start and stop Tradio's own commands, so nobody has to juggle t
   live      python speechtxt.py --url <stream>                           (transcribe, optional)
             python live.py --speaker <s> --fast --playbook --mode <m> --venues kalshi  (desk)
             python tradio/live.py --speaker <s> --t0 now                 (market tape)
+  archive   python tradio/live.py archive <event_id> [--title <title>]  (keep a finished session)
 
 Safety:
   - listens on 127.0.0.1 only; requests must carry the X-Tradio header from this page
@@ -174,7 +175,21 @@ class Runner:
                             [py, "tradio/live.py", "--speaker", sp, "--t0", "now"], env)
                 self.session = {"kind": "live", "speaker": sp, "mode": mode, "transcribe": transcribe, "url": url}
             return self.status()
-        raise ValueError("kind must be practice or live")
+        if kind == "archive":
+            eid, title = req.get("event_id") or "", req.get("title") or ""
+            if not isinstance(eid, str) or not re.fullmatch(r"[a-z]+\d{8}[a-z]?", eid):
+                raise ValueError("name must look like waller20261015 (speaker's last name + date)")
+            if eid in events():
+                raise ValueError(f"{eid} already exists")
+            if not isinstance(title, str) or len(title) > 80 or not re.fullmatch(r"[\w ,.'()\-]*", title):
+                raise ValueError("title: letters, numbers, spaces and , . ' ( ) - only, up to 80 characters")
+            with self.lock:
+                if any(p.running() for p in self.procs.values()):
+                    raise ValueError("stop the live session before saving it")
+                self._spawn("archive", f"saving the live session as {eid}",
+                            [py, "tradio/live.py", "archive", eid] + (["--title", title] if title else []))
+            return self.status()
+        raise ValueError("kind must be practice, live or archive")
 
     def status(self) -> dict:
         with self.lock:

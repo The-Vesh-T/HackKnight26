@@ -47,6 +47,13 @@ class RunnerValidationTest(unittest.TestCase):
             for bad in ("file:///etc/passwd", "http://x.com", "https://x.com/ --exec rm", "-o /tmp/x"):
                 self.assertIn("https", self.err({"kind": "live", "speaker": "michelle_bowman", "mode": "dry", "url": bad}))
 
+    def test_archive_checks_name_and_title(self):
+        self.assertIn("name", self.err({"kind": "archive", "event_id": "../x"}))
+        self.assertIn("already exists", self.err({"kind": "archive", "event_id": "bowman20250623"}))
+        self.assertIn("title", self.err({"kind": "archive", "event_id": "waller20991015", "title": "x; rm -rf /"}))
+        self.r.start({"kind": "archive", "event_id": "waller20991015", "title": "Waller, 2099-10-15"})
+        self.assertEqual(self.spawned[0][1:], ["tradio/live.py", "archive", "waller20991015", "--title", "Waller, 2099-10-15"])
+
     def test_practice_runs_only_the_simulator(self):
         self.r.start({"kind": "practice", "event": "bowman20250623", "speed": 30})
         self.assertEqual(self.spawned[0][1:], ["tradio/live.py", "--simulate", "bowman20250623", "--speed", "30"])
