@@ -329,7 +329,7 @@ mark.key { background: rgba(139, 139, 245, .18); color: inherit; padding: 1px 2p
 .flat { color: var(--faint); font-weight: 500; }
 
 .chart-stage { position: relative; margin-top: 4px; }
-.chart-wrap { height: clamp(300px, calc(100vh - 400px), 600px); }
+.chart-wrap { height: clamp(280px, calc(100vh - 520px), 560px); }
 .chart-wrap svg { width: 100%; height: 100%; display: block; }
 .cta {
   position: absolute;
@@ -704,3 +704,19 @@ mark.key { background: rgba(139, 139, 245, .18); color: inherit; padding: 1px 2p
 .also-toggle .chev { margin-left: auto; font-size: 9px; color: var(--faint); transition: transform .18s var(--ease); }
 .also-toggle[aria-expanded="true"] .chev { transform: rotate(90deg); }
 .also-toggle + .also { margin-top: 6px; animation: rise .18s var(--ease); }
+
+/* ---------- the bot's trade (under the chart) ---------- */
+.desk { align-items: center; gap: 16px; padding: 14px 16px; margin-top: 4px; border-top: 0; background: var(--panel-2); border-radius: 12px; color: var(--text); }
+.desk-main { flex: 1; min-width: 0; display: grid; gap: 3px; }
+.desk-kind { display: flex; align-items: center; gap: 8px; color: var(--faint); font-size: 12px; font-weight: 550; }
+.desk-bet { font-size: 15px; font-weight: 550; }
+.desk-bet .muted, .desk-size .muted { color: var(--muted); font-weight: 400; }
+.desk-bet.muted { color: var(--muted); font-weight: 400; }
+.desk-size { color: var(--muted); font-size: 13px; }
+.desk-size b { color: var(--text); font-weight: 600; }
+.side-yes { color: var(--green); }
+.side-no { color: var(--red); }
+.desk-show { margin: 2px 0 0; padding: 0; justify-self: start; font-size: 12.5px; }
+.desk-pnl { display: grid; justify-items: end; gap: 1px; text-align: right; }
+.desk-pnl b { font-size: 26px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; }
+.desk-pnl small { color: var(--faint); font-size: 12px; white-space: nowrap; }

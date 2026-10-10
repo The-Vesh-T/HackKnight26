@@ -149,7 +149,10 @@
     const t = (Math.abs(a - Math.round(a)) < 0.05 ? a.toFixed(0) : a.toFixed(1)) + "%";
     return `<span class="${c > 0 ? "up" : "dn"}">${c > 0 ? "▲" : "▼"} ${t}</span>`;
   }
-  const money = (x) => (x == null ? "—" : (x >= 0 ? "+$" : "−$") + Math.abs(x).toFixed(2));
+  // Signed dollars: cents for small amounts, whole dollars with commas once it's in the hundreds.
+  const money = (x) => (x == null ? "—" : (x >= 0 ? "+$" : "−$") + dollars(Math.abs(x)));
+  const dollars = (x) => (x >= 100 ? Math.round(x).toLocaleString("en-US") : x.toFixed(2));
+  const count = (n) => Number(n).toLocaleString("en-US");
   const moveText = (m, ticks) => (ticks == null ? "—" : sgn(ticks, 1, true) + (m.tick === 0.01 ? " percentage points" : " ticks"));
   const niceName = (s) => (s || "").replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
   // the LIVE banner already says "LIVE" / "SIMULATED LIVE", so the cards show just the event name
@@ -278,6 +281,7 @@
   function backtestDesk(bt) {
     return { mode: "backtest", backtest: true, trades: bt.trades || [], skipped: bt.skipped || [],
              learned_from: bt.learned_from || [], total_pnl: bt.total_pnl, capital: bt.capital,
+             bankroll: bt.sizing && bt.sizing.bankroll, sizing: bt.sizing,
              note: `rules learned from ${(bt.learned_from || []).join(", ") || "no other events"} only (leave-one-out), real Kalshi prices, fees included` };
   }
 
@@ -294,11 +298,12 @@
         t: parseT(t.t || t.entry_t), mid, label: (E.byId[mid] || {}).label || t.label || t.title || t.market,
         side: t.side, qty: t.qty, cost: t.cost, exitT: t.exit_t ? parseT(t.exit_t) : null,
         pnlFinal: t.pnl != null ? t.pnl : t.pnl_at_exit, pnlNow: t.pnl_now, value: t.value,
-        status: t.status, sideFixed: t.side_fixed || (t.playbook && t.playbook.side_fixed), fees: t.fees,
+        status: t.status, sideFixed: t.side_fixed || (t.playbook && t.playbook.side_fixed), fees: t.fees, sizeWhy: t.size_why,
         path: (t.pnl_path || []).map((p) => ({ t: parseT(p.t), pnl: p.pnl })),
       });
     }
-    return { mode: d.mode, backtest: !!d.backtest, note: d.note, trades, skipped, total: d.total_pnl, capital: d.capital };
+    return { mode: d.mode, backtest: !!d.backtest, note: d.note, trades, skipped, total: d.total_pnl, capital: d.capital,
+             bankroll: d.bankroll, sizing: d.sizing };
   }
 
   // Latest quote whose candle has ENDED by time t (quote.t is the candle end), so the replay never peeks ahead.
@@ -912,27 +917,39 @@
   const pnlHtml = (x) => `<b class="${x >= 0 ? "gain" : "loss"}">${money(x)}</b>`;
 
   // One line under the chart; the orders, skips and how the backtest was run are in the details bubble.
+  // What winning means for a bet, in words: YES wins if the outcome happens, NO if it doesn't.
+  const winsIf = (t) => `wins if “${plain(t.label)}” ${String(t.side).toLowerCase() === "no" ? "doesn't happen" : "happens"}`;
+
+  // The bot's trade, under the chart: what it bet on, how big, and the profit or loss so far.
+  // Orders, skips and P&L are read from the files; open backtest orders are marked to the tape.
   function renderDesk(E, now) {
     const el = $("desk");
     if (!el) return;
     const d = E.desk;
     if (!d) { el.hidden = true; state.sig.desk = ""; return; }
     const s = deskNow(E, now);
-    let text;
-    if (!s.started) text = "Waiting for the speech.";
-    else if (!s.shown.length) text = d.backtest ? "No trade: the playbook passed on every contract." : "No orders so far.";
+    const kind = d.backtest ? `Bot trade · backtest${d.bankroll ? ` with a $${count(d.bankroll)} bankroll` : ""}` : "Bot trade";
+    let body, pnl = "";
+    if (!s.started) body = `<span class="desk-bet muted">Waiting for the speech.</span>`;
+    else if (!s.shown.length) body = `<span class="desk-bet muted">${d.backtest ? "No trade: the playbook passed on every contract." : "No orders so far."}</span>`;
     else if (s.shown.length === 1) {
       const t = s.shown[0];
-      text = `Bought <b>${esc(String(t.side).toUpperCase())}</b> on “${esc(plain(t.label))}” ×${esc(t.qty)} at <span class="num">${cents(t.cost)}</span> · ` +
-        (t.pnl == null ? `open${t.exitT ? `, exit ${fmtEtShort(t.exitT)}` : ""}`
-          : t.marked ? `${pnlHtml(t.pnl)} if sold now${t.exitT ? ` · exits ${fmtEtShort(t.exitT)}` : ""}`
-          : `${pnlHtml(t.pnl)}${t.closed ? " · closed" : " so far"}`);
+      const side = esc(String(t.side).toUpperCase());
+      body = `<span class="desk-bet">Bet <b class="side-${side.toLowerCase()}">${side}</b> on “${esc(plain(t.label))}” <span class="muted">· ${esc(winsIf(t))}</span></span>
+        <span class="desk-size">${count(t.qty)} contracts at <span class="num">${cents(t.cost)}</span> = <b class="num">$${dollars(t.qty * t.cost)}</b>${d.bankroll ? ` of $${count(d.bankroll)}` : ""}</span>`;
+      if (t.pnl != null) {
+        pnl = `<div class="desk-pnl"><b class="num ${t.pnl >= 0 ? "gain" : "loss"}">${money(t.pnl)}</b>
+          <small>${t.marked ? `if sold now${t.exitT ? ` · exits ${fmtEtShort(t.exitT)}` : ""}` : t.closed ? `closed · ${sgn(100 * t.pnl / (t.qty * t.cost), 1)}% on the position` : "so far"}</small></div>`;
+      } else if (t.exitT) {
+        pnl = `<div class="desk-pnl"><small>open · exits ${fmtEtShort(t.exitT)}</small></div>`;
+      }
+      if (state.focus[state.view] !== t.mid) body += `<button class="linkbtn desk-show" data-act="focus" data-id="${esc(t.mid)}">Show this market on the chart</button>`;
     } else {
       const open = s.shown.filter((t) => !t.closed).length;
-      text = `${s.shown.length} orders${s.total != null ? ` · ${pnlHtml(s.total)} closed` : ""}` +
-        (open ? ` · ${open} open${s.openTotal != null ? `, ${pnlHtml(s.openTotal)} if sold now` : ""}` : "");
+      body = `<span class="desk-bet">${s.shown.length} orders${open ? ` · ${open} open` : ""}</span>`;
+      if (s.total != null) pnl = `<div class="desk-pnl"><b class="num ${s.total >= 0 ? "gain" : "loss"}">${money(s.total)}</b><small>closed</small></div>`;
     }
-    setHtml("desk", `<b>Desk</b>${deskMode(d)}<span class="why-text">${text}</span>${infoBtn("desk", "Details")}`);
+    setHtml("desk", `<div class="desk-main"><span class="desk-kind">${kind}${d.backtest ? "" : deskMode(d)}</span>${body}</div>${pnl}${infoBtn("desk", "Details")}`);
     el.hidden = false;
   }
 
@@ -943,6 +960,14 @@
       : d.mode === "live" ? "Orders the live desk placed with real money."
       : "A dry run: orders the desk would have placed. Nothing was sent.";
     let h = `<p>${deskMode(d)} ${what}</p>`;
+    if (d.sizing) {
+      const z = d.sizing;
+      h += `<h4>Money and risk limits</h4><table class="kv">
+        <tr><th>Bankroll</th><td>$${count(z.bankroll)}</td></tr>
+        <tr><th>Most in one contract</th><td>${Math.round(z.risk_per_trade * 100)}% of the bankroll ($${count(z.risk_per_trade * z.bankroll)})</td></tr>
+        <tr><th>Most across one speech</th><td>${Math.round(z.max_event_exposure * 100)}% ($${count(z.max_event_exposure * z.bankroll)})</td></tr>
+        <tr><th>Most of the market's volume</th><td>${Math.round(z.max_share_of_volume * 100)}% of the contracts traded while the position was open, so the prices are ones we could really have got</td></tr></table>`;
+    }
     if (d.note) h += `<p class="src">${esc(d.note)}</p>`;
     h += `<h4>Orders</h4>`;
     if (!s.started) h += `<p class="muted">Waiting for the speech.</p>`;
@@ -950,7 +975,7 @@
     else {
       h += `<div class="orders">` + s.shown.map((t) => `<div class="order" role="button" tabindex="0" data-act="order" data-id="${esc(t.mid)}" title="Show this contract on the chart">
         <span class="mono t">${fmtEtShort(t.t)}</span>
-        <span>BUY <b>${esc(String(t.side).toUpperCase())}</b> ×${esc(t.qty)} ${esc(plain(t.label))} @ <span class="num">${cents(t.cost)}</span></span>
+        <span>BUY <b>${esc(String(t.side).toUpperCase())}</b> ×${count(t.qty)} ${esc(plain(t.label))} @ <span class="num">${cents(t.cost)}</span>${t.sizeWhy ? `<span class="muted"> · size set by ${esc(t.sizeWhy)}</span>` : ""}</span>
         <span class="pnl">${t.pnl == null ? `<span class="muted">open${t.exitT ? `, exit ${fmtEtShort(t.exitT)}` : ""}</span>` : `${pnlHtml(t.pnl)}${t.closed ? "" : t.marked ? ' <span class="muted">if sold now</span>' : ' <span class="muted">so far</span>'}`}</span>
         ${t.sideFixed ? `<div class="fix">side corrected by the playbook: ${esc(t.sideFixed)}</div>` : ""}
       </div>`).join("") + `</div>`;

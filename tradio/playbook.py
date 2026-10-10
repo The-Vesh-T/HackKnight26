@@ -181,7 +181,29 @@ def learn(obs: list) -> dict:
 
 LATENCY_S = 60          # text released at T0 -> scored -> order sent; the live desk
                         # takes seconds, so one minute (the next closed candle) is conservative
-BACKTEST_QTY = 10
+BACKTEST_QTY = 10       # fixed size when no bankroll is given (tests, quick checks)
+
+# Backtest position sizing (the page's "what if we'd traded this with real money"). This is only
+# the backtest: the live desk keeps its own --qty and trading_common.py's limits.
+BANKROLL = 100_000          # starting money, dollars
+RISK_PER_TRADE = 0.05       # at most 5% of the bankroll in one contract (the most a bought contract can lose is its cost)
+MAX_EVENT_EXPOSURE = 0.10   # at most 10% of the bankroll across one speech
+MAX_SHARE_OF_VOLUME = 0.10  # at most 10% of the contracts that actually traded between our entry and exit,
+                            # so the fills at the quoted prices stay believable (no price impact is modelled)
+
+
+def size_position(cost: float, window_volume: int, used: float, bankroll: float) -> tuple:
+    """Contracts to buy and the limit that set it. Returns (qty, reason)."""
+    if cost <= 0:
+        return 0, "no price"
+    limits = {
+        f"{RISK_PER_TRADE:.0%} of the bankroll per trade": RISK_PER_TRADE * bankroll / cost,
+        f"{MAX_EVENT_EXPOSURE:.0%} of the bankroll per speech": (MAX_EVENT_EXPOSURE * bankroll - used) / cost,
+        f"{MAX_SHARE_OF_VOLUME:.0%} of the {window_volume:,} contracts traded while the position was open":
+            MAX_SHARE_OF_VOLUME * window_volume,
+    }
+    why = min(limits, key=limits.get)
+    return max(0, int(limits[why])), why
 
 
 def kalshi_fee(price: float) -> float:
@@ -189,7 +211,8 @@ def kalshi_fee(price: float) -> float:
     return 0.07 * price * (1 - price)
 
 
-def backtest(event_id: str, obs_all: list, latency_s: int = LATENCY_S, qty: int = BACKTEST_QTY) -> dict:
+def backtest(event_id: str, obs_all: list, latency_s: int = LATENCY_S, qty: int = BACKTEST_QTY,
+             bankroll: float = None) -> dict:
     """What the desk would have done on this event with rules learned from the OTHER events.
     Entry: the first closed candle at least latency_s after T0, buying at the ask (YES) or
     1 - bid (NO). Exit: exit_after_min later, selling at the bid (YES) or 1 - ask (NO).
@@ -200,6 +223,9 @@ def backtest(event_id: str, obs_all: list, latency_s: int = LATENCY_S, qty: int 
     out = {"event_id": event_id, "method": "leave-one-out",
            "learned_from": [o["event"] for o in others], "latency_s": latency_s, "qty": qty,
            "trades": [], "skipped": []}
+    if bankroll:
+        out["sizing"] = {"bankroll": bankroll, "risk_per_trade": RISK_PER_TRADE,
+                         "max_event_exposure": MAX_EVENT_EXPOSURE, "max_share_of_volume": MAX_SHARE_OF_VOLUME}
     if not me or not others:
         out["note"] = "not enough other events to learn from"
         return out
@@ -245,6 +271,7 @@ def backtest(event_id: str, obs_all: list, latency_s: int = LATENCY_S, qty: int 
     keep, skipped = gate(cands, z, {"rules": rules}, live_like, reg)
     out["skipped"] = [{"market": m["market"], "label": m["label"], "why": m["error"].replace("playbook: ", "")}
                       for m in skipped]
+    used = 0.0
     for m in keep:
         mid = f"kalshi:{m['market']}"
         e, x = at(mid, entry_t), at(mid, exit_t)
@@ -255,6 +282,15 @@ def backtest(event_id: str, obs_all: list, latency_s: int = LATENCY_S, qty: int 
             cost, value = e["ask"], x["bid"]
         else:
             cost, value = 1 - e["bid"], 1 - x["ask"]
+        size_why = None
+        if bankroll:
+            vol = sum(int(t.get("size") or 0) for t in tl.get("trades", [])
+                      if t.get("market") == mid and to_unix(e["t"]) <= to_unix(t["t"]) <= to_unix(x["t"]))
+            qty, size_why = size_position(cost, vol, used, bankroll)
+            if qty <= 0:
+                out["skipped"].append({"market": m["market"], "label": m["label"], "why": f"no room: {size_why}"})
+                continue
+            used += qty * cost
         fees = kalshi_fee(cost) + kalshi_fee(value)
         pnl = qty * (value - cost - fees)
         # Running profit/loss for the page: after every closed candle from entry to exit, what
@@ -275,11 +311,13 @@ def backtest(event_id: str, obs_all: list, latency_s: int = LATENCY_S, qty: int 
             "exit_t": x["t"], "exit_yes_bid": x["bid"], "exit_yes_ask": x["ask"], "value": round(value, 4),
             "fees": round(qty * fees, 4), "pnl": round(pnl, 2),
             "return_pct": round(100 * pnl / (qty * cost), 1) if cost else None,
-            "side_fixed": m["playbook"].get("side_fixed"), "pnl_path": path,
+            "side_fixed": m["playbook"].get("side_fixed"), "pnl_path": path, "size_why": size_why,
         })
     out["regime"], out["z"] = reg, z
     out["total_pnl"] = round(sum(t["pnl"] for t in out["trades"]), 2)
     out["capital"] = round(sum(t["qty"] * t["cost"] for t in out["trades"]), 2)
+    if bankroll:
+        out["return_on_bankroll_pct"] = round(100 * out["total_pnl"] / bankroll, 3)
     return out
 
 
@@ -295,7 +333,7 @@ def build() -> dict:
     for path in (PLAYBOOK, WEB_PLAYBOOK):
         write_json(path, pb)
     for o in obs:                                     # leave-one-out backtest per event
-        bt = backtest(o["event"], obs)
+        bt = backtest(o["event"], obs, bankroll=BANKROLL)
         for base in (DATA_DIR, WEB_DATA_DIR):
             if os.path.isdir(os.path.join(base, o["event"])):
                 write_json(os.path.join(base, o["event"], "backtest.json"), bt)

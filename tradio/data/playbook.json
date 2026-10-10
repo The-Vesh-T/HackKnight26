@@ -1,5 +1,5 @@
 {
- "built_at": "2026-10-10T03:17:13Z",
+ "built_at": "2026-10-10T21:51:11Z",
  "n_events": 3,
  "caveat": "Learned from 3 events. Rules of thumb, not statistics; every recorded speech updates them. Not trading advice.",
  "rules": {
@@ -324,8 +324,8 @@
   {
    "event": "bowman20250623",
    "trades": 1,
-   "total_pnl": 0.19,
-   "capital": 1.6
+   "total_pnl": 277.0,
+   "capital": 2285.44
   },
   {
    "event": "waller20250717",

@@ -35,6 +35,12 @@
    "why": "|z| 3.05 below learned threshold 3.17"
   }
  ],
+ "sizing": {
+  "bankroll": 100000,
+  "risk_per_trade": 0.05,
+  "max_event_exposure": 0.1,
+  "max_share_of_volume": 0.1
+ },
  "rules": {
   "min_abs_z": 3.17,
   "trade_kinds": [
@@ -52,5 +58,6 @@
  "regime": null,
  "z": 3.05,
  "total_pnl": 0,
- "capital": 0
+ "capital": 0,
+ "return_on_bankroll_pct": 0.0
 }
