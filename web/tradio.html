@@ -9,40 +9,69 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="brand"><img src="tradio-mark.svg" alt=""> Tradio <small>Fed speech → market reaction replay</small></div>
-    <nav class="tabs" id="tabs"></nav>
-    <div class="clock">
-      <span><span class="big num" id="clkEt">--:--:--</span><span class="lbl">ET</span></span>
-      <span><span class="num" id="clkUtc">--:--:--</span><span class="lbl">UTC</span></span>
-      <span class="big num rel" id="clkRel">T-00:00</span>
+    <div class="brand">
+      <img src="tradio-mark.svg" alt="">
+      <div class="brand-text"><b>Tradio</b><span>Did prediction markets react to this Fed speech?</span></div>
     </div>
-    <div class="controls">
-      <button class="btn" id="btnBack" title="Back 1 min (←)">−1m</button>
-      <button class="btn play" id="btnPlay" title="Play / pause (space)">▶ Play</button>
-      <button class="btn" id="btnFwd" title="Forward 1 min (→)">+1m</button>
-      <span id="speeds"></span>
-      <button class="btn" id="btnT0" title="Jump to T0+1 min (0)">T0</button>
-    </div>
+    <nav class="tabs" id="tabs" aria-label="Choose a replay"></nav>
+    <button class="btn ghost" id="btnGuide" aria-expanded="false" aria-controls="guide">? Guide</button>
   </header>
 
-  <div class="scrub">
-    <input type="range" id="scrub" min="0" max="1" step="1000" value="0" aria-label="Replay time">
-    <div class="marks" id="marks"></div>
-  </div>
-
-  <div class="summary" id="summary"></div>
+  <dialog class="guide" id="guide" aria-label="How to read this page">
+    <div class="guide-head"><h2>How to read this page</h2><button class="btn" id="guideClose">Close &#10005;</button></div>
+    <div class="guide-inner">
+      <div>
+        <h3>What this shows</h3>
+        <p>Tradio scores each paragraph of a Fed speech against <b>that speaker's own past speeches</b>: a hawk sounding dovish is news, a dove sounding dovish isn't. It then replays real Kalshi and Polymarket prices around the moment the text was released (<b>T0</b>) to see which markets reacted, how fast, and which were too thin to judge.</p>
+        <p>A price of 22&cent; is the market's implied chance of that outcome: roughly 22%.</p>
+      </div>
+      <div>
+        <h3>How to use it</h3>
+        <ol>
+          <li>Pick an event at the top.</li>
+          <li>Press <b>&#9654; Play</b> (or space), or drag the timeline. <b>Jump to speech</b> skips to one minute after release.</li>
+          <li>Click any market on the right to put it on the chart. <b>See the data</b> opens the raw rows behind its numbers.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>What the verdicts mean</h3>
+        <dl class="legend-list" id="legendList"></dl>
+      </div>
+    </div>
+    <p class="guide-foot">Prices are Kalshi 1-minute candles (time = candle end). Nothing is calculated in your browser: verdicts, reaction times and moves come from the cached <span class="mono">analysis.json</span>, speech scores from <span class="mono">timeline.json</span>. Polymarket series are indicative and get no timing claims.</p>
+  </dialog>
 
   <div id="view"><div class="loading">Loading replay data…</div></div>
 
+  <footer class="dock">
+    <div class="dock-main">
+      <div class="transport">
+        <button class="btn play" id="btnPlay" title="Play / pause (space)">&#9654; Play</button>
+        <button class="btn" id="btnBack" title="Back 1 minute (&larr;)">&minus;1m</button>
+        <button class="btn" id="btnFwd" title="Forward 1 minute (&rarr;)">+1m</button>
+        <button class="btn" id="btnT0" title="Jump to 1 minute after the text is released (0)">Jump to speech</button>
+      </div>
+      <div class="scrub">
+        <input type="range" id="scrub" min="0" max="1" step="1000" value="0" aria-label="Replay time">
+        <div class="marks" id="marks"></div>
+      </div>
+      <div class="speed"><span class="lbl">Speed</span><span id="speeds"></span></div>
+      <div class="clock">
+        <span class="rel num" id="clkRel">T&minus;00:00</span>
+        <span class="cap" id="clkCap">until the text is released</span>
+        <span class="abs" id="clkAbs"><span class="num" id="clkEt">--:--:--</span> ET &middot; <span class="num" id="clkUtc">--:--:--</span> UTC</span>
+      </div>
+    </div>
+    <div class="dock-note">
+      <span>Historical replay of cached data &middot; Polymarket series indicative (no timing claims) &middot; not trading advice</span>
+      <span class="keys">space play &middot; &larr;/&rarr; 1 min &middot; 0 jump to speech &middot; esc close</span>
+    </div>
+  </footer>
+
   <aside class="drawer" id="drawer" aria-hidden="true">
-    <header><h3 id="drawerTitle">Evidence</h3><button class="btn" id="drawerClose">Close ✕</button></header>
+    <header><h3 id="drawerTitle">Evidence</h3><button class="btn" id="drawerClose">Close &#10005;</button></header>
     <div class="body" id="drawerBody"></div>
   </aside>
-
-  <footer>
-    <span>Historical replay of cached data · Polymarket series indicative (no timing claims) · not trading advice</span>
-    <span class="keys">space play · ←/→ 1 min · 0 jump to T0 · click a market for its evidence</span>
-  </footer>
 
   <script src="tradio.js"></script>
 </body>
