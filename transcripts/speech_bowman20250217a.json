@@ -1,0 +1,413 @@
+{
+ "date": "20250217",
+ "source": "https://www.federalreserve.gov/newsevents/speech/bowman20250217a.htm",
+ "title": "Speech by Governor Bowman on the economy and bank regulation",
+ "speaker_key": "michelle_bowman",
+ "segments": [
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "At The American Bankers Association 2025 Conference for Community Bankers, Phoenix, Arizona"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Thank you for the invitation to join you here in Phoenix at the ABA's Conference for Community Bankers.1 For the past seven years, this conference provided an excellent forum for me and bankers to meet and interact with a range of state and federal regulators, policymakers, service providers, and other stakeholders. Today I would like to share a brief update on my views on monetary policy and the economy, before I turn to bank regulatory issues, and describe how I think that regulators should approach the important work of \"maintenance\" of the regulatory framework."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Economic Outlook and Monetary Policy Toward the end of last year, the Federal Open Market Committee (FOMC) began the process of moving the target range for the federal funds rate to a more neutral setting to reflect the progress made since 2023 on lowering inflation and cooling the labor market. At our September meeting, the FOMC voted to lower the target range, for the first time since we began tightening monetary policy to combat inflation, by 50 basis points to 4-3/4 to 5 percent."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "You may remember that I dissented from that decision, the first time a Fed Governor dissented from an FOMC rate decision in nearly 20 years. I preferred a smaller initial cut to begin the policy recalibration phase. I explained my reasoning in a statement published after the meeting noting that the strong economy and a healthy labor market did not warrant a larger cut. In addition, moving the policy rate down too quickly could unnecessarily risk stoking demand, potentially reigniting inflationary pressures, and could be interpreted as a premature \"declaration of victory\" on our price-stability mandate."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "At the most recent FOMC meeting last month, my colleagues and I voted to hold the federal funds rate target range at 4-1/4 to 4‑1/2 percent and to continue to reduce the Federal Reserve's securities holdings. I supported this action because, after recalibrating the policy rate by 100 basis points through the December meeting, I think that policy is now in a good place, allowing the Committee to be patient and pay closer attention to the inflation data as it evolves."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "In my view, the current policy stance also provides the opportunity to review further indicators of economic activity and get further clarity on the administration's policies and their effects on the economy. It will be very important to have a better sense of these policies, how they will be implemented, and establish greater confidence about how the economy will respond in the coming weeks and months."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "For now, the U.S. economy remains strong, with solid growth in economic activity and a labor market near full employment. Core inflation is still somewhat elevated, but has appeared to resume its downward path, and my baseline expectation has been that it will moderate further this year. Even with this outlook, there are upside risks to my baseline expectation for the inflation path."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "In 2023, the rate of inflation declined significantly, but it has taken longer to see further meaningful declines since that time. The latest consumer and producer price index reports suggest that the 12-month measure of core personal consumption expenditures inflation—which excludes food and energy prices—likely moved down to around 2.6 percent in January, which would represent a noticeable stepdown from its 2.8 percent reading in December and 3.0 percent at the end of 2023. Progress had been especially slow and uneven since the spring of last year mostly due to rising core goods price inflation."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "After increasing at a solid pace, on average, over the first nine months of last year, gross domestic product appears to have risen a bit more moderately in the fourth quarter, reflecting a large drop in the volatile category of inventory investment. In contrast, private domestic final purchases, which provide a better signal about underlying growth in economic activity, maintained its strong momentum from earlier in the year, as personal consumption rose robustly again in the fourth quarter. Following strong readings in December, retail sales and sales of motor vehicles softened in January. However, these data can be noisy around this time of the year and sales were likely affected by the cold and wintery weather last month."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Payroll employment gains have picked up since the summer of last year and averaged a strong pace of about 240,000 per month over the past three months, with last month's gains likely held back by the Los Angeles wildfires and the harsh winter weather. The unemployment rate edged down further to 4.0 percent in January and has moved sideways since the middle of last year, remaining below my estimate of full employment."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The labor market appears to have stabilized in the second half of last year, after it loosened from extremely tight conditions. The rise in the unemployment rate since mid-2023 largely reflects weaker hiring, as job seekers entering or re-entering the labor force are taking longer to find work, while layoffs have remained low. The ratio of job vacancies to unemployed workers has remained close to the pre-pandemic level in recent months, and there are still more available jobs than available workers. The labor market no longer appears to be especially tight, but wage growth remains somewhat above the pace consistent with our inflation goal."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The recent revision of the Bureau of Labor Statistics labor data further vindicates my view that the labor market was not weakening in a concerning way during the summer of last year. Although payroll employment gains were revised down considerably in the 12 months through March 2024, job gains were little revised, on net, over the remainder of last year. It is crucial that U.S. official data more accurately capture structural changes in labor markets in real time, so we can confidently rely on these data for monetary and economic policymaking. But in the meantime, given conflicting economic signals, measurement challenges, and significant data revisions in recent years, I remain cautious about taking signal from only a limited set of real-time data releases."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Assuming the economy evolves as I expect, I think that inflation will slow further this year. As the inflation data since the spring of last year show, its progress may be bumpy and uneven, and progress on disinflation may take longer than we would hope. I continue to see greater risks to price stability, especially while the labor market remains strong."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "With encouraging signs that geopolitical tensions may be abating in the Middle East, Eastern Europe, and in Asia, I will be monitoring global supply chains which could continue to be susceptible to disruptions, and lead to inflationary effects on food, energy, and other commodity markets. In addition, the release of pent-up demand following the election could lead to stronger economic activity, which could also influence inflationary pressures."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Having entered a new phase in the process of moving the federal funds rate toward a more neutral policy stance, there are a few considerations that lead me to prefer a cautious and gradual approach to adjusting policy, as it provides us time to assess progress in achieving our inflation and employment goals."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Given the current policy stance, I think that easier financial conditions from higher equity prices over the past year may have slowed progress on disinflation. And I am watching the increase in longer-term Treasury yields that has occurred since the start of policy recalibration at the September meeting. Some have interpreted it as a reflection of investors' concerns about inflation risks and the possibility of tighter-than-expected policy that may be required to address inflationary pressures."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "There is still more work to be done to bring inflation closer to our 2 percent goal. I would like to gain greater confidence that progress in lowering inflation will continue as we consider making further adjustments to the target range. We need to keep inflation in focus while the labor market appears to be in balance and the unemployment rate remains at historically low levels. Before our March meeting, we will have received one additional month of inflation and employment data."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Looking forward, it is important to note that monetary policy is not on a preset course. At each FOMC meeting, my colleagues and I will make our decisions based on the incoming data and the implications for and risks to the outlook and guided by the Fed's dual-mandate goals of maximum employment and stable prices. I will also continue to meet with a broad range of contacts to help me interpret the signals provided by real-time data and as I assess the appropriateness of our monetary policy stance."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Bringing inflation in line with our price stability goal is essential for sustaining a healthy labor market and fostering an economy that works for everyone in the longer run."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Maintenance of the Regulatory Framework I will now turn to bank supervision, the bank applications process, and regulation. Community banks experience the burden of the regulatory framework most acutely when it is not appropriately tailored to their size, risk, complexity, and business model. While promoting safety and soundness in the banking system—particularly among community banks—is an important and necessary regulatory objective, we must also be cautious to ensure that the framework does not become an impediment to their operations, preventing them from providing competitive products and services, innovating, and engaging in appropriate risk-taking."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "During my tenure at the Board, I have laid out a wide range of issues and concerns that I see as critical components that are necessary to build and maintain an effective regulatory framework.2 While I will only address a subset of these issues today, I'd like to begin by clarifying what I mean by this."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Our work to maintain an effective framework is never really complete. Just as complacency can be fatal to the business of a bank, complacency can also prevent regulators from meeting their statutory obligation to promote a safe and sound banking system that enables banks to serve their customers effectively and efficiently."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "System maintenance is not something that we should shy away from. In our everyday lives, we invest significant time in maintenance. We schedule regular oil changes for our cars, and we invest in the infrastructure that allows our economy to function. Devoting resources to maintenance often prevents more costly issues down the road—it's easier to get oil changes than it is to rebuild an engine."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "So, what does maintenance look like in practice? To address this question, I think it's helpful to look at three core areas in the bank regulatory framework: Supervision, Bank applications, and Regulation."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Approach to Supervision Let's start with supervision. Supervision operates almost entirely outside of the public view. Much of the work involves the review of proprietary business information from banks, and the preparation of examination reports shielded from public scrutiny under the auspices of protecting confidential supervisory information. But confidentiality should not be used to prevent scrutiny and accountability in the assignment of ratings."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "So, today, I am going to dig a bit deeper into the realm of supervision to discuss supervisory ratings, accountability, and the troubling trend of inaction and opacity within the supervisory toolkit."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Rational Standards & Ratings While there is some public disclosure of supervisory information, it is often difficult to get a true understanding of supervision based on data that may be released. In fact, this data often sends confusing and conflicting signals. For example, the Board's Supervision and Regulation Report presented information stating that only one-third of large financial institutions maintained satisfactory ratings across all relevant ratings components in the first half of 2024.3 At the same time, this report noted that most large financial institutions met supervisory expectations with respect to capital and liquidity.4"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The odd mismatch between financial condition and overall supervisory condition as assessed by the prudential regulators raises a more significant issue, whether subjective examiner judgment—those evaluations based on subjective, examiner-driven, non-financial concerns—is driving the firm's overall rating. Are ratings trends based on the materiality of the identified issues, or do they imply that the regulators see widespread fragility in the banking system?"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "While this example highlights a large bank ratings framework issue, it is symptomatic of a broader issue that warrants scrutiny—whether the approach to supervision has led to a world in which core financial risks have been de-prioritized, and non-core and non-financial risks—things like IT, operational risk, management, risk management, internal controls, and governance—have been over-emphasized. These issues are important, and certainly worthwhile topics for examiners to consider, but their review should not come at the expense of more material financial risk considerations—and they should not drive the overall assessment of a firm's condition. There is evidence that supervision has undergone such a shift, not only among large banks, but among regional and community banks as well.5 For all institutions, financial metrics are not among the primary findings determined from the examination process, and arguably they have been de-emphasized when assigning supervisory ratings."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Prioritization is valuable in the supervisory process, both to inform how examiners allocate their time, but also in helping banks allocate resources to remediate issues identified during the supervisory process. The frequency of supervisory findings related to non-financial metrics may be a byproduct of how long it takes to remediate these issues, like longstanding issues with IT systems that have not been enhanced over many years of growth. However, we should also be vigilant and deliberate about any shift in supervisory focus from financial risk toward non-financial risks and internal processes, as this shift is not focused on fundamental safety and soundness issues and it is not cost-free."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "We should also not expect every firm to coalesce around a single set of products, internal processes, and risk-management practices. Variety in banking models is a strength and a necessity of the U.S. banking system, relying on management and boards of directors to determine bank strategy, rather than a bank's business model effectively being set by supervisory directives."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Supervisory practices like horizontal reviews can create examiner incentives to expect uniformity and \"grade on a curve,\" but this approach perversely punishes variation among bank practices, stifling competition and innovation. Supervisory findings also inform bank ratings, which can have follow-on effects like limiting options for mergers and acquisitions (M&A); raising the cost of liquidity; or diverting resources away from other, more important bank management priorities."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Diagnostic Accountability To maintain strong and appropriate supervisory standards and practices, we need to take a step back and diagnose the bank regulatory system in its entirety: what is working, what is broken, and what needs to be updated. When things go wrong, having an impartial check on subjective judgments can lead to a better diagnosis. Of course, a better diagnosis can produce more efficient and targeted improvements, and better promote accountability. Accountability is critical to maintaining an effective regulatory system, and yet it can be difficult to establish a regulatory culture that includes mechanisms to promote accountability for supervisors and regulators.6"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "At every organizational level, from examiners to agency leadership, judgments are made that contribute to the overall effectiveness of the supervisory process. Reserve Bank examiners play a critical role in examining Fed-regulated institutions, both banks and holding companies. The Federal Reserve exercises its supervisory responsibilities by supervisory portfolio, with each portfolio relying on a combination of Board and Reserve Bank staff.7 But this split allocation of responsibility should not diminish the accountability for supervisory decision making. Responsibility for supervisory decisions must be coupled with accountability for these decisions. The misalignment of responsibility and accountability limits our ability to conduct effective supervision."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "This division of responsibility can pose a challenge to accountability. In the aftermath of the bank failures in 2023 and the broader stress to the banking system, the Board and other agencies proposed a variety of regulatory reform measures to remediate and address identified issues, based on internal reviews of the failures and banking stress. While I applaud efforts to hold ourselves accountable, we must ensure that self-reviews are credible, both in the causes they identify and in the reform agenda that they are used to support. An internal review process poses the temptation to avoid responsibility by assigning blame elsewhere, even when the review may be motivated by good intentions and with the outward appearance of impartiality."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Many of the core problems in the lead-up to the bank failures involved well-known, core banking risks—interest rate risk, liquidity risk, and poor risk management. But if we look at the subsequent reform agenda, we see that the policy emphasis has been on broader regulatory changes rather than addressing supervisory program deficiencies. In my mind, this highlights the need to have a process that challenges the subjective judgments of those that were involved in oversight, not only in performing the diagnostics, but evaluating how identified issues can best be remediated."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Purging Inaction and Opacity from the Supervisory Toolkit Supervision differs significantly from the regulatory process. Implementing new regulations, or amending existing ones, requires a public notice and comment process established by the Administrative Procedure Act. When done appropriately, regulations require regulators to \"show their work\" by providing extensive analytical and factual support for proposals and final rules and soliciting comment from the public and addressing those comments before finalizing a regulation. In contrast, the execution of bank examinations and the issuance of supervisory guidance lack these procedural safeguards, instead relying heavily on discretion and judgment with far lower standards for justifying actions taken with factual and analytical support under the veil of confidential supervisory information. The greater flexibility afforded in the supervisory process can lead to poor outcomes, often caused by the temptation to use inaction and opacity as supervisory tools. In my view, these tools, inaction and opacity, are not appropriate and must be subject to appropriate scrutiny or purged from the toolkit altogether."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "First let's consider inaction. The exam process requires open communication between examiners and banks. Often interpretive questions arise during the exam process; how do existing rules and statutes apply in a particular circumstance? These questions arise when existing rules and guidance are unclear, which is a frequent occurrence. For example, how can a bank operate in a safe and sound manner while offering a new product or service, or when serving customers in particular business lines with unique needs? Banks go to great effort to meet all applicable requirements and regulatory expectations, and regulators should welcome banks seeking supervisory input and relying on a compliance-focused mindset."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Open communication with regulated banks is a hallmark of good supervision, but regulators must live up to their end of the bargain by not leaving banks in \"limbo\" for extended periods of time. When a bank requests feedback and engages in good faith to provide information and respond to reasonable questions, regulators have an obligation to provide a clear response. Banks should not be left to wonder whether an interpretation of existing laws, regulations, and guidance is consistent with the understanding of regulators."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Next, let's consider opacity. Questions raised in the supervisory channel often result from supervisory expectations that lack sufficient clarity or the application of rules and regulations to new and emerging products and services. While regulators should not form an opinion without understanding the relevant facts and circumstances, they must also strive to provide clarity—not just to the bank being examined, but to all banks. Supervisory expectations should not surprise regulated firms, and yet transparency around expectations is often challenging to achieve.8"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The problem of opacity in supervisory expectations is exacerbated by the umbrella of confidential supervisory information, or CSI, which is the label given to most materials developed in the examination process. The rules designed to protect CSI limit the public's visibility into shifting priorities and expectations in the supervisory process.9 Changes in supervisory expectations frequently come without the benefit of guidance, advance notice, or published rulemaking. In the worst-case scenario these shifts, cloaked by the veil of supervisory opacity, can have significant financial and reputational impacts or can disrupt the management and operations of affected banks."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Opacity in supervisory expectations, or in the interpretation of applicable laws and regulations, should not be discovered only at the conclusion of an examination with the issuance of deficiencies, matters requiring attention, matters requiring immediate attention, or other shortcomings."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Approach to Applications Sunshine is the best disinfectant when it comes to an approach that fosters transparency and accountability. So, I would like to spend a few minutes discussing how we can better shine a light into the dark corners of the bank applications process."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "De Novo Formation De novo formation has essentially stagnated over the past several years. While many factors have contributed to the decline in the aggregate number of banks in the United States, one key factor has been the lack of new bank formation to replace banks that have been acquired or closed their doors. This lack of de novo bank approvals does not necessarily indicate a lack of demand for new charters though, particularly in light of ongoing demand for bank \"charter strip\" acquisitions where banks have been acquired just for their charters, the growing demand for banking-as-a-service partnerships, and the shift of activities outside of the banking sector into the non-bank financial system.10 We should consider whether the applications process itself has become an unnecessary impediment to de novo formation."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "How can we improve the process of de novo formation? As fewer applications come in, institutional muscle memory for how to deal with new bank charters erodes, and it becomes difficult to navigate and ultimately to overcome institutional inertia. A few steps like developing specialized expertise, streamlining the application process, and improving transparency can yield significant improvements."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "First, de novo formations are very different from other bank applications where there are existing institutions with established supervisory ratings and examination records. A de novo formation has no supervisory record of performance on which to base a decision or inform judgments about whether an application is consistent with approval. Instead, regulators must evaluate the proposal based on applicable statutory requirements: Is the business plan sound? Is appropriate bank leadership in place? Does the bank have a viable business plan and strategy? Is the bank's proposal supported by sufficient capital? Should there be an expectation that all of these questions are answered exhaustively often well over a year before the bank would be formed, if it is approved?"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "In recent years de novo formations have been rare, and therefore staff tasked with evaluating these proposals do not have a recent perspective or deep well of experience from which to draw. Under our current approach, regional Reserve Banks are the primary point of contact for de novo applicants. We should consider creating a specialized resource that can be utilized by any reserve bank to assist them during the pre-filing conversations with de novo applicants. Our goal should be to facilitate new bank creation—identifying and finding achievable pathways to yes, instead of expecting and insisting on increasing requirements to unachievable levels or those that are intended to deter applicants from filing or moving forward."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "We should also consider whether there are ways to streamline the application process, including, if needed, by recommending statutory changes. While the agencies use some common forms, de novo formations currently involve a range of regulatory approvals. A de novo applicant must apply for a bank charter from the Office of the Comptroller of the Currency or a state banking authority, deposit insurance from the Federal Deposit Insurance Corporation, and potentially membership or a parallel holding company formation application with the Federal Reserve."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Each regulator may be focused on different aspects of the application, and each has the right to ask for additional information as part of the application review and analysis potentially significantly extending the review timeframe. We should have clear standards of review and approval—and coordinated actions—among the state and federal regulators involved in any application. This should include clear timelines for the point at which a regulator forfeits their opportunity to object due to inaction, delay, or stalling tactics."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "But standards for de novo approval are not always clear to applicants, which can lead to lengthy back-and-forth discussions with banking agency staff even after an applicant has prepared the information required by the appropriate application forms. The need for extensive additional information from de novo applicants can be caused by a failure to provide information requested in the application form, but I suspect the submission of incomplete information is often a product of forms that do not include all necessary information."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "We should not need to constantly supplement application forms with ad hoc information requests. If additional information is needed, we should modify the required application forms. One area where the lack of transparent and clear standards is most evident is with the amount of capital required to establish a de novo bank. Discussions around required capital often hinge on subjective assessments based on planned business model and growth, but they rarely involve regulators providing a minimum required capital amount. Standards for approval should not be shrouded in mystery."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Reform of the de novo applications process should not be thought of as a deregulatory exercise. Clear and transparent standards do not imply \"low\" or inadequate standards. At the same time, if we want to encourage a pipeline of de novo bank formations, we should also be comfortable with the uncertainty that accompanies any new business, including the risk that some de novo banks will not succeed."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The cost of eliminating the failure of de novo banks—or really of any banks at any time—is simply too great. Banking is fundamentally about appropriately managed risks, and regulators play a key role in promoting a system that is safe and sound while also serving to support the banking needs of customers and broader economic growth. Our goal should not be to create a banking system that is safe, sound, and ultimately irrelevant."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Mergers and Acquisitions The issues with the banking applications process extend beyond de novo formations, but involve some of the same concerns, whether there are clear standards, and we are able to act in a timely manner. As a threshold matter, if regulators are clear about the information they need to process an application—for example, by updating applications forms to include the full set of information needed to analyze each statutory approval requirement—then we should also hold ourselves to fixed approval timelines. In my view, the purgatory of a long application process is another form of regulatory \"inaction\" that must be eliminated."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "We should also address aspects of the applications process that contribute to delay, including both the approach to competition and the public comment process."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The banking agencies have long relied on competitive \"screens\" to evaluate the pro forma effect of a merger. This process looks at the standalone institutions, imagines a merger in which their operations are combined, and then looks at how measures of competition will change in the areas served by the merged institutions. Where there is overlap in markets served, there is the potential for tripping competitive screens and triggering additional scrutiny. At the Federal Reserve, when a competitive screen is triggered the application process takes more time, as staff reviews the conflict, and the matter is removed from the Reserve Bank-delegated processing track."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Perversely, many banks that trigger additional scrutiny operate in rural markets and have less aggregate banking business over which institutions can compete. In these concentrated markets, the analytical approach may involve a counterfactual in which only two future states of the world exist—the banks continue to operate on a standalone basis, or the banks merge and operate as a consolidated whole. However, this framing ignores a possible third option, that one or both of the institutions will cease being viable and shut its doors, or be acquired by a credit union, similarly leading to an erosion of market competition and potentially greater disruption to the communities served. This analytical approach to evaluating competition no longer remains appropriate, and it needs to be reformed to better reflect actual market realities. This must include competition from credit unions, the farm credit system, internet banks, financial technology firms and other non-banks."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Finally, many M&A applications come to the Board due to the receipt of an adverse comment from the public about the past supervisory record of one or both of the institutions involved in a merger. The receipt of an adverse comment causes substantial delays in the processing of an application, as this too removes an application from the \"delegated\" processing by the local Federal Reserve Bank, escalating the matter to the Board of Governors in D.C. While it is important that regulators take into account public feedback—and indeed, is required by applicable law—we should also be concerned about comments that may lack factual support or may solely rely on matters always considered in the review of a proposal, like the existing supervisory records of the acquirer and the target institution, and may be negated by the regulator's own examination report."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Approach to Regulation – Cleanup and the Statutory Regulatory Review Since the passage of the Dodd-Frank Act nearly 15 years ago, the body of regulations that all banks are subject to has increased dramatically. Many of the reforms made after the 2008 financial crisis were important and essential to ensuring a stronger and more resilient banking system. Yet, a number of the changes are backward looking—responding only to that mortgage crisis—not fully considering the potential future unintended consequences or future states of the world."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "With well over a decade of change in the banking system now behind us post-implementation, it is time to evaluate whether all these changes continue to be relevant. Some of the regulations put in place immediately after that financial crisis resulted in pushing foundational banking activities out of the banking system into less regulated corners of the financial system. We need to ask whether this is appropriate. These tradeoffs are complicated, and we must consider not only the changes that were made but also the evolution of and differences in the banking system today."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Driving all risk out of the banking system is at odds with the fundamental nature of the business of banking. Banks, after all, are businesses. And they must be able to earn a profit and grow while also managing their risks. Adding requirements that impose more costs must be balanced with whether the new requirements make the correct tradeoffs between safety and soundness and enabling banks to serve their customers and run their businesses. The task of policymakers and regulators is not to eliminate risk from the banking system, but rather to ensure that risk is appropriately and effectively managed."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "In a well-functioning and appropriately regulated banking system, banks serve an indispensable role in credit provision and economic stability. The goal is to create and maintain a system that supports safe and sound banking practices, and results in the implementation of appropriate risk management. No efficient banking system can eliminate all bank failures. But well-designed and well-maintained systems can limit bank failures and mitigate the harm caused by any that occur."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Maintenance of the regulatory framework is necessary to ensure that our regulations continue to strike the right balance between encouraging growth and innovation, and safety and soundness. One easily identifiable way to achieve this is using the Economic Growth and Regulatory Paperwork Reduction Act (EGRPRA) review process, which the agencies initiated in February last year."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Although to-date it has not done so, the EGRPRA review requires the federal banking agencies to identify any outdated, unnecessary, or overly burdensome regulations and eliminate unnecessary regulations and take other steps to address the regulatory burdens associated with outdated or overly burdensome regulations. As I noted, prior iterations of the EGRPRA process have been underwhelming in their ability to result in meaningful change, but it is my expectation that this review, and eventually the accompanying report to Congress, will provide a meaningful process for stakeholders and the public to engage with the banking agencies in identifying regulations that are no longer necessary or are overly burdensome. It is also my expectation that regulators will be responsive to concerns raised by the public."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Another area that is ripe for review are several of the Board's rules that address core banking issues—from loans to insiders, to transactions with affiliates, to state member bank activities, and holding company requirements. Many of the Board's regulations have not been comprehensively reviewed or updated in more than 20 years. Given the dynamic nature of the banking system and how the economy and banking and financial services industries have evolved over that period, it is imperative that we update and simplify many of the Board's regulations, including thresholds for applicability and benchmarks."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Finally, I want to address the unintended consequences of anti-money laundering requirements in the provision of banking services. I think we can agree that fighting money laundering, terrorist financing, and other illicit activities is not only a statutory responsibility of the banking system but it also serves important public policy goals. But while the regulatory framework prescribing how banks fulfill this role is not within the Federal Reserve's responsibilities, it is important to consider how these requirements affect the ability of banks to serve customers. For example, the threshold for currency transaction reports (CTR) was established more than 50 years ago and has not been updated or indexed to inflation during that time. Just as an example, at the time it was implemented, a fully loaded Cadillac cost less than the CTR threshold. We've come a long way since 1972."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "It has also created a regime of more extensive and invasive reporting of customers' transactions that may pose little actual risks related to tracking illicit activities. This reporting regime is also not cost-free, as banks may opt to avoid banking customers that trigger high volumes of CTR reporting, or that otherwise trigger the filing of suspicious activity reports. The calibration of reporting requirements, their effect on bank customers, and the growing problem of customer \"de-banking,\" warrant greater public attention."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The Federal Reserve should review the supervisory messages given to banks and their holding companies about how supervisors will evaluate and consider the bank's risks associated with customers that are caught in the Bank Secrecy Act or Anti-Money Laundering reporting web. I am concerned that this framework is being used to downgrade a bank's condition based on a disproportionate weighting of its compliance with these requirements in comparison to its overall condition. There are separate examinations conducted for this purpose, and they should be viewed separately, not as a cudgel for downgrading a bank's condition through the governance and controls mechanism or management assessment."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Closing Thoughts The banking system can be an engine of economic growth and opportunity, particularly when it is supported by a bank regulatory framework that is rational and well-maintained. The work of rationalizing and maintaining this system is an ongoing cycle. While my remarks today have touched on a wide range of issues that require rationalization and \"maintenance,\" this is by no means an exhaustive list."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Maintaining an effective framework is not only about ensuring the existing plumbing continues to work (and making it more efficient where possible) but it also must include promoting a system that is responsive to emerging threats and the needs of the banking system. As an example, the significant increase in fraud over the past few years has not generated the strong regulatory and governmental response necessary, even though fraud can become a source of material financial risk, particularly to smaller institutions."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Thank you again for the opportunity to share my thoughts with you today. As always, it is a pleasure to be with you!"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "1. The views expressed in these remarks are my own and do not necessarily reflect those of my colleagues on the Board of Governors of the Federal Reserve System or the Federal Open Market Committee. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "2. See, e.g., Michelle W. Bowman, \"Bank Regulation in 2025 and Beyond (PDF)\" (speech at the Kansas Bankers Association Government Relations Conference, Topeka, Kansas, February 5, 2025); Michelle W. Bowman, \"Approaching Policymaking Pragmatically (PDF)\" (speech at the Forum Club of the Palm Beaches, West Palm Beach, Florida, November 20, 2024); Michelle W. Bowman, \"Building a Community Banking Framework for the Future (PDF)\" (speech at the 2024 Community Banking Research Conference, St. Louis, Missouri, October 2, 2024); Michelle W. Bowman, \"The Future of Stress Testing and the Stress Capital Buffer Framework (PDF)\" (speech at the Executive Council of the Banking Law Section of the Federal Bar Association, Washington, D.C., September 10, 2024); Michelle W. Bowman, \"Liquidity, Supervision, and Regulatory Reform (PDF)\" (speech at \"Exploring Conventional Bank Funding Regimes in an Unconventional World,\" Dallas, Texas, July 18, 2024); Michelle W. Bowman, \"The Consequences of Bank Capital Reform (PDF)\" (speech to the ISDA Board of Directors, London, England, June 26, 2024); Michelle W. Bowman, \"Innovation in the Financial System (PDF)\" (speech at the Salzburg Global Seminar on Financial Technology Innovation, Social Impact, and Regulation: Do We Need New Paradigms?, Salzburg, Austria, June 17, 2024); Michelle W. Bowman, \"Bank Mergers and Acquisitions, and De Novo Bank Formation: Implications for the Future of the Banking System (PDF)\" (remarks at A Workshop on the Future of Banking, Kansas City, Missouri, April 2, 2024); Michelle W. Bowman, \"Tailoring, Fidelity to the Rule of Law, and Unintended Consequences (PDF)\" (speech at the Harvard Law School Faculty Club, Cambridge, Massachusetts, March 5, 2024); Michelle W. Bowman, \"The Role of Research, Data, and Analysis in Banking Reforms (PDF)\" (speech at the 2023 Community Banking Research Conference, St. Louis, Missouri, October 4, 2023). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "3. See Board of Governors of the Federal Reserve System, Supervision and Regulation Report (PDF) at 16-17 (Washington: Board of Governors, November 2024), (describing data for the first half of 2024, the most recent period for which data is available). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "4. Board of Governors of the Federal Reserve System, Supervision and Regulation Report. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "5. Board of Governors of the Federal Reserve System, Supervision and Regulation Report at 17, 20. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "6. See Michelle W. Bowman, \"Accountability for Banks, Accountability for Regulators (PDF)\" (Essay published in Starling Insights, February 13, 2024). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "7. \"Understanding Federal Reserve Supervision,\" Board of Governors of the Federal Reserve System, last modified April 27, 2023. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "8. See Michelle W. Bowman, \"Approaching Policymaking Pragmatically (PDF)\" (speech at the Forum Club of the Palm Beaches, West Palm Beach, Florida, November 20, 2024). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "9. See Michelle W. Bowman, \"Reflections on the Economy and Bank Regulation (PDF)\" (speech at the New Jersey Bankers Association Annual Economic Leadership Forum, Somerset, New Jersey, March 7, 2024). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "10. See Michelle W. Bowman, \"The Consequences of Fewer Banks in the U.S. Banking System (PDF)\" (speech at the Wharton Financial Regulation Conference, Philadelphia, Pennsylvania, April 14, 2023). Return to text"
+  }
+ ]
+}

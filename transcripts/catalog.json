@@ -96,9 +96,159 @@
   "label": "FOMC press conference · Chair Jerome Powell · 2025-07-30"
  },
  {
+  "id": "speech_waller20250717a",
+  "date": "2025-07-17",
+  "speaker": "christopher_waller",
+  "label": "Speech: Speech by Governor Waller on the economic outlook · Governor Christopher Waller · 2025-07-17"
+ },
+ {
+  "id": "speech_bowman20250623a",
+  "date": "2025-06-23",
+  "speaker": "michelle_bowman",
+  "label": "Speech: Speech by Vice Chair for Supervision Bowman on monetary policy and banking · Governor Michelle Bowman · 2025-06-23"
+ },
+ {
+  "id": "speech_waller20250601a",
+  "date": "2025-06-01",
+  "speaker": "christopher_waller",
+  "label": "Speech: Speech by Governor Waller on the economic outlook · Governor Christopher Waller · 2025-06-01"
+ },
+ {
   "id": "speech_powell20250416a",
   "date": "2025-04-16",
   "speaker": "jerome_powell",
   "label": "Speech: Speech by Chair Powell on the economic outlook · Chair Jerome Powell · 2025-04-16"
+ },
+ {
+  "id": "speech_waller20250414a",
+  "date": "2025-04-14",
+  "speaker": "christopher_waller",
+  "label": "Speech: Speech by Governor Waller on the economic outlook · Governor Christopher Waller · 2025-04-14"
+ },
+ {
+  "id": "speech_bowman20250307a",
+  "date": "2025-03-07",
+  "speaker": "michelle_bowman",
+  "label": "Speech: Remarks by Governor Bowman on \"Monetary Policy Transmission to Real Activity\" and the recent experience · Governor Michelle Bowman · 2025-03-07"
+ },
+ {
+  "id": "speech_bowman20250217a",
+  "date": "2025-02-17",
+  "speaker": "michelle_bowman",
+  "label": "Speech: Speech by Governor Bowman on the economy and bank regulation · Governor Michelle Bowman · 2025-02-17"
+ },
+ {
+  "id": "speech_waller20250217a",
+  "date": "2025-02-17",
+  "speaker": "christopher_waller",
+  "label": "Speech: Speech by Governor Waller on the economic outlook · Governor Christopher Waller · 2025-02-17"
+ },
+ {
+  "id": "speech_bowman20250131a",
+  "date": "2025-01-31",
+  "speaker": "michelle_bowman",
+  "label": "Speech: Brief remarks by Governor Bowman on the economy, and perspective on mutual and community banks · Governor Michelle Bowman · 2025-01-31"
+ },
+ {
+  "id": "speech_bowman20250109a",
+  "date": "2025-01-09",
+  "speaker": "michelle_bowman",
+  "label": "Speech: Speech by Governor Bowman on monetary policy, economic performance, and lessons for banking regulation · Governor Michelle Bowman · 2025-01-09"
+ },
+ {
+  "id": "speech_waller20250108a",
+  "date": "2025-01-08",
+  "speaker": "christopher_waller",
+  "label": "Speech: Speech by Governor Waller on the economic outlook · Governor Christopher Waller · 2025-01-08"
+ },
+ {
+  "id": "speech_waller20241202a",
+  "date": "2024-12-02",
+  "speaker": "christopher_waller",
+  "label": "Speech: Speech by Governor Waller on the economic outlook · Governor Christopher Waller · 2024-12-02"
+ },
+ {
+  "id": "speech_bowman20241120a",
+  "date": "2024-11-20",
+  "speaker": "michelle_bowman",
+  "label": "Speech: Speech by Governor Bowman on approaching policymaking pragmatically · Governor Michelle Bowman · 2024-11-20"
+ },
+ {
+  "id": "speech_waller20241014a",
+  "date": "2024-10-14",
+  "speaker": "christopher_waller",
+  "label": "Speech: Speech by Governor Waller on the economic outlook · Governor Christopher Waller · 2024-10-14"
+ },
+ {
+  "id": "speech_bowman20240924a",
+  "date": "2024-09-24",
+  "speaker": "michelle_bowman",
+  "label": "Speech: Speech by Governor Bowman on monetary policy and the economic outlook · Governor Michelle Bowman · 2024-09-24"
+ },
+ {
+  "id": "speech_bowman20240920a",
+  "date": "2024-09-20",
+  "speaker": "michelle_bowman",
+  "label": "Speech: Statement by Governor Michelle W. Bowman · Governor Michelle Bowman · 2024-09-20"
+ },
+ {
+  "id": "speech_waller20240906a",
+  "date": "2024-09-06",
+  "speaker": "christopher_waller",
+  "label": "Speech: Speech by Governor Waller on the economic outlook · Governor Christopher Waller · 2024-09-06"
+ },
+ {
+  "id": "speech_bowman20240820a",
+  "date": "2024-08-20",
+  "speaker": "michelle_bowman",
+  "label": "Speech: Speech by Governor Bowman on the economic outlook and financial inclusion · Governor Michelle Bowman · 2024-08-20"
+ },
+ {
+  "id": "speech_bowman20240810a",
+  "date": "2024-08-10",
+  "speaker": "michelle_bowman",
+  "label": "Speech: Speech by Governor Bowman on the economic outlook, and perspective on bank culture, M&A, and liquidity · Governor Michelle Bowman · 2024-08-10"
+ },
+ {
+  "id": "speech_waller20240717a",
+  "date": "2024-07-17",
+  "speaker": "christopher_waller",
+  "label": "Speech: Speech by Governor Waller on the economic outlook · Governor Christopher Waller · 2024-07-17"
+ },
+ {
+  "id": "speech_bowman20240627a",
+  "date": "2024-06-27",
+  "speaker": "michelle_bowman",
+  "label": "Speech: Remarks by Governor Bowman on the economy, monetary policy, and bank regulation · Governor Michelle Bowman · 2024-06-27"
+ },
+ {
+  "id": "speech_bowman20240625a",
+  "date": "2024-06-25",
+  "speaker": "michelle_bowman",
+  "label": "Speech: Speech by Governor Bowman on perspectives on U.S. monetary policy and bank capital reform · Governor Michelle Bowman · 2024-06-25"
+ },
+ {
+  "id": "speech_waller20240521a",
+  "date": "2024-05-21",
+  "speaker": "christopher_waller",
+  "label": "Speech: Speech by Governor Waller on the economic outlook · Governor Christopher Waller · 2024-05-21"
+ },
+ {
+  "id": "speech_bowman20240517a",
+  "date": "2024-05-17",
+  "speaker": "michelle_bowman",
+  "label": "Speech: Remarks by Governor Bowman on the economy, monetary policy, and bank regulation · Governor Michelle Bowman · 2024-05-17"
+ },
+ {
+  "id": "speech_bowman20240503a",
+  "date": "2024-05-03",
+  "speaker": "michelle_bowman",
+  "label": "Speech: Remarks by Governor Bowman on the economy and monetary policy · Governor Michelle Bowman · 2024-05-03"
+ },
+ {
+  "id": "speech_bowman20240405a",
+  "date": "2024-04-05",
+  "speaker": "michelle_bowman",
+  "label": "Speech: Speech by Governor Bowman on risks and uncertainty in monetary policy · Governor Michelle Bowman · 2024-04-05"
  }
 ]

@@ -1,0 +1,283 @@
+{
+ "date": "20240517",
+ "source": "https://www.federalreserve.gov/newsevents/speech/bowman20240517a.htm",
+ "title": "Remarks by Governor Bowman on the economy, monetary policy, and bank regulation",
+ "speaker_key": "michelle_bowman",
+ "segments": [
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "I would like to thank the Pennsylvania Bankers Association for the invitation to join you today.1 I appreciate the opportunity to engage with you on matters that affect the banking industry. Before sharing my thoughts about the current bank regulatory environment, I will discuss my views on the economy and monetary policy."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Update on the Economy and Monetary Policy Outlook Over the past two years, the Federal Open Market Committee (FOMC) has significantly tightened the stance of monetary policy to address high inflation. At our meeting earlier this month, the FOMC voted to continue to hold the federal funds rate target range at 5-1/4 to 5-1/2 percent and to continue to reduce the Federal Reserve's securities holdings, but at a slower pace beginning in June."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "After seeing considerable progress on slowing inflation last year, we have not yet seen further progress this year. The 12-month measures of total and core personal consumption expenditures (PCE) inflation have moved roughly sideways since December and remained elevated at 2.7 percent and 2.8 percent, respectively, in March. With average core consumer price index (CPI) inflation this year through April running at an annualized rate of 4.3 percent, well above average inflation in the second half of last year, I expect inflation to remain elevated for some time."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The recent pickup seems to be evident across many goods and services categories, suggesting that inflation was temporarily lower in the latter half of last year. Prices continue to be much higher than before the pandemic, which is weighing on consumer sentiment. Inflation has hit lower-income households hardest since food, energy, and housing services price increases far outpaced overall inflation throughout this episode."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Economic activity increased at a strong pace last year but may have moderated early this year. First-quarter gross domestic product growth was temporarily dampened by volatile categories, like inventories and net exports, and over the past few months, including recent data revisions, consumers appear to have pulled-back on goods spending through April. Still, consumer services spending has remained strong, and residential activity and business investment in equipment and intangibles strengthened."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "So far this year, payroll employment has increased at a strong pace through April, partly reflecting increased immigrant labor supply. Although we have seen signs that the labor market is coming into better balance, progress has slowed. Recent employment reports continue to show a tight labor market, and the unemployment rate remains below 4 percent, with the number of job openings relative to unemployed workers still above its pre-pandemic level. Throughout last year, the average pace of job gains slowed, and the labor force participation rate rose, but in recent months, job growth has rebounded. Labor force participation flattened out around last year's peak, which suggests no further improvement in labor supply along this margin, as labor force participation among those aged 55 and older has been persistently low."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "At its current setting, our monetary policy stance appears to be restrictive, and I will continue to monitor the incoming data to assess whether monetary policy is sufficiently restrictive to bring inflation down to our target. As I've noted recently, my baseline outlook continues to be that inflation will decline further with the policy rate held steady, but I still see a number of upside inflation risks that affect my outlook."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "First, much of the progress on inflation last year was due to supply-side improvements, including easing of supply chain constraints; increases in the number of available workers, due in part to immigration; and lower energy prices. It is unclear whether further supply-side improvements will continue to lower inflation. Geopolitical developments could also pose upside risks to inflation, including the risk that spillovers from regional conflicts could disrupt global supply chains, putting additional upward pressure on food, energy, and commodity prices. There is also the risk that the loosening in financial conditions since late last year and additional fiscal stimulus could add momentum to demand, stalling any further progress or even causing inflation to reaccelerate."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Finally, there is a risk that strong consumer demand for services, increased immigration, and continued labor market tightness could lead to persistently high core services inflation. Given the current low inventory of affordable housing, the inflow of new immigrants to some geographic areas could result in upward pressure on rents, as additional housing supply may take time to materialize. Wage growth has remained at an elevated rate of about 4 to 5 percent, still higher than the pace consistent with our 2 percent inflation goal given trend productivity growth."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "In light of these risks, and the general uncertainty regarding the economic outlook, I will continue to watch the data closely as I assess the appropriate path of monetary policy. The frequency and extent of data revisions over the past few years make the task of assessing the current state of the economy and predicting how the economy will evolve even more challenging. I will remain cautious in my approach to considering future changes in the stance of policy."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "It is important to note that monetary policy is not on a preset course. My colleagues and I will make our decisions at each FOMC meeting based on the incoming data and the implications for and risks to the outlook. While the current stance of monetary policy appears to be at a restrictive level, I remain willing to raise the target range for the federal funds rate at a future meeting should the incoming data indicate that progress on inflation has stalled or reversed. Restoring price stability is essential for achieving maximum employment over the longer run."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Bank Regulatory Reform Turning to the bank regulatory reform agenda, there has been a significant volume of matters that have recently been completed, that have been proposed, and that are in the pipeline. A number of these efforts have been met with criticism and public resistance, from informal comments and ad campaigns to formal legal challenges, including litigation challenging the validity of these reforms. Reasonable minds can disagree on the appropriate path forward for bank regulatory policy, but the current period of regulatory reform feels more contentious than in the past."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The current regulatory agenda is notable for its broad scope, both for the institutions that would be subject to reforms, and the nature of the reforms. The proposals touch on a wide range of topics that directly or indirectly impact banks of all sizes. And they often represent significant shifts in regulatory requirements and supervisory expectations. My remarks today highlight two themes related to the significant number of regulatory changes and proposals under consideration."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "First, the volume and scope of revisions affect a wide range of banking activities and pose significant challenges for all bankers. Reviewing, understanding, and then implementing these reforms will involve bank management, compliance, legal, audit, and even frontline staff. At the same time, banks must also balance the existing and ongoing compliance obligations to meet supervisory expectations. Compliance has always been an important bank function, and it often involves a shared responsibility and obligation across many different business lines and personnel. Simply keeping up with the thousands of pages of new regulatory reforms poses a significant challenge, especially for banks with small staffs and a single compliance officer."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Those same staff members, with already heavy compliance responsibilities, are also often best positioned to provide feedback on pending regulatory proposals. Banker comments shared as part of the administrative rulemaking process help inform and influence proposals that are under consideration. If there is a desire to influence change, stakeholders must engage and provide input during this process."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Second, the large number of finalized, proposed, and potential changes suggest a lack of prioritization—whether we have effectively identified actual risks to the banking system and devoted resources to the most pressing of these issues. Prioritization is something I have spoken about at length in the past, and it remains just as critical today.2"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The banking stress last spring revealed the presence of flaws and shortcomings in our bank regulatory and supervisory framework. A lack of prioritization in our approach risks losing focus on making substantively responsive adjustments and reforms."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Opportunities for Engagement Reviewing and commenting on regulatory proposals should never be a distraction from a banker's core responsibility to ensure the bank continues serving its customers in a safe and sound manner, and in compliance with applicable laws. So, I do not want any of you to take my remarks today as a call to drop everything you are doing and open up the Federal Register and start reading. The banking system is a highly regulated environment, and as you see in your work every day, requires banks to devote significant resources to compliance. A strong culture of compliance can help keep your bank safe, and in the aggregate promotes a safe and sound banking system. Within a bank, virtually everyone has a role to play in promoting that culture of compliance with applicable law, all while serving your customers."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "But stakeholders, including bankers, have an important role in the stewardship of the banking system that goes beyond compliance—namely, participating in the administrative rulemaking process. It is critical that you share your views with policymakers on regulatory reform proposals. All the comments, data, and analysis from commenters enable policymakers to make informed decisions throughout the rulemaking process, from the initial brainstorming stage, through the creation of a proposal, and in crafting a final rule."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "This feedback is equally critical in understanding how the supervisory process is working as it evolves over time and incorporates new standards and expectations. Information about the intended and unintended impacts of reform initiatives is especially informative. Often, private-sector stakeholders are best positioned to understand and explain these impacts, and to identify gaps in the context, data, and analysis underpinning these initiatives."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "I recognize that in some instances, multiple, interrelated proposals out for comment at the same time complicate or even frustrate the ability to provide meaningful feedback. For example, the federal banking regulators have proposed significant reforms to capital requirements, while also proposing new long-term debt requirements for banks with over $100 billion in assets. While these efforts are on their face distinct, the calibration of such requirements are directly linked. The calibration of capital requirements is used to set long-term debt requirements. Therefore, these proposals present challenges not only to regulators, but also to public commenters trying to understand the potential and complete impact of reforms. Even so, I strongly encourage your participation to inform the rulemaking process."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "I will share my views on a few of these proposals, but I certainly do not mean to suggest that this list is exhaustive. All the proposals could benefit from public feedback."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Bank Mergers and Acquisitions Some prudential regulators and other policymakers are currently reconsidering the approach to the review and approval of bank mergers and acquisitions (M&A).3 M&A transactions allow banks to evolve and thrive in our dynamic banking system and can promote the long-term health and viability of banks. M&A also ensures that banks have a meaningful path to transitioning bank ownership. The absence of a viable M&A framework increases the potential for additional risks, including limited opportunities for succession planning, especially in smaller or rural communities when zombie banks continue to exist but have no competitive viability or exit strategy."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The impact of a more restrictive M&A framework affects institutions of all sizes, including larger institutions that are vying to compete with the very largest global systemically important banks (G-SIBs). They may choose to pursue M&A to remain competitive with larger peers who can achieve that growth organically through their sheer scale."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "M&A is an important part of a healthy banking system. So, when considering changes to the framework, I think we need to first identify the problem that needs to be solved, and then ask whether any proposed solution is fair, transparent, and consistent with applicable statutes. And critically, whether the proposed solution has the potential to damage the long-term viability of the banking system."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Are there identified shortcomings in the current process or standards, and are the proposed reforms targeted and effective to address these shortcomings? One argument I have heard about the M&A regulatory approval process is that the lack of application denials demonstrates that regulators are failing to meaningfully review and pressure test proposals and have effectively become a rubber stamp. I think this argument lacks a strong foundation. There is ample evidence that undermines this argument, including the resource demands on institutions of pursuing M&A activity, and the protracted time it takes to complete the regulatory review and approval process (and the not insignificant failure rate we see represented in withdrawn applications)."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "First, we have to acknowledge that choosing the path of a merger or acquisition is not undertaken lightly. These transactions require significant upfront and ongoing investment and commitment of resources. At the outset, this includes finding an appropriate acquisition target, conducting due diligence, and negotiating the terms of the transaction. Once a target is identified, the banks must prepare appropriate regulatory filings, engage with regulators during the application process, and prepare for post-approval business processes including scheduling necessary and costly systems conversions and customer transition. This is an expensive and reputationally risky process that bankers and their boards of directors take extremely seriously."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Second, one would expect to see different patterns emerging if regulators were truly acting as a \"rubber stamp\" for banking applications. We know from data published by the Federal Reserve that filing an application does not guarantee approval, even in the absence of a regulatory denial. The Federal Reserve's most recent report on banking applications activity identifies a significant portion of bank M&A transactions in which applications have been withdrawn.4"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The processing timelines we see also seem inconsistent with a process that is operating truly as a rubber stamp. To be clear, I think we have room to do better when it comes to timely regulatory action, while maintaining a rigorous review of applications. But extended review periods are not uncommon, particularly when you include preliminary discussions and pre-filings with regulators in the published processing timelines."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Some contemplated regulatory reform efforts will likely make the M&A application process slower and less efficient. One of the key risks to an effective process is a lack of timely regulatory action. The consequences of delays can significantly harm both the acquiring institution and the target, causing greater operational risk (including the risk of a failed merger), increased expenses, reputational risk, and staff attrition in the face of prolonged uncertainty."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Reducing the efficiency of bank M&A can be a deterrent to healthy bank transactions—limiting activity that preserves the presence of community banks in underserved areas, preventing institutions from pursuing prudent growth strategies, and undermining competition by preventing firms from growing to a larger scale, effectively creating a \"protected class\" of larger institutions."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Unfortunately, the past year has shown that regulatory attention is increasingly focused on other issues, with the timeliness of regulatory action appearing to be lower on the list of priorities. However, I would like to highlight a change that may have significant impacts on M&A transactions depending on how the requirement is implemented."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The Federal Reserve recently proposed changes to its M&A application forms, the FR Y-3 and FR Y-3F, to include a requirement that an applicant submit an integration plan at the time of the initial application.5 Many applications often include plans for integration, as this can factor into the consideration of an application's likelihood of approval. However, depending upon how this requirement is implemented, it could result in significantly increased upfront costs and burdens for banks in preparing for and submitting applications for mergers and acquisitions, particularly for smaller institutions."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "It is important for industry participants to provide comments on changes to the bank merger process—including changes to application forms—especially since cost and timing implications could affect a bank's consideration of these transactions. Ultimately, while banks are mindful of and do plan for integration, I am concerned that increased upfront requirements may lead to additional delays in processing timelines. I would therefore encourage industry stakeholders to review and provide comment on the proposed changes to our applications forms."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Third-Party Risk Management Similarly, the agencies also recently released a guide for community banks regarding third-party risk management.6 This guide took the agencies nearly a year to finalize after adopting third-party risk management guidance in June of last year. I am hopeful that this community bank guide will be helpful to community banks. But I have yet to be convinced that the guide will effectively reduce the burden on smaller banks to comply with our third-party risk management guidance. Since it is not yet clear that this guide will be effective, I encourage banks to provide feedback on the guide, including on the clarity and transparency of supervisory expectations for community banks in their management of third-party risk."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Review of Regulations under the Economic Growth and Regulatory Paperwork Reduction Act Finally, I'd like to highlight another opportunity for stakeholders to provide feedback on the agencies' regulations. In February, the Board announced the initiation of its review of its regulations to identify those regulations that are outdated, unnecessary, or overly burdensome in accordance with the Economic Growth and Regulatory Paperwork Reduction Act (EGRPRA). It is my expectation that this review, and eventually the accompanying report to Congress, will provide a meaningful process for stakeholders and the public to engage with the banking agencies in identifying regulations that are no longer necessary or are overly burdensome."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "As a part of the comment process, I would encourage the public, particularly community banks, to comment on the aggregate burden imposed on banks since the prior EGRPRA report 10 years ago. While there are many competing priorities on your time, these are valuable opportunities for you to shape the outcome of our regulations. I welcome the opportunity to learn from all stakeholders how the Board and the other banking agencies could reduce burden, especially for regional and community banks."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Prioritization within Bank Regulation and Supervision I would also like to spend a few minutes on prioritization of regulatory actions. In my view, it is essential that regulators appropriately calibrate and prioritize supervisory and regulatory actions. Failing to do so could distract banks, bank management, supervisors, and regulators from focusing on key risks."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The frenzy of regulatory reform activity we have seen over the past year raises a question as to whether the banking regulators are pursuing reforms in a prioritized way. Many reform proposals do not appear targeted to identified shortcomings or deficiencies in the existing regulatory framework."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "While regulators often identify evolving conditions and emerging risks before they materialize as pronounced stress in the banking system, too often regulators fail to take appropriately decisive measures to address them. In addition, regulators can also fall into the trap of getting distracted from core financial risks, and instead focus on issues that are tangential to statutory mandates and critical areas of responsibility. Focusing on risks that pose fewer safety and soundness concerns increases the risk that regulators miss other more foundational and pressing areas that require more immediate attention. Our recent actions suggest this could be the case, and that we have taken steps that could distract bank management from focusing on important and key risks."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "The Board's focus on climate guidance is one example, but it is not the only example. While climate change is an important issue, climate change is not a core risk to the safety and soundness of financial institutions. The lessons learned from supervisory failures during the bank stress last spring clearly illustrate that bank examiners and bank management should focus on core issues, like credit risk, interest rate risk, and liquidity risk."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "I am concerned that focusing our regulatory reform and guidance efforts on issues like climate change that do not represent core banking risks will only serve to further distract bank management and supervisors."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "In addition to issuing interagency supervisory guidance to banks on managing climate-related financial risks, the Board recently issued the results of a pilot climate scenario analysis, which was designed to learn about large banks' climate risk-management practices.7 This report goes into significant detail on the technical aspects of the scenario analysis and underlying results."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "While exploring even remote risks can help build resiliency for the future, I think the report itself included some acknowledgment that these exercises may have limited utility in the short-term for managing risk. For example, the report acknowledges that participants \"suggested that climate-related risks are highly uncertain and challenging to measure,\" and that \"[t]he uncertainty around the timing and magnitude of climate-related risks made it difficult . . . to determine how best to incorporate these risks into [banks'] risk-management frameworks on a business-as-usual basis.\"8 Participants also noted that scenario design choices, assumptions, data challenges, and modelling challenges all played a material role in the analysis."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Banks already have ongoing obligations to manage all material risks, and while scenario analysis generally is not intended to be predictive, I think the uncertainty and unreliability of the results from this exercise suggest that resources may be better devoted to dealing with more tangible and immediate financial risks."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "We should rightly be concerned about regulatory pressure on a single issue that could lead to the misallocation of risk-management resources away from risks that may be more material, such as interest rate, liquidity, and cyber risks."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "Closing Thoughts We continue to be at an inflection point in the bank regulatory reform agenda. The pending proposals, including the Basel III capital proposal, the G-SIB surcharge, new long-term debt requirements, amended resolution plan guidance, contemplated changes to the regulatory approval of merger and acquisition activity, and revisions to the interchange fee cap will have a lasting impact on banks of all sizes and their current and future customers."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "My hope is that you and other interested stakeholders play an active role in this process by sharing your views and concerns with regulators. This input provides valuable insights into the specific impacts—intended and unintended—of changes to the bank regulatory framework. Voicing your concerns enables us to identify, and where needed, address, the real-world consequences of regulatory and supervisory reforms. Without your participation, we cannot fully appreciate the impacts of our regulatory and supervisory changes."
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "1. The views expressed here are my own and are not necessarily those of my colleagues on the Federal Reserve Board or the Federal Open Market Committee. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "2. Michelle W. Bowman, \"Remarks on the Economy and Prioritization of Bank Supervision and Regulation (PDF)\" (speech at the New York Bankers Association's Financial Services Forum, Palm Beach, FL, November 9, 2023); Michelle W. Bowman, \"Tailoring, Fidelity to the Rule of Law, and Unintended Consequences (PDF)\" (speech at the Harvard Law School Faculty Club, Cambridge, MA, March 5, 2024). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "3. Jonathan Kanter, \"Merger Enforcement Sixty Years After Philadelphia National Bank\" (speech at the Brookings Institution's Center on Regulation and Markets Event, Promoting Competition in Banking, Washington, DC, June 20, 2023); Office of the Comptroller of the Currency, \"Business Combinations Under the Bank Merger Act: Notice of Proposed Rulemaking,\" OCC Bulletin 2024-4, January 29, 2024; Federal Deposit Insurance Corporation, \"FDIC Seeks Public Comment on Proposed Revisions to its Statement of Policy on Bank Merger Transactions,\" news release, March 21, 2024. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "4. Board of Governors of the Federal Reserve System, Banking Applications Activity Semiannual Report (PDF), June 1–June 30, 2023, vol. 10, no. 2 (Washington: Board of Governors, September 2023). This report notes that in the first half of 2023, 46 M&A applications were approved by the Federal Reserve, while 12 such applications were withdrawn. Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "5. Board of Governors of the Federal Reserve System, Proposed Agency Information Collection; Comment Request, 89 Fed. Reg. 34,246 (PDF) (April 30, 2024). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "6. Board of Governors of the Federal Reserve System, \"Third-Party Risk Management: A Guide for Community Banks (PDF),\" SR letter 24-2 / CA letter 24-1 (May 7, 2024). Return to text"
+  },
+  {
+   "speaker": "MICHELLE_BOWMAN",
+   "role": "chair",
+   "text": "7. Board of Governors of the Federal Reserve System, Pilot Climate Scenario Analysis Exercise: Summary of Participants' Risk-Management Practices and Estimates (PDF) (Washington: Board of Governors, May 2024). Return to text"
+  }
+ ]
+}
