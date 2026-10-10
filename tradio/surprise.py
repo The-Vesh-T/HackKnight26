@@ -37,7 +37,9 @@ from tradio.common import DATA_DIR, WEB_DATA_DIR, load_events, read_json, write_
 
 SCORES_DIR = os.path.join(ROOT, "tradio", "validation", "scores")
 MIN_SENTENCE_WORDS = 6
-SENTENCE_SPLIT = re.compile(r"(?<=[.!?])\s+(?=[A-Z\"'(])")
+# Fed texts put footnote numbers right after the period ("meeting.1 I used to ..."):
+# split there too and drop the number.
+SENTENCE_SPLIT = re.compile(r"(?<=[.!?])\d{0,2}\s+(?=[A-Z\"'(])")
 
 
 def is_relevant(text: str) -> bool:

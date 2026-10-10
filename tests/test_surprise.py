@@ -42,6 +42,13 @@ class TestRelevance(unittest.TestCase):
         self.assertEqual(len(out), 2)
         self.assertTrue(out[0].startswith("I would support"))
 
+    def test_sentences_split_after_footnote_marker(self):
+        text = ("I believe we should reduce our policy rate at the next meeting.1 I used to "
+                "tell my colleagues that presentations are not murder mysteries at all.")
+        out = surprise.sentences(text)
+        self.assertEqual(out[0], "I believe we should reduce our policy rate at the next meeting.")
+        self.assertTrue(out[1].startswith("I used to"))
+
 
 class TestBuildParagraphs(unittest.TestCase):
     def scores(self):
