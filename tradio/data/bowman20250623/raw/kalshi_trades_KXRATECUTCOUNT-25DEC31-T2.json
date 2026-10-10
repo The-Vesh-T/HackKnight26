@@ -1,0 +1,55 @@
+{
+ "ticker": "KXRATECUTCOUNT-25DEC31-T2",
+ "min_ts": 1750683600,
+ "max_ts": 1750692600,
+ "trades": [
+  {
+   "count_fp": "114.00",
+   "created_time": "2025-06-23T13:48:35.082928Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.7100",
+   "taker_book_side": "bid",
+   "taker_outcome_side": "yes",
+   "taker_side": "yes",
+   "ticker": "KXRATECUTCOUNT-25DEC31-T2",
+   "trade_id": "6cc409c9-1381-4f57-86fc-f863060b3844",
+   "yes_price_dollars": "0.2900"
+  },
+  {
+   "count_fp": "39.00",
+   "created_time": "2025-06-23T14:42:50.165147Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.7100",
+   "taker_book_side": "bid",
+   "taker_outcome_side": "yes",
+   "taker_side": "yes",
+   "ticker": "KXRATECUTCOUNT-25DEC31-T2",
+   "trade_id": "9590afd7-ba2f-42c1-8083-103598f4ec73",
+   "yes_price_dollars": "0.2900"
+  },
+  {
+   "count_fp": "1.00",
+   "created_time": "2025-06-23T14:50:01.167843Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.7100",
+   "taker_book_side": "bid",
+   "taker_outcome_side": "yes",
+   "taker_side": "yes",
+   "ticker": "KXRATECUTCOUNT-25DEC31-T2",
+   "trade_id": "20df794d-27b1-4443-83fc-3b6e4b494dce",
+   "yes_price_dollars": "0.2900"
+  },
+  {
+   "count_fp": "4.00",
+   "created_time": "2025-06-23T14:50:24.050802Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.7200",
+   "taker_book_side": "ask",
+   "taker_outcome_side": "no",
+   "taker_side": "no",
+   "ticker": "KXRATECUTCOUNT-25DEC31-T2",
+   "trade_id": "4b735626-5de5-42e5-b2b1-745ac1cec5f1",
+   "yes_price_dollars": "0.2800"
+  }
+ ]
+}

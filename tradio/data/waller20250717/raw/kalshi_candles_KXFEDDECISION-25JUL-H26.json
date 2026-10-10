@@ -1,0 +1,285 @@
+{
+ "ticker": "KXFEDDECISION-25JUL-H26",
+ "start_ts": 1752784200,
+ "end_ts": 1752800400,
+ "response": {
+  "candlesticks": [
+   {
+    "end_period_ts": 1752785760,
+    "open_interest": "44503.00",
+    "price": {
+     "close": null,
+     "high": null,
+     "low": null,
+     "mean": null,
+     "open": null,
+     "previous": "0.0100"
+    },
+    "volume": "0.00",
+    "yes_ask": {
+     "close": "0.0100",
+     "high": "0.0100",
+     "low": "0.0100",
+     "open": "0.0100"
+    },
+    "yes_bid": {
+     "close": "0.0000",
+     "high": "0.0000",
+     "low": "0.0000",
+     "open": "0.0000"
+    }
+   },
+   {
+    "end_period_ts": 1752786060,
+    "open_interest": "44503.00",
+    "price": {
+     "close": null,
+     "high": null,
+     "low": null,
+     "mean": null,
+     "open": null,
+     "previous": "0.0100"
+    },
+    "volume": "0.00",
+    "yes_ask": {
+     "close": "0.0100",
+     "high": "0.0100",
+     "low": "0.0100",
+     "open": "0.0100"
+    },
+    "yes_bid": {
+     "close": "0.0000",
+     "high": "0.0000",
+     "low": "0.0000",
+     "open": "0.0000"
+    }
+   },
+   {
+    "end_period_ts": 1752787380,
+    "open_interest": "44503.00",
+    "price": {
+     "close": null,
+     "high": null,
+     "low": null,
+     "mean": null,
+     "open": null,
+     "previous": "0.0100"
+    },
+    "volume": "0.00",
+    "yes_ask": {
+     "close": "0.0100",
+     "high": "0.0100",
+     "low": "0.0100",
+     "open": "0.0100"
+    },
+    "yes_bid": {
+     "close": "0.0000",
+     "high": "0.0000",
+     "low": "0.0000",
+     "open": "0.0000"
+    }
+   },
+   {
+    "end_period_ts": 1752789300,
+    "open_interest": "44518.00",
+    "price": {
+     "close": "0.0100",
+     "high": "0.0100",
+     "low": "0.0100",
+     "mean": "0.0100",
+     "open": "0.0100",
+     "previous": "0.0100"
+    },
+    "volume": "15.00",
+    "yes_ask": {
+     "close": "0.0100",
+     "high": "0.0100",
+     "low": "0.0100",
+     "open": "0.0100"
+    },
+    "yes_bid": {
+     "close": "0.0000",
+     "high": "0.0000",
+     "low": "0.0000",
+     "open": "0.0000"
+    }
+   },
+   {
+    "end_period_ts": 1752789360,
+    "open_interest": "44518.00",
+    "price": {
+     "close": null,
+     "high": null,
+     "low": null,
+     "mean": null,
+     "open": null,
+     "previous": "0.0100"
+    },
+    "volume": "0.00",
+    "yes_ask": {
+     "close": "0.0100",
+     "high": "0.0100",
+     "low": "0.0100",
+     "open": "0.0100"
+    },
+    "yes_bid": {
+     "close": "0.0000",
+     "high": "0.0000",
+     "low": "0.0000",
+     "open": "0.0000"
+    }
+   },
+   {
+    "end_period_ts": 1752791340,
+    "open_interest": "44518.00",
+    "price": {
+     "close": null,
+     "high": null,
+     "low": null,
+     "mean": null,
+     "open": null,
+     "previous": "0.0100"
+    },
+    "volume": "0.00",
+    "yes_ask": {
+     "close": "0.0100",
+     "high": "0.0100",
+     "low": "0.0100",
+     "open": "0.0100"
+    },
+    "yes_bid": {
+     "close": "0.0000",
+     "high": "0.0000",
+     "low": "0.0000",
+     "open": "0.0000"
+    }
+   },
+   {
+    "end_period_ts": 1752792900,
+    "open_interest": "44518.00",
+    "price": {
+     "close": null,
+     "high": null,
+     "low": null,
+     "mean": null,
+     "open": null,
+     "previous": "0.0100"
+    },
+    "volume": "0.00",
+    "yes_ask": {
+     "close": "0.0100",
+     "high": "0.0100",
+     "low": "0.0100",
+     "open": "0.0100"
+    },
+    "yes_bid": {
+     "close": "0.0000",
+     "high": "0.0000",
+     "low": "0.0000",
+     "open": "0.0000"
+    }
+   },
+   {
+    "end_period_ts": 1752794580,
+    "open_interest": "44518.00",
+    "price": {
+     "close": null,
+     "high": null,
+     "low": null,
+     "mean": null,
+     "open": null,
+     "previous": "0.0100"
+    },
+    "volume": "0.00",
+    "yes_ask": {
+     "close": "0.0100",
+     "high": "0.0100",
+     "low": "0.0100",
+     "open": "0.0100"
+    },
+    "yes_bid": {
+     "close": "0.0000",
+     "high": "0.0000",
+     "low": "0.0000",
+     "open": "0.0000"
+    }
+   },
+   {
+    "end_period_ts": 1752796260,
+    "open_interest": "44518.00",
+    "price": {
+     "close": null,
+     "high": null,
+     "low": null,
+     "mean": null,
+     "open": null,
+     "previous": "0.0100"
+    },
+    "volume": "0.00",
+    "yes_ask": {
+     "close": "0.0100",
+     "high": "0.0100",
+     "low": "0.0100",
+     "open": "0.0100"
+    },
+    "yes_bid": {
+     "close": "0.0000",
+     "high": "0.0000",
+     "low": "0.0000",
+     "open": "0.0000"
+    }
+   },
+   {
+    "end_period_ts": 1752797700,
+    "open_interest": "44518.00",
+    "price": {
+     "close": null,
+     "high": null,
+     "low": null,
+     "mean": null,
+     "open": null,
+     "previous": "0.0100"
+    },
+    "volume": "0.00",
+    "yes_ask": {
+     "close": "0.0100",
+     "high": "0.0100",
+     "low": "0.0100",
+     "open": "0.0100"
+    },
+    "yes_bid": {
+     "close": "0.0000",
+     "high": "0.0000",
+     "low": "0.0000",
+     "open": "0.0000"
+    }
+   },
+   {
+    "end_period_ts": 1752799500,
+    "open_interest": "44518.00",
+    "price": {
+     "close": null,
+     "high": null,
+     "low": null,
+     "mean": null,
+     "open": null,
+     "previous": "0.0100"
+    },
+    "volume": "0.00",
+    "yes_ask": {
+     "close": "0.0100",
+     "high": "0.0100",
+     "low": "0.0100",
+     "open": "0.0100"
+    },
+    "yes_bid": {
+     "close": "0.0000",
+     "high": "0.0000",
+     "low": "0.0000",
+     "open": "0.0000"
+    }
+   }
+  ],
+  "ticker": "KXFEDDECISION-25JUL-H26"
+ }
+}
