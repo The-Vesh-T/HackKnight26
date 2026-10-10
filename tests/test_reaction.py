@@ -15,6 +15,7 @@ from unittest import mock
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 from tradio import placebo, reaction  # noqa: E402
+from tradio.common import parse_ts  # noqa: E402
 
 FIXTURE = os.path.join(ROOT, "tests", "fixtures", "bowman_small.json")
 T0 = datetime(2025, 6, 23, 14, 0, tzinfo=timezone.utc)
@@ -333,6 +334,36 @@ class PlaceboTests(unittest.TestCase):
     def test_no_placebo_file_means_null(self):
         r = reaction.analyze(stepped_timeline())["markets"][MID]
         self.assertIsNone(r["placebo_p"])
+
+    def test_import_compact_matches_fetch(self):
+        # noisy windows with imputed-looking flat stretches; compact export of the same
+        # windows must give exactly the same fake moves as the full windows
+        self._fetch_with(lambda k: (lambda i: 0.40 + 0.005 * ((i * k) % 7) + (0.03 if i >= 93 else 0)))
+        full = placebo.run("testevent")["markets"][MID]["fake_moves"]
+        path = os.path.join(self.tmp, "testevent", "placebo_windows.json")
+        with open(path) as f:
+            windows = json.load(f)["windows"][MID]
+        lines = []
+        for key, rows in windows.items():
+            ft = parse_ts(key)
+            segs = []
+            for t, m, _ in rows:          # fetch rows here are never imputed
+                off = round((parse_ts(t) - ft).total_seconds() / 60)
+                if not (-10 < off <= 0 or 75 <= off <= 90):
+                    continue
+                v = round(m * 10000)
+                if segs and segs[-1][1] == off - 1 and segs[-1][2] == v:
+                    segs[-1][1] = off
+                else:
+                    segs.append([off, off, v])
+            body = ",".join(f"{a}:{v}" if a == b else f"{a}_{b}:{v}" for a, b, v in segs)
+            lines.append(f"C25|{int(ft.timestamp())} {body}")
+        src = os.path.join(self.tmp, "testevent", "placebo_compact.dat")
+        with open(src, "w") as f:
+            f.write("\n".join(lines) + "\nC25|1 \n")    # plus one empty window
+        os.remove(path)
+        placebo.main(["import", "testevent"])
+        self.assertEqual(placebo.run("testevent")["markets"][MID]["fake_moves"], full)
 
     def test_fetch_resumes_from_cache(self):
         self._fetch_with(lambda k: (lambda i: 0.40))

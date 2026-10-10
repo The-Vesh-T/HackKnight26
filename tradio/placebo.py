@@ -12,8 +12,14 @@ Two steps, because the fetch needs internet and the demo must not:
     python -m tradio.placebo run --all       # offline; writes placebo.json per event
     python -m tradio.reaction --all          # picks placebo_p up
 
+If Python can't reach Kalshi, the same windows can be pulled another way (we used a
+browser on the same public endpoints) into placebo_compact.dat, then:
+
+    python -m tradio.placebo import --all    # offline; placebo_compact.dat -> windows
+
 Files (per event, in tradio/data/<event_id>/):
-    placebo_windows.json  compact per-minute midpoints for each fake window (fetch)
+    placebo_compact.dat   optional compact export (see import_compact)
+    placebo_windows.json  compact per-minute midpoints for each fake window (fetch/import)
     placebo.json          fake T0s, moves, p-values (run)
 
 Choices (documented so the team can check them):
@@ -240,6 +246,44 @@ def fetch(event_id, force=False):
     print(f"wrote {path}")
 
 
+def import_compact(event_id, src):
+    """Build placebo_windows.json from a compact export (no Python network needed).
+
+    Each line: `<leg>|<unix_fake_t0> <segments>` where leg is the ticker suffix (e.g.
+    C25) and segments are `<from>[_<to>]:<mid*10000>` over minute offsets from the fake
+    T0, already carried forward exactly like reaction.build_series (imputed minutes take
+    the last real mid inside T0-60..T0+90). Only the minutes absorption() reads are
+    kept (T0-9..T0 and T0+75..T0+90), so window_move() gives the same answer as on the
+    full window. The export came from the same Kalshi candle endpoints and the same
+    reducer as role 1's build_timeline.kalshi_quotes, checked to reproduce the Bowman
+    and Warsh event moves exactly.
+    """
+    tl, markets = tested_markets(event_id)
+    by_leg = {info["ticker"].rsplit("-", 1)[-1]: mid for mid, info in markets.items()}
+    windows = {}
+    with open(src, encoding="utf-8") as f:
+        for line in f:
+            line = line.rstrip("\n")
+            if not line.strip():
+                continue
+            head, _, body = line.partition(" ")
+            leg, ts = head.split("|")
+            if leg not in by_leg:
+                continue
+            ft = datetime.fromtimestamp(int(ts), tz=timezone.utc)
+            rows = []
+            for seg in filter(None, body.strip().split(",")):
+                span, val = seg.split(":")
+                a, _, b = span.partition("_")
+                for off in range(int(a), int(b or a) + 1):
+                    rows.append([iso(ft + timedelta(minutes=off)), int(val) / 10000, False])
+            windows.setdefault(by_leg[leg], {})[iso(ft)] = rows
+    path = os.path.join(DATA_DIR, event_id, "placebo_windows.json")
+    _write(path, {"event_id": event_id, "source": os.path.basename(src),
+                  "windows": windows})
+    print(f"wrote {path} ({sum(len(v) for v in windows.values())} windows)")
+
+
 def _write(path, data):
     tmp = path + ".tmp"
     with open(tmp, "w", encoding="utf-8") as f:
@@ -300,11 +344,18 @@ def run(event_id):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("step", choices=("fetch", "run"))
+    ap.add_argument("step", choices=("fetch", "import", "run"))
     ap.add_argument("events", nargs="*")
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--force", action="store_true", help="fetch: re-download cached windows")
     a = ap.parse_args(argv)
+    if a.step == "import":
+        # import reads tradio/data/<event>/placebo_compact.dat for each event that has one
+        for e in a.events or sorted(os.listdir(DATA_DIR)):
+            src = os.path.join(DATA_DIR, e, "placebo_compact.dat")
+            if os.path.isfile(src):
+                import_compact(e, src)
+        return
     events = a.events
     if a.all:
         events = sorted(e for e in os.listdir(DATA_DIR) if os.path.isfile(_timeline_path(e)))

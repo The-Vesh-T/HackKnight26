@@ -60,8 +60,8 @@
    "t50_min": 21.0,
    "t90_min": 70.0,
    "status": "reacted",
-   "reason": "Alarm 14:07 UTC (T0+7 min), move -8.5 ticks, confirmed by a trade.",
-   "placebo_p": null,
+   "reason": "Alarm 14:07 UTC (T0+7 min), move -8.5 ticks, confirmed by a trade. Placebo has too few ordinary days (n=17) to count.",
+   "placebo_p": 0.0,
    "indicative": false,
    "cusum_alarm_t": null,
    "pre_band": [
@@ -85,8 +85,8 @@
    "t50_min": 24.0,
    "t90_min": 42.0,
    "status": "reacted",
-   "reason": "Alarm 14:07 UTC (T0+7 min), move +8 ticks.",
-   "placebo_p": null,
+   "reason": "Alarm 14:07 UTC (T0+7 min), move +8 ticks. Placebo has too few ordinary days (n=17) to count.",
+   "placebo_p": 0.0,
    "indicative": false,
    "cusum_alarm_t": null,
    "pre_band": [
