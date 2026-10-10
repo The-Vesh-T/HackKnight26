@@ -38,6 +38,33 @@ historical market-reaction analysis and the replay terminal (`tradio/`, `web/tra
  replay terminal: transcript, speaker baseline, price chart, propagation network
 ```
 
+## Live mode
+
+The same screen works during a real Fed speech. The **● LIVE** tab on `web/tradio.html`
+shows the transcript as it's spoken, scored against the speaker's own history by
+MarketPulse's live listener, next to Kalshi's live Fed-decision prices with the same
+reaction checks. Until the 90-minute window closes it only says "alarm · moving" or
+"watching"; the final verdict appears when the window is complete. Afterwards one command
+keeps the session as a History tab.
+
+```bash
+# terminal 1+2: transcribe and score the speech (MarketPulse; dry, no watchlist => never trades)
+python speechtxt.py --url https://www.federalreserve.gov/live-broadcast.htm
+python live.py --speaker christopher_waller --no-prewarm --mode dry
+# terminal 3: live Kalshi tape + reaction checks -> web/data/tradio/live/
+python tradio/live.py --speaker christopher_waller --t0 now
+# terminal 4: the page
+cd web && python3 -m http.server 8000     # open http://localhost:8000/tradio.html#live
+# afterwards: keep it as a history event
+python tradio/live.py archive waller20261015 --title "Waller, 2026-10-15"
+
+# no speech on? rehearse offline: replay a past event through the live tab (labelled SIMULATED)
+python tradio/live.py --simulate bowman20250623 --speed 30
+```
+
+`tradio/live.py` only reads MarketPulse's `live_state.json`; it never imports the
+trading code. Kalshi's public endpoints need no keys.
+
 ## Team roles
 
 Work is split into four roles. Each has a file in `docs/team/` that tells its owner (and
@@ -71,7 +98,7 @@ python tradio/build_baselines.py --dry-run # check paragraph counts, no Gemini c
 python tradio/build_baselines.py           # build both baselines into stance_baselines.json
 # Warsh's baseline (June/July 2026 press conferences) is already in stance_baselines.json.
 
-python -m unittest tests.test_timeline tests.test_ingest
+python -m unittest tests.test_timeline tests.test_ingest tests.test_reaction tests.test_live
 ```
 
 ## Repo map
@@ -82,7 +109,8 @@ python -m unittest tests.test_timeline tests.test_ingest
 | `tradio/ingest_markets.py`, `build_timeline.py`, `build_evidence.py` | Role 1: market data pipeline |
 | `tradio/data/<event>/` | Cached raw data, `timeline.json`, `evidence.json` (and `analysis.json` from role 2) |
 | `tradio/build_baselines.py` | Role 3: Bowman/Waller speaker baselines |
-| `web/tradio.*` | New: the replay terminal |
+| `tradio/live.py` | Live mode: live Kalshi tape + MarketPulse's scored transcript into the LIVE tab; `archive` saves a session as a history event |
+| `web/tradio.*` | New: the replay terminal (History tabs + LIVE tab) |
 | `stance_scorer.py`, `fed_speeches.py`, `fed_transcripts.py` | Stance rubric, speaker baselines, speech and press-conference downloads |
 | `live.py`, `speechtxt.py`, `mic.py`, `dashboard.py` | MarketPulse live desk (real-time transcription and scoring) |
 | `market_router.py`, `kalshi_*.py`, `polymarket_client.py`, `run_*.py` | Market search and recommendations (live) |

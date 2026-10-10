@@ -311,3 +311,18 @@ footer .keys { margin-left: auto; color: var(--faint); }
   .clock { margin-left: 0; }
   .chart-wrap { height: 320px; }
 }
+
+/* ---------- live ---------- */
+.tab.live b { color: var(--red); }
+.tab.live.on { border-color: var(--red); background: rgba(239, 91, 91, .08); }
+.live-chip { color: var(--red); display: inline-flex; align-items: center; gap: 5px; }
+.live-chip .dot, .tab.live.on b::first-letter { animation: blink 1.4s ease-in-out infinite; }
+.live-chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red); display: inline-block; }
+@keyframes blink { 50% { opacity: .25; } }
+.para .t { font: 11px var(--mono); color: var(--faint); margin-right: 4px; }
+.idle { max-width: 760px; margin: 40px auto; padding: 0 16px; color: var(--muted); }
+.idle h3 { color: var(--text); font-size: 20px; margin: 0 0 10px; }
+.idle li { margin: 10px 0; }
+.idle .mono { color: var(--text); background: var(--panel-2); padding: 1px 5px; border-radius: 4px; font-size: 12px; display: inline-block; margin-top: 3px; }
+.idle .muted { color: var(--faint); font-size: 12px; }
+.chip.alarm { color: var(--green); border-style: dashed; }
