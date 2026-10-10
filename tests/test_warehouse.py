@@ -95,6 +95,21 @@ class TestSnowflake(unittest.TestCase):
                 cfg = warehouse.snowflake_config()
         self.assertEqual(cfg, {"account": "org-acct", "user": "me", "password": "pw"})
 
+    def test_connect_args_password(self):
+        cfg = {"account": "a", "user": "u", "password": "pw"}
+        self.assertEqual(warehouse.snowflake_connect_args(cfg), cfg)
+
+    def test_connect_args_key_pair(self):
+        args = warehouse.snowflake_connect_args(
+            {"account": "a", "user": "u", "password": "stale", "private_key_file": "snowflake_key.pem"})
+        self.assertNotIn("password", args)
+        self.assertEqual(args["authenticator"], "SNOWFLAKE_JWT")
+        self.assertEqual(args["private_key_file"], os.path.join(warehouse.ROOT, "snowflake_key.pem"))
+
+    def test_connect_args_missing_credentials(self):
+        with self.assertRaises(SystemExit):
+            warehouse.snowflake_connect_args({"account": "a", "user": "u"})
+
 
 class TestExport(unittest.TestCase):
     def test_export_writes_csvs_and_ignores_them(self):
