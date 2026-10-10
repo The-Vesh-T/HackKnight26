@@ -82,7 +82,7 @@
     focus: {},           // event id -> focused market id
     focusPinned: {},     // view -> true once the viewer picks a market (LIVE then stops following the headline)
     fired: new Set(),    // alarm pulses already shown
-    lastDraw: 0,
+    headRel: START_REL,  // where the chart's playhead is drawn: eases to `rel` after a jump
     lastFit: 0,
     touched: false,      // the viewer has used a control: hides the "press play" prompt
     speechOpen: false,   // full speech text expanded
@@ -295,6 +295,7 @@
         side: t.side, qty: t.qty, cost: t.cost, exitT: t.exit_t ? parseT(t.exit_t) : null,
         pnlFinal: t.pnl != null ? t.pnl : t.pnl_at_exit, pnlNow: t.pnl_now, value: t.value,
         status: t.status, sideFixed: t.side_fixed || (t.playbook && t.playbook.side_fixed), fees: t.fees,
+        path: (t.pnl_path || []).map((p) => ({ t: parseT(p.t), pnl: p.pnl })),
       });
     }
     return { mode: d.mode, backtest: !!d.backtest, note: d.note, trades, skipped, total: d.total_pnl, capital: d.capital };
@@ -343,8 +344,9 @@
     stepPath.lastY = prevY;
     return d;
   }
-  // replay time over which a new candle glides in: about a quarter of a second on screen
-  const easeMs = () => (state.playing ? state.speed * 250 : 0);
+  // replay time over which a new candle glides in: most of the way to the next minute, at most
+  // 0.7 s on screen, so the price dot moves continuously while the line keeps its steps
+  const easeMs = () => (state.playing ? Math.min(0.9 * MIN, state.speed * 700) : 0);
 
   function bandPath(qs, x, y, until) {
     const pts = qs.filter((q) => q.t <= until && q.bid != null && q.ask != null);
@@ -481,12 +483,20 @@
         g += `<line x1="${cx}" y1="${cy}" x2="${ex}" y2="${ey}" stroke="#E8EAED" stroke-dasharray="3 3" opacity=".7"/>`;
         g += `<rect x="${ex - 5}" y="${ey - 5}" width="10" height="10" fill="#E8EAED"/>`;
         g += `<text x="${ex + 8}" y="${ey + 4}" fill="#E8EAED" font-size="11.5" font-weight="600">exit ${money(t.pnlFinal)}</text>`;
+      } else if (lineEndY != null) {
+        // still open: a dashed line from the entry to the price dot, and the running P&L under the dot
+        const live = deskTrade(E, t, now);
+        if (live.pnl == null) continue;
+        const dx = x(until);
+        g += `<line x1="${cx}" y1="${cy}" x2="${dx.toFixed(1)}" y2="${lineEndY.toFixed(1)}" stroke="#E8EAED" stroke-dasharray="3 3" opacity=".5"/>`;
+        const right = dx + 150 < W - R;
+        g += `<text x="${(dx + (right ? 10 : -10)).toFixed(1)}" y="${(lineEndY + 22).toFixed(1)}" text-anchor="${right ? "start" : "end"}" fill="${live.pnl >= 0 ? "#1FCB8A" : "#F2555A"}" font-size="11.5" font-weight="600">${money(live.pnl)} if sold now</text>`;
       }
     }
 
     // playhead: a line at "now" and a dot on the price
     if (now >= E.ws && now <= E.xe) {
-      g += `<line x1="${x(now)}" x2="${x(now)}" y1="${T}" y2="${H - B}" stroke="#4C8DFF" opacity=".35"/>`;
+      g += `<line x1="${x(now).toFixed(1)}" x2="${x(now).toFixed(1)}" y1="${T}" y2="${H - B}" stroke="#4C8DFF" opacity=".35"/>`;
       const q = quoteAt(m, now);
       if (q && q.mid != null) g += `<circle cx="${x(until).toFixed(1)}" cy="${(lineEndY != null ? lineEndY : y(q.mid)).toFixed(1)}" r="5" fill="${color}" stroke="#0F1114" stroke-width="2"/>`;
     }
@@ -868,33 +878,31 @@
   }
 
   // The desk: what the playbook traded (live) or would have traded (backtest). Orders, skips and
-  // P&L are read from the files; the only sum here is the closed total over the orders shown.
-  // Kalshi taker fee per contract, the same formula tradio/playbook.py uses for the backtest.
-  const kalshiFee = (p) => 0.07 * p * (1 - p);
-  // An open backtest order marked to the tape: what it would be worth if sold at this replay minute
-  // (YES sells at the bid, NO at 1 − ask), fees on both legs, so at the exit time it equals backtest.json's P&L.
-  function markToMarket(E, t, now) {
-    const m = E.byId[t.mid];
-    const q = m && quoteAt(m, now);
-    if (!q || t.cost == null || !t.qty) return null;
-    const side = String(t.side || "").toLowerCase();
-    const v = side === "no" ? (q.ask != null ? 1 - q.ask : q.mid != null ? 1 - q.mid : null) : (q.bid != null ? q.bid : q.mid);
-    if (v == null) return null;
-    return t.qty * (v - t.cost - kalshiFee(t.cost) - kalshiFee(v));
+  // P&L are read from the files; the only sums here are the closed and open totals over the orders shown.
+  // An open backtest order's running P&L is backtest.json's pnl_path: what selling at the latest
+  // closed candle would make, fees included. Its last point is the exit P&L.
+  function pnlAt(t, now) {
+    let p = null;
+    for (const pt of t.path || []) { if (pt.t > now) break; p = pt.pnl; }
+    return p;
+  }
+
+  function deskTrade(E, t, now) {
+    const closed = !!(t.exitT && now >= t.exitT);
+    const pnl = closed && t.pnlFinal != null ? t.pnlFinal : (E.desk.backtest ? pnlAt(t, now) : t.pnlNow);
+    return { ...t, closed, pnl, marked: !closed && E.desk.backtest && pnl != null };
   }
 
   function deskNow(E, now) {
     const d = E.desk;
-    const shown = d.trades.filter((t) => t.t <= now).map((t) => {
-      const closed = !!(t.exitT && now >= t.exitT);
-      const pnl = closed && t.pnlFinal != null ? t.pnlFinal : (d.backtest ? markToMarket(E, t, now) : t.pnlNow);
-      return { ...t, closed, pnl, marked: !closed && d.backtest && pnl != null };
-    });
+    const shown = d.trades.filter((t) => t.t <= now).map((t) => deskTrade(E, t, now));
     const done = shown.filter((t) => t.closed && t.pnlFinal != null);
+    const open = shown.filter((t) => !t.closed && t.pnl != null);
     return {
       shown, started: now >= E.t0,
       skipped: d.skipped.filter((x) => !x.t || x.t <= now),
       total: done.length ? done.reduce((a, t) => a + t.pnlFinal, 0) : null,
+      openTotal: open.length ? open.reduce((a, t) => a + t.pnl, 0) : null,
     };
   }
   const deskMode = (d) => (d.backtest ? `<span class="chip indic">Backtest</span>`
@@ -915,13 +923,14 @@
     else if (!s.shown.length) text = d.backtest ? "No trade: the playbook passed on every contract." : "No orders so far.";
     else if (s.shown.length === 1) {
       const t = s.shown[0];
-      text = `Bought <b>${esc(String(t.side).toUpperCase())}</b> ×${esc(t.qty)} at <span class="num">${cents(t.cost)}</span> · ` +
+      text = `Bought <b>${esc(String(t.side).toUpperCase())}</b> on “${esc(plain(t.label))}” ×${esc(t.qty)} at <span class="num">${cents(t.cost)}</span> · ` +
         (t.pnl == null ? `open${t.exitT ? `, exit ${fmtEtShort(t.exitT)}` : ""}`
           : t.marked ? `${pnlHtml(t.pnl)} if sold now${t.exitT ? ` · exits ${fmtEtShort(t.exitT)}` : ""}`
           : `${pnlHtml(t.pnl)}${t.closed ? " · closed" : " so far"}`);
     } else {
       const open = s.shown.filter((t) => !t.closed).length;
-      text = `${s.shown.length} orders${s.total != null ? ` · ${pnlHtml(s.total)} closed` : ""}${open ? ` · ${open} open` : ""}`;
+      text = `${s.shown.length} orders${s.total != null ? ` · ${pnlHtml(s.total)} closed` : ""}` +
+        (open ? ` · ${open} open${s.openTotal != null ? `, ${pnlHtml(s.openTotal)} if sold now` : ""}` : "");
     }
     setHtml("desk", `<b>Desk</b>${deskMode(d)}<span class="why-text">${text}</span>${infoBtn("desk", "Details")}`);
     el.hidden = false;
@@ -1524,8 +1533,6 @@
 
   function draw(force) {
     const t = performance.now();
-    if (!force && t - state.lastDraw < 16) return; // ~60 fps so the playhead and new candles glide
-    state.lastDraw = t;
     $("scrub").value = state.rel;
 
     if (state.view === "compare") {
@@ -1542,7 +1549,7 @@
     const m = E.byId[state.focus[state.view]] || E.headline;
     if (m) {
       renderMarketHead(E, m, now);
-      drawMainChart(E, m, now);
+      drawMainChart(E, m, E.t0 + state.headRel);
     }
     renderDesk(E, now);
     renderMarkets(E, now);
@@ -1552,16 +1559,23 @@
     renderInfo(E, m, now);
   }
 
+  // Redraws every animation frame while playing. The chart's playhead follows the clock exactly
+  // while playing; after a jump (arrow keys, scrubbing, a button) it eases to the new time.
+  const HEAD_EASE_MS = 90;
   let lastTick = null;
   function tick(ts) {
-    if (state.playing && lastTick != null) {
-      const dt = ts - lastTick;
+    const dt = lastTick == null ? 0 : ts - lastTick;
+    lastTick = ts;
+    if (state.playing && dt) {
       const [, b] = currentRange();
       state.rel = Math.min(b, state.rel + dt * state.speed);
       if (state.rel >= b) setPlaying(false);
-      draw(false);
     }
-    lastTick = ts;
+    const lag = state.rel - state.headRel;
+    const moving = state.playing || lag !== 0;
+    if (state.playing || Math.abs(lag) < 1000) state.headRel = state.rel;
+    else state.headRel += lag * (1 - Math.exp(-dt / HEAD_EASE_MS));
+    if (moving) draw(false);
     requestAnimationFrame(tick);
   }
 
@@ -1575,6 +1589,7 @@
     hideInfo();
     stopLive();
     state.view = id;
+    state.headRel = state.rel;
     $("liveControls").hidden = id !== "live";
     $("speedBox").hidden = id === "live";
     renderTabs();
