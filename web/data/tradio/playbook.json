@@ -78,7 +78,7 @@
   },
   "direction_hit_rate": {
    "value": 1.0,
-   "why": "4/4 reactions moved the way the regime-aware mapping predicts; MarketPulse's fixed table got 3/4"
+   "why": "4/4 reactions moved the way the regime-aware mapping predicts; the old fixed table got 3/4"
   },
   "hold_side_by_regime": {
    "value": true,
