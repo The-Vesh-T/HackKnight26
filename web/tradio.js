@@ -162,6 +162,15 @@
     return ans >= 0 ? q[ans] : null;
   }
 
+  // When the replay may show a market's verdict and final move. A reaction with an alarm is shown
+  // when its alarm passes; Polymarket (indicative, measured T0+75..90 min by role 2) only near the
+  // end of that window; everything else from T0. Before that the card just says "watching".
+  function verdictAt(E, m) {
+    if (m.alarm) return m.alarm;
+    if (m.indicative) return E.t0 + 75 * MIN;
+    return E.t0;
+  }
+
   // ---------- SVG helpers ----------
   const svgEl = (w, h, inner) => `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" preserveAspectRatio="none">${inner}</svg>`;
 
@@ -381,7 +390,7 @@
     $("chartHead").innerHTML = `<span class="title">${esc(m.label)}</span><span class="venue" style="color:var(--muted)">${esc(m.venue)} · ${esc(m.exposure)} exposure</span>${ind}<span class="live">${q ? cents(q.mid) : "—"}${ba}</span>`;
     const a = m.a;
     // Same reveal rule as the cards: no verdict before T0, and a reaction only once its alarm time passes.
-    const revealed = a && now >= E.t0 && (a.status !== "reacted" || !m.alarm || now >= m.alarm);
+    const revealed = a && now >= verdictAt(E, m);
     if (!revealed) { $("explain").innerHTML = a ? `<b>Verdict:</b> <span class="chip watching">${now < E.t0 ? "before T0" : "watching…"}</span>` : ""; return; }
     const bits = [`<b>Verdict:</b> <span class="chip ${a.status}">${STATUS_TEXT[a.status] || a.status}</span>`];
     if (a.reason) bits.push(esc(a.reason));
@@ -399,17 +408,17 @@
       let chip;
       if (!m.status) chip = `<span class="chip watching">no analysis</span>`;
       else if (now < E.t0) chip = `<span class="chip watching">before T0</span>`;
-      else if (m.status === "reacted" && m.alarm && now < m.alarm) chip = `<span class="chip watching">watching…</span>`;
+      else if (now < verdictAt(E, m)) chip = `<span class="chip watching">watching…</span>`;
       else chip = `<span class="chip ${m.status}">${STATUS_TEXT[m.status] || m.status}</span>`;
       const fired = m.alarm && now >= m.alarm && !state.fired.has(state.view + m.id);
       if (fired) state.fired.add(state.view + m.id);
       const facts = [];
       facts.push(`liq <b>${esc(a.liquidity || "—")}</b>`);
       if (a.pre_mid != null) facts.push(`pre <b>${cents(a.pre_mid)}</b>`);
-      if (now >= E.t0 && a.move_ticks != null) facts.push(`move <b>${signed(a.move_ticks)}t</b>`);
+      if (now >= verdictAt(E, m) && a.move_ticks != null) facts.push(`move <b>${signed(a.move_ticks)}t</b>`);
       if (m.alarm && !m.indicative && now >= m.alarm) facts.push(`alarm <b>${relMin(m.alarm - E.t0)}</b>`);
       if (a.t90_min != null && !m.indicative && now >= E.t0 + a.t90_min * MIN) facts.push(`t90 <b>${a.t90_min}m</b>`);
-      const showReason = now >= E.t0 && (m.status !== "reacted" || !m.alarm || now >= m.alarm);
+      const showReason = now >= verdictAt(E, m);
       html += `<div class="card ${m.id === focus ? "focus" : ""} ${fired ? "fired" : ""}" data-id="${esc(m.id)}">
         <div class="row"><span class="lab">${esc(m.label)}</span><span class="venue">${esc(m.venue)}${m.exposure === "partial" ? " · partial" : ""}</span><span class="px">${q ? cents(q.mid) : "—"}</span></div>
         ${sparkline(E, m, now)}
@@ -459,8 +468,9 @@
         g += `<path d="${stepPath(m.q.filter((q) => q.t >= ws && q.mid != null).map((q) => ({ t: q.t, v: q.mid })), x, y, until)}" fill="none" stroke="#22d3ee" stroke-width="2"/>`;
         if (m.alarm && m.alarm <= now) g += `<line x1="${x(m.alarm)}" x2="${x(m.alarm)}" y1="${T}" y2="${H - B}" stroke="#84f04f"/><text x="${x(m.alarm) + 4}" y="${T + 10}" fill="#84f04f" font-size="10">alarm ${relMin(m.alarm - E.t0)}</text>`;
         const q = quoteAt(m, now);
-        const chip = now >= E.t0 && m.status ? `<span class="chip ${m.status}">${STATUS_TEXT[m.status]}</span>` : `<span class="chip watching">before T0</span>`;
-        const mv = now >= E.t0 && m.a ? ` · move <b class="num">${signed(m.a.move_ticks)}t</b>` : "";
+        const shown = m.status && now >= verdictAt(E, m);
+        const chip = shown ? `<span class="chip ${m.status}">${STATUS_TEXT[m.status]}</span>` : `<span class="chip watching">${now < E.t0 ? "before T0" : "watching…"}</span>`;
+        const mv = shown && m.a ? ` · move <b class="num">${signed(m.a.move_ticks)}t</b>` : "";
         html += `<div class="cmp-chart"><div class="hd"><b>${esc(r.name)}</b>${chip}<span style="color:var(--muted);font-size:12px">pre ${cents(m.a?.pre_mid)}${mv}</span><span class="px">${q ? cents(q.mid) : "—"}</span></div>${svgEl(W, H, g).replace("<svg ", '<svg style="width:100%;height:190px" ')}</div>`;
       }
       html += `</div>`;
