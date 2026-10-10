@@ -1,11 +1,11 @@
 {
- "built_at": "2026-10-10T05:12:45Z",
- "n_events": 195,
- "n_history_events": 192,
- "n_rows": 874,
- "n_labeled": 272,
- "positives": 33,
- "excluded_not_measurable": 602,
+ "built_at": "2026-10-10T07:32:40Z",
+ "n_events": 203,
+ "n_history_events": 200,
+ "n_rows": 909,
+ "n_labeled": 284,
+ "positives": 38,
+ "excluded_not_measurable": 625,
  "features": [
   "kind_hold",
   "kind_hike_small",
@@ -21,123 +21,146 @@
   "role_vice_chair",
   "role_vice_chair_supervision",
   "role_governor",
+  "is_testimony",
   "log_days_to_decision",
   "after_hours",
-  "n_flags",
+  "overlap_speeches",
+  "release_in_window",
+  "release_day",
   "has_text",
   "policy_share",
   "has_stance",
   "abs_z",
-  "aligned_z"
+  "aligned_z",
+  "has_embedding",
+  "novelty_vs_speaker",
+  "novelty_vs_recent"
  ],
  "min_train_events": 10,
- "champion": "logistic",
+ "champion": "ensemble",
  "champion_beats_base_rate": false,
- "verdict": "No model beats the base rate yet on 118 events predicted in time order; best is logistic. Each new event is a new test.",
+ "verdict": "No model beats the base rate yet on 123 events predicted in time order; best is ensemble. Each new event is a new test.",
  "scoreboard": {
-  "n_events": 118,
-  "n_rows": 244,
-  "positives": 25,
+  "n_events": 123,
+  "n_rows": 255,
+  "positives": 31,
   "models": {
    "base_rate": {
-    "log_loss": 0.3536,
-    "brier": 0.0978,
-    "avg_precision": 0.0802,
+    "log_loss": 0.3848,
+    "brier": 0.1106,
+    "avg_precision": 0.1113,
     "brier_skill": 0.0
    },
    "playbook": {
-    "log_loss": 0.3682,
-    "brier": 0.1037,
-    "avg_precision": 0.0885,
-    "brier_skill": -0.0603,
+    "log_loss": 0.3947,
+    "brier": 0.1148,
+    "avg_precision": 0.1254,
+    "brier_skill": -0.038,
     "gain_vs_base_ci": [
-     -0.0285,
-     -0.002
+     -0.029,
+     0.0091
     ],
     "beats_base_rate": false
    },
    "logistic": {
-    "log_loss": 0.2394,
-    "brier": 0.0661,
-    "avg_precision": 0.5431,
-    "brier_skill": 0.3241,
+    "log_loss": 0.2902,
+    "brier": 0.0761,
+    "avg_precision": 0.5359,
+    "brier_skill": 0.3119,
     "gain_vs_base_ci": [
-     -0.0582,
-     0.2661
+     -0.0693,
+     0.2618
     ],
     "beats_base_rate": false
    },
    "boosting": {
-    "log_loss": 0.2735,
-    "brier": 0.0779,
-    "avg_precision": 0.3834,
-    "brier_skill": 0.2035,
+    "log_loss": 0.295,
+    "brier": 0.0863,
+    "avg_precision": 0.4594,
+    "brier_skill": 0.2197,
     "gain_vs_base_ci": [
-     -0.0316,
-     0.2168
+     -0.0311,
+     0.2015
     ],
     "beats_base_rate": false
    },
    "mlp": {
-    "log_loss": 0.2526,
-    "brier": 0.0725,
-    "avg_precision": 0.5335,
-    "brier_skill": 0.2587,
+    "log_loss": 0.3011,
+    "brier": 0.0823,
+    "avg_precision": 0.5015,
+    "brier_skill": 0.2559,
     "gain_vs_base_ci": [
-     -0.0264,
-     0.253
+     -0.0838,
+     0.2655
     ],
     "beats_base_rate": false
    },
    "mlp_bag": {
-    "log_loss": 0.302,
-    "brier": 0.0731,
-    "avg_precision": 0.5804,
-    "brier_skill": 0.2526,
+    "log_loss": 0.3825,
+    "brier": 0.0893,
+    "avg_precision": 0.5201,
+    "brier_skill": 0.1926,
     "gain_vs_base_ci": [
-     -0.136,
-     0.2366
+     -0.203,
+     0.204
     ],
     "beats_base_rate": false
    },
    "mlp_tuned": {
-    "log_loss": 0.2528,
-    "brier": 0.0683,
-    "avg_precision": 0.6005,
-    "brier_skill": 0.3016,
+    "log_loss": 0.3276,
+    "brier": 0.0792,
+    "avg_precision": 0.4983,
+    "brier_skill": 0.2839,
     "gain_vs_base_ci": [
-     -0.0569,
-     0.2688
+     -0.1074,
+     0.232
+    ],
+    "beats_base_rate": false
+   },
+   "ensemble": {
+    "log_loss": 0.2628,
+    "brier": 0.075,
+    "avg_precision": 0.5234,
+    "brier_skill": 0.3219,
+    "gain_vs_base_ci": [
+     -0.013,
+     0.2604
     ],
     "beats_base_rate": false
    }
   },
-  "n_clusters": 112,
-  "ci_level": 0.9917
+  "n_clusters": 117,
+  "ci_level": 0.9929
  },
  "logistic_weights": {
-  "uncertainty": 1.277,
-  "policy_share": 0.691,
-  "n_flags": 0.675,
-  "quote_changes": 0.387,
-  "kind_hike_small": 0.383,
-  "abs_z": 0.341,
-  "spread_ticks": -0.326,
-  "role_chair": 0.317,
-  "kind_cut_small": -0.312,
-  "log_trades": 0.235,
-  "role_vice_chair_supervision": -0.212,
-  "role_vice_chair": 0.206,
-  "role_governor": -0.161,
-  "has_stance": 0.153,
-  "kind_hold": 0.148,
-  "kind_cut_big": -0.103,
-  "aligned_z": 0.103,
-  "after_hours": -0.083,
-  "log_days_to_decision": 0.018,
-  "kind_hike_big": -0.012,
-  "pre_mid": 0.006,
-  "has_text": 0.0
+  "uncertainty": 1.214,
+  "abs_z": 0.66,
+  "has_stance": 0.48,
+  "quote_changes": 0.444,
+  "role_chair": 0.435,
+  "overlap_speeches": 0.362,
+  "role_governor": -0.305,
+  "is_testimony": 0.3,
+  "kind_hike_small": 0.297,
+  "kind_cut_small": -0.238,
+  "log_trades": 0.2,
+  "spread_ticks": -0.188,
+  "policy_share": 0.134,
+  "role_vice_chair": 0.133,
+  "release_in_window": 0.13,
+  "kind_hold": 0.117,
+  "kind_cut_big": -0.092,
+  "role_vice_chair_supervision": -0.088,
+  "pre_mid": 0.083,
+  "release_day": 0.062,
+  "log_days_to_decision": -0.048,
+  "after_hours": 0.045,
+  "kind_hike_big": -0.008,
+  "aligned_z": -0.007,
+  "has_text": 0.0,
+  "has_embedding": 0.0,
+  "novelty_vs_speaker": 0.0,
+  "novelty_vs_recent": 0.0
  },
  "events": [
   {
@@ -145,7 +168,7 @@
    "t0": "2024-11-12T15:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 0.283,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 3
@@ -155,7 +178,7 @@
    "t0": "2024-11-14T12:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -1.532,
    "rows": 2,
    "reacted": 0,
    "not_measurable": 2
@@ -165,7 +188,17 @@
    "t0": "2024-11-14T20:00:00Z",
    "source": "history",
    "role": "chair",
-   "z": null,
+   "z": 2.178,
+   "rows": 3,
+   "reacted": 0,
+   "not_measurable": 3
+  },
+  {
+   "event": "barr20241120a",
+   "t0": "2024-11-20T15:00:00Z",
+   "source": "history",
+   "role": "vice_chair_supervision",
+   "z": -0.039,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 3
@@ -175,7 +208,7 @@
    "t0": "2024-11-20T16:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -1.532,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 3
@@ -185,7 +218,7 @@
    "t0": "2024-11-20T17:15:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -1.984,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 3
@@ -195,7 +228,7 @@
    "t0": "2024-11-22T23:15:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.467,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 3
@@ -205,7 +238,7 @@
    "t0": "2024-12-02T20:15:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -2.842,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 3
@@ -215,7 +248,7 @@
    "t0": "2024-12-03T17:35:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -1.532,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 3
@@ -225,7 +258,7 @@
    "t0": "2025-01-06T14:15:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -1.532,
    "rows": 2,
    "reacted": 0,
    "not_measurable": 2
@@ -235,7 +268,7 @@
    "t0": "2025-01-08T13:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -1.279,
    "rows": 2,
    "reacted": 0,
    "not_measurable": 2
@@ -245,7 +278,7 @@
    "t0": "2025-01-09T18:35:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 2.567,
    "rows": 1,
    "reacted": 0,
    "not_measurable": 1
@@ -255,7 +288,7 @@
    "t0": "2025-01-31T13:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -1.984,
    "rows": 2,
    "reacted": 0,
    "not_measurable": 2
@@ -265,7 +298,7 @@
    "t0": "2025-02-05T00:30:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": -1.532,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 3
@@ -275,7 +308,7 @@
    "t0": "2025-02-05T20:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.467,
    "rows": 1,
    "reacted": 0,
    "not_measurable": 1
@@ -285,7 +318,7 @@
    "t0": "2025-02-06T00:30:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": 1.454,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 3
@@ -295,7 +328,17 @@
    "t0": "2025-02-07T17:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 1.454,
+   "rows": 4,
+   "reacted": 0,
+   "not_measurable": 4
+  },
+  {
+   "event": "powell20250211a",
+   "t0": "2025-02-11T15:00:00Z",
+   "source": "history",
+   "role": "chair",
+   "z": 2.178,
    "rows": 4,
    "reacted": 0,
    "not_measurable": 4
@@ -305,7 +348,7 @@
    "t0": "2025-02-12T22:05:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 0.283,
    "rows": 2,
    "reacted": 0,
    "not_measurable": 2
@@ -315,7 +358,7 @@
    "t0": "2025-02-17T15:20:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -1.984,
    "rows": 1,
    "reacted": 0,
    "not_measurable": 1
@@ -325,7 +368,7 @@
    "t0": "2025-02-17T23:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 1.846,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 3
@@ -335,7 +378,7 @@
    "t0": "2025-02-19T22:00:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": -1.532,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 3
@@ -345,7 +388,7 @@
    "t0": "2025-02-20T19:30:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -0.039,
    "rows": 2,
    "reacted": 0,
    "not_measurable": 2
@@ -355,7 +398,7 @@
    "t0": "2025-02-20T22:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 1.454,
    "rows": 1,
    "reacted": 0,
    "not_measurable": 1
@@ -365,7 +408,7 @@
    "t0": "2025-02-21T16:30:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": -0.039,
    "rows": 2,
    "reacted": 0,
    "not_measurable": 2
@@ -375,7 +418,7 @@
    "t0": "2025-02-25T16:45:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -0.039,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 3
@@ -385,7 +428,7 @@
    "t0": "2025-02-27T15:00:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -0.039,
    "rows": 2,
    "reacted": 0,
    "not_measurable": 2
@@ -395,7 +438,7 @@
    "t0": "2025-02-27T16:45:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.467,
    "rows": 2,
    "reacted": 0,
    "not_measurable": 2
@@ -405,7 +448,7 @@
    "t0": "2025-03-07T15:15:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -1.984,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 2
@@ -415,7 +458,7 @@
    "t0": "2025-03-07T17:20:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 1.454,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 3
@@ -425,7 +468,7 @@
    "t0": "2025-03-07T17:30:00Z",
    "source": "history",
    "role": "chair",
-   "z": null,
+   "z": 2.178,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 3
@@ -435,7 +478,7 @@
    "t0": "2025-03-21T14:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 1.846,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 3
@@ -445,7 +488,7 @@
    "t0": "2025-03-24T19:10:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 2,
    "reacted": 0,
    "not_measurable": 2
@@ -455,7 +498,7 @@
    "t0": "2025-03-25T12:40:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 1.454,
    "rows": 2,
    "reacted": 0,
    "not_measurable": 2
@@ -465,7 +508,7 @@
    "t0": "2025-04-02T20:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 1.454,
    "rows": 3,
    "reacted": 2,
    "not_measurable": 1
@@ -475,7 +518,7 @@
    "t0": "2025-04-03T16:30:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": -1.532,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 3
@@ -485,7 +528,7 @@
    "t0": "2025-04-03T18:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -3.024,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 2
@@ -495,7 +538,7 @@
    "t0": "2025-04-04T15:25:00Z",
    "source": "history",
    "role": "chair",
-   "z": null,
+   "z": 2.178,
    "rows": 4,
    "reacted": 2,
    "not_measurable": 1
@@ -505,7 +548,7 @@
    "t0": "2025-04-04T16:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 4,
    "reacted": 1,
    "not_measurable": 1
@@ -515,9 +558,19 @@
    "t0": "2025-04-07T14:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 4,
    "reacted": 0,
+   "not_measurable": 1
+  },
+  {
+   "event": "bowman20250410a",
+   "t0": "2025-04-10T14:00:00Z",
+   "source": "history",
+   "role": "governor",
+   "z": -0.467,
+   "rows": 5,
+   "reacted": 1,
    "not_measurable": 1
   },
   {
@@ -525,7 +578,7 @@
    "t0": "2025-04-14T17:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -2.842,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 1
@@ -535,7 +588,7 @@
    "t0": "2025-04-15T23:10:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 1
@@ -545,7 +598,7 @@
    "t0": "2025-04-16T17:30:00Z",
    "source": "history",
    "role": "chair",
-   "z": null,
+   "z": 2.178,
    "rows": 5,
    "reacted": 1,
    "not_measurable": 1
@@ -555,7 +608,7 @@
    "t0": "2025-04-17T15:45:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 2,
    "not_measurable": 2
@@ -565,7 +618,7 @@
    "t0": "2025-04-22T13:00:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 2
@@ -575,7 +628,7 @@
    "t0": "2025-04-22T22:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -1.532,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 2
@@ -585,7 +638,7 @@
    "t0": "2025-04-23T13:35:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 0.283,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 2
@@ -595,7 +648,7 @@
    "t0": "2025-05-03T16:50:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -605,7 +658,7 @@
    "t0": "2025-05-09T09:55:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 3
@@ -615,7 +668,7 @@
    "t0": "2025-05-09T10:45:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -625,7 +678,7 @@
    "t0": "2025-05-09T15:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 0.283,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 2
@@ -635,7 +688,7 @@
    "t0": "2025-05-09T23:45:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 1.454,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -645,7 +698,7 @@
    "t0": "2025-05-12T14:25:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -1.532,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 2
@@ -655,7 +708,7 @@
    "t0": "2025-05-14T09:15:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 0.283,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 3
@@ -665,7 +718,7 @@
    "t0": "2025-05-14T13:10:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": 1.454,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 2
@@ -695,7 +748,7 @@
    "t0": "2025-05-19T12:45:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -705,7 +758,7 @@
    "t0": "2025-05-20T21:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -715,7 +768,7 @@
    "t0": "2025-05-23T16:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 2
@@ -735,7 +788,7 @@
    "t0": "2025-05-29T18:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 2
@@ -745,7 +798,7 @@
    "t0": "2025-06-02T00:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -2.842,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 2
@@ -765,7 +818,7 @@
    "t0": "2025-06-03T17:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 1.454,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -775,7 +828,7 @@
    "t0": "2025-06-04T12:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -785,7 +838,7 @@
    "t0": "2025-06-05T16:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 1.454,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -795,7 +848,7 @@
    "t0": "2025-06-06T14:00:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -0.467,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 2
@@ -805,7 +858,7 @@
    "t0": "2025-06-23T07:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 0.283,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -825,9 +878,19 @@
    "t0": "2025-06-23T18:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
+   "not_measurable": 2
+  },
+  {
+   "event": "powell20250624a",
+   "t0": "2025-06-24T12:30:00Z",
+   "source": "history",
+   "role": "chair",
+   "z": 2.178,
+   "rows": 5,
+   "reacted": 2,
    "not_measurable": 2
   },
   {
@@ -835,7 +898,7 @@
    "t0": "2025-06-24T20:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 2
@@ -845,7 +908,7 @@
    "t0": "2025-06-26T17:15:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 2
@@ -855,7 +918,7 @@
    "t0": "2025-07-10T17:15:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 1.846,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 2
@@ -885,7 +948,7 @@
    "t0": "2025-07-16T14:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -895,7 +958,7 @@
    "t0": "2025-07-17T13:15:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 1.454,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -905,7 +968,7 @@
    "t0": "2025-07-17T17:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -935,7 +998,7 @@
    "t0": "2025-08-01T12:00:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -3.501,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -945,7 +1008,7 @@
    "t0": "2025-08-01T12:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -2.842,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -955,7 +1018,7 @@
    "t0": "2025-08-09T16:15:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -3.501,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 4
@@ -965,7 +1028,7 @@
    "t0": "2025-08-19T18:10:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -0.467,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -975,7 +1038,7 @@
    "t0": "2025-08-20T15:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 0.283,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -985,7 +1048,7 @@
    "t0": "2025-08-22T14:00:00Z",
    "source": "history",
    "role": "chair",
-   "z": null,
+   "z": 2.178,
    "rows": 5,
    "reacted": 3,
    "not_measurable": 2
@@ -995,7 +1058,7 @@
    "t0": "2025-08-28T22:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -2.842,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 4
@@ -1005,7 +1068,7 @@
    "t0": "2025-09-22T16:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -3.024,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1015,7 +1078,7 @@
    "t0": "2025-09-23T13:00:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -3.501,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 2
@@ -1025,7 +1088,7 @@
    "t0": "2025-09-23T16:35:00Z",
    "source": "history",
    "role": "chair",
-   "z": null,
+   "z": 2.178,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1035,7 +1098,7 @@
    "t0": "2025-09-25T17:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1045,7 +1108,7 @@
    "t0": "2025-09-26T17:00:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -3.501,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1055,7 +1118,7 @@
    "t0": "2025-09-29T11:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 0.283,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -1065,7 +1128,7 @@
    "t0": "2025-09-30T10:00:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": -1.532,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -1075,7 +1138,7 @@
    "t0": "2025-10-03T17:40:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": -1.532,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1095,7 +1158,7 @@
    "t0": "2025-10-08T13:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 4
@@ -1105,7 +1168,7 @@
    "t0": "2025-10-08T21:45:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1135,7 +1198,7 @@
    "t0": "2025-10-09T16:45:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -1.532,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 4
@@ -1155,7 +1218,7 @@
    "t0": "2025-10-14T16:20:00Z",
    "source": "history",
    "role": "chair",
-   "z": null,
+   "z": 2.178,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 2
@@ -1165,7 +1228,7 @@
    "t0": "2025-10-15T17:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 0.283,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1175,7 +1238,7 @@
    "t0": "2025-10-16T13:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1185,7 +1248,7 @@
    "t0": "2025-10-16T13:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -2.217,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1235,7 +1298,7 @@
    "t0": "2025-10-23T14:25:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1255,7 +1318,7 @@
    "t0": "2025-11-03T19:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 2.946,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1265,7 +1328,7 @@
    "t0": "2025-11-07T12:00:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": -1.532,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -1275,7 +1338,7 @@
    "t0": "2025-11-07T20:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -1.532,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 4
@@ -1285,7 +1348,7 @@
    "t0": "2025-11-12T03:25:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1295,7 +1358,7 @@
    "t0": "2025-11-17T14:30:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": -1.532,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 4
@@ -1305,7 +1368,7 @@
    "t0": "2025-11-17T20:35:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -2.842,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 2
@@ -1315,7 +1378,7 @@
    "t0": "2025-11-18T15:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 2
@@ -1325,7 +1388,7 @@
    "t0": "2025-11-19T15:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -1.532,
    "rows": 5,
    "reacted": 1,
    "not_measurable": 2
@@ -1335,7 +1398,7 @@
    "t0": "2025-11-20T16:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1345,7 +1408,7 @@
    "t0": "2025-11-21T13:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 2,
    "not_measurable": 2
@@ -1355,7 +1418,7 @@
    "t0": "2025-11-21T13:45:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 2,
    "not_measurable": 2
@@ -1365,17 +1428,27 @@
    "t0": "2025-12-02T01:00:00Z",
    "source": "history",
    "role": "chair",
-   "z": null,
+   "z": 0.357,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 2
+  },
+  {
+   "event": "bowman20251202a",
+   "t0": "2025-12-02T21:30:00Z",
+   "source": "history",
+   "role": "vice_chair_supervision",
+   "z": -0.467,
+   "rows": 5,
+   "reacted": 0,
+   "not_measurable": 3
   },
   {
    "event": "miran20251215a",
    "t0": "2025-12-15T14:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -3.024,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -1385,7 +1458,7 @@
    "t0": "2026-01-07T21:10:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -0.467,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1405,7 +1478,7 @@
    "t0": "2026-01-14T15:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -3.024,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1415,7 +1488,7 @@
    "t0": "2026-01-16T16:00:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -3.501,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1425,7 +1498,7 @@
    "t0": "2026-01-16T20:30:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": -1.532,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1435,7 +1508,7 @@
    "t0": "2026-01-30T14:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -2.842,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1445,7 +1518,7 @@
    "t0": "2026-01-30T22:00:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -2.894,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 4
@@ -1455,7 +1528,7 @@
    "t0": "2026-02-04T23:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 2.2,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1465,7 +1538,7 @@
    "t0": "2026-02-06T17:00:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": -1.532,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 4
@@ -1475,7 +1548,7 @@
    "t0": "2026-02-16T13:25:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -0.467,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 4
@@ -1485,7 +1558,7 @@
    "t0": "2026-02-17T17:45:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -1.532,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 4
@@ -1505,7 +1578,7 @@
    "t0": "2026-02-23T13:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -2.842,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -1515,7 +1588,7 @@
    "t0": "2026-02-24T14:15:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 0.283,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -1525,17 +1598,27 @@
    "t0": "2026-02-24T14:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 1.454,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
+  },
+  {
+   "event": "bowman20260226a",
+   "t0": "2026-02-26T15:00:00Z",
+   "source": "history",
+   "role": "vice_chair_supervision",
+   "z": -0.467,
+   "rows": 3,
+   "reacted": 0,
+   "not_measurable": 2
   },
   {
    "event": "bowman20260303a",
    "t0": "2026-03-03T13:30:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -0.467,
    "rows": 4,
    "reacted": 0,
    "not_measurable": 4
@@ -1545,7 +1628,7 @@
    "t0": "2026-03-12T15:00:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -0.467,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1565,7 +1648,7 @@
    "t0": "2026-03-24T22:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 1.454,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -1575,7 +1658,7 @@
    "t0": "2026-03-26T20:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1585,7 +1668,7 @@
    "t0": "2026-03-26T22:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 2.946,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -1595,7 +1678,7 @@
    "t0": "2026-03-26T23:00:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": -1.532,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 4
@@ -1605,7 +1688,7 @@
    "t0": "2026-03-26T23:10:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -1.532,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 4
@@ -1625,7 +1708,7 @@
    "t0": "2026-03-31T21:10:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -1.984,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 4
@@ -1635,7 +1718,7 @@
    "t0": "2026-04-07T21:50:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": -1.532,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1655,7 +1738,7 @@
    "t0": "2026-04-17T18:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 1.846,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -1665,7 +1748,7 @@
    "t0": "2026-04-21T18:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 0.283,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 4
@@ -1675,7 +1758,7 @@
    "t0": "2026-05-01T18:00:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -0.467,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -1685,7 +1768,7 @@
    "t0": "2026-05-05T14:00:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -0.467,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 4
@@ -1695,7 +1778,7 @@
    "t0": "2026-05-08T09:45:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -1705,7 +1788,7 @@
    "t0": "2026-05-08T23:30:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -0.467,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -1715,7 +1798,7 @@
    "t0": "2026-05-08T23:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 0.283,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -1735,7 +1818,7 @@
    "t0": "2026-05-14T23:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -1.532,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -1745,7 +1828,7 @@
    "t0": "2026-05-20T13:15:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -1755,7 +1838,7 @@
    "t0": "2026-05-22T14:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 1.846,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -1765,7 +1848,7 @@
    "t0": "2026-05-27T19:55:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -1.532,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -1775,7 +1858,7 @@
    "t0": "2026-05-28T00:00:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": 1.454,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 4
@@ -1785,7 +1868,7 @@
    "t0": "2026-05-29T13:10:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -3.501,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 4
@@ -1795,7 +1878,17 @@
    "t0": "2026-06-01T00:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 0.357,
+   "rows": 5,
+   "reacted": 0,
+   "not_measurable": 5
+  },
+  {
+   "event": "bowman20260604a",
+   "t0": "2026-06-04T14:00:00Z",
+   "source": "history",
+   "role": "vice_chair_supervision",
+   "z": -0.467,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -1805,7 +1898,7 @@
    "t0": "2026-06-06T16:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -1835,7 +1928,7 @@
    "t0": "2026-07-06T15:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 0.283,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1845,7 +1938,7 @@
    "t0": "2026-07-07T11:00:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -0.467,
    "rows": 4,
    "reacted": 0,
    "not_measurable": 4
@@ -1855,7 +1948,7 @@
    "t0": "2026-07-13T09:25:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -0.467,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 5
@@ -1865,7 +1958,17 @@
    "t0": "2026-07-13T16:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 3.408,
+   "rows": 5,
+   "reacted": 2,
+   "not_measurable": 3
+  },
+  {
+   "event": "warsh20260714a",
+   "t0": "2026-07-14T12:30:00Z",
+   "source": "history",
+   "role": "chair",
+   "z": 1.132,
    "rows": 5,
    "reacted": 2,
    "not_measurable": 3
@@ -1875,7 +1978,7 @@
    "t0": "2026-07-14T16:40:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 2
@@ -1895,7 +1998,7 @@
    "t0": "2026-07-15T17:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 2.946,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1905,7 +2008,7 @@
    "t0": "2026-07-16T23:00:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": 1.454,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 4
@@ -1915,7 +2018,7 @@
    "t0": "2026-08-05T20:05:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 2.051,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -1935,7 +2038,7 @@
    "t0": "2026-09-01T13:05:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 1.454,
    "rows": 5,
    "reacted": 1,
    "not_measurable": 3
@@ -1945,7 +2048,7 @@
    "t0": "2026-09-03T12:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 2.783,
    "rows": 5,
    "reacted": 2,
    "not_measurable": 3
@@ -1955,7 +2058,7 @@
    "t0": "2026-09-18T13:30:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -0.467,
    "rows": 5,
    "reacted": 1,
    "not_measurable": 3
@@ -1965,7 +2068,7 @@
    "t0": "2026-09-18T13:30:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -0.467,
    "rows": 5,
    "reacted": 1,
    "not_measurable": 3
@@ -1975,7 +2078,7 @@
    "t0": "2026-09-22T14:20:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": -0.039,
    "rows": 5,
    "reacted": 1,
    "not_measurable": 4
@@ -1985,7 +2088,7 @@
    "t0": "2026-09-23T14:05:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 2.2,
    "rows": 5,
    "reacted": 2,
    "not_measurable": 3
@@ -1995,7 +2098,7 @@
    "t0": "2026-09-28T17:25:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 2.946,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 4
@@ -2015,7 +2118,7 @@
    "t0": "2026-09-29T16:40:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 2.946,
    "rows": 4,
    "reacted": 1,
    "not_measurable": 3
@@ -2025,7 +2128,7 @@
    "t0": "2026-09-29T19:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 0.283,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 2
@@ -2035,7 +2138,7 @@
    "t0": "2026-09-30T19:25:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 2.2,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -2045,7 +2148,7 @@
    "t0": "2026-10-01T14:00:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 0.283,
    "rows": 3,
    "reacted": 0,
    "not_measurable": 1
@@ -2055,7 +2158,7 @@
    "t0": "2026-10-01T17:30:00Z",
    "source": "history",
    "role": "vice_chair",
-   "z": null,
+   "z": 2.946,
    "rows": 5,
    "reacted": 2,
    "not_measurable": 3
@@ -2065,7 +2168,7 @@
    "t0": "2026-10-01T19:00:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -0.467,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -2075,7 +2178,7 @@
    "t0": "2026-10-06T14:45:00Z",
    "source": "history",
    "role": "vice_chair_supervision",
-   "z": null,
+   "z": -0.467,
    "rows": 5,
    "reacted": 0,
    "not_measurable": 3
@@ -2085,7 +2188,7 @@
    "t0": "2026-10-08T08:30:00Z",
    "source": "history",
    "role": "governor",
-   "z": null,
+   "z": 3.408,
    "rows": 4,
    "reacted": 0,
    "not_measurable": 4
@@ -2093,3512 +2196,3923 @@
  ],
  "predictions": [
   {
-   "event": "jefferson20250422a",
-   "t0": "2025-04-22T13:00:00Z",
+   "event": "barr20250417a",
+   "t0": "2025-04-17T15:45:00Z",
    "trained_on": 10,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25MAY-C25",
-     "label": 0,
-     "base_rate": 0.3,
-     "playbook": 0.45,
-     "logistic": 0.4603,
-     "boosting": 0.0453,
-     "mlp": 0.2964,
-     "mlp_bag": 0.1735,
-     "mlp_tuned": 0.2867
+     "label": 1,
+     "base_rate": 0.2581,
+     "playbook": 0.4,
+     "logistic": 0.009,
+     "boosting": 0.0064,
+     "mlp": 0.0045,
+     "mlp_bag": 0.0021,
+     "mlp_tuned": 0.0093,
+     "ensemble": 0.0067
     },
     {
      "market": "kalshi:KXFEDDECISION-25MAY-C26",
      "label": 0,
-     "base_rate": 0.3,
-     "playbook": 0.0833,
-     "logistic": 0.0582,
-     "boosting": 0.0121,
-     "mlp": 0.0162,
-     "mlp_bag": 0.0115,
-     "mlp_tuned": 0.1924
+     "base_rate": 0.2581,
+     "playbook": 0.0769,
+     "logistic": 0.0018,
+     "boosting": 0.0047,
+     "mlp": 0.0019,
+     "mlp_bag": 0.0003,
+     "mlp_tuned": 0.0024,
+     "ensemble": 0.0028
+    },
+    {
+     "market": "kalshi:KXFEDDECISION-25MAY-H0",
+     "label": 1,
+     "base_rate": 0.2581,
+     "playbook": 0.4,
+     "logistic": 0.0641,
+     "boosting": 0.4561,
+     "mlp": 0.0422,
+     "mlp_bag": 0.0131,
+     "mlp_tuned": 0.0655,
+     "ensemble": 0.1875
+    }
+   ]
+  },
+  {
+   "event": "jefferson20250422a",
+   "t0": "2025-04-22T13:00:00Z",
+   "trained_on": 11,
+   "rows": [
+    {
+     "market": "kalshi:KXFEDDECISION-25MAY-C25",
+     "label": 0,
+     "base_rate": 0.2941,
+     "playbook": 0.4545,
+     "logistic": 0.4211,
+     "boosting": 0.0338,
+     "mlp": 0.3239,
+     "mlp_bag": 0.2271,
+     "mlp_tuned": 0.2701,
+     "ensemble": 0.2596
+    },
+    {
+     "market": "kalshi:KXFEDDECISION-25MAY-C26",
+     "label": 0,
+     "base_rate": 0.2941,
+     "playbook": 0.0714,
+     "logistic": 0.06,
+     "boosting": 0.0067,
+     "mlp": 0.0197,
+     "mlp_bag": 0.0107,
+     "mlp_tuned": 0.1599,
+     "ensemble": 0.0288
     },
     {
      "market": "kalshi:KXFEDDECISION-25MAY-H0",
      "label": 0,
-     "base_rate": 0.3,
-     "playbook": 0.45,
-     "logistic": 0.6419,
-     "boosting": 0.128,
-     "mlp": 0.5435,
-     "mlp_bag": 0.5041,
-     "mlp_tuned": 0.3343
+     "base_rate": 0.2941,
+     "playbook": 0.4545,
+     "logistic": 0.7045,
+     "boosting": 0.0775,
+     "mlp": 0.5303,
+     "mlp_bag": 0.4879,
+     "mlp_tuned": 0.3681,
+     "ensemble": 0.4374
     }
    ]
   },
   {
    "event": "kugler20250422a",
    "t0": "2025-04-22T22:00:00Z",
-   "trained_on": 11,
+   "trained_on": 12,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25MAY-C25",
      "label": 0,
-     "base_rate": 0.2727,
-     "playbook": 0.4091,
-     "logistic": 0.2216,
-     "boosting": 0.0239,
-     "mlp": 0.3015,
-     "mlp_bag": 0.089,
-     "mlp_tuned": 0.2382
+     "base_rate": 0.2703,
+     "playbook": 0.4167,
+     "logistic": 0.2163,
+     "boosting": 0.045,
+     "mlp": 0.2923,
+     "mlp_bag": 0.2571,
+     "mlp_tuned": 0.2207,
+     "ensemble": 0.1845
     },
     {
      "market": "kalshi:KXFEDDECISION-25MAY-C26",
      "label": 0,
-     "base_rate": 0.2727,
-     "playbook": 0.0769,
-     "logistic": 0.0266,
-     "boosting": 0.0058,
-     "mlp": 0.0126,
-     "mlp_bag": 0.0067,
-     "mlp_tuned": 0.1572
+     "base_rate": 0.2703,
+     "playbook": 0.0667,
+     "logistic": 0.0287,
+     "boosting": 0.0067,
+     "mlp": 0.0125,
+     "mlp_bag": 0.004,
+     "mlp_tuned": 0.1317,
+     "ensemble": 0.016
     },
     {
      "market": "kalshi:KXFEDDECISION-25MAY-H0",
      "label": 0,
-     "base_rate": 0.2727,
-     "playbook": 0.4091,
-     "logistic": 0.4552,
-     "boosting": 0.3112,
-     "mlp": 0.4793,
-     "mlp_bag": 0.4301,
-     "mlp_tuned": 0.3009
+     "base_rate": 0.2703,
+     "playbook": 0.4167,
+     "logistic": 0.4388,
+     "boosting": 0.58,
+     "mlp": 0.3925,
+     "mlp_bag": 0.3181,
+     "mlp_tuned": 0.309,
+     "ensemble": 0.4704
     }
    ]
   },
   {
    "event": "waller20250423a",
    "t0": "2025-04-23T13:35:00Z",
-   "trained_on": 12,
+   "trained_on": 13,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25MAY-C25",
      "label": 0,
      "base_rate": 0.25,
-     "playbook": 0.375,
-     "logistic": 0.081,
-     "boosting": 0.0176,
-     "mlp": 0.1795,
-     "mlp_bag": 0.2074,
-     "mlp_tuned": 0.204
+     "playbook": 0.3846,
+     "logistic": 0.0691,
+     "boosting": 0.0208,
+     "mlp": 0.2013,
+     "mlp_bag": 0.2292,
+     "mlp_tuned": 0.1785,
+     "ensemble": 0.0971
     },
     {
      "market": "kalshi:KXFEDDECISION-25MAY-C26",
      "label": 0,
      "base_rate": 0.25,
-     "playbook": 0.0714,
-     "logistic": 0.0087,
-     "boosting": 0.0061,
-     "mlp": 0.005,
-     "mlp_bag": 0.0076,
-     "mlp_tuned": 0.127
+     "playbook": 0.0625,
+     "logistic": 0.0084,
+     "boosting": 0.0073,
+     "mlp": 0.0079,
+     "mlp_bag": 0.0063,
+     "mlp_tuned": 0.0999,
+     "ensemble": 0.0079
     },
     {
      "market": "kalshi:KXFEDDECISION-25MAY-H0",
      "label": 0,
      "base_rate": 0.25,
-     "playbook": 0.375,
-     "logistic": 0.1685,
-     "boosting": 0.1256,
-     "mlp": 0.2803,
-     "mlp_bag": 0.3093,
-     "mlp_tuned": 0.2533
+     "playbook": 0.3846,
+     "logistic": 0.2219,
+     "boosting": 0.2038,
+     "mlp": 0.3844,
+     "mlp_bag": 0.4411,
+     "mlp_tuned": 0.2668,
+     "ensemble": 0.27
     }
    ]
   },
   {
    "event": "cook20250503a",
    "t0": "2025-05-03T16:50:00Z",
-   "trained_on": 13,
+   "trained_on": 14,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25MAY-C25",
      "label": 0,
-     "base_rate": 0.2308,
-     "playbook": 0.3462,
-     "logistic": 0.0099,
-     "boosting": 0.0051,
-     "mlp": 0.0028,
-     "mlp_bag": 0.0095,
-     "mlp_tuned": 0.0014
+     "base_rate": 0.2326,
+     "playbook": 0.3571,
+     "logistic": 0.0067,
+     "boosting": 0.0061,
+     "mlp": 0.0055,
+     "mlp_bag": 0.0045,
+     "mlp_tuned": 0.0013,
+     "ensemble": 0.0061
     },
     {
      "market": "kalshi:KXFEDDECISION-25MAY-H0",
      "label": 0,
-     "base_rate": 0.2308,
-     "playbook": 0.3462,
-     "logistic": 0.0302,
-     "boosting": 0.0094,
-     "mlp": 0.01,
-     "mlp_bag": 0.0165,
-     "mlp_tuned": 0.002
+     "base_rate": 0.2326,
+     "playbook": 0.3571,
+     "logistic": 0.0291,
+     "boosting": 0.0148,
+     "mlp": 0.0046,
+     "mlp_bag": 0.0075,
+     "mlp_tuned": 0.0015,
+     "ensemble": 0.0161
     }
    ]
   },
   {
    "event": "waller20250509a",
    "t0": "2025-05-09T15:30:00Z",
-   "trained_on": 14,
+   "trained_on": 15,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C25",
      "label": 0,
-     "base_rate": 0.2195,
-     "playbook": 0.3214,
-     "logistic": 0.1344,
-     "boosting": 0.0269,
-     "mlp": 0.2796,
-     "mlp_bag": 0.0881,
-     "mlp_tuned": 0.093
+     "base_rate": 0.2222,
+     "playbook": 0.3333,
+     "logistic": 0.1361,
+     "boosting": 0.0182,
+     "mlp": 0.1679,
+     "mlp_bag": 0.1593,
+     "mlp_tuned": 0.1174,
+     "ensemble": 0.1074
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C26",
      "label": 0,
-     "base_rate": 0.2195,
-     "playbook": 0.0667,
-     "logistic": 0.0255,
-     "boosting": 0.0091,
-     "mlp": 0.0374,
-     "mlp_bag": 0.0089,
-     "mlp_tuned": 0.0095
+     "base_rate": 0.2222,
+     "playbook": 0.0588,
+     "logistic": 0.026,
+     "boosting": 0.0121,
+     "mlp": 0.0192,
+     "mlp_bag": 0.0071,
+     "mlp_tuned": 0.0071,
+     "ensemble": 0.0191
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-H0",
      "label": 0,
-     "base_rate": 0.2195,
-     "playbook": 0.3214,
-     "logistic": 0.2946,
-     "boosting": 0.1157,
-     "mlp": 0.3253,
-     "mlp_bag": 0.187,
-     "mlp_tuned": 0.1857
+     "base_rate": 0.2222,
+     "playbook": 0.3333,
+     "logistic": 0.4013,
+     "boosting": 0.1715,
+     "mlp": 0.3773,
+     "mlp_bag": 0.3775,
+     "mlp_tuned": 0.373,
+     "ensemble": 0.3167
     }
    ]
   },
   {
    "event": "cook20250509a",
    "t0": "2025-05-09T23:45:00Z",
-   "trained_on": 15,
+   "trained_on": 16,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C25",
      "label": 0,
-     "base_rate": 0.2045,
-     "playbook": 0.3,
-     "logistic": 0.1275,
-     "boosting": 0.0078,
-     "mlp": 0.2382,
-     "mlp_bag": 0.1101,
-     "mlp_tuned": 0.1139
+     "base_rate": 0.2083,
+     "playbook": 0.3125,
+     "logistic": 0.099,
+     "boosting": 0.0122,
+     "mlp": 0.2038,
+     "mlp_bag": 0.0707,
+     "mlp_tuned": 0.0629,
+     "ensemble": 0.105
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-H0",
      "label": 0,
-     "base_rate": 0.2045,
-     "playbook": 0.3,
-     "logistic": 0.2665,
-     "boosting": 0.0221,
-     "mlp": 0.4227,
-     "mlp_bag": 0.3448,
-     "mlp_tuned": 0.3497
+     "base_rate": 0.2083,
+     "playbook": 0.3125,
+     "logistic": 0.3827,
+     "boosting": 0.038,
+     "mlp": 0.5293,
+     "mlp_bag": 0.4803,
+     "mlp_tuned": 0.4291,
+     "ensemble": 0.3166
     }
    ]
   },
   {
    "event": "kugler20250512a",
    "t0": "2025-05-12T14:25:00Z",
-   "trained_on": 16,
+   "trained_on": 17,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C25",
      "label": 0,
-     "base_rate": 0.1957,
-     "playbook": 0.2812,
-     "logistic": 0.1357,
-     "boosting": 0.0146,
-     "mlp": 0.1739,
-     "mlp_bag": 0.1685,
-     "mlp_tuned": 0.1627
+     "base_rate": 0.2,
+     "playbook": 0.2941,
+     "logistic": 0.1427,
+     "boosting": 0.0406,
+     "mlp": 0.1577,
+     "mlp_bag": 0.1976,
+     "mlp_tuned": 0.1064,
+     "ensemble": 0.1137
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C26",
      "label": 0,
-     "base_rate": 0.1957,
-     "playbook": 0.0625,
-     "logistic": 0.0115,
-     "boosting": 0.0049,
-     "mlp": 0.0152,
-     "mlp_bag": 0.004,
-     "mlp_tuned": 0.0041
+     "base_rate": 0.2,
+     "playbook": 0.0556,
+     "logistic": 0.0133,
+     "boosting": 0.006,
+     "mlp": 0.0126,
+     "mlp_bag": 0.0025,
+     "mlp_tuned": 0.0026,
+     "ensemble": 0.0107
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-H0",
      "label": 0,
-     "base_rate": 0.1957,
-     "playbook": 0.2812,
-     "logistic": 0.1953,
-     "boosting": 0.0411,
-     "mlp": 0.2055,
-     "mlp_bag": 0.1617,
-     "mlp_tuned": 0.1616
+     "base_rate": 0.2,
+     "playbook": 0.2941,
+     "logistic": 0.1989,
+     "boosting": 0.055,
+     "mlp": 0.1383,
+     "mlp_bag": 0.1194,
+     "mlp_tuned": 0.1288,
+     "ensemble": 0.1307
     }
    ]
   },
   {
    "event": "jefferson20250514a",
    "t0": "2025-05-14T13:10:00Z",
-   "trained_on": 17,
+   "trained_on": 18,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C25",
      "label": 0,
-     "base_rate": 0.1837,
-     "playbook": 0.2647,
-     "logistic": 0.034,
-     "boosting": 0.0112,
-     "mlp": 0.0476,
-     "mlp_bag": 0.0336,
-     "mlp_tuned": 0.0352
+     "base_rate": 0.1887,
+     "playbook": 0.2778,
+     "logistic": 0.0215,
+     "boosting": 0.0091,
+     "mlp": 0.0392,
+     "mlp_bag": 0.0156,
+     "mlp_tuned": 0.023,
+     "ensemble": 0.0233
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C26",
      "label": 0,
-     "base_rate": 0.1837,
-     "playbook": 0.0588,
-     "logistic": 0.004,
-     "boosting": 0.0051,
-     "mlp": 0.0043,
-     "mlp_bag": 0.0012,
-     "mlp_tuned": 0.0012
+     "base_rate": 0.1887,
+     "playbook": 0.0526,
+     "logistic": 0.003,
+     "boosting": 0.0065,
+     "mlp": 0.002,
+     "mlp_bag": 0.0002,
+     "mlp_tuned": 0.0003,
+     "ensemble": 0.0038
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-H0",
      "label": 0,
-     "base_rate": 0.1837,
-     "playbook": 0.2647,
-     "logistic": 0.0632,
-     "boosting": 0.0209,
-     "mlp": 0.0326,
-     "mlp_bag": 0.0576,
-     "mlp_tuned": 0.061
+     "base_rate": 0.1887,
+     "playbook": 0.2778,
+     "logistic": 0.0905,
+     "boosting": 0.0294,
+     "mlp": 0.1357,
+     "mlp_bag": 0.0529,
+     "mlp_tuned": 0.0727,
+     "ensemble": 0.0852
     }
    ]
   },
   {
    "event": "powell20250515a",
    "t0": "2025-05-15T12:40:00Z",
-   "trained_on": 18,
+   "trained_on": 19,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C25",
      "label": 0,
-     "base_rate": 0.1731,
-     "playbook": 0.25,
-     "logistic": 0.3595,
-     "boosting": 0.7785,
-     "mlp": 0.2149,
-     "mlp_bag": 0.2111,
-     "mlp_tuned": 0.2436
+     "base_rate": 0.1786,
+     "playbook": 0.2632,
+     "logistic": 0.3387,
+     "boosting": 0.6077,
+     "mlp": 0.2059,
+     "mlp_bag": 0.2346,
+     "mlp_tuned": 0.134,
+     "ensemble": 0.3841
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-H0",
      "label": 0,
-     "base_rate": 0.1731,
-     "playbook": 0.25,
-     "logistic": 0.6573,
-     "boosting": 0.8279,
-     "mlp": 0.6563,
-     "mlp_bag": 0.8609,
-     "mlp_tuned": 0.8897
+     "base_rate": 0.1786,
+     "playbook": 0.2632,
+     "logistic": 0.7111,
+     "boosting": 0.7647,
+     "mlp": 0.6274,
+     "mlp_bag": 0.7887,
+     "mlp_tuned": 0.7464,
+     "ensemble": 0.7011
     }
    ]
   },
   {
    "event": "barr20250515a",
    "t0": "2025-05-15T18:05:00Z",
-   "trained_on": 19,
+   "trained_on": 20,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C25",
      "label": 0,
-     "base_rate": 0.1667,
-     "playbook": 0.2368,
-     "logistic": 0.0546,
-     "boosting": 0.068,
-     "mlp": 0.2897,
-     "mlp_bag": 0.3042,
-     "mlp_tuned": 0.2773
+     "base_rate": 0.1724,
+     "playbook": 0.25,
+     "logistic": 0.0071,
+     "boosting": 0.0377,
+     "mlp": 0.0296,
+     "mlp_bag": 0.0501,
+     "mlp_tuned": 0.0662,
+     "ensemble": 0.0248
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-H0",
      "label": 0,
-     "base_rate": 0.1667,
-     "playbook": 0.2368,
-     "logistic": 0.1098,
-     "boosting": 0.0815,
-     "mlp": 0.4742,
-     "mlp_bag": 0.4735,
-     "mlp_tuned": 0.4612
+     "base_rate": 0.1724,
+     "playbook": 0.25,
+     "logistic": 0.0231,
+     "boosting": 0.0391,
+     "mlp": 0.0508,
+     "mlp_bag": 0.0964,
+     "mlp_tuned": 0.1587,
+     "ensemble": 0.0377
     }
    ]
   },
   {
    "event": "jefferson20250519a",
    "t0": "2025-05-19T12:45:00Z",
-   "trained_on": 20,
+   "trained_on": 21,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C25",
      "label": 0,
-     "base_rate": 0.1607,
-     "playbook": 0.225,
-     "logistic": 0.0159,
-     "boosting": 0.0051,
-     "mlp": 0.0114,
-     "mlp_bag": 0.0015,
-     "mlp_tuned": 0.0016
+     "base_rate": 0.1667,
+     "playbook": 0.2381,
+     "logistic": 0.0163,
+     "boosting": 0.0063,
+     "mlp": 0.0097,
+     "mlp_bag": 0.0033,
+     "mlp_tuned": 0.0037,
+     "ensemble": 0.0107
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-H0",
      "label": 0,
-     "base_rate": 0.1607,
-     "playbook": 0.225,
-     "logistic": 0.0363,
-     "boosting": 0.0069,
-     "mlp": 0.0109,
-     "mlp_bag": 0.0012,
-     "mlp_tuned": 0.0013
+     "base_rate": 0.1667,
+     "playbook": 0.2381,
+     "logistic": 0.0533,
+     "boosting": 0.0099,
+     "mlp": 0.0184,
+     "mlp_bag": 0.003,
+     "mlp_tuned": 0.0034,
+     "ensemble": 0.0272
     }
    ]
   },
   {
    "event": "kugler20250520a",
    "t0": "2025-05-20T21:00:00Z",
-   "trained_on": 21,
+   "trained_on": 22,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C25",
      "label": 0,
-     "base_rate": 0.1552,
-     "playbook": 0.2143,
-     "logistic": 0.0409,
-     "boosting": 0.0057,
-     "mlp": 0.0656,
-     "mlp_bag": 0.0159,
-     "mlp_tuned": 0.0176
+     "base_rate": 0.1613,
+     "playbook": 0.2273,
+     "logistic": 0.0489,
+     "boosting": 0.0058,
+     "mlp": 0.0734,
+     "mlp_bag": 0.0424,
+     "mlp_tuned": 0.0344,
+     "ensemble": 0.0427
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-H0",
      "label": 0,
-     "base_rate": 0.1552,
-     "playbook": 0.2143,
-     "logistic": 0.0865,
-     "boosting": 0.0061,
-     "mlp": 0.1012,
-     "mlp_bag": 0.009,
-     "mlp_tuned": 0.0093
+     "base_rate": 0.1613,
+     "playbook": 0.2273,
+     "logistic": 0.1395,
+     "boosting": 0.0073,
+     "mlp": 0.1251,
+     "mlp_bag": 0.0431,
+     "mlp_tuned": 0.0356,
+     "ensemble": 0.0906
     }
    ]
   },
   {
    "event": "cook20250523a",
    "t0": "2025-05-23T16:00:00Z",
-   "trained_on": 22,
+   "trained_on": 23,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C25",
      "label": 0,
-     "base_rate": 0.15,
-     "playbook": 0.2045,
-     "logistic": 0.0296,
-     "boosting": 0.0059,
-     "mlp": 0.0623,
-     "mlp_bag": 0.0367,
-     "mlp_tuned": 0.0398
+     "base_rate": 0.1562,
+     "playbook": 0.2174,
+     "logistic": 0.0292,
+     "boosting": 0.0067,
+     "mlp": 0.1021,
+     "mlp_bag": 0.0951,
+     "mlp_tuned": 0.0871,
+     "ensemble": 0.046
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C26",
      "label": 0,
-     "base_rate": 0.15,
-     "playbook": 0.0556,
-     "logistic": 0.0055,
-     "boosting": 0.0051,
-     "mlp": 0.0058,
-     "mlp_bag": 0.0008,
-     "mlp_tuned": 0.0008
+     "base_rate": 0.1562,
+     "playbook": 0.05,
+     "logistic": 0.0057,
+     "boosting": 0.0067,
+     "mlp": 0.0077,
+     "mlp_bag": 0.0018,
+     "mlp_tuned": 0.0018,
+     "ensemble": 0.0067
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-H0",
      "label": 0,
-     "base_rate": 0.15,
-     "playbook": 0.2045,
-     "logistic": 0.0696,
-     "boosting": 0.007,
-     "mlp": 0.1734,
-     "mlp_bag": 0.0536,
-     "mlp_tuned": 0.0568
+     "base_rate": 0.1562,
+     "playbook": 0.2174,
+     "logistic": 0.0984,
+     "boosting": 0.0074,
+     "mlp": 0.1396,
+     "mlp_bag": 0.1509,
+     "mlp_tuned": 0.1637,
+     "ensemble": 0.0818
     }
    ]
   },
   {
    "event": "kugler20250529a",
    "t0": "2025-05-29T18:00:00Z",
-   "trained_on": 23,
+   "trained_on": 24,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C25",
      "label": 0,
-     "base_rate": 0.1429,
-     "playbook": 0.1957,
-     "logistic": 0.1421,
-     "boosting": 0.3272,
-     "mlp": 0.3858,
-     "mlp_bag": 0.3688,
-     "mlp_tuned": 0.3632
+     "base_rate": 0.1493,
+     "playbook": 0.2083,
+     "logistic": 0.1125,
+     "boosting": 0.0482,
+     "mlp": 0.2968,
+     "mlp_bag": 0.2259,
+     "mlp_tuned": 0.2079,
+     "ensemble": 0.1525
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C26",
      "label": 0,
-     "base_rate": 0.1429,
-     "playbook": 0.0526,
-     "logistic": 0.0046,
-     "boosting": 0.0052,
-     "mlp": 0.0047,
-     "mlp_bag": 0.0007,
-     "mlp_tuned": 0.0007
+     "base_rate": 0.1493,
+     "playbook": 0.0476,
+     "logistic": 0.0045,
+     "boosting": 0.0056,
+     "mlp": 0.0068,
+     "mlp_bag": 0.0011,
+     "mlp_tuned": 0.0011,
+     "ensemble": 0.0057
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-H0",
      "label": 0,
-     "base_rate": 0.1429,
-     "playbook": 0.1957,
-     "logistic": 0.056,
-     "boosting": 0.0056,
-     "mlp": 0.1005,
-     "mlp_bag": 0.0563,
-     "mlp_tuned": 0.0559
+     "base_rate": 0.1493,
+     "playbook": 0.2083,
+     "logistic": 0.076,
+     "boosting": 0.006,
+     "mlp": 0.1401,
+     "mlp_bag": 0.1265,
+     "mlp_tuned": 0.1378,
+     "ensemble": 0.0741
     }
    ]
   },
   {
    "event": "waller20250601a",
    "t0": "2025-06-02T00:00:00Z",
-   "trained_on": 24,
+   "trained_on": 25,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C25",
      "label": 0,
-     "base_rate": 0.1364,
-     "playbook": 0.1875,
-     "logistic": 0.0258,
-     "boosting": 0.2196,
-     "mlp": 0.0212,
-     "mlp_bag": 0.0091,
-     "mlp_tuned": 0.0092
+     "base_rate": 0.1429,
+     "playbook": 0.2,
+     "logistic": 0.0342,
+     "boosting": 0.0812,
+     "mlp": 0.0274,
+     "mlp_bag": 0.0142,
+     "mlp_tuned": 0.0166,
+     "ensemble": 0.0476
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C26",
      "label": 0,
-     "base_rate": 0.1364,
-     "playbook": 0.05,
-     "logistic": 0.0059,
-     "boosting": 0.0892,
-     "mlp": 0.0039,
+     "base_rate": 0.1429,
+     "playbook": 0.0455,
+     "logistic": 0.0084,
+     "boosting": 0.0471,
+     "mlp": 0.0078,
      "mlp_bag": 0.0007,
-     "mlp_tuned": 0.0005
+     "mlp_tuned": 0.0008,
+     "ensemble": 0.0211
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-H0",
      "label": 0,
-     "base_rate": 0.1364,
-     "playbook": 0.1875,
-     "logistic": 0.0602,
-     "boosting": 0.3336,
-     "mlp": 0.0522,
-     "mlp_bag": 0.0216,
-     "mlp_tuned": 0.017
+     "base_rate": 0.1429,
+     "playbook": 0.2,
+     "logistic": 0.0487,
+     "boosting": 0.2246,
+     "mlp": 0.0483,
+     "mlp_bag": 0.0016,
+     "mlp_tuned": 0.0015,
+     "ensemble": 0.1072
     }
    ]
   },
   {
    "event": "powell20250602a",
    "t0": "2025-06-02T17:00:00Z",
-   "trained_on": 25,
+   "trained_on": 26,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C25",
      "label": 0,
-     "base_rate": 0.1304,
-     "playbook": 0.18,
-     "logistic": 0.0428,
-     "boosting": 0.1746,
-     "mlp": 0.0798,
-     "mlp_bag": 0.0286,
-     "mlp_tuned": 0.0253
+     "base_rate": 0.137,
+     "playbook": 0.1923,
+     "logistic": 0.0115,
+     "boosting": 0.099,
+     "mlp": 0.0121,
+     "mlp_bag": 0.0227,
+     "mlp_tuned": 0.0219,
+     "ensemble": 0.0409
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C26",
      "label": 0,
-     "base_rate": 0.1304,
-     "playbook": 0.0476,
-     "logistic": 0.0082,
-     "boosting": 0.0284,
-     "mlp": 0.0099,
-     "mlp_bag": 0.0003,
-     "mlp_tuned": 0.0003
+     "base_rate": 0.137,
+     "playbook": 0.0435,
+     "logistic": 0.0021,
+     "boosting": 0.0224,
+     "mlp": 0.0011,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0001,
+     "ensemble": 0.0085
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-H0",
      "label": 0,
-     "base_rate": 0.1304,
-     "playbook": 0.18,
-     "logistic": 0.101,
-     "boosting": 0.0337,
-     "mlp": 0.0588,
-     "mlp_bag": 0.0301,
-     "mlp_tuned": 0.0277
+     "base_rate": 0.137,
+     "playbook": 0.1923,
+     "logistic": 0.0409,
+     "boosting": 0.0214,
+     "mlp": 0.0324,
+     "mlp_bag": 0.0203,
+     "mlp_tuned": 0.0219,
+     "ensemble": 0.0316
     }
    ]
   },
   {
    "event": "cook20250603a",
    "t0": "2025-06-03T17:00:00Z",
-   "trained_on": 26,
+   "trained_on": 27,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C25",
      "label": 0,
-     "base_rate": 0.125,
-     "playbook": 0.1731,
-     "logistic": 0.0168,
-     "boosting": 0.0032,
-     "mlp": 0.0191,
-     "mlp_bag": 0.009,
-     "mlp_tuned": 0.0094
+     "base_rate": 0.1316,
+     "playbook": 0.1852,
+     "logistic": 0.0117,
+     "boosting": 0.0051,
+     "mlp": 0.027,
+     "mlp_bag": 0.0024,
+     "mlp_tuned": 0.0022,
+     "ensemble": 0.0146
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-H0",
      "label": 0,
-     "base_rate": 0.125,
-     "playbook": 0.1731,
-     "logistic": 0.0445,
-     "boosting": 0.0031,
-     "mlp": 0.0456,
-     "mlp_bag": 0.0125,
-     "mlp_tuned": 0.0146
+     "base_rate": 0.1316,
+     "playbook": 0.1852,
+     "logistic": 0.0702,
+     "boosting": 0.0057,
+     "mlp": 0.1077,
+     "mlp_bag": 0.0163,
+     "mlp_tuned": 0.0076,
+     "ensemble": 0.0612
     }
    ]
   },
   {
    "event": "cook20250604a",
    "t0": "2025-06-04T12:30:00Z",
-   "trained_on": 27,
+   "trained_on": 28,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C25",
      "label": 0,
-     "base_rate": 0.1216,
-     "playbook": 0.1667,
-     "logistic": 0.1477,
-     "boosting": 0.0041,
-     "mlp": 0.2244,
-     "mlp_bag": 0.1108,
-     "mlp_tuned": 0.102
+     "base_rate": 0.1282,
+     "playbook": 0.1786,
+     "logistic": 0.0308,
+     "boosting": 0.0054,
+     "mlp": 0.0349,
+     "mlp_bag": 0.0152,
+     "mlp_tuned": 0.0075,
+     "ensemble": 0.0237
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-H0",
      "label": 0,
-     "base_rate": 0.1216,
-     "playbook": 0.1667,
-     "logistic": 0.1616,
-     "boosting": 0.0044,
-     "mlp": 0.4233,
-     "mlp_bag": 0.0559,
-     "mlp_tuned": 0.0533
+     "base_rate": 0.1282,
+     "playbook": 0.1786,
+     "logistic": 0.0505,
+     "boosting": 0.0052,
+     "mlp": 0.0242,
+     "mlp_bag": 0.0021,
+     "mlp_tuned": 0.0017,
+     "ensemble": 0.0266
     }
    ]
   },
   {
    "event": "kugler20250605a",
    "t0": "2025-06-05T16:00:00Z",
-   "trained_on": 28,
+   "trained_on": 29,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C25",
      "label": 0,
-     "base_rate": 0.1184,
-     "playbook": 0.1607,
-     "logistic": 0.0123,
-     "boosting": 0.0033,
-     "mlp": 0.0151,
-     "mlp_bag": 0.0074,
-     "mlp_tuned": 0.007
+     "base_rate": 0.125,
+     "playbook": 0.1724,
+     "logistic": 0.0096,
+     "boosting": 0.005,
+     "mlp": 0.0196,
+     "mlp_bag": 0.0019,
+     "mlp_tuned": 0.0018,
+     "ensemble": 0.0114
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-H0",
      "label": 0,
-     "base_rate": 0.1184,
-     "playbook": 0.1607,
-     "logistic": 0.0273,
-     "boosting": 0.0035,
-     "mlp": 0.0265,
-     "mlp_bag": 0.0052,
-     "mlp_tuned": 0.0055
+     "base_rate": 0.125,
+     "playbook": 0.1724,
+     "logistic": 0.0477,
+     "boosting": 0.005,
+     "mlp": 0.0493,
+     "mlp_bag": 0.006,
+     "mlp_tuned": 0.0031,
+     "ensemble": 0.034
     }
    ]
   },
   {
    "event": "bowman20250606a",
    "t0": "2025-06-06T14:00:00Z",
-   "trained_on": 29,
+   "trained_on": 30,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C25",
      "label": 0,
-     "base_rate": 0.1154,
-     "playbook": 0.1552,
-     "logistic": 0.1442,
-     "boosting": 0.019,
-     "mlp": 0.2045,
-     "mlp_bag": 0.1508,
-     "mlp_tuned": 0.1158
+     "base_rate": 0.122,
+     "playbook": 0.1667,
+     "logistic": 0.0844,
+     "boosting": 0.0325,
+     "mlp": 0.1251,
+     "mlp_bag": 0.1256,
+     "mlp_tuned": 0.1734,
+     "ensemble": 0.0807
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-C26",
      "label": 0,
-     "base_rate": 0.1154,
-     "playbook": 0.0455,
-     "logistic": 0.0083,
-     "boosting": 0.0037,
-     "mlp": 0.0084,
-     "mlp_bag": 0.0003,
-     "mlp_tuned": 0.0002
+     "base_rate": 0.122,
+     "playbook": 0.0417,
+     "logistic": 0.0052,
+     "boosting": 0.0044,
+     "mlp": 0.0064,
+     "mlp_bag": 0.0005,
+     "mlp_tuned": 0.0008,
+     "ensemble": 0.0053
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUN-H0",
      "label": 0,
-     "base_rate": 0.1154,
-     "playbook": 0.1552,
-     "logistic": 0.0805,
-     "boosting": 0.0037,
-     "mlp": 0.2624,
-     "mlp_bag": 0.0235,
-     "mlp_tuned": 0.0173
+     "base_rate": 0.122,
+     "playbook": 0.1667,
+     "logistic": 0.0715,
+     "boosting": 0.0046,
+     "mlp": 0.1458,
+     "mlp_bag": 0.111,
+     "mlp_tuned": 0.1628,
+     "ensemble": 0.074
     }
    ]
   },
   {
    "event": "bowman20250623",
    "t0": "2025-06-23T14:00:00Z",
-   "trained_on": 30,
+   "trained_on": 31,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUL-H0",
      "label": 1,
-     "base_rate": 0.1111,
-     "playbook": 0.15,
-     "logistic": 0.1547,
-     "boosting": 0.0086,
-     "mlp": 0.2706,
-     "mlp_bag": 0.1112,
-     "mlp_tuned": 0.1053
+     "base_rate": 0.1176,
+     "playbook": 0.1613,
+     "logistic": 0.0541,
+     "boosting": 0.0138,
+     "mlp": 0.072,
+     "mlp_bag": 0.0018,
+     "mlp_tuned": 0.0013,
+     "ensemble": 0.0466
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUL-C25",
      "label": 1,
-     "base_rate": 0.1111,
-     "playbook": 0.15,
-     "logistic": 0.0387,
-     "boosting": 0.0069,
-     "mlp": 0.0746,
-     "mlp_bag": 0.0045,
-     "mlp_tuned": 0.0047
+     "base_rate": 0.1176,
+     "playbook": 0.1613,
+     "logistic": 0.0244,
+     "boosting": 0.0091,
+     "mlp": 0.103,
+     "mlp_bag": 0.0078,
+     "mlp_tuned": 0.004,
+     "ensemble": 0.0455
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUL-C26",
      "label": 0,
-     "base_rate": 0.1111,
-     "playbook": 0.0435,
-     "logistic": 0.0044,
-     "boosting": 0.003,
-     "mlp": 0.0082,
+     "base_rate": 0.1176,
+     "playbook": 0.04,
+     "logistic": 0.003,
+     "boosting": 0.0049,
+     "mlp": 0.0052,
      "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0001
+     "mlp_tuned": 0.0001,
+     "ensemble": 0.0043
     }
    ]
   },
   {
    "event": "kugler20250623a",
    "t0": "2025-06-23T18:30:00Z",
-   "trained_on": 31,
+   "trained_on": 32,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUL-C25",
      "label": 0,
-     "base_rate": 0.131,
-     "playbook": 0.1774,
-     "logistic": 0.1621,
-     "boosting": 0.0374,
-     "mlp": 0.1336,
-     "mlp_bag": 0.0817,
-     "mlp_tuned": 0.1241
+     "base_rate": 0.1364,
+     "playbook": 0.1875,
+     "logistic": 0.1536,
+     "boosting": 0.0479,
+     "mlp": 0.1547,
+     "mlp_bag": 0.1971,
+     "mlp_tuned": 0.1552,
+     "ensemble": 0.1187
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUL-C26",
      "label": 0,
-     "base_rate": 0.131,
-     "playbook": 0.0417,
-     "logistic": 0.0033,
-     "boosting": 0.0054,
-     "mlp": 0.0135,
-     "mlp_bag": 0.0006,
-     "mlp_tuned": 0.0102
+     "base_rate": 0.1364,
+     "playbook": 0.0385,
+     "logistic": 0.0043,
+     "boosting": 0.008,
+     "mlp": 0.0101,
+     "mlp_bag": 0.0007,
+     "mlp_tuned": 0.0285,
+     "ensemble": 0.0075
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUL-H0",
      "label": 0,
-     "base_rate": 0.131,
-     "playbook": 0.1774,
-     "logistic": 0.1381,
-     "boosting": 0.0374,
-     "mlp": 0.2168,
-     "mlp_bag": 0.1203,
-     "mlp_tuned": 0.1394
+     "base_rate": 0.1364,
+     "playbook": 0.1875,
+     "logistic": 0.1752,
+     "boosting": 0.1768,
+     "mlp": 0.1712,
+     "mlp_bag": 0.1779,
+     "mlp_tuned": 0.1697,
+     "ensemble": 0.1744
+    }
+   ]
+  },
+  {
+   "event": "powell20250624a",
+   "t0": "2025-06-24T12:30:00Z",
+   "trained_on": 33,
+   "rows": [
+    {
+     "market": "kalshi:KXFEDDECISION-25JUL-C25",
+     "label": 1,
+     "base_rate": 0.1319,
+     "playbook": 0.1818,
+     "logistic": 0.4844,
+     "boosting": 0.0487,
+     "mlp": 0.3847,
+     "mlp_bag": 0.2424,
+     "mlp_tuned": 0.229,
+     "ensemble": 0.3059
+    },
+    {
+     "market": "kalshi:KXFEDDECISION-25JUL-C26",
+     "label": 0,
+     "base_rate": 0.1319,
+     "playbook": 0.037,
+     "logistic": 0.041,
+     "boosting": 0.009,
+     "mlp": 0.0058,
+     "mlp_bag": 0.0005,
+     "mlp_tuned": 0.0632,
+     "ensemble": 0.0186
+    },
+    {
+     "market": "kalshi:KXFEDDECISION-25JUL-H0",
+     "label": 1,
+     "base_rate": 0.1319,
+     "playbook": 0.1818,
+     "logistic": 0.8698,
+     "boosting": 0.0828,
+     "mlp": 0.9388,
+     "mlp_bag": 0.9183,
+     "mlp_tuned": 0.4149,
+     "ensemble": 0.6304
     }
    ]
   },
   {
    "event": "barr20250624a",
    "t0": "2025-06-24T20:00:00Z",
-   "trained_on": 32,
+   "trained_on": 34,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUL-C25",
      "label": 0,
-     "base_rate": 0.1264,
-     "playbook": 0.1719,
-     "logistic": 0.0578,
-     "boosting": 0.023,
-     "mlp": 0.0533,
-     "mlp_bag": 0.0348,
-     "mlp_tuned": 0.0671
+     "base_rate": 0.1489,
+     "playbook": 0.2059,
+     "logistic": 0.0594,
+     "boosting": 0.0228,
+     "mlp": 0.0688,
+     "mlp_bag": 0.0183,
+     "mlp_tuned": 0.091,
+     "ensemble": 0.0503
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUL-C26",
      "label": 0,
-     "base_rate": 0.1264,
-     "playbook": 0.04,
-     "logistic": 0.0019,
-     "boosting": 0.0064,
-     "mlp": 0.0046,
-     "mlp_bag": 0.0002,
-     "mlp_tuned": 0.0039
+     "base_rate": 0.1489,
+     "playbook": 0.0357,
+     "logistic": 0.0015,
+     "boosting": 0.0111,
+     "mlp": 0.0043,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0159,
+     "ensemble": 0.0056
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUL-H0",
      "label": 0,
-     "base_rate": 0.1264,
-     "playbook": 0.1719,
-     "logistic": 0.1246,
-     "boosting": 0.0274,
-     "mlp": 0.1164,
-     "mlp_bag": 0.1719,
-     "mlp_tuned": 0.1599
+     "base_rate": 0.1489,
+     "playbook": 0.2059,
+     "logistic": 0.1501,
+     "boosting": 0.048,
+     "mlp": 0.1531,
+     "mlp_bag": 0.053,
+     "mlp_tuned": 0.1537,
+     "ensemble": 0.1171
     }
    ]
   },
   {
    "event": "barr20250626a",
    "t0": "2025-06-26T17:15:00Z",
-   "trained_on": 33,
+   "trained_on": 35,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUL-C25",
      "label": 0,
-     "base_rate": 0.1222,
-     "playbook": 0.1667,
-     "logistic": 0.0413,
-     "boosting": 0.0175,
-     "mlp": 0.0673,
-     "mlp_bag": 0.0269,
-     "mlp_tuned": 0.0659
+     "base_rate": 0.1443,
+     "playbook": 0.2,
+     "logistic": 0.0586,
+     "boosting": 0.0467,
+     "mlp": 0.0834,
+     "mlp_bag": 0.0547,
+     "mlp_tuned": 0.087,
+     "ensemble": 0.0629
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUL-C26",
      "label": 0,
-     "base_rate": 0.1222,
-     "playbook": 0.0385,
-     "logistic": 0.0025,
-     "boosting": 0.0055,
-     "mlp": 0.0109,
-     "mlp_bag": 0.0002,
-     "mlp_tuned": 0.0067
+     "base_rate": 0.1443,
+     "playbook": 0.0345,
+     "logistic": 0.0031,
+     "boosting": 0.0102,
+     "mlp": 0.0071,
+     "mlp_bag": 0.0003,
+     "mlp_tuned": 0.0187,
+     "ensemble": 0.0068
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUL-H0",
      "label": 0,
-     "base_rate": 0.1222,
-     "playbook": 0.1667,
-     "logistic": 0.0852,
-     "boosting": 0.0175,
-     "mlp": 0.0899,
-     "mlp_bag": 0.1044,
-     "mlp_tuned": 0.0891
+     "base_rate": 0.1443,
+     "playbook": 0.2,
+     "logistic": 0.1287,
+     "boosting": 0.0659,
+     "mlp": 0.1319,
+     "mlp_bag": 0.139,
+     "mlp_tuned": 0.1392,
+     "ensemble": 0.1088
     }
    ]
   },
   {
    "event": "waller20250710a",
    "t0": "2025-07-10T17:15:00Z",
-   "trained_on": 34,
+   "trained_on": 36,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUL-C25",
      "label": 0,
-     "base_rate": 0.1183,
-     "playbook": 0.1618,
-     "logistic": 0.0102,
-     "boosting": 0.0063,
-     "mlp": 0.0162,
-     "mlp_bag": 0.0026,
-     "mlp_tuned": 0.0199
+     "base_rate": 0.14,
+     "playbook": 0.1944,
+     "logistic": 0.0113,
+     "boosting": 0.0105,
+     "mlp": 0.0168,
+     "mlp_bag": 0.0014,
+     "mlp_tuned": 0.0401,
+     "ensemble": 0.0129
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUL-C26",
      "label": 0,
-     "base_rate": 0.1183,
-     "playbook": 0.037,
+     "base_rate": 0.14,
+     "playbook": 0.0333,
      "logistic": 0.0018,
-     "boosting": 0.0063,
+     "boosting": 0.0105,
      "mlp": 0.0034,
-     "mlp_bag": 0.0002,
-     "mlp_tuned": 0.005
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0196,
+     "ensemble": 0.0053
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUL-H0",
      "label": 0,
-     "base_rate": 0.1183,
-     "playbook": 0.1618,
-     "logistic": 0.029,
-     "boosting": 0.0063,
-     "mlp": 0.0458,
-     "mlp_bag": 0.0054,
-     "mlp_tuned": 0.0292
+     "base_rate": 0.14,
+     "playbook": 0.1944,
+     "logistic": 0.0647,
+     "boosting": 0.0105,
+     "mlp": 0.0782,
+     "mlp_bag": 0.0143,
+     "mlp_tuned": 0.0912,
+     "ensemble": 0.0511
     }
    ]
   },
   {
    "event": "bowman20250715a",
    "t0": "2025-07-15T13:15:00Z",
-   "trained_on": 35,
+   "trained_on": 37,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUL-C25",
      "label": 0,
-     "base_rate": 0.1146,
-     "playbook": 0.1571,
-     "logistic": 0.0226,
-     "boosting": 0.0333,
-     "mlp": 0.0857,
-     "mlp_bag": 0.008,
-     "mlp_tuned": 0.0265
+     "base_rate": 0.1359,
+     "playbook": 0.1892,
+     "logistic": 0.0288,
+     "boosting": 0.0539,
+     "mlp": 0.0102,
+     "mlp_bag": 0.0025,
+     "mlp_tuned": 0.0871,
+     "ensemble": 0.0309
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUL-C26",
      "label": 0,
-     "base_rate": 0.1146,
-     "playbook": 0.0357,
-     "logistic": 0.0018,
-     "boosting": 0.021,
-     "mlp": 0.0136,
+     "base_rate": 0.1359,
+     "playbook": 0.0323,
+     "logistic": 0.0027,
+     "boosting": 0.0227,
+     "mlp": 0.0008,
      "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0028
+     "mlp_tuned": 0.0289,
+     "ensemble": 0.0087
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUL-H0",
      "label": 0,
-     "base_rate": 0.1146,
-     "playbook": 0.1571,
-     "logistic": 0.0266,
-     "boosting": 0.021,
-     "mlp": 0.0631,
-     "mlp_bag": 0.0025,
-     "mlp_tuned": 0.0167
+     "base_rate": 0.1359,
+     "playbook": 0.1892,
+     "logistic": 0.0501,
+     "boosting": 0.0249,
+     "mlp": 0.0269,
+     "mlp_bag": 0.0056,
+     "mlp_tuned": 0.1154,
+     "ensemble": 0.0339
     }
    ]
   },
   {
    "event": "barr20250715a",
    "t0": "2025-07-15T16:45:00Z",
-   "trained_on": 36,
+   "trained_on": 38,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUL-C25",
      "label": 0,
-     "base_rate": 0.1111,
-     "playbook": 0.1528,
-     "logistic": 0.0069,
-     "boosting": 0.0112,
-     "mlp": 0.0348,
-     "mlp_bag": 0.0091,
-     "mlp_tuned": 0.0193
+     "base_rate": 0.1321,
+     "playbook": 0.1842,
+     "logistic": 0.001,
+     "boosting": 0.0141,
+     "mlp": 0.01,
+     "mlp_bag": 0.0004,
+     "mlp_tuned": 0.0194,
+     "ensemble": 0.0084
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUL-C26",
      "label": 0,
-     "base_rate": 0.1111,
-     "playbook": 0.0345,
-     "logistic": 0.0012,
-     "boosting": 0.0112,
-     "mlp": 0.0042,
-     "mlp_bag": 0.0002,
-     "mlp_tuned": 0.004
+     "base_rate": 0.1321,
+     "playbook": 0.0312,
+     "logistic": 0.0002,
+     "boosting": 0.0141,
+     "mlp": 0.0012,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0104,
+     "ensemble": 0.0052
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUL-H0",
      "label": 0,
-     "base_rate": 0.1111,
-     "playbook": 0.1528,
-     "logistic": 0.0154,
-     "boosting": 0.0112,
-     "mlp": 0.0432,
-     "mlp_bag": 0.006,
-     "mlp_tuned": 0.0142
+     "base_rate": 0.1321,
+     "playbook": 0.1842,
+     "logistic": 0.0031,
+     "boosting": 0.0149,
+     "mlp": 0.0169,
+     "mlp_bag": 0.0003,
+     "mlp_tuned": 0.0276,
+     "ensemble": 0.0116
     }
    ]
   },
   {
    "event": "barr20250716a",
    "t0": "2025-07-16T14:00:00Z",
-   "trained_on": 37,
+   "trained_on": 39,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUL-C25",
      "label": 0,
-     "base_rate": 0.1078,
-     "playbook": 0.1486,
-     "logistic": 0.0215,
-     "boosting": 0.0054,
-     "mlp": 0.0376,
-     "mlp_bag": 0.0064,
-     "mlp_tuned": 0.0237
+     "base_rate": 0.1284,
+     "playbook": 0.1795,
+     "logistic": 0.0073,
+     "boosting": 0.0079,
+     "mlp": 0.0326,
+     "mlp_bag": 0.0145,
+     "mlp_tuned": 0.0212,
+     "ensemble": 0.016
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUL-H0",
      "label": 0,
-     "base_rate": 0.1078,
-     "playbook": 0.1486,
-     "logistic": 0.0551,
-     "boosting": 0.0054,
-     "mlp": 0.1643,
-     "mlp_bag": 0.0194,
-     "mlp_tuned": 0.0309
+     "base_rate": 0.1284,
+     "playbook": 0.1795,
+     "logistic": 0.0215,
+     "boosting": 0.0079,
+     "mlp": 0.045,
+     "mlp_bag": 0.0336,
+     "mlp_tuned": 0.0389,
+     "ensemble": 0.0248
     }
    ]
   },
   {
    "event": "kugler20250717a",
    "t0": "2025-07-17T13:15:00Z",
-   "trained_on": 38,
+   "trained_on": 40,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUL-C25",
      "label": 0,
-     "base_rate": 0.1058,
-     "playbook": 0.1447,
-     "logistic": 0.0114,
-     "boosting": 0.0052,
-     "mlp": 0.0471,
-     "mlp_bag": 0.0022,
-     "mlp_tuned": 0.013
+     "base_rate": 0.1261,
+     "playbook": 0.175,
+     "logistic": 0.0147,
+     "boosting": 0.0067,
+     "mlp": 0.0163,
+     "mlp_bag": 0.0029,
+     "mlp_tuned": 0.031,
+     "ensemble": 0.0126
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUL-H0",
      "label": 0,
-     "base_rate": 0.1058,
-     "playbook": 0.1447,
-     "logistic": 0.0202,
-     "boosting": 0.0052,
-     "mlp": 0.034,
-     "mlp_bag": 0.0011,
-     "mlp_tuned": 0.0123
+     "base_rate": 0.1261,
+     "playbook": 0.175,
+     "logistic": 0.0547,
+     "boosting": 0.0073,
+     "mlp": 0.0257,
+     "mlp_bag": 0.0043,
+     "mlp_tuned": 0.0596,
+     "ensemble": 0.0292
     }
    ]
   },
   {
    "event": "cook20250717a",
    "t0": "2025-07-17T17:30:00Z",
-   "trained_on": 39,
+   "trained_on": 41,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUL-C25",
      "label": 0,
-     "base_rate": 0.1038,
-     "playbook": 0.141,
-     "logistic": 0.0079,
-     "boosting": 0.0051,
-     "mlp": 0.0225,
-     "mlp_bag": 0.0032,
-     "mlp_tuned": 0.0169
+     "base_rate": 0.1239,
+     "playbook": 0.1707,
+     "logistic": 0.0074,
+     "boosting": 0.0071,
+     "mlp": 0.0206,
+     "mlp_bag": 0.0042,
+     "mlp_tuned": 0.0223,
+     "ensemble": 0.0117
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUL-H0",
      "label": 0,
-     "base_rate": 0.1038,
-     "playbook": 0.141,
-     "logistic": 0.0133,
-     "boosting": 0.0048,
-     "mlp": 0.0237,
-     "mlp_bag": 0.002,
-     "mlp_tuned": 0.0116
+     "base_rate": 0.1239,
+     "playbook": 0.1707,
+     "logistic": 0.0168,
+     "boosting": 0.0071,
+     "mlp": 0.0143,
+     "mlp_bag": 0.0021,
+     "mlp_tuned": 0.0347,
+     "ensemble": 0.0128
     }
    ]
   },
   {
    "event": "waller20250717",
    "t0": "2025-07-17T22:30:00Z",
-   "trained_on": 40,
+   "trained_on": 42,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUL-H0",
      "label": 0,
-     "base_rate": 0.1019,
-     "playbook": 0.1375,
-     "logistic": 0.4,
-     "boosting": 0.2563,
-     "mlp": 0.6885,
-     "mlp_bag": 0.1122,
-     "mlp_tuned": 0.1968
+     "base_rate": 0.1217,
+     "playbook": 0.1667,
+     "logistic": 0.03,
+     "boosting": 0.0081,
+     "mlp": 0.0077,
+     "mlp_bag": 0.0004,
+     "mlp_tuned": 0.0001,
+     "ensemble": 0.0153
     }
    ]
   },
   {
    "event": "powell20250722a",
    "t0": "2025-07-22T12:30:00Z",
-   "trained_on": 41,
+   "trained_on": 43,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25JUL-C25",
      "label": 0,
-     "base_rate": 0.1009,
-     "playbook": 0.1358,
-     "logistic": 0.058,
-     "boosting": 0.0099,
-     "mlp": 0.043,
-     "mlp_bag": 0.0008,
-     "mlp_tuned": 0.0141
+     "base_rate": 0.1207,
+     "playbook": 0.1647,
+     "logistic": 0.0082,
+     "boosting": 0.0136,
+     "mlp": 0.0185,
+     "mlp_bag": 0.0011,
+     "mlp_tuned": 0.0001,
+     "ensemble": 0.0134
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUL-C26",
      "label": 0,
-     "base_rate": 0.1009,
-     "playbook": 0.0333,
-     "logistic": 0.0086,
-     "boosting": 0.0099,
-     "mlp": 0.0035,
+     "base_rate": 0.1207,
+     "playbook": 0.0303,
+     "logistic": 0.0013,
+     "boosting": 0.0136,
+     "mlp": 0.001,
      "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0013
+     "mlp_tuned": 0.0001,
+     "ensemble": 0.0053
     },
     {
      "market": "kalshi:KXFEDDECISION-25JUL-H0",
      "label": 0,
-     "base_rate": 0.1009,
-     "playbook": 0.1358,
-     "logistic": 0.1241,
-     "boosting": 0.0099,
-     "mlp": 0.0241,
-     "mlp_bag": 0.0062,
-     "mlp_tuned": 0.0349
+     "base_rate": 0.1207,
+     "playbook": 0.1647,
+     "logistic": 0.0244,
+     "boosting": 0.0136,
+     "mlp": 0.03,
+     "mlp_bag": 0.0009,
+     "mlp_tuned": 0.0001,
+     "ensemble": 0.0227
     }
    ]
   },
   {
    "event": "bowman20250809a",
    "t0": "2025-08-09T16:15:00Z",
-   "trained_on": 42,
+   "trained_on": 44,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25SEP-H0",
      "label": 0,
-     "base_rate": 0.0982,
-     "playbook": 0.1325,
-     "logistic": 0.0445,
-     "boosting": 0.0148,
-     "mlp": 0.1091,
-     "mlp_bag": 0.0097,
-     "mlp_tuned": 0.0095
+     "base_rate": 0.1176,
+     "playbook": 0.1609,
+     "logistic": 0.5482,
+     "boosting": 0.6327,
+     "mlp": 0.7507,
+     "mlp_bag": 0.3262,
+     "mlp_tuned": 0.397,
+     "ensemble": 0.6439
     }
    ]
   },
   {
    "event": "bowman20250819a",
    "t0": "2025-08-19T18:10:00Z",
-   "trained_on": 43,
+   "trained_on": 45,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25SEP-C25",
      "label": 0,
-     "base_rate": 0.0973,
-     "playbook": 0.131,
-     "logistic": 0.052,
-     "boosting": 0.0477,
-     "mlp": 0.2629,
-     "mlp_bag": 0.0085,
-     "mlp_tuned": 0.0085
+     "base_rate": 0.1167,
+     "playbook": 0.1591,
+     "logistic": 0.4566,
+     "boosting": 0.0668,
+     "mlp": 0.5713,
+     "mlp_bag": 0.4282,
+     "mlp_tuned": 0.2246,
+     "ensemble": 0.3649
     },
     {
      "market": "kalshi:KXFEDDECISION-25SEP-H0",
      "label": 0,
-     "base_rate": 0.0973,
-     "playbook": 0.131,
-     "logistic": 0.0215,
-     "boosting": 0.0173,
-     "mlp": 0.1872,
-     "mlp_bag": 0.0033,
-     "mlp_tuned": 0.0037
+     "base_rate": 0.1167,
+     "playbook": 0.1591,
+     "logistic": 0.1331,
+     "boosting": 0.0635,
+     "mlp": 0.2324,
+     "mlp_bag": 0.0454,
+     "mlp_tuned": 0.0217,
+     "ensemble": 0.143
     }
    ]
   },
   {
    "event": "waller20250820a",
    "t0": "2025-08-20T15:00:00Z",
-   "trained_on": 44,
+   "trained_on": 46,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25SEP-C25",
      "label": 0,
-     "base_rate": 0.0957,
-     "playbook": 0.1279,
-     "logistic": 0.0379,
-     "boosting": 0.0333,
-     "mlp": 0.0714,
-     "mlp_bag": 0.0232,
-     "mlp_tuned": 0.0226
+     "base_rate": 0.1148,
+     "playbook": 0.1556,
+     "logistic": 0.0538,
+     "boosting": 0.0606,
+     "mlp": 0.0445,
+     "mlp_bag": 0.0321,
+     "mlp_tuned": 0.0139,
+     "ensemble": 0.0529
     },
     {
      "market": "kalshi:KXFEDDECISION-25SEP-H0",
      "label": 0,
-     "base_rate": 0.0957,
-     "playbook": 0.1279,
-     "logistic": 0.157,
-     "boosting": 0.066,
-     "mlp": 0.2785,
-     "mlp_bag": 0.3955,
-     "mlp_tuned": 0.3946
+     "base_rate": 0.1148,
+     "playbook": 0.1556,
+     "logistic": 0.1668,
+     "boosting": 0.2976,
+     "mlp": 0.3926,
+     "mlp_bag": 0.5116,
+     "mlp_tuned": 0.7109,
+     "ensemble": 0.2856
     }
    ]
   },
   {
    "event": "powell20250822a",
    "t0": "2025-08-22T14:00:00Z",
-   "trained_on": 45,
+   "trained_on": 47,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25SEP-C25",
      "label": 1,
-     "base_rate": 0.094,
-     "playbook": 0.125,
-     "logistic": 0.8951,
-     "boosting": 0.3699,
-     "mlp": 0.8542,
-     "mlp_bag": 0.9782,
-     "mlp_tuned": 0.9752
+     "base_rate": 0.1129,
+     "playbook": 0.1522,
+     "logistic": 0.7149,
+     "boosting": 0.3898,
+     "mlp": 0.436,
+     "mlp_bag": 0.7023,
+     "mlp_tuned": 0.65,
+     "ensemble": 0.5135
     },
     {
      "market": "kalshi:KXFEDDECISION-25SEP-C26",
      "label": 1,
-     "base_rate": 0.094,
-     "playbook": 0.0323,
-     "logistic": 0.0476,
-     "boosting": 0.0063,
-     "mlp": 0.1009,
-     "mlp_bag": 0.0064,
-     "mlp_tuned": 0.0075
+     "base_rate": 0.1129,
+     "playbook": 0.0294,
+     "logistic": 0.0192,
+     "boosting": 0.016,
+     "mlp": 0.0233,
+     "mlp_bag": 0.0004,
+     "mlp_tuned": 0.0066,
+     "ensemble": 0.0195
     },
     {
      "market": "kalshi:KXFEDDECISION-25SEP-H0",
      "label": 1,
-     "base_rate": 0.094,
-     "playbook": 0.125,
-     "logistic": 0.9152,
-     "boosting": 0.7064,
-     "mlp": 0.9187,
-     "mlp_bag": 0.9908,
-     "mlp_tuned": 0.992
+     "base_rate": 0.1129,
+     "playbook": 0.1522,
+     "logistic": 0.8277,
+     "boosting": 0.7501,
+     "mlp": 0.7836,
+     "mlp_bag": 0.8744,
+     "mlp_tuned": 0.8857,
+     "ensemble": 0.7871
     }
    ]
   },
   {
    "event": "waller20250828a",
    "t0": "2025-08-28T22:30:00Z",
-   "trained_on": 46,
+   "trained_on": 48,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25SEP-H0",
      "label": 0,
-     "base_rate": 0.1167,
-     "playbook": 0.1197,
-     "logistic": 0.0174,
-     "boosting": 0.0278,
-     "mlp": 0.0208,
-     "mlp_bag": 0.0005,
-     "mlp_tuned": 0.0101
+     "base_rate": 0.1339,
+     "playbook": 0.1382,
+     "logistic": 0.0303,
+     "boosting": 0.0226,
+     "mlp": 0.0035,
+     "mlp_bag": 0.0002,
+     "mlp_tuned": 0.0797,
+     "ensemble": 0.0188
     }
    ]
   },
   {
    "event": "miran20250922a",
    "t0": "2025-09-22T16:00:00Z",
-   "trained_on": 47,
+   "trained_on": 49,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C25",
      "label": 0,
-     "base_rate": 0.1157,
-     "playbook": 0.1186,
-     "logistic": 0.0287,
-     "boosting": 0.0092,
-     "mlp": 0.0312,
-     "mlp_bag": 0.0008,
-     "mlp_tuned": 0.0237
+     "base_rate": 0.1328,
+     "playbook": 0.1371,
+     "logistic": 0.1667,
+     "boosting": 0.0329,
+     "mlp": 0.143,
+     "mlp_bag": 0.1306,
+     "mlp_tuned": 0.1512,
+     "ensemble": 0.1142
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-H0",
      "label": 0,
-     "base_rate": 0.1157,
-     "playbook": 0.1186,
-     "logistic": 0.0238,
-     "boosting": 0.0393,
-     "mlp": 0.0161,
-     "mlp_bag": 0.0004,
-     "mlp_tuned": 0.0188
+     "base_rate": 0.1328,
+     "playbook": 0.1371,
+     "logistic": 0.0293,
+     "boosting": 0.0843,
+     "mlp": 0.0086,
+     "mlp_bag": 0.001,
+     "mlp_tuned": 0.1002,
+     "ensemble": 0.0407
     }
    ]
   },
   {
    "event": "bowman20250923a",
    "t0": "2025-09-23T13:00:00Z",
-   "trained_on": 48,
+   "trained_on": 50,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C25",
      "label": 0,
-     "base_rate": 0.1138,
-     "playbook": 0.1167,
-     "logistic": 0.0399,
-     "boosting": 0.0104,
-     "mlp": 0.1616,
-     "mlp_bag": 0.0237,
-     "mlp_tuned": 0.0404
+     "base_rate": 0.1308,
+     "playbook": 0.1349,
+     "logistic": 0.5688,
+     "boosting": 0.3569,
+     "mlp": 0.8638,
+     "mlp_bag": 0.9552,
+     "mlp_tuned": 0.3345,
+     "ensemble": 0.5965
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C26",
      "label": 0,
-     "base_rate": 0.1138,
-     "playbook": 0.1167,
-     "logistic": 0.0087,
-     "boosting": 0.0039,
-     "mlp": 0.0271,
-     "mlp_bag": 0.0018,
-     "mlp_tuned": 0.0069
+     "base_rate": 0.1308,
+     "playbook": 0.1349,
+     "logistic": 0.1801,
+     "boosting": 0.1639,
+     "mlp": 0.2391,
+     "mlp_bag": 0.2742,
+     "mlp_tuned": 0.1314,
+     "ensemble": 0.1943
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-H0",
      "label": 0,
-     "base_rate": 0.1138,
-     "playbook": 0.1167,
-     "logistic": 0.0229,
-     "boosting": 0.0104,
-     "mlp": 0.0402,
-     "mlp_bag": 0.0029,
-     "mlp_tuned": 0.0203
+     "base_rate": 0.1308,
+     "playbook": 0.1349,
+     "logistic": 0.2015,
+     "boosting": 0.1229,
+     "mlp": 0.1265,
+     "mlp_bag": 0.0454,
+     "mlp_tuned": 0.2061,
+     "ensemble": 0.1503
     }
    ]
   },
   {
    "event": "powell20250923a",
    "t0": "2025-09-23T16:35:00Z",
-   "trained_on": 49,
+   "trained_on": 51,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C25",
      "label": 0,
-     "base_rate": 0.1111,
-     "playbook": 0.1138,
-     "logistic": 0.0827,
-     "boosting": 0.0097,
-     "mlp": 0.1043,
-     "mlp_bag": 0.0017,
-     "mlp_tuned": 0.0358
+     "base_rate": 0.1278,
+     "playbook": 0.1318,
+     "logistic": 0.3479,
+     "boosting": 0.0282,
+     "mlp": 0.3667,
+     "mlp_bag": 0.2975,
+     "mlp_tuned": 0.2537,
+     "ensemble": 0.2476
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C26",
      "label": 0,
-     "base_rate": 0.1111,
-     "playbook": 0.1138,
-     "logistic": 0.0219,
-     "boosting": 0.0049,
-     "mlp": 0.0474,
-     "mlp_bag": 0.0003,
-     "mlp_tuned": 0.0078
+     "base_rate": 0.1278,
+     "playbook": 0.1318,
+     "logistic": 0.0963,
+     "boosting": 0.0103,
+     "mlp": 0.2454,
+     "mlp_bag": 0.0721,
+     "mlp_tuned": 0.0996,
+     "ensemble": 0.1173
     }
    ]
   },
   {
    "event": "barr20250925a",
    "t0": "2025-09-25T17:00:00Z",
-   "trained_on": 50,
+   "trained_on": 52,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C25",
      "label": 0,
-     "base_rate": 0.1094,
-     "playbook": 0.112,
-     "logistic": 0.0246,
-     "boosting": 0.012,
-     "mlp": 0.0658,
-     "mlp_bag": 0.0038,
-     "mlp_tuned": 0.0313
+     "base_rate": 0.1259,
+     "playbook": 0.1298,
+     "logistic": 0.0419,
+     "boosting": 0.0271,
+     "mlp": 0.0368,
+     "mlp_bag": 0.0182,
+     "mlp_tuned": 0.0675,
+     "ensemble": 0.0353
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-H0",
      "label": 0,
-     "base_rate": 0.1094,
-     "playbook": 0.112,
-     "logistic": 0.0236,
-     "boosting": 0.022,
-     "mlp": 0.0577,
-     "mlp_bag": 0.0013,
-     "mlp_tuned": 0.0233
+     "base_rate": 0.1259,
+     "playbook": 0.1298,
+     "logistic": 0.0364,
+     "boosting": 0.0661,
+     "mlp": 0.0274,
+     "mlp_bag": 0.0092,
+     "mlp_tuned": 0.0695,
+     "ensemble": 0.0433
     }
    ]
   },
   {
    "event": "bowman20250926a",
    "t0": "2025-09-26T17:00:00Z",
-   "trained_on": 51,
+   "trained_on": 53,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C25",
      "label": 0,
-     "base_rate": 0.1077,
-     "playbook": 0.1102,
-     "logistic": 0.0148,
-     "boosting": 0.0096,
-     "mlp": 0.0551,
-     "mlp_bag": 0.0002,
-     "mlp_tuned": 0.0094
+     "base_rate": 0.1241,
+     "playbook": 0.1278,
+     "logistic": 0.2543,
+     "boosting": 0.1268,
+     "mlp": 0.3925,
+     "mlp_bag": 0.1681,
+     "mlp_tuned": 0.2082,
+     "ensemble": 0.2578
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-H0",
      "label": 0,
-     "base_rate": 0.1077,
-     "playbook": 0.1102,
-     "logistic": 0.0112,
-     "boosting": 0.011,
-     "mlp": 0.0541,
-     "mlp_bag": 0.0001,
-     "mlp_tuned": 0.008
+     "base_rate": 0.1241,
+     "playbook": 0.1278,
+     "logistic": 0.0798,
+     "boosting": 0.2149,
+     "mlp": 0.052,
+     "mlp_bag": 0.0094,
+     "mlp_tuned": 0.1495,
+     "ensemble": 0.1156
     }
    ]
   },
   {
    "event": "jefferson20251003a",
    "t0": "2025-10-03T17:40:00Z",
-   "trained_on": 52,
+   "trained_on": 54,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C25",
      "label": 0,
-     "base_rate": 0.1061,
-     "playbook": 0.1085,
-     "logistic": 0.0075,
-     "boosting": 0.021,
-     "mlp": 0.0173,
+     "base_rate": 0.1223,
+     "playbook": 0.1259,
+     "logistic": 0.0116,
+     "boosting": 0.014,
+     "mlp": 0.0112,
      "mlp_bag": 0.0002,
-     "mlp_tuned": 0.0067
+     "mlp_tuned": 0.0483,
+     "ensemble": 0.0123
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-H0",
      "label": 0,
-     "base_rate": 0.1061,
-     "playbook": 0.1085,
-     "logistic": 0.0094,
-     "boosting": 0.024,
-     "mlp": 0.0165,
-     "mlp_bag": 0.0003,
-     "mlp_tuned": 0.0089
+     "base_rate": 0.1223,
+     "playbook": 0.1259,
+     "logistic": 0.0131,
+     "boosting": 0.0209,
+     "mlp": 0.0114,
+     "mlp_bag": 0.0008,
+     "mlp_tuned": 0.0452,
+     "ensemble": 0.0152
     }
    ]
   },
   {
    "event": "bowman20251007a",
    "t0": "2025-10-07T14:05:00Z",
-   "trained_on": 53,
+   "trained_on": 55,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C25",
      "label": 0,
-     "base_rate": 0.1045,
-     "playbook": 0.1069,
-     "logistic": 0.0079,
-     "boosting": 0.0193,
-     "mlp": 0.0527,
-     "mlp_bag": 0.0047,
-     "mlp_tuned": 0.0141
+     "base_rate": 0.1206,
+     "playbook": 0.1241,
+     "logistic": 0.011,
+     "boosting": 0.0284,
+     "mlp": 0.0271,
+     "mlp_bag": 0.0006,
+     "mlp_tuned": 0.0385,
+     "ensemble": 0.0222
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-H0",
      "label": 0,
-     "base_rate": 0.1045,
-     "playbook": 0.1069,
-     "logistic": 0.0044,
-     "boosting": 0.0319,
-     "mlp": 0.0241,
-     "mlp_bag": 0.0002,
-     "mlp_tuned": 0.0053
+     "base_rate": 0.1206,
+     "playbook": 0.1241,
+     "logistic": 0.0063,
+     "boosting": 0.0856,
+     "mlp": 0.0215,
+     "mlp_bag": 0.0004,
+     "mlp_tuned": 0.03,
+     "ensemble": 0.0378
     }
    ]
   },
   {
    "event": "barr20251008a",
    "t0": "2025-10-08T13:30:00Z",
-   "trained_on": 54,
+   "trained_on": 56,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-H0",
      "label": 0,
-     "base_rate": 0.1029,
-     "playbook": 0.1053,
-     "logistic": 0.0086,
-     "boosting": 0.0043,
-     "mlp": 0.0404,
-     "mlp_bag": 0.0006,
-     "mlp_tuned": 0.0108
+     "base_rate": 0.1189,
+     "playbook": 0.1223,
+     "logistic": 0.0234,
+     "boosting": 0.0082,
+     "mlp": 0.0318,
+     "mlp_bag": 0.0063,
+     "mlp_tuned": 0.0337,
+     "ensemble": 0.0211
     }
    ]
   },
   {
    "event": "barr20251008b",
    "t0": "2025-10-08T21:45:00Z",
-   "trained_on": 55,
+   "trained_on": 57,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C25",
      "label": 0,
-     "base_rate": 0.1022,
-     "playbook": 0.1045,
-     "logistic": 0.0136,
-     "boosting": 0.009,
-     "mlp": 0.0442,
-     "mlp_bag": 0.0098,
-     "mlp_tuned": 0.0201
+     "base_rate": 0.1181,
+     "playbook": 0.1214,
+     "logistic": 0.016,
+     "boosting": 0.0108,
+     "mlp": 0.0174,
+     "mlp_bag": 0.0009,
+     "mlp_tuned": 0.0342,
+     "ensemble": 0.0147
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-H0",
      "label": 0,
-     "base_rate": 0.1022,
-     "playbook": 0.1045,
-     "logistic": 0.0066,
-     "boosting": 0.0041,
-     "mlp": 0.0187,
-     "mlp_bag": 0.0003,
-     "mlp_tuned": 0.006
+     "base_rate": 0.1181,
+     "playbook": 0.1214,
+     "logistic": 0.0141,
+     "boosting": 0.0064,
+     "mlp": 0.0094,
+     "mlp_bag": 0.0004,
+     "mlp_tuned": 0.0243,
+     "ensemble": 0.01
     }
    ]
   },
   {
    "event": "powell20251009a",
    "t0": "2025-10-09T12:30:00Z",
-   "trained_on": 56,
+   "trained_on": 58,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C25",
      "label": 0,
-     "base_rate": 0.1007,
-     "playbook": 0.1029,
-     "logistic": 0.5861,
-     "boosting": 0.0549,
-     "mlp": 0.1669,
-     "mlp_bag": 0.2907,
-     "mlp_tuned": 0.5492
+     "base_rate": 0.1164,
+     "playbook": 0.1197,
+     "logistic": 0.1211,
+     "boosting": 0.0332,
+     "mlp": 0.0188,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.1464,
+     "ensemble": 0.0577
     }
    ]
   },
   {
    "event": "bowman20251009a",
    "t0": "2025-10-09T12:35:00Z",
-   "trained_on": 56,
+   "trained_on": 58,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C25",
      "label": 0,
-     "base_rate": 0.1007,
-     "playbook": 0.1029,
-     "logistic": 0.0488,
-     "boosting": 0.0512,
-     "mlp": 0.0752,
-     "mlp_bag": 0.0034,
-     "mlp_tuned": 0.0301
+     "base_rate": 0.1164,
+     "playbook": 0.1197,
+     "logistic": 0.0456,
+     "boosting": 0.0368,
+     "mlp": 0.0041,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0824,
+     "ensemble": 0.0288
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-H0",
      "label": 0,
-     "base_rate": 0.1007,
-     "playbook": 0.1029,
-     "logistic": 0.0246,
-     "boosting": 0.0108,
-     "mlp": 0.0702,
-     "mlp_bag": 0.0006,
-     "mlp_tuned": 0.0111
+     "base_rate": 0.1164,
+     "playbook": 0.1197,
+     "logistic": 0.0414,
+     "boosting": 0.0154,
+     "mlp": 0.0015,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0623,
+     "ensemble": 0.0194
     }
    ]
   },
   {
    "event": "barr20251009a",
    "t0": "2025-10-09T16:45:00Z",
-   "trained_on": 58,
+   "trained_on": 60,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-H0",
      "label": 0,
-     "base_rate": 0.0986,
-     "playbook": 0.1007,
-     "logistic": 0.0393,
-     "boosting": 0.0268,
-     "mlp": 0.0207,
-     "mlp_bag": 0.0054,
-     "mlp_tuned": 0.037
+     "base_rate": 0.1141,
+     "playbook": 0.1172,
+     "logistic": 0.0375,
+     "boosting": 0.0602,
+     "mlp": 0.0334,
+     "mlp_bag": 0.0051,
+     "mlp_tuned": 0.0673,
+     "ensemble": 0.0437
     }
    ]
   },
   {
    "event": "bowman20251009b",
    "t0": "2025-10-09T19:45:00Z",
-   "trained_on": 59,
+   "trained_on": 61,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-H0",
      "label": 0,
-     "base_rate": 0.0979,
-     "playbook": 0.1,
-     "logistic": 0.0028,
-     "boosting": 0.0074,
-     "mlp": 0.0103,
+     "base_rate": 0.1133,
+     "playbook": 0.1164,
+     "logistic": 0.0031,
+     "boosting": 0.0115,
+     "mlp": 0.0096,
      "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0018
+     "mlp_tuned": 0.0175,
+     "ensemble": 0.0081
     }
    ]
   },
   {
    "event": "powell20251014a",
    "t0": "2025-10-14T16:20:00Z",
-   "trained_on": 60,
+   "trained_on": 62,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C25",
      "label": 0,
-     "base_rate": 0.0972,
-     "playbook": 0.0993,
-     "logistic": 0.0514,
-     "boosting": 0.0069,
-     "mlp": 0.0792,
-     "mlp_bag": 0.0101,
-     "mlp_tuned": 0.0335
+     "base_rate": 0.1126,
+     "playbook": 0.1156,
+     "logistic": 0.1396,
+     "boosting": 0.014,
+     "mlp": 0.2371,
+     "mlp_bag": 0.0618,
+     "mlp_tuned": 0.1548,
+     "ensemble": 0.1302
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C26",
      "label": 0,
-     "base_rate": 0.0972,
-     "playbook": 0.0993,
-     "logistic": 0.0113,
-     "boosting": 0.005,
-     "mlp": 0.0191,
-     "mlp_bag": 0.0003,
-     "mlp_tuned": 0.0034
+     "base_rate": 0.1126,
+     "playbook": 0.1156,
+     "logistic": 0.031,
+     "boosting": 0.0079,
+     "mlp": 0.0563,
+     "mlp_bag": 0.0029,
+     "mlp_tuned": 0.0555,
+     "ensemble": 0.0318
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-H0",
      "label": 0,
-     "base_rate": 0.0972,
-     "playbook": 0.0993,
-     "logistic": 0.0766,
-     "boosting": 0.0069,
-     "mlp": 0.1623,
-     "mlp_bag": 0.0291,
-     "mlp_tuned": 0.0539
+     "base_rate": 0.1126,
+     "playbook": 0.1156,
+     "logistic": 0.2965,
+     "boosting": 0.013,
+     "mlp": 0.3916,
+     "mlp_bag": 0.3885,
+     "mlp_tuned": 0.1773,
+     "ensemble": 0.2337
     }
    ]
   },
   {
    "event": "waller20251015a",
    "t0": "2025-10-15T17:00:00Z",
-   "trained_on": 61,
+   "trained_on": 63,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C25",
      "label": 0,
-     "base_rate": 0.0952,
-     "playbook": 0.0972,
-     "logistic": 0.0037,
-     "boosting": 0.005,
-     "mlp": 0.0142,
-     "mlp_bag": 0.0016,
-     "mlp_tuned": 0.0077
+     "base_rate": 0.1104,
+     "playbook": 0.1133,
+     "logistic": 0.0062,
+     "boosting": 0.0073,
+     "mlp": 0.0109,
+     "mlp_bag": 0.0005,
+     "mlp_tuned": 0.0203,
+     "ensemble": 0.0081
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-H0",
      "label": 0,
-     "base_rate": 0.0952,
-     "playbook": 0.0972,
-     "logistic": 0.0069,
-     "boosting": 0.005,
-     "mlp": 0.0118,
-     "mlp_bag": 0.0035,
-     "mlp_tuned": 0.0123
+     "base_rate": 0.1104,
+     "playbook": 0.1133,
+     "logistic": 0.0091,
+     "boosting": 0.0069,
+     "mlp": 0.0172,
+     "mlp_bag": 0.0041,
+     "mlp_tuned": 0.0208,
+     "ensemble": 0.0111
     }
    ]
   },
   {
    "event": "barr20251016a",
    "t0": "2025-10-16T13:00:00Z",
-   "trained_on": 62,
+   "trained_on": 64,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C25",
      "label": 0,
-     "base_rate": 0.094,
-     "playbook": 0.0959,
-     "logistic": 0.0318,
-     "boosting": 0.0046,
-     "mlp": 0.109,
-     "mlp_bag": 0.001,
-     "mlp_tuned": 0.0114
+     "base_rate": 0.109,
+     "playbook": 0.1118,
+     "logistic": 0.0398,
+     "boosting": 0.0059,
+     "mlp": 0.0018,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0481,
+     "ensemble": 0.0158
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-H0",
      "label": 0,
-     "base_rate": 0.094,
-     "playbook": 0.0959,
-     "logistic": 0.0573,
-     "boosting": 0.0088,
-     "mlp": 0.0949,
-     "mlp_bag": 0.0095,
-     "mlp_tuned": 0.0273
+     "base_rate": 0.109,
+     "playbook": 0.1118,
+     "logistic": 0.0527,
+     "boosting": 0.0059,
+     "mlp": 0.0024,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0483,
+     "ensemble": 0.0203
     }
    ]
   },
   {
    "event": "waller20251016a",
    "t0": "2025-10-16T13:00:00Z",
-   "trained_on": 62,
+   "trained_on": 64,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C25",
      "label": 0,
-     "base_rate": 0.094,
-     "playbook": 0.0959,
-     "logistic": 0.0533,
-     "boosting": 0.0046,
-     "mlp": 0.2571,
-     "mlp_bag": 0.0095,
-     "mlp_tuned": 0.0392
+     "base_rate": 0.109,
+     "playbook": 0.1118,
+     "logistic": 0.0766,
+     "boosting": 0.0071,
+     "mlp": 0.0065,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0923,
+     "ensemble": 0.0301
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-H0",
      "label": 0,
-     "base_rate": 0.094,
-     "playbook": 0.0959,
-     "logistic": 0.0944,
-     "boosting": 0.0088,
-     "mlp": 0.2264,
-     "mlp_bag": 0.0701,
-     "mlp_tuned": 0.0918
+     "base_rate": 0.109,
+     "playbook": 0.1118,
+     "logistic": 0.0659,
+     "boosting": 0.0071,
+     "mlp": 0.0033,
+     "mlp_bag": 0.0002,
+     "mlp_tuned": 0.0814,
+     "ensemble": 0.0255
     }
    ]
   },
   {
    "event": "bowman20251016a",
    "t0": "2025-10-16T14:00:00Z",
-   "trained_on": 62,
+   "trained_on": 64,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C26",
      "label": 0,
-     "base_rate": 0.094,
-     "playbook": 0.0959,
-     "logistic": 0.0565,
-     "boosting": 0.0043,
-     "mlp": 0.0355,
-     "mlp_bag": 0.0189,
-     "mlp_tuned": 0.024
+     "base_rate": 0.109,
+     "playbook": 0.1118,
+     "logistic": 0.0099,
+     "boosting": 0.0099,
+     "mlp": 0.0001,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0271,
+     "ensemble": 0.0066
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-H0",
      "label": 0,
-     "base_rate": 0.094,
-     "playbook": 0.0959,
-     "logistic": 0.1676,
-     "boosting": 0.0084,
-     "mlp": 0.0301,
-     "mlp_bag": 0.0529,
-     "mlp_tuned": 0.0964
+     "base_rate": 0.109,
+     "playbook": 0.1118,
+     "logistic": 0.0346,
+     "boosting": 0.0099,
+     "mlp": 0.0002,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0542,
+     "ensemble": 0.0149
     }
    ]
   },
   {
    "event": "waller20251021a",
    "t0": "2025-10-21T13:00:00Z",
-   "trained_on": 65,
+   "trained_on": 67,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C25",
      "label": 0,
-     "base_rate": 0.0903,
-     "playbook": 0.0921,
-     "logistic": 0.0047,
-     "boosting": 0.0057,
-     "mlp": 0.0173,
-     "mlp_bag": 0.0061,
-     "mlp_tuned": 0.0157
+     "base_rate": 0.1049,
+     "playbook": 0.1076,
+     "logistic": 0.0014,
+     "boosting": 0.0101,
+     "mlp": 0.0141,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0114,
+     "ensemble": 0.0086
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C26",
      "label": 0,
-     "base_rate": 0.0903,
-     "playbook": 0.0921,
-     "logistic": 0.001,
-     "boosting": 0.0047,
-     "mlp": 0.0033,
-     "mlp_bag": 0.0002,
-     "mlp_tuned": 0.0018
+     "base_rate": 0.1049,
+     "playbook": 0.1076,
+     "logistic": 0.0003,
+     "boosting": 0.0095,
+     "mlp": 0.0026,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0051,
+     "ensemble": 0.0041
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-H0",
      "label": 0,
-     "base_rate": 0.0903,
-     "playbook": 0.0921,
-     "logistic": 0.0022,
-     "boosting": 0.0047,
-     "mlp": 0.0025,
-     "mlp_bag": 0.0005,
-     "mlp_tuned": 0.0042
+     "base_rate": 0.1049,
+     "playbook": 0.1076,
+     "logistic": 0.0008,
+     "boosting": 0.0095,
+     "mlp": 0.0032,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0072,
+     "ensemble": 0.0045
     }
    ]
   },
   {
    "event": "barr20251022a",
    "t0": "2025-10-22T16:35:00Z",
-   "trained_on": 66,
+   "trained_on": 68,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C25",
      "label": 0,
-     "base_rate": 0.0886,
-     "playbook": 0.0903,
-     "logistic": 0.0019,
-     "boosting": 0.0053,
-     "mlp": 0.0129,
-     "mlp_bag": 0.0039,
-     "mlp_tuned": 0.0021
+     "base_rate": 0.103,
+     "playbook": 0.1056,
+     "logistic": 0.0006,
+     "boosting": 0.0081,
+     "mlp": 0.0045,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0077,
+     "ensemble": 0.0044
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C26",
      "label": 0,
-     "base_rate": 0.0886,
-     "playbook": 0.0903,
-     "logistic": 0.0012,
-     "boosting": 0.0049,
-     "mlp": 0.0057,
-     "mlp_bag": 0.0022,
-     "mlp_tuned": 0.003
+     "base_rate": 0.103,
+     "playbook": 0.1056,
+     "logistic": 0.0003,
+     "boosting": 0.007,
+     "mlp": 0.0045,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0056,
+     "ensemble": 0.0039
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-H0",
      "label": 0,
-     "base_rate": 0.0886,
-     "playbook": 0.0903,
-     "logistic": 0.0016,
-     "boosting": 0.0049,
-     "mlp": 0.0036,
-     "mlp_bag": 0.0007,
-     "mlp_tuned": 0.0001
+     "base_rate": 0.103,
+     "playbook": 0.1056,
+     "logistic": 0.0007,
+     "boosting": 0.007,
+     "mlp": 0.0023,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0065,
+     "ensemble": 0.0033
     }
    ]
   },
   {
    "event": "barr20251022b",
    "t0": "2025-10-22T20:00:00Z",
-   "trained_on": 67,
+   "trained_on": 69,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C25",
      "label": 0,
-     "base_rate": 0.087,
-     "playbook": 0.0886,
-     "logistic": 0.0021,
-     "boosting": 0.0055,
-     "mlp": 0.0125,
-     "mlp_bag": 0.001,
-     "mlp_tuned": 0.0008
+     "base_rate": 0.1012,
+     "playbook": 0.1037,
+     "logistic": 0.0008,
+     "boosting": 0.0066,
+     "mlp": 0.0073,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0008,
+     "ensemble": 0.0049
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C26",
      "label": 0,
-     "base_rate": 0.087,
-     "playbook": 0.0886,
-     "logistic": 0.0007,
-     "boosting": 0.0048,
-     "mlp": 0.0053,
+     "base_rate": 0.1012,
+     "playbook": 0.1037,
+     "logistic": 0.0003,
+     "boosting": 0.0062,
+     "mlp": 0.0022,
      "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0001
+     "mlp_tuned": 0.0002,
+     "ensemble": 0.0029
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-H0",
      "label": 0,
-     "base_rate": 0.087,
-     "playbook": 0.0886,
-     "logistic": 0.0016,
-     "boosting": 0.0051,
-     "mlp": 0.0045,
-     "mlp_bag": 0.0002,
-     "mlp_tuned": 0.0002
+     "base_rate": 0.1012,
+     "playbook": 0.1037,
+     "logistic": 0.0007,
+     "boosting": 0.0062,
+     "mlp": 0.0028,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0005,
+     "ensemble": 0.0032
     }
    ]
   },
   {
    "event": "barr20251023a",
    "t0": "2025-10-23T14:25:00Z",
-   "trained_on": 68,
+   "trained_on": 70,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25OCT-C26",
      "label": 0,
-     "base_rate": 0.0854,
-     "playbook": 0.087,
-     "logistic": 0.001,
-     "boosting": 0.0036,
-     "mlp": 0.005,
-     "mlp_bag": 0.001,
-     "mlp_tuned": 0.0009
+     "base_rate": 0.0994,
+     "playbook": 0.1018,
+     "logistic": 0.0011,
+     "boosting": 0.0052,
+     "mlp": 0.0069,
+     "mlp_bag": 0.0004,
+     "mlp_tuned": 0.0005,
+     "ensemble": 0.0044
     },
     {
      "market": "kalshi:KXFEDDECISION-25OCT-H0",
      "label": 0,
-     "base_rate": 0.0854,
-     "playbook": 0.087,
-     "logistic": 0.0012,
-     "boosting": 0.0036,
-     "mlp": 0.0028,
-     "mlp_bag": 0.0002,
-     "mlp_tuned": 0.0002
+     "base_rate": 0.0994,
+     "playbook": 0.1018,
+     "logistic": 0.0023,
+     "boosting": 0.0052,
+     "mlp": 0.0033,
+     "mlp_bag": 0.0003,
+     "mlp_tuned": 0.0003,
+     "ensemble": 0.0036
     }
    ]
   },
   {
    "event": "bowman20251030a",
    "t0": "2025-10-30T13:55:00Z",
-   "trained_on": 69,
+   "trained_on": 71,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25DEC-C25",
      "label": 0,
-     "base_rate": 0.0843,
-     "playbook": 0.0859,
-     "logistic": 0.0172,
-     "boosting": 0.0144,
-     "mlp": 0.0581,
-     "mlp_bag": 0.0007,
-     "mlp_tuned": 0.0007
+     "base_rate": 0.0983,
+     "playbook": 0.1006,
+     "logistic": 0.0313,
+     "boosting": 0.0634,
+     "mlp": 0.069,
+     "mlp_bag": 0.0027,
+     "mlp_tuned": 0.0025,
+     "ensemble": 0.0546
     },
     {
      "market": "kalshi:KXFEDDECISION-25DEC-H0",
      "label": 0,
-     "base_rate": 0.0843,
-     "playbook": 0.0859,
-     "logistic": 0.0603,
-     "boosting": 0.3815,
-     "mlp": 0.3241,
-     "mlp_bag": 0.0026,
-     "mlp_tuned": 0.0023
+     "base_rate": 0.0983,
+     "playbook": 0.1006,
+     "logistic": 0.1154,
+     "boosting": 0.5344,
+     "mlp": 0.1919,
+     "mlp_bag": 0.0976,
+     "mlp_tuned": 0.0785,
+     "ensemble": 0.2806
     }
    ]
   },
   {
    "event": "cook20251103a",
    "t0": "2025-11-03T19:00:00Z",
-   "trained_on": 70,
+   "trained_on": 72,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25DEC-C25",
      "label": 0,
-     "base_rate": 0.0833,
-     "playbook": 0.0848,
-     "logistic": 0.0237,
-     "boosting": 0.01,
-     "mlp": 0.0185,
-     "mlp_bag": 0.0002,
-     "mlp_tuned": 0.0003
+     "base_rate": 0.0971,
+     "playbook": 0.0994,
+     "logistic": 0.0441,
+     "boosting": 0.0276,
+     "mlp": 0.0071,
+     "mlp_bag": 0.0004,
+     "mlp_tuned": 0.0004,
+     "ensemble": 0.0263
     },
     {
      "market": "kalshi:KXFEDDECISION-25DEC-C26",
      "label": 0,
-     "base_rate": 0.0833,
-     "playbook": 0.0848,
-     "logistic": 0.0062,
-     "boosting": 0.005,
-     "mlp": 0.0132,
-     "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0001
+     "base_rate": 0.0971,
+     "playbook": 0.0994,
+     "logistic": 0.0093,
+     "boosting": 0.006,
+     "mlp": 0.0291,
+     "mlp_bag": 0.0007,
+     "mlp_tuned": 0.0007,
+     "ensemble": 0.0148
     }
    ]
   },
   {
    "event": "miran20251107a",
    "t0": "2025-11-07T20:00:00Z",
-   "trained_on": 71,
+   "trained_on": 73,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25DEC-H0",
      "label": 0,
-     "base_rate": 0.0824,
-     "playbook": 0.0838,
-     "logistic": 0.0205,
-     "boosting": 0.0059,
-     "mlp": 0.013,
-     "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0001
+     "base_rate": 0.096,
+     "playbook": 0.0983,
+     "logistic": 0.0446,
+     "boosting": 0.0108,
+     "mlp": 0.0159,
+     "mlp_bag": 0.0007,
+     "mlp_tuned": 0.0006,
+     "ensemble": 0.0238
     }
    ]
   },
   {
    "event": "barr20251111a",
    "t0": "2025-11-12T03:25:00Z",
-   "trained_on": 72,
+   "trained_on": 74,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25DEC-C25",
      "label": 0,
-     "base_rate": 0.0819,
-     "playbook": 0.0833,
-     "logistic": 0.0098,
-     "boosting": 0.0082,
-     "mlp": 0.0392,
-     "mlp_bag": 0.0008,
-     "mlp_tuned": 0.001
+     "base_rate": 0.0955,
+     "playbook": 0.0977,
+     "logistic": 0.0198,
+     "boosting": 0.0117,
+     "mlp": 0.0142,
+     "mlp_bag": 0.0003,
+     "mlp_tuned": 0.0002,
+     "ensemble": 0.0152
     },
     {
      "market": "kalshi:KXFEDDECISION-25DEC-H0",
      "label": 0,
-     "base_rate": 0.0819,
-     "playbook": 0.0833,
-     "logistic": 0.0127,
-     "boosting": 0.0082,
-     "mlp": 0.0253,
+     "base_rate": 0.0955,
+     "playbook": 0.0977,
+     "logistic": 0.0286,
+     "boosting": 0.0122,
+     "mlp": 0.0249,
      "mlp_bag": 0.0005,
-     "mlp_tuned": 0.0007
+     "mlp_tuned": 0.0004,
+     "ensemble": 0.0219
     }
    ]
   },
   {
    "event": "jefferson20251117a",
    "t0": "2025-11-17T14:30:00Z",
-   "trained_on": 73,
+   "trained_on": 75,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25DEC-C25",
      "label": 0,
-     "base_rate": 0.0809,
-     "playbook": 0.0824,
-     "logistic": 0.0102,
-     "boosting": 0.0117,
-     "mlp": 0.0151,
-     "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0001
+     "base_rate": 0.0944,
+     "playbook": 0.0966,
+     "logistic": 0.0165,
+     "boosting": 0.0309,
+     "mlp": 0.0277,
+     "mlp_bag": 0.0004,
+     "mlp_tuned": 0.0004,
+     "ensemble": 0.025
     }
    ]
   },
   {
    "event": "waller20251117a",
    "t0": "2025-11-17T20:35:00Z",
-   "trained_on": 74,
+   "trained_on": 76,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25DEC-C25",
      "label": 0,
-     "base_rate": 0.0805,
-     "playbook": 0.0819,
-     "logistic": 0.0352,
-     "boosting": 0.0081,
-     "mlp": 0.0209,
-     "mlp_bag": 0.0102,
-     "mlp_tuned": 0.0109
+     "base_rate": 0.0939,
+     "playbook": 0.096,
+     "logistic": 0.0724,
+     "boosting": 0.0201,
+     "mlp": 0.0332,
+     "mlp_bag": 0.0115,
+     "mlp_tuned": 0.0082,
+     "ensemble": 0.0419
     },
     {
      "market": "kalshi:KXFEDDECISION-25DEC-C26",
      "label": 0,
-     "base_rate": 0.0805,
-     "playbook": 0.0819,
-     "logistic": 0.0043,
-     "boosting": 0.0035,
-     "mlp": 0.011,
-     "mlp_bag": 0.0002,
-     "mlp_tuned": 0.0001
+     "base_rate": 0.0939,
+     "playbook": 0.096,
+     "logistic": 0.0104,
+     "boosting": 0.0062,
+     "mlp": 0.0203,
+     "mlp_bag": 0.0024,
+     "mlp_tuned": 0.002,
+     "ensemble": 0.0123
     },
     {
      "market": "kalshi:KXFEDDECISION-25DEC-H0",
      "label": 0,
-     "base_rate": 0.0805,
-     "playbook": 0.0819,
-     "logistic": 0.1239,
-     "boosting": 0.0354,
-     "mlp": 0.046,
-     "mlp_bag": 0.0292,
-     "mlp_tuned": 0.0264
+     "base_rate": 0.0939,
+     "playbook": 0.096,
+     "logistic": 0.1485,
+     "boosting": 0.1178,
+     "mlp": 0.0513,
+     "mlp_bag": 0.0047,
+     "mlp_tuned": 0.0043,
+     "ensemble": 0.1059
     }
    ]
   },
   {
    "event": "barr20251118a",
    "t0": "2025-11-18T15:30:00Z",
-   "trained_on": 75,
+   "trained_on": 77,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25DEC-C25",
      "label": 0,
-     "base_rate": 0.0791,
-     "playbook": 0.0805,
-     "logistic": 0.0629,
-     "boosting": 0.0258,
-     "mlp": 0.0949,
-     "mlp_bag": 0.1491,
-     "mlp_tuned": 0.1172
+     "base_rate": 0.0924,
+     "playbook": 0.0944,
+     "logistic": 0.0593,
+     "boosting": 0.0902,
+     "mlp": 0.0666,
+     "mlp_bag": 0.1591,
+     "mlp_tuned": 0.1648,
+     "ensemble": 0.0721
     },
     {
      "market": "kalshi:KXFEDDECISION-25DEC-C26",
      "label": 0,
-     "base_rate": 0.0791,
-     "playbook": 0.0805,
-     "logistic": 0.0033,
-     "boosting": 0.0041,
-     "mlp": 0.0243,
-     "mlp_bag": 0.0011,
-     "mlp_tuned": 0.0008
+     "base_rate": 0.0924,
+     "playbook": 0.0944,
+     "logistic": 0.0035,
+     "boosting": 0.0056,
+     "mlp": 0.0287,
+     "mlp_bag": 0.0016,
+     "mlp_tuned": 0.0013,
+     "ensemble": 0.0126
     },
     {
      "market": "kalshi:KXFEDDECISION-25DEC-H0",
      "label": 0,
-     "base_rate": 0.0791,
-     "playbook": 0.0805,
-     "logistic": 0.1083,
-     "boosting": 0.0258,
-     "mlp": 0.1283,
-     "mlp_bag": 0.0743,
-     "mlp_tuned": 0.0729
+     "base_rate": 0.0924,
+     "playbook": 0.0944,
+     "logistic": 0.1325,
+     "boosting": 0.1106,
+     "mlp": 0.1464,
+     "mlp_bag": 0.1041,
+     "mlp_tuned": 0.1113,
+     "ensemble": 0.1298
     }
    ]
   },
   {
    "event": "miran20251119a",
    "t0": "2025-11-19T15:00:00Z",
-   "trained_on": 76,
+   "trained_on": 78,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25DEC-C25",
      "label": 0,
-     "base_rate": 0.0778,
-     "playbook": 0.0791,
-     "logistic": 0.1068,
-     "boosting": 0.0367,
-     "mlp": 0.0538,
-     "mlp_bag": 0.1506,
-     "mlp_tuned": 0.178
+     "base_rate": 0.0909,
+     "playbook": 0.0929,
+     "logistic": 0.0413,
+     "boosting": 0.0301,
+     "mlp": 0.0347,
+     "mlp_bag": 0.0095,
+     "mlp_tuned": 0.0104,
+     "ensemble": 0.0354
     },
     {
      "market": "kalshi:KXFEDDECISION-25DEC-C26",
      "label": 0,
-     "base_rate": 0.0778,
-     "playbook": 0.0791,
-     "logistic": 0.0079,
-     "boosting": 0.0039,
-     "mlp": 0.0289,
-     "mlp_bag": 0.0004,
-     "mlp_tuned": 0.0003
+     "base_rate": 0.0909,
+     "playbook": 0.0929,
+     "logistic": 0.0045,
+     "boosting": 0.0067,
+     "mlp": 0.0229,
+     "mlp_bag": 0.0008,
+     "mlp_tuned": 0.0006,
+     "ensemble": 0.0114
     },
     {
      "market": "kalshi:KXFEDDECISION-25DEC-H0",
      "label": 1,
-     "base_rate": 0.0778,
-     "playbook": 0.0791,
-     "logistic": 0.0656,
-     "boosting": 0.0111,
-     "mlp": 0.0321,
-     "mlp_bag": 0.0082,
-     "mlp_tuned": 0.0113
+     "base_rate": 0.0909,
+     "playbook": 0.0929,
+     "logistic": 0.0298,
+     "boosting": 0.0109,
+     "mlp": 0.0115,
+     "mlp_bag": 0.0006,
+     "mlp_tuned": 0.0005,
+     "ensemble": 0.0174
     }
    ]
   },
   {
    "event": "cook20251120a",
    "t0": "2025-11-20T16:00:00Z",
-   "trained_on": 77,
+   "trained_on": 79,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25DEC-C25",
      "label": 0,
-     "base_rate": 0.082,
-     "playbook": 0.0833,
-     "logistic": 0.2115,
-     "boosting": 0.5042,
-     "mlp": 0.2469,
-     "mlp_bag": 0.0286,
-     "mlp_tuned": 0.026
+     "base_rate": 0.0947,
+     "playbook": 0.0968,
+     "logistic": 0.1451,
+     "boosting": 0.5858,
+     "mlp": 0.131,
+     "mlp_bag": 0.1237,
+     "mlp_tuned": 0.2355,
+     "ensemble": 0.2873
     },
     {
      "market": "kalshi:KXFEDDECISION-25DEC-H0",
      "label": 0,
-     "base_rate": 0.082,
-     "playbook": 0.0833,
-     "logistic": 0.2528,
-     "boosting": 0.1297,
-     "mlp": 0.2671,
-     "mlp_bag": 0.2387,
-     "mlp_tuned": 0.23
+     "base_rate": 0.0947,
+     "playbook": 0.0968,
+     "logistic": 0.2632,
+     "boosting": 0.2393,
+     "mlp": 0.4112,
+     "mlp_bag": 0.4993,
+     "mlp_tuned": 0.2817,
+     "ensemble": 0.3046
     }
    ]
   },
   {
    "event": "barr20251121a",
    "t0": "2025-11-21T13:30:00Z",
-   "trained_on": 78,
+   "trained_on": 80,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25DEC-C25",
      "label": 1,
-     "base_rate": 0.0811,
-     "playbook": 0.0824,
-     "logistic": 0.9955,
-     "boosting": 0.578,
-     "mlp": 0.9762,
-     "mlp_bag": 0.9984,
-     "mlp_tuned": 0.9999
+     "base_rate": 0.0938,
+     "playbook": 0.0957,
+     "logistic": 0.9648,
+     "boosting": 0.4152,
+     "mlp": 0.986,
+     "mlp_bag": 0.976,
+     "mlp_tuned": 0.9352,
+     "ensemble": 0.7887
     },
     {
      "market": "kalshi:KXFEDDECISION-25DEC-C26",
      "label": 0,
-     "base_rate": 0.0811,
-     "playbook": 0.0824,
-     "logistic": 0.1718,
-     "boosting": 0.0192,
-     "mlp": 0.4875,
-     "mlp_bag": 0.3447,
-     "mlp_tuned": 0.3443
+     "base_rate": 0.0938,
+     "playbook": 0.0957,
+     "logistic": 0.036,
+     "boosting": 0.0168,
+     "mlp": 0.0397,
+     "mlp_bag": 0.0245,
+     "mlp_tuned": 0.0296,
+     "ensemble": 0.0308
     },
     {
      "market": "kalshi:KXFEDDECISION-25DEC-H0",
      "label": 1,
-     "base_rate": 0.0811,
-     "playbook": 0.0824,
-     "logistic": 0.9754,
-     "boosting": 0.6096,
-     "mlp": 0.9071,
-     "mlp_bag": 0.9988,
-     "mlp_tuned": 0.9996
+     "base_rate": 0.0938,
+     "playbook": 0.0957,
+     "logistic": 0.8355,
+     "boosting": 0.3143,
+     "mlp": 0.9488,
+     "mlp_bag": 0.9691,
+     "mlp_tuned": 0.86,
+     "ensemble": 0.6995
     }
    ]
   },
   {
    "event": "jefferson20251121a",
    "t0": "2025-11-21T13:45:00Z",
-   "trained_on": 78,
+   "trained_on": 80,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25DEC-C25",
      "label": 1,
-     "base_rate": 0.0811,
-     "playbook": 0.0824,
-     "logistic": 0.8478,
-     "boosting": 0.578,
-     "mlp": 0.9425,
-     "mlp_bag": 0.9351,
-     "mlp_tuned": 0.9838
+     "base_rate": 0.0938,
+     "playbook": 0.0957,
+     "logistic": 0.7984,
+     "boosting": 0.6593,
+     "mlp": 0.927,
+     "mlp_bag": 0.9193,
+     "mlp_tuned": 0.8087,
+     "ensemble": 0.7949
     },
     {
      "market": "kalshi:KXFEDDECISION-25DEC-C26",
      "label": 0,
-     "base_rate": 0.0811,
-     "playbook": 0.0824,
-     "logistic": 0.0086,
-     "boosting": 0.0196,
-     "mlp": 0.1273,
-     "mlp_bag": 0.0007,
-     "mlp_tuned": 0.0003
+     "base_rate": 0.0938,
+     "playbook": 0.0957,
+     "logistic": 0.0075,
+     "boosting": 0.0233,
+     "mlp": 0.0017,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0014,
+     "ensemble": 0.0108
     },
     {
      "market": "kalshi:KXFEDDECISION-25DEC-H0",
      "label": 1,
-     "base_rate": 0.0811,
-     "playbook": 0.0824,
-     "logistic": 0.5876,
-     "boosting": 0.1952,
-     "mlp": 0.8924,
-     "mlp_bag": 0.9431,
-     "mlp_tuned": 0.9582
+     "base_rate": 0.0938,
+     "playbook": 0.0957,
+     "logistic": 0.5159,
+     "boosting": 0.1384,
+     "mlp": 0.8001,
+     "mlp_bag": 0.8621,
+     "mlp_tuned": 0.7099,
+     "ensemble": 0.4848
     }
    ]
   },
   {
    "event": "powell20251201a",
    "t0": "2025-12-02T01:00:00Z",
-   "trained_on": 80,
+   "trained_on": 82,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-25DEC-C25",
      "label": 0,
-     "base_rate": 0.0995,
-     "playbook": 0.1011,
-     "logistic": 0.0085,
-     "boosting": 0.0044,
-     "mlp": 0.0167,
-     "mlp_bag": 0.0002,
-     "mlp_tuned": 0.0029
+     "base_rate": 0.1111,
+     "playbook": 0.1134,
+     "logistic": 0.0403,
+     "boosting": 0.0084,
+     "mlp": 0.0478,
+     "mlp_bag": 0.0003,
+     "mlp_tuned": 0.0057,
+     "ensemble": 0.0322
     },
     {
      "market": "kalshi:KXFEDDECISION-25DEC-C26",
      "label": 0,
-     "base_rate": 0.0995,
-     "playbook": 0.1011,
-     "logistic": 0.0027,
-     "boosting": 0.0044,
-     "mlp": 0.011,
+     "base_rate": 0.1111,
+     "playbook": 0.1134,
+     "logistic": 0.0117,
+     "boosting": 0.0079,
+     "mlp": 0.0093,
      "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0006
+     "mlp_tuned": 0.0014,
+     "ensemble": 0.0096
     },
     {
      "market": "kalshi:KXFEDDECISION-25DEC-H0",
      "label": 0,
-     "base_rate": 0.0995,
-     "playbook": 0.1011,
-     "logistic": 0.0258,
-     "boosting": 0.0088,
-     "mlp": 0.028,
-     "mlp_bag": 0.0014,
-     "mlp_tuned": 0.0069
+     "base_rate": 0.1111,
+     "playbook": 0.1134,
+     "logistic": 0.0926,
+     "boosting": 0.0075,
+     "mlp": 0.0517,
+     "mlp_bag": 0.0105,
+     "mlp_tuned": 0.0249,
+     "ensemble": 0.0506
+    }
+   ]
+  },
+  {
+   "event": "bowman20251202a",
+   "t0": "2025-12-02T21:30:00Z",
+   "trained_on": 83,
+   "rows": [
+    {
+     "market": "kalshi:KXFEDDECISION-25DEC-C25",
+     "label": 0,
+     "base_rate": 0.1095,
+     "playbook": 0.1117,
+     "logistic": 0.0705,
+     "boosting": 0.0193,
+     "mlp": 0.0669,
+     "mlp_bag": 0.0109,
+     "mlp_tuned": 0.0357,
+     "ensemble": 0.0522
+    },
+    {
+     "market": "kalshi:KXFEDDECISION-25DEC-H0",
+     "label": 0,
+     "base_rate": 0.1095,
+     "playbook": 0.1117,
+     "logistic": 0.0774,
+     "boosting": 0.0162,
+     "mlp": 0.0187,
+     "mlp_bag": 0.0063,
+     "mlp_tuned": 0.0234,
+     "ensemble": 0.0375
     }
    ]
   },
   {
    "event": "bowman20260107a",
    "t0": "2026-01-07T21:10:00Z",
-   "trained_on": 81,
+   "trained_on": 84,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26JAN-C25",
      "label": 0,
-     "base_rate": 0.0979,
-     "playbook": 0.0995,
-     "logistic": 0.0023,
-     "boosting": 0.0044,
-     "mlp": 0.0373,
-     "mlp_bag": 0.0002,
-     "mlp_tuned": 0.0024
+     "base_rate": 0.1084,
+     "playbook": 0.1106,
+     "logistic": 0.0183,
+     "boosting": 0.009,
+     "mlp": 0.1685,
+     "mlp_bag": 0.0005,
+     "mlp_tuned": 0.0055,
+     "ensemble": 0.0653
     },
     {
      "market": "kalshi:KXFEDDECISION-26JAN-H0",
      "label": 0,
-     "base_rate": 0.0979,
-     "playbook": 0.0995,
-     "logistic": 0.0038,
-     "boosting": 0.0045,
-     "mlp": 0.0119,
+     "base_rate": 0.1084,
+     "playbook": 0.1106,
+     "logistic": 0.0432,
+     "boosting": 0.0077,
+     "mlp": 0.1688,
      "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0011
+     "mlp_tuned": 0.0051,
+     "ensemble": 0.0732
     }
    ]
   },
   {
    "event": "powell20260111a",
    "t0": "2026-01-12T00:30:00Z",
-   "trained_on": 82,
+   "trained_on": 85,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26JAN-C25",
      "label": 0,
-     "base_rate": 0.0969,
-     "playbook": 0.0984,
-     "logistic": 0.0107,
-     "boosting": 0.0123,
-     "mlp": 0.045,
-     "mlp_bag": 0.0003,
-     "mlp_tuned": 0.0003
+     "base_rate": 0.1073,
+     "playbook": 0.1095,
+     "logistic": 0.0063,
+     "boosting": 0.0089,
+     "mlp": 0.0955,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0022,
+     "ensemble": 0.0369
     },
     {
      "market": "kalshi:KXFEDDECISION-26JAN-H0",
      "label": 0,
-     "base_rate": 0.0969,
-     "playbook": 0.0984,
-     "logistic": 0.0358,
-     "boosting": 0.0138,
-     "mlp": 0.0291,
-     "mlp_bag": 0.0023,
-     "mlp_tuned": 0.0018
+     "base_rate": 0.1073,
+     "playbook": 0.1095,
+     "logistic": 0.0268,
+     "boosting": 0.0089,
+     "mlp": 0.1142,
+     "mlp_bag": 0.0004,
+     "mlp_tuned": 0.0064,
+     "ensemble": 0.05
     }
    ]
   },
   {
    "event": "miran20260114a",
    "t0": "2026-01-14T15:30:00Z",
-   "trained_on": 83,
+   "trained_on": 86,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26JAN-C25",
      "label": 0,
-     "base_rate": 0.096,
-     "playbook": 0.0974,
-     "logistic": 0.0124,
-     "boosting": 0.0135,
-     "mlp": 0.0728,
-     "mlp_bag": 0.0924,
-     "mlp_tuned": 0.0816
+     "base_rate": 0.1063,
+     "playbook": 0.1084,
+     "logistic": 0.0414,
+     "boosting": 0.036,
+     "mlp": 0.0741,
+     "mlp_bag": 0.0392,
+     "mlp_tuned": 0.0856,
+     "ensemble": 0.0505
     },
     {
      "market": "kalshi:KXFEDDECISION-26JAN-H0",
      "label": 0,
-     "base_rate": 0.096,
-     "playbook": 0.0974,
-     "logistic": 0.0206,
-     "boosting": 0.0155,
-     "mlp": 0.1104,
-     "mlp_bag": 0.1802,
-     "mlp_tuned": 0.2706
+     "base_rate": 0.1063,
+     "playbook": 0.1084,
+     "logistic": 0.0429,
+     "boosting": 0.0178,
+     "mlp": 0.1245,
+     "mlp_bag": 0.0791,
+     "mlp_tuned": 0.0964,
+     "ensemble": 0.0617
     }
    ]
   },
   {
    "event": "bowman20260116a",
    "t0": "2026-01-16T16:00:00Z",
-   "trained_on": 84,
+   "trained_on": 87,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26JAN-C25",
      "label": 0,
-     "base_rate": 0.095,
-     "playbook": 0.0964,
-     "logistic": 0.003,
-     "boosting": 0.0075,
-     "mlp": 0.0312,
-     "mlp_bag": 0.0009,
-     "mlp_tuned": 0.0072
+     "base_rate": 0.1053,
+     "playbook": 0.1073,
+     "logistic": 0.0284,
+     "boosting": 0.0442,
+     "mlp": 0.0761,
+     "mlp_bag": 0.0183,
+     "mlp_tuned": 0.0557,
+     "ensemble": 0.0496
     },
     {
      "market": "kalshi:KXFEDDECISION-26JAN-H0",
      "label": 0,
-     "base_rate": 0.095,
-     "playbook": 0.0964,
-     "logistic": 0.0052,
-     "boosting": 0.005,
-     "mlp": 0.0317,
-     "mlp_bag": 0.0004,
-     "mlp_tuned": 0.0039
+     "base_rate": 0.1053,
+     "playbook": 0.1073,
+     "logistic": 0.0433,
+     "boosting": 0.01,
+     "mlp": 0.0884,
+     "mlp_bag": 0.0033,
+     "mlp_tuned": 0.0251,
+     "ensemble": 0.0472
     }
    ]
   },
   {
    "event": "jefferson20260116a",
    "t0": "2026-01-16T20:30:00Z",
-   "trained_on": 85,
+   "trained_on": 88,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26JAN-C25",
      "label": 0,
-     "base_rate": 0.0941,
-     "playbook": 0.0955,
-     "logistic": 0.0106,
-     "boosting": 0.0283,
-     "mlp": 0.014,
-     "mlp_bag": 0.0009,
-     "mlp_tuned": 0.0149
+     "base_rate": 0.1043,
+     "playbook": 0.1063,
+     "logistic": 0.0071,
+     "boosting": 0.0347,
+     "mlp": 0.0588,
+     "mlp_bag": 0.0011,
+     "mlp_tuned": 0.013,
+     "ensemble": 0.0336
     },
     {
      "market": "kalshi:KXFEDDECISION-26JAN-H0",
      "label": 0,
-     "base_rate": 0.0941,
-     "playbook": 0.0955,
-     "logistic": 0.0127,
-     "boosting": 0.0086,
-     "mlp": 0.0179,
-     "mlp_bag": 0.0004,
-     "mlp_tuned": 0.0045
+     "base_rate": 0.1043,
+     "playbook": 0.1063,
+     "logistic": 0.0117,
+     "boosting": 0.0232,
+     "mlp": 0.0716,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0032,
+     "ensemble": 0.0355
     }
    ]
   },
   {
    "event": "waller20260130a",
    "t0": "2026-01-30T14:00:00Z",
-   "trained_on": 86,
+   "trained_on": 89,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26MAR-C25",
      "label": 0,
-     "base_rate": 0.0931,
-     "playbook": 0.0945,
-     "logistic": 0.0266,
-     "boosting": 0.2295,
-     "mlp": 0.1379,
-     "mlp_bag": 0.0167,
-     "mlp_tuned": 0.035
+     "base_rate": 0.1033,
+     "playbook": 0.1053,
+     "logistic": 0.0435,
+     "boosting": 0.0547,
+     "mlp": 0.0797,
+     "mlp_bag": 0.05,
+     "mlp_tuned": 0.0606,
+     "ensemble": 0.0593
     },
     {
      "market": "kalshi:KXFEDDECISION-26MAR-H0",
      "label": 0,
-     "base_rate": 0.0931,
-     "playbook": 0.0945,
-     "logistic": 0.1166,
-     "boosting": 0.6108,
-     "mlp": 0.1874,
-     "mlp_bag": 0.3971,
-     "mlp_tuned": 0.2116
+     "base_rate": 0.1033,
+     "playbook": 0.1053,
+     "logistic": 0.1566,
+     "boosting": 0.3811,
+     "mlp": 0.2367,
+     "mlp_bag": 0.1948,
+     "mlp_tuned": 0.2402,
+     "ensemble": 0.2581
     }
    ]
   },
   {
    "event": "bowman20260130a",
    "t0": "2026-01-30T22:00:00Z",
-   "trained_on": 87,
+   "trained_on": 90,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26MAR-C25",
      "label": 0,
-     "base_rate": 0.0922,
-     "playbook": 0.0936,
-     "logistic": 0.007,
-     "boosting": 0.0069,
-     "mlp": 0.0763,
-     "mlp_bag": 0.0002,
-     "mlp_tuned": 0.0044
+     "base_rate": 0.1023,
+     "playbook": 0.1043,
+     "logistic": 0.0711,
+     "boosting": 0.0092,
+     "mlp": 0.1137,
+     "mlp_bag": 0.0154,
+     "mlp_tuned": 0.0557,
+     "ensemble": 0.0647
     }
    ]
   },
   {
    "event": "cook20260204a",
    "t0": "2026-02-04T23:30:00Z",
-   "trained_on": 88,
+   "trained_on": 91,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26MAR-C25",
      "label": 0,
-     "base_rate": 0.0918,
-     "playbook": 0.0931,
-     "logistic": 0.0147,
-     "boosting": 0.0067,
-     "mlp": 0.0805,
-     "mlp_bag": 0.0063,
-     "mlp_tuned": 0.0146
+     "base_rate": 0.1019,
+     "playbook": 0.1038,
+     "logistic": 0.016,
+     "boosting": 0.0096,
+     "mlp": 0.0487,
+     "mlp_bag": 0.0021,
+     "mlp_tuned": 0.0127,
+     "ensemble": 0.0248
     },
     {
      "market": "kalshi:KXFEDDECISION-26MAR-H0",
      "label": 0,
-     "base_rate": 0.0918,
-     "playbook": 0.0931,
-     "logistic": 0.0302,
-     "boosting": 0.0045,
-     "mlp": 0.0776,
-     "mlp_bag": 0.0102,
-     "mlp_tuned": 0.0219
+     "base_rate": 0.1019,
+     "playbook": 0.1038,
+     "logistic": 0.0676,
+     "boosting": 0.0075,
+     "mlp": 0.0615,
+     "mlp_bag": 0.0143,
+     "mlp_tuned": 0.0427,
+     "ensemble": 0.0455
     }
    ]
   },
   {
    "event": "jefferson20260206a",
    "t0": "2026-02-06T17:00:00Z",
-   "trained_on": 89,
+   "trained_on": 92,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26MAR-H0",
      "label": 0,
-     "base_rate": 0.0909,
-     "playbook": 0.0922,
-     "logistic": 0.0357,
-     "boosting": 0.0311,
-     "mlp": 0.1258,
-     "mlp_bag": 0.0011,
-     "mlp_tuned": 0.0246
+     "base_rate": 0.1009,
+     "playbook": 0.1028,
+     "logistic": 0.0508,
+     "boosting": 0.2373,
+     "mlp": 0.0985,
+     "mlp_bag": 0.003,
+     "mlp_tuned": 0.0245,
+     "ensemble": 0.1289
     }
    ]
   },
   {
    "event": "bowman20260216a",
    "t0": "2026-02-16T13:25:00Z",
-   "trained_on": 90,
+   "trained_on": 93,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26MAR-H0",
      "label": 0,
-     "base_rate": 0.0905,
-     "playbook": 0.0918,
-     "logistic": 0.0048,
-     "boosting": 0.0048,
-     "mlp": 0.0313,
-     "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0016
+     "base_rate": 0.1005,
+     "playbook": 0.1023,
+     "logistic": 0.0532,
+     "boosting": 0.0074,
+     "mlp": 0.0388,
+     "mlp_bag": 0.0005,
+     "mlp_tuned": 0.0095,
+     "ensemble": 0.0331
     }
    ]
   },
   {
    "event": "barr20260217a",
    "t0": "2026-02-17T17:45:00Z",
-   "trained_on": 91,
+   "trained_on": 94,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26MAR-H0",
      "label": 0,
-     "base_rate": 0.09,
-     "playbook": 0.0913,
-     "logistic": 0.0084,
-     "boosting": 0.0049,
-     "mlp": 0.0383,
-     "mlp_bag": 0.0004,
-     "mlp_tuned": 0.0054
+     "base_rate": 0.1,
+     "playbook": 0.1019,
+     "logistic": 0.0201,
+     "boosting": 0.008,
+     "mlp": 0.0371,
+     "mlp_bag": 0.0013,
+     "mlp_tuned": 0.0071,
+     "ensemble": 0.0217
+    }
+   ]
+  },
+  {
+   "event": "bowman20260226a",
+   "t0": "2026-02-26T15:00:00Z",
+   "trained_on": 95,
+   "rows": [
+    {
+     "market": "kalshi:KXFEDDECISION-26MAR-H0",
+     "label": 0,
+     "base_rate": 0.0995,
+     "playbook": 0.1014,
+     "logistic": 0.0833,
+     "boosting": 0.0116,
+     "mlp": 0.0385,
+     "mlp_bag": 0.0059,
+     "mlp_tuned": 0.021,
+     "ensemble": 0.0444
     }
    ]
   },
   {
    "event": "bowman20260312a",
    "t0": "2026-03-12T15:00:00Z",
-   "trained_on": 92,
+   "trained_on": 96,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26MAR-C25",
      "label": 0,
-     "base_rate": 0.0896,
-     "playbook": 0.0909,
-     "logistic": 0.0003,
-     "boosting": 0.0038,
-     "mlp": 0.0105,
-     "mlp_bag": 0.0001,
-     "mlp_tuned": 0.001
+     "base_rate": 0.0991,
+     "playbook": 0.1009,
+     "logistic": 0.0021,
+     "boosting": 0.0067,
+     "mlp": 0.0133,
+     "mlp_bag": 0.0005,
+     "mlp_tuned": 0.002,
+     "ensemble": 0.0073
     },
     {
      "market": "kalshi:KXFEDDECISION-26MAR-H0",
      "label": 0,
-     "base_rate": 0.0896,
-     "playbook": 0.0909,
-     "logistic": 0.0006,
-     "boosting": 0.0038,
-     "mlp": 0.0113,
+     "base_rate": 0.0991,
+     "playbook": 0.1009,
+     "logistic": 0.0057,
+     "boosting": 0.0067,
+     "mlp": 0.0121,
      "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0007
+     "mlp_tuned": 0.0014,
+     "ensemble": 0.0081
     }
    ]
   },
   {
    "event": "cook20260326a",
    "t0": "2026-03-26T20:00:00Z",
-   "trained_on": 93,
+   "trained_on": 97,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26APR-H0",
      "label": 0,
-     "base_rate": 0.0888,
-     "playbook": 0.09,
-     "logistic": 0.0065,
-     "boosting": 0.0052,
-     "mlp": 0.022,
+     "base_rate": 0.0982,
+     "playbook": 0.1,
+     "logistic": 0.0125,
+     "boosting": 0.0053,
+     "mlp": 0.0198,
      "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0023
+     "mlp_tuned": 0.0016,
+     "ensemble": 0.0125
     },
     {
      "market": "kalshi:KXFEDDECISION-26APR-H25",
      "label": 0,
-     "base_rate": 0.0888,
-     "playbook": 0.2,
-     "logistic": 0.0028,
-     "boosting": 0.004,
-     "mlp": 0.0133,
+     "base_rate": 0.0982,
+     "playbook": 0.1667,
+     "logistic": 0.0021,
+     "boosting": 0.0057,
+     "mlp": 0.0116,
      "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0021
+     "mlp_tuned": 0.0008,
+     "ensemble": 0.0065
     }
    ]
   },
   {
    "event": "jefferson20260326a",
    "t0": "2026-03-26T23:00:00Z",
-   "trained_on": 94,
+   "trained_on": 98,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26APR-H0",
      "label": 0,
-     "base_rate": 0.088,
-     "playbook": 0.0896,
-     "logistic": 0.105,
-     "boosting": 0.0124,
-     "mlp": 0.1307,
-     "mlp_bag": 0.0042,
-     "mlp_tuned": 0.0399
+     "base_rate": 0.0973,
+     "playbook": 0.0995,
+     "logistic": 0.1148,
+     "boosting": 0.0076,
+     "mlp": 0.0672,
+     "mlp_bag": 0.0004,
+     "mlp_tuned": 0.0085,
+     "ensemble": 0.0632
     }
    ]
   },
   {
    "event": "barr20260326a",
    "t0": "2026-03-26T23:10:00Z",
-   "trained_on": 94,
+   "trained_on": 98,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26APR-H0",
      "label": 0,
-     "base_rate": 0.088,
-     "playbook": 0.0896,
-     "logistic": 0.1145,
-     "boosting": 0.014,
-     "mlp": 0.1721,
-     "mlp_bag": 0.022,
-     "mlp_tuned": 0.0896
+     "base_rate": 0.0973,
+     "playbook": 0.0995,
+     "logistic": 0.1093,
+     "boosting": 0.0071,
+     "mlp": 0.0759,
+     "mlp_bag": 0.0034,
+     "mlp_tuned": 0.0153,
+     "ensemble": 0.0641
     }
    ]
   },
   {
    "event": "barr20260331a",
    "t0": "2026-03-31T19:00:00Z",
-   "trained_on": 96,
+   "trained_on": 100,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26APR-C25",
      "label": 0,
-     "base_rate": 0.0872,
-     "playbook": 0.0888,
-     "logistic": 0.0014,
-     "boosting": 0.0054,
-     "mlp": 0.0103,
+     "base_rate": 0.0965,
+     "playbook": 0.0987,
+     "logistic": 0.0005,
+     "boosting": 0.0077,
+     "mlp": 0.0067,
      "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0021
+     "mlp_tuned": 0.0006,
+     "ensemble": 0.0049
     }
    ]
   },
   {
    "event": "bowman20260331a",
    "t0": "2026-03-31T21:10:00Z",
-   "trained_on": 97,
+   "trained_on": 101,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26APR-C25",
      "label": 0,
-     "base_rate": 0.0868,
-     "playbook": 0.0884,
-     "logistic": 0.0012,
-     "boosting": 0.0028,
-     "mlp": 0.0083,
-     "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0007
+     "base_rate": 0.0961,
+     "playbook": 0.0982,
+     "logistic": 0.0161,
+     "boosting": 0.0056,
+     "mlp": 0.0235,
+     "mlp_bag": 0.0004,
+     "mlp_tuned": 0.0047,
+     "ensemble": 0.0151
     }
    ]
   },
   {
    "event": "jefferson20260407a",
    "t0": "2026-04-07T21:50:00Z",
-   "trained_on": 98,
+   "trained_on": 102,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26APR-C25",
      "label": 0,
-     "base_rate": 0.0864,
-     "playbook": 0.088,
-     "logistic": 0.0033,
-     "boosting": 0.0035,
-     "mlp": 0.0133,
+     "base_rate": 0.0957,
+     "playbook": 0.0978,
+     "logistic": 0.0041,
+     "boosting": 0.006,
+     "mlp": 0.01,
      "mlp_bag": 0.0001,
-     "mlp_tuned": 0.001
+     "mlp_tuned": 0.0007,
+     "ensemble": 0.0067
     },
     {
      "market": "kalshi:KXFEDDECISION-26APR-H0",
      "label": 0,
-     "base_rate": 0.0864,
-     "playbook": 0.088,
-     "logistic": 0.0106,
-     "boosting": 0.0048,
-     "mlp": 0.0131,
-     "mlp_bag": 0.0006,
-     "mlp_tuned": 0.0033
+     "base_rate": 0.0957,
+     "playbook": 0.0978,
+     "logistic": 0.0161,
+     "boosting": 0.0067,
+     "mlp": 0.0168,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0038,
+     "ensemble": 0.0132
     }
    ]
   },
   {
    "event": "barr20260414a",
    "t0": "2026-04-14T16:45:00Z",
-   "trained_on": 99,
+   "trained_on": 103,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26APR-C25",
      "label": 0,
-     "base_rate": 0.0856,
-     "playbook": 0.0872,
-     "logistic": 0.0008,
-     "boosting": 0.0045,
-     "mlp": 0.0092,
-     "mlp_bag": 0.0002,
-     "mlp_tuned": 0.0016
+     "base_rate": 0.0948,
+     "playbook": 0.0969,
+     "logistic": 0.0003,
+     "boosting": 0.006,
+     "mlp": 0.0056,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0004,
+     "ensemble": 0.004
     }
    ]
   },
   {
    "event": "waller20260421a",
    "t0": "2026-04-21T18:30:00Z",
-   "trained_on": 100,
+   "trained_on": 104,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26APR-H0",
      "label": 0,
-     "base_rate": 0.0852,
-     "playbook": 0.0868,
-     "logistic": 0.0018,
-     "boosting": 0.0039,
-     "mlp": 0.0084,
-     "mlp_bag": 0.0005,
-     "mlp_tuned": 0.0024
+     "base_rate": 0.0944,
+     "playbook": 0.0965,
+     "logistic": 0.0025,
+     "boosting": 0.0061,
+     "mlp": 0.0078,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0014,
+     "ensemble": 0.0054
     }
    ]
   },
   {
    "event": "bowman20260505a",
    "t0": "2026-05-05T14:00:00Z",
-   "trained_on": 101,
+   "trained_on": 105,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26JUN-C25",
      "label": 0,
-     "base_rate": 0.0848,
-     "playbook": 0.0864,
-     "logistic": 0.0056,
-     "boosting": 0.0062,
-     "mlp": 0.0197,
-     "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0019
+     "base_rate": 0.094,
+     "playbook": 0.0961,
+     "logistic": 0.0165,
+     "boosting": 0.0069,
+     "mlp": 0.0259,
+     "mlp_bag": 0.001,
+     "mlp_tuned": 0.0063,
+     "ensemble": 0.0164
     }
    ]
   },
   {
    "event": "bowman20260514a",
    "t0": "2026-05-14T17:00:00Z",
-   "trained_on": 102,
+   "trained_on": 106,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26JUN-C25",
      "label": 0,
-     "base_rate": 0.0844,
-     "playbook": 0.086,
-     "logistic": 0.0013,
-     "boosting": 0.0035,
-     "mlp": 0.0109,
+     "base_rate": 0.0936,
+     "playbook": 0.0957,
+     "logistic": 0.0021,
+     "boosting": 0.007,
+     "mlp": 0.0114,
      "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0013
+     "mlp_tuned": 0.001,
+     "ensemble": 0.0068
     },
     {
      "market": "kalshi:KXFEDDECISION-26JUN-H25",
      "label": 0,
-     "base_rate": 0.0844,
-     "playbook": 0.1667,
+     "base_rate": 0.0936,
+     "playbook": 0.1429,
      "logistic": 0.0009,
-     "boosting": 0.0035,
-     "mlp": 0.007,
+     "boosting": 0.007,
+     "mlp": 0.0047,
      "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0006
+     "mlp_tuned": 0.0003,
+     "ensemble": 0.0042
     }
    ]
   },
   {
    "event": "jefferson20260527a",
    "t0": "2026-05-28T00:00:00Z",
-   "trained_on": 103,
+   "trained_on": 107,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26JUN-H25",
      "label": 0,
-     "base_rate": 0.0837,
-     "playbook": 0.1429,
-     "logistic": 0.0051,
-     "boosting": 0.0053,
-     "mlp": 0.0222,
-     "mlp_bag": 0.0003,
-     "mlp_tuned": 0.0018
+     "base_rate": 0.0928,
+     "playbook": 0.125,
+     "logistic": 0.0033,
+     "boosting": 0.0071,
+     "mlp": 0.012,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0011,
+     "ensemble": 0.0075
     }
    ]
   },
   {
    "event": "bowman20260529a",
    "t0": "2026-05-29T13:10:00Z",
-   "trained_on": 104,
+   "trained_on": 108,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26JUN-H0",
      "label": 0,
-     "base_rate": 0.0833,
-     "playbook": 0.0856,
-     "logistic": 0.0074,
-     "boosting": 0.0506,
-     "mlp": 0.0173,
-     "mlp_bag": 0.0014,
-     "mlp_tuned": 0.0047
+     "base_rate": 0.0924,
+     "playbook": 0.0952,
+     "logistic": 0.0764,
+     "boosting": 0.0635,
+     "mlp": 0.0842,
+     "mlp_bag": 0.0084,
+     "mlp_tuned": 0.0625,
+     "ensemble": 0.0747
     }
    ]
   },
   {
    "event": "waller20260706a",
    "t0": "2026-07-06T15:00:00Z",
-   "trained_on": 105,
+   "trained_on": 109,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26JUL-H0",
      "label": 0,
-     "base_rate": 0.083,
-     "playbook": 0.0852,
-     "logistic": 0.0213,
-     "boosting": 0.0093,
-     "mlp": 0.0377,
-     "mlp_bag": 0.0073,
-     "mlp_tuned": 0.025
+     "base_rate": 0.0921,
+     "playbook": 0.0948,
+     "logistic": 0.0197,
+     "boosting": 0.0232,
+     "mlp": 0.0432,
+     "mlp_bag": 0.007,
+     "mlp_tuned": 0.0185,
+     "ensemble": 0.0287
     },
     {
      "market": "kalshi:KXFEDDECISION-26JUL-H25",
      "label": 0,
-     "base_rate": 0.083,
-     "playbook": 0.125,
-     "logistic": 0.0057,
-     "boosting": 0.0103,
-     "mlp": 0.0172,
+     "base_rate": 0.0921,
+     "playbook": 0.1111,
+     "logistic": 0.0033,
+     "boosting": 0.0208,
+     "mlp": 0.0218,
      "mlp_bag": 0.0004,
-     "mlp_tuned": 0.0061
+     "mlp_tuned": 0.0036,
+     "ensemble": 0.0153
     }
    ]
   },
   {
    "event": "waller20260713a",
    "t0": "2026-07-13T16:30:00Z",
-   "trained_on": 106,
+   "trained_on": 110,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26JUL-H0",
      "label": 1,
-     "base_rate": 0.0823,
-     "playbook": 0.0848,
-     "logistic": 0.122,
-     "boosting": 0.0609,
-     "mlp": 0.1117,
-     "mlp_bag": 0.0387,
-     "mlp_tuned": 0.1056
+     "base_rate": 0.0913,
+     "playbook": 0.0944,
+     "logistic": 0.1571,
+     "boosting": 0.5421,
+     "mlp": 0.1849,
+     "mlp_bag": 0.0216,
+     "mlp_tuned": 0.1164,
+     "ensemble": 0.2947
     },
     {
      "market": "kalshi:KXFEDDECISION-26JUL-H25",
      "label": 1,
-     "base_rate": 0.0823,
-     "playbook": 0.1111,
-     "logistic": 0.0406,
-     "boosting": 0.0737,
-     "mlp": 0.0759,
-     "mlp_bag": 0.0117,
-     "mlp_tuned": 0.066
+     "base_rate": 0.0913,
+     "playbook": 0.1,
+     "logistic": 0.0527,
+     "boosting": 0.4562,
+     "mlp": 0.1387,
+     "mlp_bag": 0.0123,
+     "mlp_tuned": 0.0745,
+     "ensemble": 0.2159
+    }
+   ]
+  },
+  {
+   "event": "warsh20260714a",
+   "t0": "2026-07-14T12:30:00Z",
+   "trained_on": 111,
+   "rows": [
+    {
+     "market": "kalshi:KXFEDDECISION-26JUL-H0",
+     "label": 1,
+     "base_rate": 0.0988,
+     "playbook": 0.0988,
+     "logistic": 0.6577,
+     "boosting": 0.898,
+     "mlp": 0.925,
+     "mlp_bag": 0.9712,
+     "mlp_tuned": 0.674,
+     "ensemble": 0.8269
+    },
+    {
+     "market": "kalshi:KXFEDDECISION-26JUL-H25",
+     "label": 1,
+     "base_rate": 0.0988,
+     "playbook": 0.0988,
+     "logistic": 0.8811,
+     "boosting": 0.7503,
+     "mlp": 0.7902,
+     "mlp_bag": 0.9615,
+     "mlp_tuned": 0.7259,
+     "ensemble": 0.8072
     }
    ]
   },
   {
    "event": "barr20260714a",
    "t0": "2026-07-14T16:40:00Z",
-   "trained_on": 107,
+   "trained_on": 112,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26JUL-C25",
      "label": 0,
-     "base_rate": 0.0901,
-     "playbook": 0.0901,
-     "logistic": 0.0008,
-     "boosting": 0.0044,
-     "mlp": 0.0067,
-     "mlp_bag": 0.0005,
-     "mlp_tuned": 0.0021
+     "base_rate": 0.1061,
+     "playbook": 0.1061,
+     "logistic": 0.0005,
+     "boosting": 0.0061,
+     "mlp": 0.0063,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0059,
+     "ensemble": 0.0043
     },
     {
      "market": "kalshi:KXFEDDECISION-26JUL-H0",
      "label": 0,
-     "base_rate": 0.0901,
-     "playbook": 0.0901,
-     "logistic": 0.0308,
-     "boosting": 0.0175,
-     "mlp": 0.0822,
-     "mlp_bag": 0.1239,
-     "mlp_tuned": 0.0553
+     "base_rate": 0.1061,
+     "playbook": 0.1061,
+     "logistic": 0.0182,
+     "boosting": 0.0389,
+     "mlp": 0.0585,
+     "mlp_bag": 0.0061,
+     "mlp_tuned": 0.0418,
+     "ensemble": 0.0385
     },
     {
      "market": "kalshi:KXFEDDECISION-26JUL-H25",
      "label": 0,
-     "base_rate": 0.0901,
-     "playbook": 0.0901,
-     "logistic": 0.1268,
-     "boosting": 0.0092,
-     "mlp": 0.1628,
-     "mlp_bag": 0.208,
-     "mlp_tuned": 0.0927
+     "base_rate": 0.1061,
+     "playbook": 0.1061,
+     "logistic": 0.0256,
+     "boosting": 0.0088,
+     "mlp": 0.0422,
+     "mlp_bag": 0.0047,
+     "mlp_tuned": 0.0441,
+     "ensemble": 0.0255
     }
    ]
   },
   {
    "event": "bowman20260714a",
    "t0": "2026-07-14T18:55:00Z",
-   "trained_on": 108,
+   "trained_on": 113,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26JUL-H0",
      "label": 0,
-     "base_rate": 0.089,
-     "playbook": 0.089,
-     "logistic": 0.0051,
-     "boosting": 0.0065,
-     "mlp": 0.0168,
-     "mlp_bag": 0.0021,
-     "mlp_tuned": 0.0044
+     "base_rate": 0.1048,
+     "playbook": 0.1048,
+     "logistic": 0.0036,
+     "boosting": 0.0066,
+     "mlp": 0.0095,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0151,
+     "ensemble": 0.0065
     },
     {
      "market": "kalshi:KXFEDDECISION-26JUL-H25",
      "label": 0,
-     "base_rate": 0.089,
-     "playbook": 0.089,
-     "logistic": 0.0182,
-     "boosting": 0.0052,
-     "mlp": 0.0192,
-     "mlp_bag": 0.001,
-     "mlp_tuned": 0.0044
+     "base_rate": 0.1048,
+     "playbook": 0.1048,
+     "logistic": 0.0056,
+     "boosting": 0.0066,
+     "mlp": 0.0033,
+     "mlp_bag": 0.0001,
+     "mlp_tuned": 0.0171,
+     "ensemble": 0.0052
     }
    ]
   },
   {
    "event": "cook20260715a",
    "t0": "2026-07-15T17:00:00Z",
-   "trained_on": 109,
+   "trained_on": 114,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26JUL-H0",
      "label": 0,
-     "base_rate": 0.0882,
-     "playbook": 0.0882,
-     "logistic": 0.008,
-     "boosting": 0.0045,
-     "mlp": 0.0128,
-     "mlp_bag": 0.0008,
-     "mlp_tuned": 0.0042
+     "base_rate": 0.104,
+     "playbook": 0.104,
+     "logistic": 0.0145,
+     "boosting": 0.008,
+     "mlp": 0.0208,
+     "mlp_bag": 0.0007,
+     "mlp_tuned": 0.0317,
+     "ensemble": 0.0144
     },
     {
      "market": "kalshi:KXFEDDECISION-26JUL-H25",
      "label": 0,
-     "base_rate": 0.0882,
-     "playbook": 0.0882,
-     "logistic": 0.0378,
-     "boosting": 0.0045,
-     "mlp": 0.0362,
-     "mlp_bag": 0.003,
-     "mlp_tuned": 0.0154
+     "base_rate": 0.104,
+     "playbook": 0.104,
+     "logistic": 0.0401,
+     "boosting": 0.0072,
+     "mlp": 0.04,
+     "mlp_bag": 0.0027,
+     "mlp_tuned": 0.0465,
+     "ensemble": 0.0291
     }
    ]
   },
   {
    "event": "jefferson20260716a",
    "t0": "2026-07-16T23:00:00Z",
-   "trained_on": 110,
+   "trained_on": 115,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26JUL-H0",
      "label": 0,
-     "base_rate": 0.0875,
-     "playbook": 0.0875,
-     "logistic": 0.0046,
-     "boosting": 0.0041,
-     "mlp": 0.0034,
+     "base_rate": 0.1032,
+     "playbook": 0.1032,
+     "logistic": 0.0062,
+     "boosting": 0.0065,
+     "mlp": 0.0058,
      "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0006
+     "mlp_tuned": 0.0194,
+     "ensemble": 0.0061
     }
    ]
   },
   {
    "event": "cook20260805a",
    "t0": "2026-08-05T20:05:00Z",
-   "trained_on": 111,
+   "trained_on": 116,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26SEP-H0",
      "label": 0,
-     "base_rate": 0.0871,
-     "playbook": 0.0871,
-     "logistic": 0.2096,
-     "boosting": 0.0264,
-     "mlp": 0.179,
-     "mlp_bag": 0.1628,
-     "mlp_tuned": 0.3367
+     "base_rate": 0.1028,
+     "playbook": 0.1028,
+     "logistic": 0.3247,
+     "boosting": 0.1003,
+     "mlp": 0.1899,
+     "mlp_bag": 0.5151,
+     "mlp_tuned": 0.4424,
+     "ensemble": 0.205
     },
     {
      "market": "kalshi:KXFEDDECISION-26SEP-H25",
      "label": 0,
-     "base_rate": 0.0871,
-     "playbook": 0.0871,
-     "logistic": 0.4281,
-     "boosting": 0.0377,
-     "mlp": 0.4562,
-     "mlp_bag": 0.4566,
-     "mlp_tuned": 0.6193
+     "base_rate": 0.1028,
+     "playbook": 0.1028,
+     "logistic": 0.4996,
+     "boosting": 0.1173,
+     "mlp": 0.5337,
+     "mlp_bag": 0.6613,
+     "mlp_tuned": 0.5552,
+     "ensemble": 0.3835
     }
    ]
   },
   {
    "event": "warsh20260828",
    "t0": "2026-08-28T14:00:00Z",
-   "trained_on": 112,
+   "trained_on": 117,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26SEP-H25",
      "label": 1,
-     "base_rate": 0.0864,
-     "playbook": 0.0864,
-     "logistic": 0.9897,
-     "boosting": 0.2466,
-     "mlp": 0.6063,
-     "mlp_bag": 0.9974,
-     "mlp_tuned": 0.9877
+     "base_rate": 0.102,
+     "playbook": 0.102,
+     "logistic": 0.6769,
+     "boosting": 0.0747,
+     "mlp": 0.5714,
+     "mlp_bag": 0.8138,
+     "mlp_tuned": 0.6689,
+     "ensemble": 0.441
     },
     {
      "market": "kalshi:KXFEDDECISION-26SEP-H0",
      "label": 1,
-     "base_rate": 0.0864,
-     "playbook": 0.0864,
-     "logistic": 0.9894,
-     "boosting": 0.4981,
-     "mlp": 0.9379,
-     "mlp_bag": 0.9993,
-     "mlp_tuned": 0.983
+     "base_rate": 0.102,
+     "playbook": 0.102,
+     "logistic": 0.8757,
+     "boosting": 0.6452,
+     "mlp": 0.7718,
+     "mlp_bag": 0.9371,
+     "mlp_tuned": 0.8377,
+     "ensemble": 0.7642
     },
     {
      "market": "kalshi:KXFEDDECISION-26SEP-C25",
      "label": 0,
-     "base_rate": 0.0864,
-     "playbook": 0.0864,
-     "logistic": 0.6987,
-     "boosting": 0.0618,
-     "mlp": 0.6073,
-     "mlp_bag": 0.224,
-     "mlp_tuned": 0.6963
+     "base_rate": 0.102,
+     "playbook": 0.102,
+     "logistic": 0.0766,
+     "boosting": 0.0167,
+     "mlp": 0.0965,
+     "mlp_bag": 0.05,
+     "mlp_tuned": 0.0643,
+     "ensemble": 0.0633
     }
    ]
   },
   {
    "event": "barr20260901a",
    "t0": "2026-09-01T13:05:00Z",
-   "trained_on": 113,
+   "trained_on": 118,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26SEP-H0",
      "label": 0,
-     "base_rate": 0.0935,
-     "playbook": 0.0935,
-     "logistic": 0.0992,
-     "boosting": 0.1264,
-     "mlp": 0.1672,
-     "mlp_bag": 0.4081,
-     "mlp_tuned": 0.1055
+     "base_rate": 0.1085,
+     "playbook": 0.1085,
+     "logistic": 0.1479,
+     "boosting": 0.3234,
+     "mlp": 0.2091,
+     "mlp_bag": 0.4707,
+     "mlp_tuned": 0.1819,
+     "ensemble": 0.2268
     },
     {
      "market": "kalshi:KXFEDDECISION-26SEP-H25",
      "label": 1,
-     "base_rate": 0.0935,
-     "playbook": 0.0935,
-     "logistic": 0.1157,
-     "boosting": 0.0539,
-     "mlp": 0.1645,
-     "mlp_bag": 0.1401,
-     "mlp_tuned": 0.067
+     "base_rate": 0.1085,
+     "playbook": 0.1085,
+     "logistic": 0.1365,
+     "boosting": 0.1237,
+     "mlp": 0.2098,
+     "mlp_bag": 0.0373,
+     "mlp_tuned": 0.0493,
+     "ensemble": 0.1566
     }
    ]
   },
   {
    "event": "waller20260903a",
    "t0": "2026-09-03T12:30:00Z",
-   "trained_on": 114,
+   "trained_on": 119,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26SEP-H0",
      "label": 1,
-     "base_rate": 0.0968,
-     "playbook": 0.0968,
-     "logistic": 0.3003,
-     "boosting": 0.6266,
-     "mlp": 0.4112,
-     "mlp_bag": 0.5713,
-     "mlp_tuned": 0.4312
+     "base_rate": 0.1115,
+     "playbook": 0.1115,
+     "logistic": 0.1771,
+     "boosting": 0.3293,
+     "mlp": 0.161,
+     "mlp_bag": 0.1449,
+     "mlp_tuned": 0.185,
+     "ensemble": 0.2224
     },
     {
      "market": "kalshi:KXFEDDECISION-26SEP-H25",
      "label": 1,
-     "base_rate": 0.0968,
-     "playbook": 0.0968,
-     "logistic": 0.7636,
-     "boosting": 0.7234,
-     "mlp": 0.7496,
-     "mlp_bag": 0.9826,
-     "mlp_tuned": 0.876
+     "base_rate": 0.1115,
+     "playbook": 0.1115,
+     "logistic": 0.5737,
+     "boosting": 0.2654,
+     "mlp": 0.6842,
+     "mlp_bag": 0.9459,
+     "mlp_tuned": 0.7302,
+     "ensemble": 0.5078
     }
    ]
   },
   {
    "event": "bowman20260918a",
    "t0": "2026-09-18T13:30:00Z",
-   "trained_on": 115,
+   "trained_on": 120,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H0",
      "label": 0,
-     "base_rate": 0.104,
-     "playbook": 0.104,
-     "logistic": 0.1857,
-     "boosting": 0.5576,
-     "mlp": 0.2758,
-     "mlp_bag": 0.0407,
-     "mlp_tuned": 0.2039
+     "base_rate": 0.1183,
+     "playbook": 0.1183,
+     "logistic": 0.4457,
+     "boosting": 0.1847,
+     "mlp": 0.5327,
+     "mlp_bag": 0.5421,
+     "mlp_tuned": 0.4265,
+     "ensemble": 0.3877
     },
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H25",
      "label": 1,
-     "base_rate": 0.104,
-     "playbook": 0.104,
-     "logistic": 0.463,
-     "boosting": 0.2531,
-     "mlp": 0.4548,
-     "mlp_bag": 0.1889,
-     "mlp_tuned": 0.502
+     "base_rate": 0.1183,
+     "playbook": 0.1183,
+     "logistic": 0.646,
+     "boosting": 0.1212,
+     "mlp": 0.4923,
+     "mlp_bag": 0.6253,
+     "mlp_tuned": 0.536,
+     "ensemble": 0.4198
     }
    ]
   },
   {
    "event": "bowman20260918b",
    "t0": "2026-09-18T13:30:00Z",
-   "trained_on": 115,
+   "trained_on": 120,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H0",
      "label": 0,
-     "base_rate": 0.104,
-     "playbook": 0.104,
-     "logistic": 0.1882,
-     "boosting": 0.5576,
-     "mlp": 0.2792,
-     "mlp_bag": 0.042,
-     "mlp_tuned": 0.2082
+     "base_rate": 0.1183,
+     "playbook": 0.1183,
+     "logistic": 0.4451,
+     "boosting": 0.1847,
+     "mlp": 0.5328,
+     "mlp_bag": 0.5452,
+     "mlp_tuned": 0.4284,
+     "ensemble": 0.3875
     },
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H25",
      "label": 1,
-     "base_rate": 0.104,
-     "playbook": 0.104,
-     "logistic": 0.4672,
-     "boosting": 0.2531,
-     "mlp": 0.4595,
-     "mlp_bag": 0.1941,
-     "mlp_tuned": 0.5086
+     "base_rate": 0.1183,
+     "playbook": 0.1183,
+     "logistic": 0.6454,
+     "boosting": 0.1212,
+     "mlp": 0.4938,
+     "mlp_bag": 0.6277,
+     "mlp_tuned": 0.5385,
+     "ensemble": 0.4201
     }
    ]
   },
   {
    "event": "jefferson20260922a",
    "t0": "2026-09-22T14:20:00Z",
-   "trained_on": 117,
+   "trained_on": 122,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H0",
      "label": 1,
-     "base_rate": 0.1102,
-     "playbook": 0.1102,
-     "logistic": 0.0222,
-     "boosting": 0.0374,
-     "mlp": 0.0298,
-     "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0487
+     "base_rate": 0.1241,
+     "playbook": 0.1241,
+     "logistic": 0.0336,
+     "boosting": 0.1908,
+     "mlp": 0.0377,
+     "mlp_bag": 0.0011,
+     "mlp_tuned": 0.0625,
+     "ensemble": 0.0873
     }
    ]
   },
   {
    "event": "barr20260923a",
    "t0": "2026-09-23T14:05:00Z",
-   "trained_on": 118,
+   "trained_on": 123,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H0",
      "label": 1,
-     "base_rate": 0.1137,
-     "playbook": 0.1137,
-     "logistic": 0.2449,
-     "boosting": 0.0933,
-     "mlp": 0.146,
-     "mlp_bag": 0.0061,
-     "mlp_tuned": 0.2394
+     "base_rate": 0.1273,
+     "playbook": 0.1273,
+     "logistic": 0.5169,
+     "boosting": 0.2345,
+     "mlp": 0.2914,
+     "mlp_bag": 0.0596,
+     "mlp_tuned": 0.4046,
+     "ensemble": 0.3476
     },
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H25",
      "label": 1,
-     "base_rate": 0.1137,
-     "playbook": 0.1137,
-     "logistic": 0.768,
-     "boosting": 0.309,
-     "mlp": 0.5274,
-     "mlp_bag": 0.3116,
-     "mlp_tuned": 0.6773
+     "base_rate": 0.1273,
+     "playbook": 0.1273,
+     "logistic": 0.8789,
+     "boosting": 0.4542,
+     "mlp": 0.7732,
+     "mlp_bag": 0.2868,
+     "mlp_tuned": 0.7674,
+     "ensemble": 0.7021
     }
    ]
   },
   {
    "event": "cook20260928a",
    "t0": "2026-09-28T17:25:00Z",
-   "trained_on": 119,
+   "trained_on": 124,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H0",
      "label": 0,
-     "base_rate": 0.1206,
-     "playbook": 0.1206,
-     "logistic": 0.128,
-     "boosting": 0.0933,
-     "mlp": 0.1207,
-     "mlp_bag": 0.009,
-     "mlp_tuned": 0.1523
+     "base_rate": 0.1338,
+     "playbook": 0.1338,
+     "logistic": 0.3409,
+     "boosting": 0.2543,
+     "mlp": 0.2937,
+     "mlp_bag": 0.191,
+     "mlp_tuned": 0.3198,
+     "ensemble": 0.2963
     }
    ]
   },
   {
    "event": "bowman20260929a",
    "t0": "2026-09-29T15:00:00Z",
-   "trained_on": 120,
+   "trained_on": 125,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H0",
      "label": 0,
-     "base_rate": 0.1202,
-     "playbook": 0.1202,
-     "logistic": 0.051,
-     "boosting": 0.0556,
-     "mlp": 0.0473,
-     "mlp_bag": 0.0047,
-     "mlp_tuned": 0.0756
+     "base_rate": 0.1333,
+     "playbook": 0.1333,
+     "logistic": 0.0375,
+     "boosting": 0.1231,
+     "mlp": 0.0516,
+     "mlp_bag": 0.0128,
+     "mlp_tuned": 0.0635,
+     "ensemble": 0.0708
     },
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H25",
      "label": 0,
-     "base_rate": 0.1202,
-     "playbook": 0.1202,
-     "logistic": 0.3284,
-     "boosting": 0.1745,
-     "mlp": 0.4247,
-     "mlp_bag": 0.5491,
-     "mlp_tuned": 0.3372
+     "base_rate": 0.1333,
+     "playbook": 0.1333,
+     "logistic": 0.1957,
+     "boosting": 0.2261,
+     "mlp": 0.2562,
+     "mlp_bag": 0.5894,
+     "mlp_tuned": 0.244,
+     "ensemble": 0.226
     }
    ]
   },
   {
    "event": "barr20260929a",
    "t0": "2026-09-29T16:40:00Z",
-   "trained_on": 121,
+   "trained_on": 126,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H0",
      "label": 1,
-     "base_rate": 0.1192,
-     "playbook": 0.1192,
-     "logistic": 0.1677,
-     "boosting": 0.0491,
-     "mlp": 0.1232,
-     "mlp_bag": 0.0161,
-     "mlp_tuned": 0.1552
+     "base_rate": 0.1324,
+     "playbook": 0.1324,
+     "logistic": 0.3072,
+     "boosting": 0.1498,
+     "mlp": 0.253,
+     "mlp_bag": 0.2896,
+     "mlp_tuned": 0.2756,
+     "ensemble": 0.2367
     }
    ]
   },
   {
    "event": "waller20260928a",
    "t0": "2026-09-29T19:00:00Z",
-   "trained_on": 122,
+   "trained_on": 127,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H0",
      "label": 0,
-     "base_rate": 0.1226,
-     "playbook": 0.1226,
-     "logistic": 0.9631,
-     "boosting": 0.4085,
-     "mlp": 0.8793,
-     "mlp_bag": 0.4244,
-     "mlp_tuned": 0.9026
+     "base_rate": 0.1355,
+     "playbook": 0.1355,
+     "logistic": 0.9793,
+     "boosting": 0.5838,
+     "mlp": 0.957,
+     "mlp_bag": 0.7214,
+     "mlp_tuned": 0.9235,
+     "ensemble": 0.8401
     },
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H25",
      "label": 0,
-     "base_rate": 0.1226,
-     "playbook": 0.1226,
-     "logistic": 0.9956,
-     "boosting": 0.8046,
-     "mlp": 0.9716,
-     "mlp_bag": 0.9359,
-     "mlp_tuned": 0.9815
+     "base_rate": 0.1355,
+     "playbook": 0.1355,
+     "logistic": 0.9968,
+     "boosting": 0.7135,
+     "mlp": 0.9953,
+     "mlp_bag": 0.9759,
+     "mlp_tuned": 0.9806,
+     "ensemble": 0.9018
     },
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H26",
      "label": 0,
-     "base_rate": 0.1226,
+     "base_rate": 0.1355,
      "playbook": 0.5,
-     "logistic": 0.0027,
-     "boosting": 0.009,
-     "mlp": 0.0066,
-     "mlp_bag": 0.0002,
-     "mlp_tuned": 0.0069
+     "logistic": 0.0039,
+     "boosting": 0.012,
+     "mlp": 0.0061,
+     "mlp_bag": 0.0003,
+     "mlp_tuned": 0.0075,
+     "ensemble": 0.0073
     }
    ]
   },
   {
    "event": "cook20260930a",
    "t0": "2026-09-30T19:25:00Z",
-   "trained_on": 123,
+   "trained_on": 128,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H0",
      "label": 0,
-     "base_rate": 0.1212,
-     "playbook": 0.1217,
-     "logistic": 0.3119,
-     "boosting": 0.3007,
-     "mlp": 0.3432,
-     "mlp_bag": 0.2095,
-     "mlp_tuned": 0.3483
+     "base_rate": 0.1341,
+     "playbook": 0.1345,
+     "logistic": 0.5138,
+     "boosting": 0.6033,
+     "mlp": 0.4409,
+     "mlp_bag": 0.4899,
+     "mlp_tuned": 0.5004,
+     "ensemble": 0.5193
     },
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H25",
      "label": 0,
-     "base_rate": 0.1212,
-     "playbook": 0.1217,
-     "logistic": 0.6095,
-     "boosting": 0.2678,
-     "mlp": 0.5784,
-     "mlp_bag": 0.7516,
-     "mlp_tuned": 0.6559
+     "base_rate": 0.1341,
+     "playbook": 0.1345,
+     "logistic": 0.7194,
+     "boosting": 0.5545,
+     "mlp": 0.6565,
+     "mlp_bag": 0.8385,
+     "mlp_tuned": 0.6843,
+     "ensemble": 0.6434
     }
    ]
   },
   {
    "event": "waller20261001a",
    "t0": "2026-10-01T14:00:00Z",
-   "trained_on": 124,
+   "trained_on": 129,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H0",
      "label": 0,
-     "base_rate": 0.1203,
-     "playbook": 0.1208,
-     "logistic": 0.2461,
-     "boosting": 0.3249,
-     "mlp": 0.2572,
-     "mlp_bag": 0.4992,
-     "mlp_tuned": 0.1998
+     "base_rate": 0.1331,
+     "playbook": 0.1336,
+     "logistic": 0.088,
+     "boosting": 0.073,
+     "mlp": 0.1192,
+     "mlp_bag": 0.0592,
+     "mlp_tuned": 0.1026,
+     "ensemble": 0.0934
     },
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H25",
      "label": 0,
-     "base_rate": 0.1203,
-     "playbook": 0.1208,
-     "logistic": 0.4331,
-     "boosting": 0.8185,
-     "mlp": 0.5552,
-     "mlp_bag": 0.8245,
-     "mlp_tuned": 0.4414
+     "base_rate": 0.1331,
+     "playbook": 0.1336,
+     "logistic": 0.1713,
+     "boosting": 0.168,
+     "mlp": 0.1618,
+     "mlp_bag": 0.0564,
+     "mlp_tuned": 0.2358,
+     "ensemble": 0.167
     }
    ]
   },
   {
    "event": "jefferson20261001a",
    "t0": "2026-10-01T17:30:00Z",
-   "trained_on": 125,
+   "trained_on": 130,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H0",
      "label": 1,
-     "base_rate": 0.1194,
-     "playbook": 0.1199,
-     "logistic": 0.6767,
-     "boosting": 0.719,
-     "mlp": 0.7911,
-     "mlp_bag": 0.6104,
-     "mlp_tuned": 0.5938
+     "base_rate": 0.1321,
+     "playbook": 0.1326,
+     "logistic": 0.7769,
+     "boosting": 0.4915,
+     "mlp": 0.8556,
+     "mlp_bag": 0.5357,
+     "mlp_tuned": 0.709,
+     "ensemble": 0.708
     },
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H25",
      "label": 1,
-     "base_rate": 0.1194,
-     "playbook": 0.1199,
-     "logistic": 0.7367,
-     "boosting": 0.48,
-     "mlp": 0.724,
-     "mlp_bag": 0.8882,
-     "mlp_tuned": 0.6555
+     "base_rate": 0.1321,
+     "playbook": 0.1326,
+     "logistic": 0.7568,
+     "boosting": 0.3683,
+     "mlp": 0.8058,
+     "mlp_bag": 0.7922,
+     "mlp_tuned": 0.7165,
+     "ensemble": 0.6436
     }
    ]
   },
   {
    "event": "bowman20261001a",
    "t0": "2026-10-01T19:00:00Z",
-   "trained_on": 126,
+   "trained_on": 131,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H0",
      "label": 0,
-     "base_rate": 0.1259,
-     "playbook": 0.1264,
-     "logistic": 0.09,
-     "boosting": 0.0776,
-     "mlp": 0.1614,
-     "mlp_bag": 0.0302,
-     "mlp_tuned": 0.1208
+     "base_rate": 0.1383,
+     "playbook": 0.1388,
+     "logistic": 0.1604,
+     "boosting": 0.2044,
+     "mlp": 0.1254,
+     "mlp_bag": 0.2533,
+     "mlp_tuned": 0.1788,
+     "ensemble": 0.1634
     },
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H25",
      "label": 0,
-     "base_rate": 0.1259,
-     "playbook": 0.1264,
-     "logistic": 0.2135,
-     "boosting": 0.0983,
-     "mlp": 0.4222,
-     "mlp_bag": 0.2011,
-     "mlp_tuned": 0.3111
+     "base_rate": 0.1383,
+     "playbook": 0.1388,
+     "logistic": 0.2917,
+     "boosting": 0.2057,
+     "mlp": 0.3011,
+     "mlp_bag": 0.6128,
+     "mlp_tuned": 0.3934,
+     "ensemble": 0.2662
     }
    ]
   },
   {
    "event": "bowman20261006a",
    "t0": "2026-10-06T14:45:00Z",
-   "trained_on": 127,
+   "trained_on": 132,
    "rows": [
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H0",
      "label": 0,
-     "base_rate": 0.125,
-     "playbook": 0.1255,
-     "logistic": 0.0047,
-     "boosting": 0.0209,
-     "mlp": 0.008,
-     "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0097
+     "base_rate": 0.1373,
+     "playbook": 0.1378,
+     "logistic": 0.0222,
+     "boosting": 0.0283,
+     "mlp": 0.0131,
+     "mlp_bag": 0.0003,
+     "mlp_tuned": 0.0196,
+     "ensemble": 0.0212
     },
     {
      "market": "kalshi:KXFEDDECISION-26OCT-H25",
      "label": 0,
-     "base_rate": 0.125,
-     "playbook": 0.1255,
-     "logistic": 0.0127,
-     "boosting": 0.0265,
-     "mlp": 0.0385,
-     "mlp_bag": 0.0001,
-     "mlp_tuned": 0.0275
+     "base_rate": 0.1373,
+     "playbook": 0.1378,
+     "logistic": 0.0419,
+     "boosting": 0.0334,
+     "mlp": 0.0406,
+     "mlp_bag": 0.0008,
+     "mlp_tuned": 0.0484,
+     "ensemble": 0.0387
     }
    ]
   }
