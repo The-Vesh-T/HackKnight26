@@ -257,13 +257,25 @@ def backtest(event_id: str, obs_all: list, latency_s: int = LATENCY_S, qty: int 
             cost, value = 1 - e["bid"], 1 - x["ask"]
         fees = kalshi_fee(cost) + kalshi_fee(value)
         pnl = qty * (value - cost - fees)
+        # Running profit/loss for the page: after every closed candle from entry to exit, what
+        # selling right then would make (same bid / 1 - ask and fees as the real exit). The last
+        # point is the trade's final pnl.
+        path = []
+        for q in quotes.get(mid, []):
+            if not (to_unix(e["t"]) <= to_unix(q["t"]) <= to_unix(x["t"])):
+                continue
+            if q.get("bid") is None or q.get("ask") is None:
+                continue
+            v = q["bid"] if m["side"] == "yes" else 1 - q["ask"]
+            path.append({"t": q["t"], "value": round(v, 4),
+                         "pnl": round(qty * (v - cost - kalshi_fee(cost) - kalshi_fee(v)), 2)})
         out["trades"].append({
             "market": mid, "label": m["label"], "side": m["side"], "qty": qty,
             "entry_t": e["t"], "entry_yes_bid": e["bid"], "entry_yes_ask": e["ask"], "cost": round(cost, 4),
             "exit_t": x["t"], "exit_yes_bid": x["bid"], "exit_yes_ask": x["ask"], "value": round(value, 4),
             "fees": round(qty * fees, 4), "pnl": round(pnl, 2),
             "return_pct": round(100 * pnl / (qty * cost), 1) if cost else None,
-            "side_fixed": m["playbook"].get("side_fixed"),
+            "side_fixed": m["playbook"].get("side_fixed"), "pnl_path": path,
         })
     out["regime"], out["z"] = reg, z
     out["total_pnl"] = round(sum(t["pnl"] for t in out["trades"]), 2)
