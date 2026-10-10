@@ -1,0 +1,30 @@
+{
+ "speech_id": "cook20250604a",
+ "t0": "2025-06-04T12:30:00Z",
+ "speaker": "lisa_cook",
+ "who": "Governor Lisa D. Cook",
+ "role": "governor",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/cook20250604a.htm",
+ "next_decision": "2025-06-18",
+ "days_to_decision": 14,
+ "flags": [
+  "T0 at 08:30 ET, when US data releases usually land"
+ ],
+ "paragraphs": 7,
+ "policy_paragraphs": 4,
+ "kind": "speech",
+ "stance": {
+  "n": 4,
+  "scores": [
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "mean": 0.0,
+  "top_z": -0.039,
+  "baseline": "pooled",
+  "model": "gemini-3.5-flash-lite"
+ }
+}

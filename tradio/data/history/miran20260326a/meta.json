@@ -1,0 +1,52 @@
+{
+ "speech_id": "miran20260326a",
+ "t0": "2026-03-26T22:30:00Z",
+ "speaker": "stephen_miran",
+ "who": "Governor Stephen I. Miran",
+ "role": "governor",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/miran20260326a.htm",
+ "next_decision": "2026-04-29",
+ "days_to_decision": 34,
+ "flags": [
+  "another Board speech within 90 min (jefferson20260326a)",
+  "another Board speech within 90 min (barr20260326a)"
+ ],
+ "paragraphs": 29,
+ "policy_paragraphs": 25,
+ "kind": "speech",
+ "stance": {
+  "n": 25,
+  "scores": [
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   0.0,
+   1.0,
+   1.0,
+   1.0,
+   0.5,
+   0.5,
+   0.5,
+   0.5,
+   0.5,
+   0.5,
+   0.5,
+   0.0,
+   0.0,
+   -0.5,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "mean": 0.32,
+  "top_z": 2.946,
+  "baseline": "pooled",
+  "model": "gemini-3.5-flash-lite"
+ }
+}

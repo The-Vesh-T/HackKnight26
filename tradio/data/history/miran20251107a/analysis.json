@@ -1,0 +1,130 @@
+{
+ "event_id": "miran20251107a",
+ "markets": {
+  "kalshi:KXFEDDECISION-25DEC-C25": {
+   "liquidity": "thin",
+   "pre_mid": 0.725,
+   "alarm_t": "2025-11-07T20:44:00Z",
+   "confirmed_by_trade": null,
+   "move_ticks": -2.0,
+   "t50_min": 44.0,
+   "t90_min": 59.0,
+   "status": "reacted",
+   "reason": "Alarm 20:44 UTC (T0+44 min), move -2 ticks; thin market, timing is rough.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": null,
+   "pre_band": [
+    0.725,
+    0.725
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 9,
+    "quote_change_minutes": 0,
+    "median_spread_ticks": 1.0,
+    "imputed_minutes": 5
+   }
+  },
+  "kalshi:KXFEDDECISION-25DEC-C26": {
+   "liquidity": "thin",
+   "pre_mid": 0.035,
+   "alarm_t": null,
+   "confirmed_by_trade": null,
+   "move_ticks": 0.0,
+   "t50_min": null,
+   "t90_min": null,
+   "status": "cant_tell_illiquid",
+   "reason": "Thin before T0 (1 trades in 60 min) and no clear reaction (move 0 ticks); can't tell slow from quiet.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": null,
+   "pre_band": [
+    0.035,
+    0.035
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 1,
+    "quote_change_minutes": 0,
+    "median_spread_ticks": 1.0,
+    "imputed_minutes": 44
+   }
+  },
+  "kalshi:KXFEDDECISION-25DEC-H0": {
+   "liquidity": "active",
+   "pre_mid": 0.255,
+   "alarm_t": "2025-11-07T20:59:00Z",
+   "confirmed_by_trade": null,
+   "move_ticks": 1.0,
+   "t50_min": null,
+   "t90_min": null,
+   "status": "expected_no_reaction",
+   "reason": "Brief alarm 20:59 UTC but final move only +1 ticks; no lasting reaction.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": null,
+   "pre_band": [
+    0.245,
+    0.255
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 10,
+    "quote_change_minutes": 1,
+    "median_spread_ticks": 1.0,
+    "imputed_minutes": 4
+   }
+  },
+  "kalshi:KXFEDDECISION-25DEC-H25": {
+   "liquidity": "dark",
+   "pre_mid": 0.005,
+   "alarm_t": null,
+   "confirmed_by_trade": null,
+   "move_ticks": 0.0,
+   "t50_min": null,
+   "t90_min": null,
+   "status": "cant_tell_illiquid",
+   "reason": "Dark before T0 (0 trades, 0 quote changes in 60 min); a quiet tape here says nothing about speed.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": null,
+   "pre_band": [
+    0.005,
+    0.005
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 0,
+    "quote_change_minutes": 0,
+    "median_spread_ticks": 1.0,
+    "imputed_minutes": 59
+   }
+  },
+  "kalshi:KXFEDDECISION-25DEC-H26": {
+   "liquidity": "dark",
+   "pre_mid": 0.005,
+   "alarm_t": null,
+   "confirmed_by_trade": null,
+   "move_ticks": 0.0,
+   "t50_min": null,
+   "t90_min": null,
+   "status": "cant_tell_illiquid",
+   "reason": "Dark before T0 (0 trades, 0 quote changes in 60 min); a quiet tape here says nothing about speed.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": null,
+   "pre_band": [
+    0.005,
+    0.005
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 0,
+    "quote_change_minutes": 0,
+    "median_spread_ticks": 1.0,
+    "imputed_minutes": 51
+   }
+  }
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "speech_id": "waller20261001a",
+ "t0": "2026-10-01T14:00:00Z",
+ "speaker": "christopher_waller",
+ "who": "Governor Christopher J. Waller",
+ "role": "governor",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/waller20261001a.htm",
+ "next_decision": "2026-10-28",
+ "days_to_decision": 27,
+ "flags": [
+  "T0 at 10:00 ET, when US data releases usually land"
+ ],
+ "paragraphs": 13,
+ "policy_paragraphs": 1,
+ "kind": "speech",
+ "stance": {
+  "n": 1,
+  "scores": [
+   0.0
+  ],
+  "mean": 0.0,
+  "top_z": 0.283,
+  "baseline": "speaker",
+  "model": "gemini-3.5-flash-lite"
+ }
+}

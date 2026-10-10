@@ -1,0 +1,43 @@
+{
+ "speech_id": "kugler20241203a",
+ "t0": "2024-12-03T17:35:00Z",
+ "speaker": "adriana_kugler",
+ "who": "Governor Adriana D. Kugler",
+ "role": "governor",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/kugler20241203a.htm",
+ "next_decision": "2024-12-18",
+ "days_to_decision": 15,
+ "flags": [],
+ "paragraphs": 36,
+ "policy_paragraphs": 19,
+ "kind": "speech",
+ "stance": {
+  "n": 19,
+  "scores": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   -0.5,
+   0.0,
+   -0.5,
+   0.0,
+   0.0,
+   -0.5,
+   0.0,
+   0.0,
+   -0.5,
+   0.0,
+   0.0
+  ],
+  "mean": -0.105,
+  "top_z": -1.532,
+  "baseline": "pooled",
+  "model": "gemini-3.5-flash-lite"
+ }
+}

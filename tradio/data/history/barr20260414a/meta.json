@@ -1,0 +1,18 @@
+{
+ "speech_id": "barr20260414a",
+ "t0": "2026-04-14T16:45:00Z",
+ "speaker": "michael_barr",
+ "who": "Governor Michael S. Barr",
+ "role": "governor",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/barr20260414a.htm",
+ "next_decision": "2026-04-29",
+ "days_to_decision": 15,
+ "flags": [],
+ "paragraphs": 1,
+ "policy_paragraphs": 0,
+ "kind": "speech",
+ "stance": {
+  "n": 0
+ }
+}

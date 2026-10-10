@@ -246,6 +246,16 @@ def write_live(timeline: dict) -> None:
     for d in LIVE_DIRS:
         write_json(os.path.join(d, "timeline.json"), timeline)
         write_json(os.path.join(d, "analysis.json"), analysis)
+    try:                                              # the learner's odds per contract (pre-T0 facts)
+        from tradio import learner
+        odds = learner.live_odds(LIVE_DIRS[0])
+    except Exception as e:
+        odds = None
+        log(f"learner odds unavailable: {e}")
+    if odds:
+        analysis["model"] = odds
+        for d in LIVE_DIRS:
+            write_json(os.path.join(d, "analysis.json"), analysis)
 
 
 def base_timeline(title, speaker, t0: int, start: int, now: int, kind: str, source: str) -> dict:
@@ -363,6 +373,12 @@ def archive(event_id: str, title: str = None, sub: str = None) -> None:
         log(f"playbook rebuilt from {pb['n_events']} events")
     except Exception as e:
         log(f"playbook not rebuilt: {e}")
+    try:                                              # ...and retrains the learner (test-then-train)
+        from tradio import learner
+        m = learner.build()
+        log(f"learner rebuilt from {m['n_events']} events: {m['verdict']}")
+    except Exception as e:
+        log(f"learner not rebuilt: {e}")
 
 
 def main(argv=None):

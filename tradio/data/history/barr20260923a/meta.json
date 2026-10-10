@@ -1,0 +1,36 @@
+{
+ "speech_id": "barr20260923a",
+ "t0": "2026-09-23T14:05:00Z",
+ "speaker": "michael_barr",
+ "who": "Governor Michael S. Barr",
+ "role": "governor",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/barr20260923a.htm",
+ "next_decision": "2026-10-28",
+ "days_to_decision": 35,
+ "flags": [],
+ "paragraphs": 60,
+ "policy_paragraphs": 12,
+ "kind": "speech",
+ "stance": {
+  "n": 12,
+  "scores": [
+   0.0,
+   0.0,
+   0.75,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "mean": 0.062,
+  "top_z": 2.2,
+  "baseline": "pooled",
+  "model": "gemini-3.5-flash-lite"
+ }
+}

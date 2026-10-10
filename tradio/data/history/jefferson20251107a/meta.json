@@ -1,0 +1,37 @@
+{
+ "speech_id": "jefferson20251107a",
+ "t0": "2025-11-07T12:00:00Z",
+ "speaker": "philip_jefferson",
+ "who": "Vice Chair Philip N. Jefferson",
+ "role": "vice_chair",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/jefferson20251107a.htm",
+ "next_decision": "2025-12-10",
+ "days_to_decision": 33,
+ "flags": [],
+ "paragraphs": 28,
+ "policy_paragraphs": 13,
+ "kind": "speech",
+ "stance": {
+  "n": 13,
+  "scores": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   -0.5,
+   0.0,
+   0.0,
+   -0.5,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "mean": -0.077,
+  "top_z": -1.532,
+  "baseline": "pooled",
+  "model": "gemini-3.5-flash-lite"
+ }
+}

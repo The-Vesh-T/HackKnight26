@@ -1,0 +1,28 @@
+{
+ "speech_id": "waller20250212a",
+ "t0": "2025-02-12T22:05:00Z",
+ "speaker": "christopher_waller",
+ "who": "Governor Christopher J. Waller",
+ "role": "governor",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/waller20250212a.htm",
+ "next_decision": "2025-03-19",
+ "days_to_decision": 35,
+ "flags": [],
+ "paragraphs": 33,
+ "policy_paragraphs": 4,
+ "kind": "speech",
+ "stance": {
+  "n": 4,
+  "scores": [
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "mean": 0.0,
+  "top_z": 0.283,
+  "baseline": "speaker",
+  "model": "gemini-3.5-flash-lite"
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "speech_id": "waller20241112a",
+ "t0": "2024-11-12T15:00:00Z",
+ "speaker": "christopher_waller",
+ "who": "Governor Christopher J. Waller",
+ "role": "governor",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/waller20241112a.htm",
+ "next_decision": "2024-12-18",
+ "days_to_decision": 36,
+ "flags": [
+  "T0 at 10:00 ET, when US data releases usually land"
+ ],
+ "paragraphs": 27,
+ "policy_paragraphs": 1,
+ "kind": "speech",
+ "stance": {
+  "n": 1,
+  "scores": [
+   0.0
+  ],
+  "mean": 0.0,
+  "top_z": 0.283,
+  "baseline": "speaker",
+  "model": "gemini-3.5-flash-lite"
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "speech_id": "kugler20250623a",
+ "t0": "2025-06-23T18:30:00Z",
+ "speaker": "adriana_kugler",
+ "who": "Governor Adriana D. Kugler",
+ "role": "governor",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/kugler20250623a.htm",
+ "next_decision": "2025-07-30",
+ "days_to_decision": 37,
+ "flags": [],
+ "paragraphs": 8,
+ "policy_paragraphs": 3,
+ "kind": "speech",
+ "stance": {
+  "n": 3,
+  "scores": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "mean": 0.0,
+  "top_z": -0.039,
+  "baseline": "pooled",
+  "model": "gemini-3.5-flash-lite"
+ }
+}

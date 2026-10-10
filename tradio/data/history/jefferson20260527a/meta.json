@@ -1,0 +1,30 @@
+{
+ "speech_id": "jefferson20260527a",
+ "t0": "2026-05-28T00:00:00Z",
+ "speaker": "philip_jefferson",
+ "who": "Vice Chair Philip N. Jefferson",
+ "role": "vice_chair",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/jefferson20260527a.htm",
+ "next_decision": "2026-06-17",
+ "days_to_decision": 21,
+ "flags": [],
+ "paragraphs": 9,
+ "policy_paragraphs": 6,
+ "kind": "speech",
+ "stance": {
+  "n": 6,
+  "scores": [
+   0.0,
+   0.0,
+   0.0,
+   0.5,
+   0.0,
+   0.0
+  ],
+  "mean": 0.083,
+  "top_z": 1.454,
+  "baseline": "pooled",
+  "model": "gemini-3.5-flash-lite"
+ }
+}

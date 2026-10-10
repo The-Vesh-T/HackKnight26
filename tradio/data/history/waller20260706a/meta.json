@@ -1,0 +1,36 @@
+{
+ "speech_id": "waller20260706a",
+ "t0": "2026-07-06T15:00:00Z",
+ "speaker": "christopher_waller",
+ "who": "Governor Christopher J. Waller",
+ "role": "governor",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/waller20260706a.htm",
+ "next_decision": "2026-07-29",
+ "days_to_decision": 23,
+ "flags": [],
+ "paragraphs": 18,
+ "policy_paragraphs": 12,
+ "kind": "speech",
+ "stance": {
+  "n": 12,
+  "scores": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "mean": 0.0,
+  "top_z": 0.283,
+  "baseline": "speaker",
+  "model": "gemini-3.5-flash-lite"
+ }
+}

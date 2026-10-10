@@ -1,0 +1,30 @@
+{
+ "event_id": "bowman20250217a",
+ "markets": {
+  "kalshi:KXFEDDECISION-25MAR-C25": {
+   "liquidity": "dark",
+   "pre_mid": 0.035,
+   "alarm_t": null,
+   "confirmed_by_trade": null,
+   "move_ticks": 0.0,
+   "t50_min": null,
+   "t90_min": null,
+   "status": "cant_tell_illiquid",
+   "reason": "Dark before T0 (0 trades, 0 quote changes in 60 min); a quiet tape here says nothing about speed.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": null,
+   "pre_band": [
+    0.035,
+    0.035
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 0,
+    "quote_change_minutes": 0,
+    "median_spread_ticks": 1.0,
+    "imputed_minutes": 60
+   }
+  }
+ }
+}

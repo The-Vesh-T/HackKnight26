@@ -1,0 +1,20 @@
+{
+ "speech_id": "bowman20251009a",
+ "t0": "2025-10-09T12:35:00Z",
+ "speaker": "michelle_bowman",
+ "who": "Vice Chair for Supervision Michelle W. Bowman",
+ "role": "vice_chair_supervision",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/bowman20251009a.htm",
+ "next_decision": "2025-10-29",
+ "days_to_decision": 20,
+ "flags": [
+  "another Board speech within 90 min (powell20251009a)"
+ ],
+ "paragraphs": 1,
+ "policy_paragraphs": 0,
+ "kind": "speech",
+ "stance": {
+  "n": 0
+ }
+}

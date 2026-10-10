@@ -5,6 +5,7 @@
  *   data/tradio/<event>/analysis.json   (role 2)
  *   data/tradio/<event>/evidence.json   (role 1, raw rows behind the numbers)
  *   data/tradio/<event>/backtest.json   (tradio/playbook.py: what the playbook would have traded)
+ *   data/tradio/model.json              (tradio/learner.py: out-of-sample predictions)
  * The LIVE tab reads the same files from data/tradio/live/, which tradio/live.py rewrites
  * every few seconds during a speech.
  *
@@ -91,6 +92,7 @@
     follow: true,        // LIVE view: keep the clock pinned to the newest data
     liveTimer: null,
     liveShellKey: null,
+    model: null,         // data/tradio/model.json, loaded once
   };
 
   const $ = (id) => document.getElementById(id);
@@ -721,7 +723,9 @@
     if (evBtn) evBtn.dataset.id = m.id;
     $("mkMeta").textContent = sourceNote(E, m);
     $("legend").innerHTML = legendHtml(E, m);
-    $("verdict").innerHTML = verdictHtml(E, m, now);
+    // the learner's pre-T0 odds for this contract sit under the verdict (it was made before the event)
+    const mp = modelPrediction(E, m);
+    $("verdict").innerHTML = verdictHtml(E, m, now) + (mp ? modelLine(mp) : "");
   }
 
   // The desk: what the playbook traded (live) or would have traded (backtest). Orders, skips and
@@ -790,9 +794,11 @@
     if (m.indicative) tags.push("indicative");
     else if (m.exposure === "partial") tags.push("indirect");
     const isFocus = m.id === focus;
+    const mp = modelPrediction(E, m);
     return `<div class="mrow ${isFocus ? "focus" : ""} ${fired ? "fired" : ""}" role="button" tabindex="0" data-act="focus" data-id="${esc(m.id)}" aria-pressed="${isFocus}" title="${esc(m.status && STATUS_HELP[m.status] ? STATUS_HELP[m.status] : "")}">
       <div class="mrow-top"><span class="lab">${esc(displayLabel(m))}</span><span class="tag">${esc(tags.join(" · "))}</span><span class="px num">${q ? cents(q.mid) : "—"}</span></div>
       <div class="mrow-bot">${sparkline(E, m, now)}<span class="chg num">${chg}</span>${chip}</div>
+      ${mp ? modelLine(mp) : ""}
     </div>`;
   }
 
@@ -1009,6 +1015,107 @@
       }
     }
     showDrawer(displayLabel(m), h);
+  }
+
+  // ---------- model (tradio/learner.py) ----------
+  const MODEL_NAMES = {
+    base_rate: "Simple guessing (base rate)", playbook: "Playbook rules", logistic: "Logistic regression",
+    boosting: "Boosted trees", mlp: "Neural network", mlp_bag: "Neural network ×10 (averaged)",
+    mlp_tuned: "Neural network (self-tuning)", logistic_text: "Logistic + speech text (Gemini)",
+    mlp_text: "Neural network + speech text (Gemini)", ensemble: "Ensemble (average of models)",
+  };
+  const FEATURE_TEXT = {
+    uncertainty: "price near 50/50 before T0", policy_share: "speech mostly about the policy outlook",
+    n_flags: "released at a data-release time or next to another speech", quote_changes: "quotes already moving before T0",
+    kind_hike_small: "contract is “hike 25 bp”", kind_cut_small: "contract is “cut 25 bp”", kind_hold: "contract is “hold”",
+    kind_cut_big: "contract is “cut >25 bp”", kind_hike_big: "contract is “hike >25 bp”", abs_z: "bigger stance surprise (|z|)",
+    aligned_z: "surprise points this contract's way", spread_ticks: "wider bid–ask spread", log_trades: "more trades before T0",
+    role_chair: "speaker is the Chair", role_vice_chair: "speaker is the Vice Chair",
+    role_vice_chair_supervision: "speaker is the Vice Chair for Supervision", role_governor: "speaker is a governor",
+    has_stance: "speech has a stance score", has_text: "speech text downloaded", after_hours: "released outside market hours",
+    log_days_to_decision: "more days until the FOMC decision", pre_mid: "higher price before T0",
+    overlap_speeches: "another Board speech within 90 min", is_testimony: "testimony to Congress (not a speech)", release_in_window: "jobs/CPI report lands inside the window",
+    release_day: "jobs/CPI report day", has_embedding: "speech text embedded",
+    novelty_vs_speaker: "speech unlike the speaker's earlier ones", novelty_vs_recent: "speech unlike recent Board speeches",
+  };
+  const pctText = (p) => (p == null ? "—" : p < 0.01 ? "<1%" : p > 0.99 ? ">99%" : Math.round(p * 100) + "%");
+
+  async function loadModel() {
+    if (!state.model) state.model = await fetchJson(DATA_ROOT + "model.json", true);
+    return state.model;
+  }
+
+  // The champion's prediction for this market, made before the model saw this event.
+  function modelPrediction(E, m) {
+    const M = state.model;
+    if (m.venue !== "kalshi" || !/^kalshi:KXFEDDECISION-/.test(m.id)) return null;
+    // live (and archived live) sessions: odds written by tradio/live.py from the current model
+    const lo = E.an && E.an.model;
+    if (lo && lo.markets && m.id in lo.markets) {
+      const p = lo.markets[m.id];
+      return p == null ? { none: true } : { p, model: lo.model, trainedOn: lo.trained_on_events, base: null };
+    }
+    if (!M) return null;
+    const id = E.tl.event_id;
+    const ev = (M.predictions || []).find((e) => e.event === id);
+    if (!ev) return null;
+    const row = ev.rows.find((r) => r.market === m.id);
+    if (!row) return { none: true };
+    return { p: row[M.champion], base: row.base_rate, model: M.champion, trainedOn: ev.trained_on };
+  }
+
+  function modelLine(mp) {
+    if (mp.none) return `<div class="model-line muted">Model: no prediction (not active before T0)</div>`;
+    const w = Math.max(2, Math.round(mp.p * 100));
+    return `<div class="model-line" title="${esc(MODEL_NAMES[mp.model] || mp.model)}, trained on ${mp.trainedOn} earlier speeches${mp.base != null ? `; simple guessing said ${pctText(mp.base)}` : ""}">
+      <span>Model before T0</span><span class="mbar"><i style="width:${w}%"></i></span><b class="num">${pctText(mp.p)}</b><span class="muted">chance to react</span></div>`;
+  }
+
+  async function openModel() {
+    const M = await loadModel();
+    let body;
+    if (!M) {
+      body = `<p class="src note">No model yet. Run <span class="mono">python -m tradio.learner</span>.</p>`;
+    } else {
+      const sb = M.scoreboard || {}, models = sb.models || {};
+      const names = Object.keys(models);
+      const maxAbs = Math.max(0.05, ...names.map((n) => Math.abs(models[n].brier_skill || 0)));
+      const bar = (v) => {
+        const w = Math.round((Math.abs(v) / maxAbs) * 50);
+        return `<span class="skill"><span class="axis"></span><i class="${v < 0 ? "neg" : "pos"}" style="${v < 0 ? `right:50%` : `left:50%`};width:${w}%"></i></span>`;
+      };
+      let h = `<p class="model-verdict">${esc(M.verdict)}</p>
+        <p class="src note">Learned from <b>${M.n_events}</b> Fed Board speeches (Nov 2024 →), <b>${M.n_labeled}</b> contract windows where the market was active before T0, <b>${M.positives}</b> of which reacted. ${M.excluded_not_measurable} windows were too thin to judge and are left out.</p>
+        <h4>Scoreboard · each speech predicted before the model saw it (${sb.n_events || 0} speeches)</h4>
+        <table class="scoreboard"><tr><th>predictor</th><th>vs simple guessing</th><th class="barcol"></th><th>log loss</th><th>clearly better?</th></tr>` +
+        names.sort((a, b) => models[a].log_loss - models[b].log_loss).map((n) => {
+          const r = models[n], sk = r.brier_skill || 0;
+          const ci = r.gain_vs_base_ci;
+          const verdict = n === "base_rate" ? "—" : r.beats_base_rate ? "yes" : ci && ci[1] < 0 ? "no, worse" : "not yet";
+          return `<tr class="${n === M.champion ? "champ" : ""}" title="${ci ? `log-loss gain vs guessing, ${Math.round((sb.ci_level || 0.95) * 1000) / 10}% interval: ${ci[0]} to ${ci[1]}` : ""}">
+            <td>${esc(MODEL_NAMES[n] || n)}${n === M.champion ? ' <span class="chip reacted">best</span>' : ""}</td>
+            <td class="num">${n === "base_rate" ? "baseline" : (sk >= 0 ? "" : "−") + Math.abs(Math.round(sk * 100)) + "% " + (sk >= 0 ? "better" : "worse")}</td>
+            <td class="barcol">${n === "base_rate" ? "" : bar(sk)}</td><td class="num">${r.log_loss.toFixed(3)}</td><td>${verdict}</td></tr>`;
+        }).join("") + `</table>
+        <p class="src note">"Better" = lower Brier score (squared error of the probability). "Clearly better" needs the whole bootstrap interval over ${sb.n_clusters || "—"} independent speech windows above zero, corrected for picking the best of four. Hover a row for the interval.</p>`;
+      const w = M.logistic_weights;
+      if (w) {
+        const top = Object.entries(w).filter(([, v]) => Math.abs(v) >= 0.15).slice(0, 8);
+        h += `<h4>What raises or lowers the odds (logistic regression, all speeches)</h4><table class="weights">` +
+          top.map(([f, v]) => `<tr><td>${esc(FEATURE_TEXT[f] || f)}</td><td class="num nowrap">${v > 0 ? "▲ raises" : "▼ lowers"}</td><td class="barcol">${bar(v / Math.max(...top.map(([, x]) => Math.abs(x))) * maxAbs)}</td></tr>`).join("") +
+          `</table><p class="src note">Standardized weights; they show association, not cause. Jobs and CPI reports (8:30 ET) are tracked from the BLS calendar, so a move caused by the data isn't credited to the speech.</p>`;
+      }
+      const heroes = EVENTS.map((e) => e.id);
+      const hp = (M.predictions || []).filter((e) => heroes.includes(e.event));
+      if (hp.length) {
+        h += `<h4>Our replay events: what the model said before T0</h4><table><tr><th>event</th><th>contract</th><th>predicted</th><th>happened</th></tr>` +
+          hp.map((e) => e.rows.map((r) => `<tr><td>${esc(e.event)}</td><td>${esc(r.market.replace("kalshi:KXFEDDECISION-", ""))}</td><td class="num">${pctText(r[M.champion])}</td><td>${r.label ? "reacted" : "no reaction"}</td></tr>`).join("")).join("") +
+          `</table><p class="src note">Each made from earlier speeches only. A low number that reacted is a genuine surprise, not a bug.</p>`;
+      }
+      h += `<p class="src note">${esc(M.caveat)} Built ${esc(M.built_at)} by <span class="mono">python -m tradio.learner</span>; every archived live speech retrains it.</p>`;
+      body = h;
+    }
+    showDrawer("Model · predicting which markets react", body);
   }
 
   async function openPlaybook() {
@@ -1451,6 +1558,7 @@
     $("scrub").addEventListener("input", (e) => { touch(); setRel(+e.target.value); });
     $("drawerClose").addEventListener("click", closeDrawer);
     $("btnPlaybook").addEventListener("click", openPlaybook);
+    $("btnModel").addEventListener("click", openModel);
     $("btnGuide").addEventListener("click", toggleGuide);
     $("guideClose").addEventListener("click", () => $("guide").close());
     $("guide").addEventListener("close", () => $("btnGuide").setAttribute("aria-expanded", "false"));
@@ -1475,8 +1583,9 @@
     });
     window.addEventListener("hashchange", () => { const id = location.hash.slice(1); if (id && id !== state.view) show(id); });
 
-    // recorded live sessions (data/tradio/events.json, written by `tradio/live.py archive`) add History tabs
-    loadArchivedEvents().finally(() => {
+    // recorded live sessions (data/tradio/events.json, written by `tradio/live.py archive`) add History tabs;
+    // the model's predictions (data/tradio/model.json) are loaded once, before the first view
+    Promise.all([loadArchivedEvents(), loadModel()]).finally(() => {
       const start = location.hash.slice(1);
       const valid = [LIVE, ...EVENTS, COMPARE].some((e) => e.id === start);
       show(valid ? start : EVENTS[0].id);

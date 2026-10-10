@@ -1,0 +1,32 @@
+{
+ "speech_id": "barr20251118a",
+ "t0": "2025-11-18T15:30:00Z",
+ "speaker": "michael_barr",
+ "who": "Governor Michael S. Barr",
+ "role": "governor",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/barr20251118a.htm",
+ "next_decision": "2025-12-10",
+ "days_to_decision": 22,
+ "flags": [],
+ "paragraphs": 53,
+ "policy_paragraphs": 8,
+ "kind": "speech",
+ "stance": {
+  "n": 8,
+  "scores": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "mean": 0.0,
+  "top_z": -0.039,
+  "baseline": "pooled",
+  "model": "gemini-3.5-flash-lite"
+ }
+}

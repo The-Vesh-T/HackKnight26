@@ -1,0 +1,34 @@
+{
+ "speech_id": "cook20250509a",
+ "t0": "2025-05-09T23:45:00Z",
+ "speaker": "lisa_cook",
+ "who": "Governor Lisa D. Cook",
+ "role": "governor",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/cook20250509a.htm",
+ "next_decision": "2025-06-18",
+ "days_to_decision": 40,
+ "flags": [],
+ "paragraphs": 17,
+ "policy_paragraphs": 10,
+ "kind": "speech",
+ "stance": {
+  "n": 10,
+  "scores": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.5,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "mean": 0.05,
+  "top_z": 1.454,
+  "baseline": "pooled",
+  "model": "gemini-3.5-flash-lite"
+ }
+}

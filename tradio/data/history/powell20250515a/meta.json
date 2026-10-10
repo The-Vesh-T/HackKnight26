@@ -1,0 +1,18 @@
+{
+ "speech_id": "powell20250515a",
+ "t0": "2025-05-15T12:40:00Z",
+ "speaker": "jerome_powell",
+ "who": "Chair Jerome H. Powell",
+ "role": "chair",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/powell20250515a.htm",
+ "next_decision": "2025-06-18",
+ "days_to_decision": 34,
+ "flags": [],
+ "paragraphs": 1,
+ "policy_paragraphs": 0,
+ "kind": "speech",
+ "stance": {
+  "n": 0
+ }
+}

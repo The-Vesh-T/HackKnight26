@@ -1,0 +1,28 @@
+{
+ "speech_id": "bowman20260331a",
+ "t0": "2026-03-31T21:10:00Z",
+ "speaker": "michelle_bowman",
+ "who": "Vice Chair for Supervision Michelle W. Bowman",
+ "role": "vice_chair_supervision",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/bowman20260331a.htm",
+ "next_decision": "2026-04-29",
+ "days_to_decision": 29,
+ "flags": [],
+ "paragraphs": 22,
+ "policy_paragraphs": 4,
+ "kind": "speech",
+ "stance": {
+  "n": 4,
+  "scores": [
+   0.0,
+   -0.5,
+   0.0,
+   0.0
+  ],
+  "mean": -0.125,
+  "top_z": -1.984,
+  "baseline": "speaker",
+  "model": "gemini-3.5-flash-lite"
+ }
+}

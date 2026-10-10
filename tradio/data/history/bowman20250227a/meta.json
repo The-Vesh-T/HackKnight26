@@ -1,0 +1,29 @@
+{
+ "speech_id": "bowman20250227a",
+ "t0": "2025-02-27T16:45:00Z",
+ "speaker": "michelle_bowman",
+ "who": "Governor Michelle W. Bowman",
+ "role": "governor",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/bowman20250227a.htm",
+ "next_decision": "2025-03-19",
+ "days_to_decision": 20,
+ "flags": [],
+ "paragraphs": 45,
+ "policy_paragraphs": 5,
+ "kind": "speech",
+ "stance": {
+  "n": 5,
+  "scores": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "mean": 0.0,
+  "top_z": -0.467,
+  "baseline": "speaker",
+  "model": "gemini-3.5-flash-lite"
+ }
+}
