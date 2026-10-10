@@ -363,6 +363,12 @@ def archive(event_id: str, title: str = None, sub: str = None) -> None:
         log(f"playbook rebuilt from {pb['n_events']} events")
     except Exception as e:
         log(f"playbook not rebuilt: {e}")
+    try:                                              # ...and retrains the learner (test-then-train)
+        from tradio import learner
+        m = learner.build()
+        log(f"learner rebuilt from {m['n_events']} events: {m['verdict']}")
+    except Exception as e:
+        log(f"learner not rebuilt: {e}")
 
 
 def main(argv=None):

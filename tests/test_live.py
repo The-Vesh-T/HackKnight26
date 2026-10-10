@@ -107,9 +107,11 @@ class LiveModeTest(unittest.TestCase):
         with mock.patch.object(im, "get_json", self.fake_kalshi), mock.patch.object(im.time, "sleep"), \
                 mock.patch.object(live.time, "time", return_value=NOW):
             live.main(["--t0", live.iso_from_unix(T0), "--once", "--state", state])
-        from tradio import playbook
-        with mock.patch.object(playbook, "build", return_value={"n_events": 0}):   # don't touch the real playbook
+        from tradio import learner, playbook
+        with mock.patch.object(playbook, "build", return_value={"n_events": 0}), \
+                mock.patch.object(learner, "build", return_value={"n_events": 0, "verdict": "test"}) as lb:
             live.main(["archive", "waller20261003", "--title", "Waller, 2026-10-03"])
+        lb.assert_called_once()                       # every archived speech retrains the learner
         tl = json.load(open(os.path.join(self.web, "waller20261003", "timeline.json")))
         self.assertEqual(tl["event_id"], "waller20261003")
         self.assertNotIn("live", tl)
