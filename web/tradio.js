@@ -1591,6 +1591,20 @@
       show(valid ? start : EVENTS[0].id);
       requestAnimationFrame(tick);
     });
+    showSolanaBadge();
+  }
+
+  // Root hash of every cached result file, anchored on Solana (tradio/receipts.py).
+  // Proves when these numbers were fixed; for past events that is publication, not foresight.
+  async function showSolanaBadge() {
+    const r = await fetchJson(DATA_ROOT + "receipts.json", true);
+    const b = $("solanaBadge");
+    if (!r || !r.chain || !r.chain.signature || !b) return;
+    b.href = r.chain.explorer;
+    b.textContent = "◎ Verified on Solana";
+    b.title = `SHA-256 root of ${r.n_files} data files, anchored ${r.created_at} on ${r.chain.cluster}.\n` +
+      `Check it: python -m tradio.receipts verify`;
+    b.hidden = false;
   }
 
   init();
