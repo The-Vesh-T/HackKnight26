@@ -342,3 +342,25 @@ footer .keys { margin-left: auto; color: var(--faint); }
 .desk details { margin-top: 6px; color: var(--muted); font-size: 12px; }
 .desk details summary { cursor: pointer; }
 .desk .skip { padding: 2px 0 2px 10px; }
+
+/* Narrow screens (e.g. a side panel): chart and desk first, speech last and scrollable. */
+@media (max-width: 1100px) {
+  main > .pane:nth-child(2) { order: 1; }
+  main > .pane:nth-child(3) { order: 2; }
+  main > .pane:nth-child(1) { order: 3; max-height: 420px; }
+}
+
+/* ---------- live controls ---------- */
+.controls-bar { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; padding: 8px 16px; border-bottom: 1px solid var(--line); background: var(--panel); }
+.controls-bar select, .controls-bar input[type=text], .controls-bar input:not([type]) { background: var(--panel-2); color: var(--text); border: 1px solid var(--line-2); border-radius: 6px; padding: 4px 6px; font: 12px var(--sans); }
+.controls-bar label { color: var(--muted); font-size: 12px; }
+.ctl-group { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.ctl-group b { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; margin-right: 2px; }
+.controls-bar .btn.stop { border-color: rgba(239, 91, 91, .6); color: var(--red); }
+.ctl-status { flex-basis: 100%; font-size: 12px; }
+.ctl-status details { margin: 2px 0; }
+.ctl-status summary { cursor: pointer; }
+.ctl-status pre { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 6px; font: 11px/1.35 var(--mono); max-height: 180px; overflow: auto; color: #b9c9cf; }
+.ctl-status .err { color: var(--red); margin-bottom: 4px; }
+.controls-bar .muted { color: var(--faint); }
+.controls-bar[hidden] { display: none; }

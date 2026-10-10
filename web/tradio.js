@@ -833,6 +833,7 @@
     closeDrawer();
     stopLive();
     state.view = id;
+    $("liveControls").hidden = id !== "live";
     renderTabs();
     $("speeds").hidden = id === "live";
     if (id === "live") { if (location.hash !== "#live") history.replaceState(null, "", "#live"); return startLive(); }
@@ -858,6 +859,92 @@
     setRel(state.rel);
   }
 
+  // ---------- live controls (only when served by tradio/serve.py) ----------
+  const ctl = { ok: null, status: null, built: false, error: "", seq: 0 };
+
+  async function api(path, body) {
+    const r = await fetch(path, {
+      method: body ? "POST" : "GET", cache: "no-store",
+      headers: { "X-Tradio": "1", "Content-Type": "application/json" },
+      body: body ? JSON.stringify(body) : undefined,
+    });
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(data.error || `HTTP ${r.status}`);
+    return data;
+  }
+
+  async function refreshControls() {
+    const box = $("liveControls");
+    box.hidden = state.view !== "live";
+    if (state.view !== "live") return;
+    const seq = ctl.seq;
+    let st = null;
+    try { st = await api("/api/status"); } catch (e) { st = null; }
+    if (seq !== ctl.seq) return;           // a Start/Stop happened meanwhile; its answer is newer
+    ctl.status = st || ctl.status;
+    ctl.ok = !!st && st.server === "tradio";
+    renderControls();
+  }
+
+  function renderControls() {
+    const box = $("liveControls");
+    if (!ctl.ok) {
+      ctl.built = false;
+      box.innerHTML = `<span class="muted">Want Start/Stop buttons here? Run the site with <span class="mono">python3 tradio/serve.py</span> instead of <span class="mono">python3 -m http.server</span>.</span>`;
+      return;
+    }
+    const st = ctl.status, k = st.keys;
+    if (!ctl.built) {
+      const opt = (v, t, dis) => `<option value="${esc(v)}" ${dis ? "disabled" : ""}>${esc(t)}</option>`;
+      box.innerHTML = `
+        <div class="ctl-group"><b>Practice</b>
+          <select id="ctlEvent">${st.events.map((e) => opt(e, e)).join("")}</select>
+          <select id="ctlSpeed">${st.speeds.map((v) => `<option value="${v}" ${v === 30 ? "selected" : ""}>${v}×</option>`).join("")}</select>
+          <button class="btn" id="ctlPractice">▶ Start practice</button></div>
+        <div class="ctl-group"><b>Real speech</b>
+          <select id="ctlSpeaker">${st.speakers.map((v) => opt(v, v.replace(/_/g, " "))).join("")}</select>
+          <select id="ctlMode">
+            ${opt("dry", "Guide only (no orders)")}
+            ${opt("demo", "Trade: Kalshi demo (fake money)" + (k.kalshi_demo ? "" : " · needs demo keys"), !k.kalshi_demo)}
+            ${opt("live", "Trade: REAL MONEY" + (!st.allow_live ? " · off (TRADIO_ALLOW_LIVE=1)" : !k.kalshi_live ? " · needs Kalshi keys" : ""), !(st.allow_live && k.kalshi_live))}
+          </select>
+          <label><input type="checkbox" id="ctlTranscribe" checked> transcribe</label>
+          <input id="ctlUrl" placeholder="stream (default: Fed live broadcast)" size="28">
+          <input id="ctlConfirm" placeholder="type LIVE" size="9" hidden>
+          <button class="btn" id="ctlLive">▶ Start live</button></div>
+        <button class="btn stop" id="ctlStop">■ Stop</button>
+        <div class="ctl-status" id="ctlStatus"></div>`;
+      $("ctlMode").addEventListener("change", () => { $("ctlConfirm").hidden = $("ctlMode").value !== "live"; });
+      $("ctlPractice").addEventListener("click", () => startSession({ kind: "practice", event: $("ctlEvent").value, speed: +$("ctlSpeed").value }));
+      $("ctlLive").addEventListener("click", () => startSession({
+        kind: "live", speaker: $("ctlSpeaker").value, mode: $("ctlMode").value, transcribe: $("ctlTranscribe").checked,
+        url: $("ctlUrl").value.trim() || undefined, confirm: $("ctlConfirm").value.trim() }));
+      $("ctlStop").addEventListener("click", async () => { ctl.seq++; try { ctl.status = await api("/api/stop", {}); ctl.error = ""; } catch (e) { ctl.error = e.message; } renderControls(); });
+      ctl.built = true;
+    }
+    const procs = Object.entries(st.processes || {});
+    const missing = [!k.gemini && "gemapi.txt", !k.elevenlabs && "elevenapi.txt", !k.kalshi_demo && "Kalshi demo keys"].filter(Boolean);
+    $("ctlStatus").innerHTML =
+      (ctl.error ? `<div class="err">${esc(ctl.error)}</div>` : "") +
+      (procs.length ? procs.map(([n, p]) => `<details><summary><span class="chip ${p.running ? "reacted" : "watching"}">${p.running ? "running" : "stopped" + (p.exit_code ? ` (exit ${p.exit_code})` : "")}</span> <b>${esc(n)}</b> · ${esc(p.label)} <span class="muted mono">${esc((p.log.slice(-1)[0] || "").slice(0, 90))}</span></summary><pre>${esc(p.log.join("\n"))}</pre></details>`).join("")
+        : `<span class="muted">Nothing running.${missing.length ? " Missing: " + missing.join(", ") + "." : ""}</span>`);
+  }
+
+  async function startSession(req) {
+    ctl.seq++;
+    ctl.error = "";
+    try {
+      ctl.status = await api("/api/start", req);
+      state.liveShellKey = null;
+      state.follow = true;
+      state.focusPinned = {};
+      setTimeout(pollLive, 1500);
+    } catch (e) {
+      ctl.error = e.message;
+    }
+    renderControls();
+  }
+
   // ---------- live view ----------
   function stopLive() {
     if (state.liveTimer) clearInterval(state.liveTimer);
@@ -873,6 +960,7 @@
   }
 
   async function pollLive() {
+    refreshControls();
     let E;
     try {
       E = await loadEvent("live", true);
@@ -901,6 +989,7 @@
   function liveIdleHtml() {
     return `<div class="idle">
       <h3>No live session running</h3>
+      <p><b>Use the buttons above</b> (Practice replays a past speech; Real speech listens, scores and, if you pick it, trades). Or run the commands yourself:</p>
       <p>The LIVE tab shows a Fed speech as it happens: the transcript scored against the speaker's own history, next to Kalshi's live Fed-decision prices, with the same reaction checks as the replays. When it's over, it becomes one more History tab.</p>
       <ol>
         <li><b>Score the speech</b> (MarketPulse, dry, never trades):<br><span class="mono">python speechtxt.py --url https://www.federalreserve.gov/live-broadcast.htm</span><br><span class="mono">python live.py --speaker christopher_waller --no-prewarm --mode dry</span><br>or let it <b>trade on Kalshi's demo exchange</b> by the learned playbook:<br><span class="mono">python live.py --speaker christopher_waller --fast --playbook --mode demo --venues kalshi</span></li>
