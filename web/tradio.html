@@ -14,6 +14,7 @@
       <div class="brand-text"><b>Tradio</b><span>Did prediction markets react to this Fed speech?</span></div>
     </div>
     <nav class="tabs" id="tabs" aria-label="Choose a replay"></nav>
+    <button class="btn ghost" id="btnPlaybook" title="Trading rules learned from past speeches">Playbook</button>
     <button class="btn ghost" id="btnGuide" aria-expanded="false" aria-controls="guide">? Guide</button>
   </header>
 
@@ -24,13 +25,14 @@
         <h3>What this shows</h3>
         <p>Tradio scores each paragraph of a Fed speech against <b>that speaker's own past speeches</b>: a hawk sounding dovish is news, a dove sounding dovish isn't. It then replays real Kalshi and Polymarket prices around the moment the text was released (<b>T0</b>) to see which markets reacted, how fast, and which were too thin to judge.</p>
         <p>A price of 22&cent; is the market's implied chance of that outcome: roughly 22%.</p>
+        <p>The <b>&#9679; LIVE</b> tab shows a speech as it happens, or a past one replayed as practice. <b>Playbook</b> lists the trading rules learned from past speeches, and the <b>Desk</b> panel under the chart shows what those rules traded or would have traded. Trades default to Kalshi's demo exchange (fake money).</p>
       </div>
       <div>
         <h3>How to use it</h3>
         <ol>
           <li>Pick an event at the top.</li>
-          <li>Press <b>&#9654; Play</b> (or space), or drag the timeline. <b>Jump to speech</b> skips to one minute after release.</li>
-          <li>Click any market on the right to put it on the chart. <b>See the data</b> opens the raw rows behind its numbers.</li>
+          <li>Press <b>&#9654; Play</b> (or space), or drag the timeline. <b>Jump to T0</b> (key 0) skips to one minute after release.</li>
+          <li>Click any market in the list to put it on the chart. <b>See the data</b> opens the raw rows behind its numbers.</li>
         </ol>
       </div>
       <div>
@@ -38,8 +40,10 @@
         <dl class="legend-list" id="legendList"></dl>
       </div>
     </div>
-    <p class="guide-foot">Prices are Kalshi 1-minute candles (time = candle end). Nothing is calculated in your browser: verdicts, reaction times and moves come from the cached <span class="mono">analysis.json</span>, speech scores from <span class="mono">timeline.json</span>. Polymarket series are indicative and get no timing claims.</p>
+    <p class="guide-foot">Prices are Kalshi 1-minute candles (time = candle end). Nothing is calculated in your browser: verdicts, reaction times and moves come from the cached <span class="mono">analysis.json</span>, speech scores from <span class="mono">timeline.json</span>, orders and P&amp;L from <span class="mono">backtest.json</span> or the live desk. Polymarket series are indicative and get no timing claims.</p>
   </dialog>
+
+  <div class="controls-bar" id="liveControls" hidden></div>
 
   <div id="view"><div class="loading">Loading replay data…</div></div>
 
@@ -49,13 +53,13 @@
         <button class="btn play" id="btnPlay" title="Play / pause (space)">&#9654; Play</button>
         <button class="btn" id="btnBack" title="Back 1 minute (&larr;)">&minus;1m</button>
         <button class="btn" id="btnFwd" title="Forward 1 minute (&rarr;)">+1m</button>
-        <button class="btn" id="btnT0" title="Jump to 1 minute after the text is released (0)">Jump to speech</button>
+        <button class="btn" id="btnT0" title="Jump to T0 + 1 minute: just after the text is released (0)">Jump to T0</button>
       </div>
       <div class="scrub">
         <input type="range" id="scrub" min="0" max="1" step="1000" value="0" aria-label="Replay time">
         <div class="marks" id="marks"></div>
       </div>
-      <div class="speed"><span class="lbl">Speed</span><span id="speeds"></span></div>
+      <div class="speed" id="speedBox"><span class="lbl">Speed</span><span id="speeds"></span></div>
       <div class="clock">
         <span class="rel num" id="clkRel">T&minus;00:00</span>
         <span class="cap" id="clkCap">until the text is released</span>
@@ -63,8 +67,8 @@
       </div>
     </div>
     <div class="dock-note">
-      <span>Historical replay of cached data &middot; Polymarket series indicative (no timing claims) &middot; not trading advice</span>
-      <span class="keys">space play &middot; &larr;/&rarr; 1 min &middot; 0 jump to speech &middot; esc close</span>
+      <span>Cached historical data or live Kalshi tape &middot; Polymarket series indicative (no timing claims) &middot; trades default to Kalshi's demo exchange &middot; not trading advice</span>
+      <span class="keys">space play &middot; &larr;/&rarr; 1 min &middot; 0 jump to T0 &middot; esc close</span>
     </div>
   </footer>
 

@@ -1,0 +1,56 @@
+{
+ "event_id": "warsh20260828",
+ "method": "leave-one-out",
+ "learned_from": [
+  "bowman20250623",
+  "waller20250717"
+ ],
+ "latency_s": 60,
+ "qty": 10,
+ "trades": [],
+ "skipped": [
+  {
+   "market": "KXFEDDECISION-26SEP-H26",
+   "label": "Sep 2026: hike >25 bp",
+   "why": "|z| 3.05 below learned threshold 3.17"
+  },
+  {
+   "market": "KXFEDDECISION-26SEP-H25",
+   "label": "Sep 2026: hike 25 bp",
+   "why": "|z| 3.05 below learned threshold 3.17"
+  },
+  {
+   "market": "KXFEDDECISION-26SEP-H0",
+   "label": "Sep 2026: hold",
+   "why": "|z| 3.05 below learned threshold 3.17"
+  },
+  {
+   "market": "KXFEDDECISION-26SEP-C25",
+   "label": "Sep 2026: cut 25 bp",
+   "why": "|z| 3.05 below learned threshold 3.17"
+  },
+  {
+   "market": "KXFEDDECISION-26SEP-C26",
+   "label": "Sep 2026: cut >25 bp",
+   "why": "|z| 3.05 below learned threshold 3.17"
+  }
+ ],
+ "rules": {
+  "min_abs_z": 3.17,
+  "trade_kinds": [
+   "cut_small",
+   "hold"
+  ],
+  "tradeable_liquidity": [
+   "active"
+  ],
+  "exit_after_min": 56,
+  "skip_if_alarmed": true,
+  "direction_hit_rate": 1.0,
+  "hold_side_by_regime": true
+ },
+ "regime": null,
+ "z": 3.05,
+ "total_pnl": 0,
+ "capital": 0
+}

@@ -305,8 +305,10 @@ def recommender_markets(record: dict, venues, already: set) -> list:
 
 
 class LiveDesk:
-    def __init__(self, speaker, venues, qty, live, watchlist, state, source="live", surprises_only=False):
+    def __init__(self, speaker, venues, qty, live, watchlist, state, source="live", surprises_only=False,
+                 playbook=None):
         self.speaker, self.venues, self.qty, self.live = speaker, venues, qty, live
+        self.playbook = playbook              # Tradio's learned rules (tradio/playbook.py); None = old behavior
         self.source = source                  # "live", "mic" or "simulate": how rows are tagged in Tiger Data
         self.surprises_only = surprises_only  # mic demo: don't store neutral chatter
         self.watch = watchlist
@@ -388,8 +390,24 @@ class LiveDesk:
         candidates += extra
         with ThreadPoolExecutor(max_workers=8) as pool:            # refresh prices in parallel
             fresh = list(pool.map(fresh_quote, candidates))
+        skipped, notes = [], {}
+        if self.playbook:
+            # Tradio's history decides: big-enough surprise, contract types that have reacted
+            # before, liquid right now, not already moved, and the right side for the regime.
+            from tradio import playbook as pbk
+            try:
+                with open(pbk.LIVE_ANALYSIS, encoding="utf-8") as f:
+                    live_an = json.load(f)
+            except (OSError, ValueError):
+                live_an = None
+            fresh, skipped = pbk.gate(fresh, record["z"], self.playbook, live_an)
+            notes = {(m["venue"], m["market"]): m.get("playbook", {}) for m in fresh}
+            for m in skipped:
+                print(f"   playbook skip {m['market']}: {m['error']}")
         trades = market_router.trade_all(fresh, live=self.live, qty=self.qty, max_per_venue=3,
                                          reason=f"LIVE {self.speaker} {record['direction']} z={record['z']:+.1f}")
+        trades += [{"venue": m["venue"], "market": m["market"], "side": m["side"], "error": m["error"]}
+                   for m in skipped]
         done = time.time()
         for t in trades:
             if not t.get("error") and not t.get("blocked"):
@@ -414,6 +432,9 @@ class LiveDesk:
                 "title": titles.get((t.get("venue"), t.get("market")), ""),
                 "side": t.get("side"), "qty": t.get("qty"), "yes_limit": t.get("yes_limit"),
                 "max_cost": t.get("max_cost"), "trigger": f"{record['direction']} z {record['z']:+.1f}",
+                "entry_quote": {"bid": (t.get("quote") or {}).get("best_bid"),
+                                "ask": (t.get("quote") or {}).get("best_ask")},
+                "playbook": notes.get((t.get("venue"), t.get("market"))),
                 "skipped": bool(t.get("error") or t.get("blocked")),
                 "status": t.get("error") and f"skipped: {t['error']}" or tc.trade_status(t)})
         print(f"   >>> {record['direction']} surprise: {alert['orders']} order(s) in "
@@ -530,6 +551,8 @@ def main():
                         help="Display label for this audio source in live_state.json")
     parser.add_argument("--surprises-only", action="store_true",
                         help="Only store surprises (use for the mic demo so room chatter isn't saved)")
+    parser.add_argument("--playbook", action="store_true",
+                        help="Only trade what Tradio's learned playbook allows (python tradio/playbook.py builds it)")
     parser.add_argument("--fast", action="store_true",
                         help="Only watch the next Fed decision's markets (starts in seconds; good for the mic demo)")
     args = parser.parse_args()
@@ -551,8 +574,21 @@ def main():
         watchlist = build_watchlist(args.speaker, args.venues)
     state.update(watchlist=watchlist, status="listening")
 
+    playbook = None
+    if args.playbook:
+        from tradio import playbook as pbk
+        playbook = pbk.load()
+        if not playbook:
+            raise SystemExit("No playbook yet. Run: python tradio/playbook.py")
+        r = playbook["rules"]
+        print(f"Playbook ({playbook['n_events']} events): |z| >= {r['min_abs_z']['value']}, "
+              f"contracts {', '.join(r['trade_kinds']['value'])}, liquidity {', '.join(r['tradeable_liquidity']['value'])}, "
+              f"planned exit after {r['exit_after_min']['value']} min")
+        state.update(playbook={"n_events": playbook["n_events"], "min_abs_z": r["min_abs_z"]["value"],
+                               "exit_after_min": r["exit_after_min"]["value"]})
     desk = LiveDesk(args.speaker, args.venues, args.qty, args.live, watchlist, state,
-                    source="simulate" if args.simulate else args.source, surprises_only=args.surprises_only)
+                    source="simulate" if args.simulate else args.source, surprises_only=args.surprises_only,
+                    playbook=playbook)
     sentences = simulate(args.simulate, args.speed) if args.simulate else watch_file(args.watch)
     try:
         for text, heard_at in chunks(sentences, per_utterance=(args.source == "mic" and not args.simulate)):

@@ -1,0 +1,70 @@
+{
+ "event_id": "bowman20250623",
+ "method": "leave-one-out",
+ "learned_from": [
+  "waller20250717",
+  "warsh20260828"
+ ],
+ "latency_s": 60,
+ "qty": 10,
+ "trades": [
+  {
+   "market": "kalshi:KXFEDDECISION-25JUL-H0",
+   "label": "Jul 2025: hold",
+   "side": "no",
+   "qty": 10,
+   "entry_t": "2025-06-23T14:01:00Z",
+   "entry_yes_bid": 0.84,
+   "entry_yes_ask": 0.86,
+   "cost": 0.16,
+   "exit_t": "2025-06-23T14:30:00Z",
+   "exit_yes_bid": 0.79,
+   "exit_yes_ask": 0.8,
+   "value": 0.2,
+   "fees": 0.2061,
+   "pnl": 0.19,
+   "return_pct": 12.1,
+   "side_fixed": "yes -> no (easing market)"
+  }
+ ],
+ "skipped": [
+  {
+   "market": "KXFEDDECISION-25JUL-H26",
+   "label": "Jul 2025: hike >25 bp",
+   "why": "hike_big has never reacted in past events"
+  },
+  {
+   "market": "KXFEDDECISION-25JUL-H25",
+   "label": "Jul 2025: hike 25 bp",
+   "why": "dark right now; reactions in dark markets weren't measurable"
+  },
+  {
+   "market": "KXFEDDECISION-25JUL-C25",
+   "label": "Jul 2025: cut 25 bp",
+   "why": "cut_small has never reacted in past events"
+  },
+  {
+   "market": "KXFEDDECISION-25JUL-C26",
+   "label": "Jul 2025: cut >25 bp",
+   "why": "cut_big has never reacted in past events"
+  }
+ ],
+ "rules": {
+  "min_abs_z": 2.94,
+  "trade_kinds": [
+   "hike_small",
+   "hold"
+  ],
+  "tradeable_liquidity": [
+   "active"
+  ],
+  "exit_after_min": 29,
+  "skip_if_alarmed": true,
+  "direction_hit_rate": 1.0,
+  "hold_side_by_regime": true
+ },
+ "regime": "easing",
+ "z": -3.5,
+ "total_pnl": 0.19,
+ "capital": 1.6
+}

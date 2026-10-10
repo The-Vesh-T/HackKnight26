@@ -55,8 +55,10 @@ a { color: var(--cyan); }
 .brand-text b { font-size: 17px; letter-spacing: .02em; }
 .brand-text span { color: var(--muted); font-size: 12px; }
 
-.tabs { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
+/* One row that scrolls sideways: recorded live sessions keep adding History tabs. */
+.tabs { display: flex; gap: 6px; flex: 1 1 0; min-width: 0; overflow-x: auto; scrollbar-width: thin; padding-bottom: 2px; }
 .tab {
+  flex: none;
   background: transparent;
   border: 1px solid var(--line-2);
   border-radius: 8px;
@@ -109,20 +111,26 @@ dialog.guide::backdrop { background: rgba(5, 9, 12, .7); }
 .guide-foot { margin: 14px 0 0; color: var(--muted); font-size: 12.5px; }
 
 /* ---------- layout ---------- */
-.stage { width: 100%; max-width: 1600px; margin: 0 auto; padding: 16px 20px 28px; display: grid; gap: 16px; }
+.stage { width: 100%; max-width: 1600px; margin: 0 auto; padding: 16px 20px 28px; display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); }
 .layout {
+  display: grid;
+  gap: 16px;
   grid-template-columns: 440px minmax(0, 1fr);
   grid-template-areas: "speech chart" "markets chart";
   grid-template-rows: auto 1fr;
   align-items: start;
 }
 #speechCard { grid-area: speech; }
-#marketCard { grid-area: chart; position: sticky; top: 82px; }
+/* Pinned beside the speech and the market list while it fits on screen (tradio.js fitSticky). */
+#marketCard { grid-area: chart; position: sticky; top: calc(var(--topbar-h, 66px) + 16px); }
+#marketCard.nostick { position: static; }
 .markets { grid-area: markets; }
 .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; min-width: 0; }
 .card-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
 .card-head h2 { margin: 0; font-size: 16px; font-weight: 650; }
 .card-head .meta { margin-left: auto; color: var(--muted); font-size: 13px; }
+.head-right { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
+.head-right .meta { margin-left: 0; }
 .card-head .count { color: var(--muted); font: 13px var(--mono); margin-left: 4px; }
 .step {
   display: inline-grid;
@@ -211,7 +219,7 @@ mark.key {
 .flat { color: var(--muted); font-weight: 500; }
 
 .chart-stage { position: relative; }
-.chart-wrap { height: clamp(280px, calc(100vh - 520px), 520px); }
+.chart-wrap { height: clamp(280px, calc(100vh - 580px), 520px); }
 .chart-wrap svg { width: 100%; height: 100%; display: block; }
 .cta {
   position: absolute;
@@ -247,7 +255,14 @@ mark.key {
   flex-wrap: wrap;
   align-items: baseline;
 }
-.verdict .why-text { flex: 1 1 360px; }
+.verdict .why-text { flex: 1 1 260px; }
+/* Verdict and desk share a row when the chart card is wide enough, so the card stays short enough to pin. */
+#marketCard { container-type: inline-size; }
+.below-chart { display: grid; gap: 10px; margin-top: 12px; align-items: start; grid-template-columns: minmax(0, 1fr); }
+.below-chart .verdict, .below-chart .desk { margin-top: 0; }
+@container (min-width: 820px) {
+  .below-chart.has-desk { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
+}
 .verdict .facts { display: flex; gap: 4px 18px; flex-wrap: wrap; width: 100%; color: var(--muted); font-size: 13px; }
 .verdict .facts b { color: var(--text); font-weight: 600; }
 .indic-banner {
@@ -419,19 +434,58 @@ mark.key {
 .loading, .error { padding: 60px 20px; text-align: center; color: var(--muted); }
 .error { color: var(--red); max-width: 800px; margin: 0 auto; }
 
+/* ---------- live ---------- */
+.tab.live b { color: var(--red); }
+.tab.live.on { border-color: var(--red); background: rgba(239, 91, 91, .08); box-shadow: inset 0 -2px 0 var(--red); }
+.live-chip { color: var(--red); display: inline-flex; align-items: center; gap: 5px; }
+.live-chip .dot, .tab.live.on b::first-letter { animation: blink 1.4s ease-in-out infinite; }
+.live-chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red); display: inline-block; }
+@keyframes blink { 50% { opacity: .25; } }
+.chip.alarm { color: var(--green); border-style: dashed; }
+.live-banner { display: flex; align-items: center; gap: 10px 14px; flex-wrap: wrap; padding: 10px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+.live-banner .muted { color: var(--muted); font-size: 13px; }
+.live-meta { color: var(--muted); font-size: 13px; margin-bottom: 10px; }
+.live-list-label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .07em; margin-top: 14px; }
+.para-key { color: var(--muted); font-size: 12.5px; }
+.para .t { font: 11.5px var(--mono); color: var(--faint); margin-right: 4px; }
+.card.idle { max-width: 860px; margin: 8px auto; padding: 22px 28px; color: var(--muted); }
+.idle h3 { color: var(--text); font-size: 20px; margin: 0 0 10px; }
+.idle li { margin: 10px 0; }
+.idle .mono { color: var(--text); background: var(--panel-2); padding: 1px 5px; border-radius: 4px; font-size: 12px; display: inline-block; margin-top: 3px; }
+.idle .muted { color: var(--faint); font-size: 12px; }
+
+/* ---------- desk: what the playbook traded, under the chart ---------- */
+.desk { margin-top: 10px; padding: 10px 14px; background: var(--panel-2); border: 1px solid var(--line-2); border-radius: 10px; }
+.desk-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+.desk .px { margin-left: auto; font: 600 14px var(--mono); }
+.desk .order { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: baseline; padding: 6px 0; border-top: 1px solid var(--line); cursor: pointer; }
+.desk .order:hover { background: rgba(255, 255, 255, .03); }
+.desk .order .t { color: var(--faint); font-size: 12px; }
+.desk .order .pnl { font-family: var(--mono); }
+.desk .order .fix { grid-column: 2 / -1; color: #f4d68a; font-size: 12px; }
+.desk .up { color: var(--green); }
+.desk .down { color: var(--red); }
+.desk .muted { color: var(--faint); }
+.desk .small { font-size: 12px; margin-top: 6px; }
+.desk details { margin-top: 6px; color: var(--muted); font-size: 12.5px; }
+.desk details summary { cursor: pointer; }
+.desk .skip { padding: 2px 0 2px 10px; }
+.legend i.diamond { width: 9px; height: 9px; background: #fff; transform: rotate(45deg); border-radius: 0; }
+.legend i.sq { width: 9px; height: 9px; background: #fff; border-radius: 0; }
+.legend i.tri { width: 0; height: 0; background: none; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 9px solid var(--hawk); border-radius: 0; }
+
 /* ---------- responsive ---------- */
-/* short screens: a pinned chart card taller than the window could never be scrolled fully into view */
-@media (max-height: 820px) {
-  #marketCard { position: static; }
-  .chart-wrap { height: 300px; }
+@media (max-width: 1500px) {
+  .brand-text span { display: none; }
 }
-@media (max-width: 1200px) {
-  .layout { grid-template-columns: minmax(0, 1fr); grid-template-areas: "speech" "chart" "markets"; grid-template-rows: auto; }
+/* Narrow screens (e.g. a side panel): chart and desk first, speech last and scrollable. */
+@media (max-width: 1100px) {
+  .layout { grid-template-columns: minmax(0, 1fr); grid-template-areas: "chart" "markets" "speech"; grid-template-rows: auto; }
   #marketCard { position: static; }
+  #speechCard { max-height: 520px; overflow: auto; }
+  .step { display: none; }
   .speech-body { grid-template-columns: minmax(0, 1fr) 380px; align-items: start; gap: 24px; }
   .chart-wrap { height: clamp(280px, 42vh, 460px); }
-}
-@media (max-width: 1100px) {
   .dock-main { flex-wrap: wrap; gap: 10px 14px; }
   .scrub { order: 5; flex-basis: 100%; }
   .clock { margin-left: auto; }
@@ -440,9 +494,6 @@ mark.key {
   .speech-body { grid-template-columns: minmax(0, 1fr); }
   .guide-inner { grid-template-columns: 1fr; gap: 16px; }
   .compare-grid { grid-template-columns: 1fr; }
-  .dock-main { flex-wrap: wrap; gap: 10px 14px; }
-  .scrub { order: 5; flex-basis: 100%; }
-  .clock { margin-left: auto; }
   .chart-wrap { height: 300px; }
   .mk-price { margin-left: 0; text-align: left; }
   .mk-price .row { justify-content: flex-start; }
@@ -451,6 +502,21 @@ mark.key {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mrow.fired { animation: none; }
+  .mrow.fired, .live-chip .dot, .tab.live.on b::first-letter { animation: none; }
   .drawer, .group-head .chev { transition: none; }
 }
+
+/* ---------- live controls (shown on the LIVE tab; buttons need tradio/serve.py) ---------- */
+.controls-bar { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; padding: 8px 20px; border-bottom: 1px solid var(--line); background: var(--panel); }
+.controls-bar select, .controls-bar input[type=text], .controls-bar input:not([type]) { background: var(--panel-2); color: var(--text); border: 1px solid var(--line-2); border-radius: 6px; padding: 4px 6px; font: 12px var(--sans); }
+.controls-bar label { color: var(--muted); font-size: 12px; }
+.ctl-group { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.ctl-group b { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; margin-right: 2px; }
+.controls-bar .btn.stop { border-color: rgba(239, 91, 91, .6); color: var(--red); }
+.ctl-status { flex-basis: 100%; font-size: 12px; }
+.ctl-status details { margin: 2px 0; }
+.ctl-status summary { cursor: pointer; }
+.ctl-status pre { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 6px; font: 11px/1.35 var(--mono); max-height: 180px; overflow: auto; color: #b9c9cf; }
+.ctl-status .err { color: var(--red); margin-bottom: 4px; }
+.controls-bar .muted { color: var(--faint); }
+.controls-bar[hidden] { display: none; }
