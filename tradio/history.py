@@ -289,7 +289,7 @@ def analyze(speeches, all_speeches):
 # ------------------------------------------------------------------ text + stance
 
 def speech_text(sid: str) -> dict:
-    """Speech text, cached in the history folder (not transcripts/, so MarketPulse's
+    """Speech text, cached in the history folder (not transcripts/, so the live desk's
     replay catalog doesn't fill up with 200 extra speeches)."""
     path = os.path.join(HIST_DIR, sid, "speech.json")
     if not os.path.isfile(path):

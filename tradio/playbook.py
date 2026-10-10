@@ -9,7 +9,7 @@ saved with `tradio/live.py archive`) is one observation:
   - which were too thin to judge,
   - and, for recorded live sessions, what the desk's orders made or lost.
 
-From those it writes plain rules the MarketPulse desk follows when started with
+From those it writes plain rules the live desk follows when started with
 `python live.py --playbook` (see gate()):
   min_abs_z        trade only surprises at least this big. Learned as the midpoint between
                    the biggest surprise that did NOT move markets and the smallest one that did.
@@ -37,13 +37,13 @@ PLAYBOOK = os.path.join(DATA_DIR, "playbook.json")
 WEB_PLAYBOOK = os.path.join(WEB_DATA_DIR, "playbook.json")
 LIVE_ANALYSIS = os.path.join(WEB_DATA_DIR, "live", "analysis.json")
 
-# Same mapping as MarketPulse's live.py FED_OUTCOME_SIDES: which side a surprise favors.
+# Same mapping as live.py's FED_OUTCOME_SIDES: which side a surprise favors.
 KINDS = {"H0": "hold", "H25": "hike_small", "H26": "hike_big", "C25": "cut_small", "C26": "cut_big"}
 SIDE = {"hold": {"HAWKISH": "no", "DOVISH": "yes"},
         "hike_small": {"HAWKISH": "yes", "DOVISH": "no"}, "hike_big": {"HAWKISH": "yes", "DOVISH": "no"},
         "cut_small": {"HAWKISH": "no", "DOVISH": "yes"}, "cut_big": {"HAWKISH": "no", "DOVISH": "yes"}}
 CUT_KINDS, HIKE_KINDS = ("cut_small", "cut_big"), ("hike_small", "hike_big")
-Z_FLOOR = 2.0                 # never below MarketPulse's own surprise threshold
+Z_FLOOR = 2.0                 # never below the live desk's own surprise threshold
 DEFAULT_EXIT_MIN = 30
 
 
@@ -66,7 +66,7 @@ def side_for(kind: str, direction: str, reg) -> str:
     """Which side of a decision contract a surprise favors. Cuts and hikes are fixed, but
     'hold' flips with the regime: when the market leans to a cut, a dovish surprise makes
     the cut likelier and the hold LESS likely; when it leans to a hike, a dovish surprise
-    makes the hold MORE likely. MarketPulse's fixed table assumed the second case."""
+    makes the hold MORE likely. The old fixed table assumed the second case."""
     if kind == "hold" and reg == "easing":
         return "no" if direction == "DOVISH" else "yes"
     return SIDE[kind][direction]
@@ -131,7 +131,7 @@ def learn(obs: list) -> dict:
         z_thr = min(reacted_z)
         z_why = f"smallest surprise that moved markets (|z| {min(reacted_z):.2f}); no clean separation yet"
     else:
-        z_thr, z_why = Z_FLOOR, "no reactions recorded yet; using MarketPulse's default"
+        z_thr, z_why = Z_FLOOR, "no reactions recorded yet; using the live desk's default"
     z_thr = round(max(Z_FLOOR, z_thr), 2)
 
     rows = [(o, m) for o in obs for m in o["markets"]]
@@ -165,7 +165,7 @@ def learn(obs: list) -> dict:
                                     "the surprise is priced in, so don't chase")},
         "direction_hit_rate": {"value": (round(sum(right) / len(right), 2) if right else None),
                                "why": (f"{sum(right)}/{len(right)} reactions moved the way the regime-aware mapping "
-                                       f"predicts; MarketPulse's fixed table got {sum(fixed)}/{len(fixed)}")},
+                                       f"predicts; the old fixed table got {sum(fixed)}/{len(fixed)}")},
         "hold_side_by_regime": {"value": True,
                                 "why": ("'hold' flips with the regime: in an easing market a dovish surprise "
                                         "lowers the hold (Bowman 2025), in a tightening market it raises it")},
@@ -179,7 +179,7 @@ def learn(obs: list) -> dict:
 
 # ------------------------------------------------------------------ backtest
 
-LATENCY_S = 60          # text released at T0 -> scored -> order sent; MarketPulse's live desk
+LATENCY_S = 60          # text released at T0 -> scored -> order sent; the live desk
                         # takes seconds, so one minute (the next closed candle) is conservative
 BACKTEST_QTY = 10
 
@@ -314,7 +314,7 @@ def candidate_regime(candidates: list):
 
 def gate(candidates: list, z: float, playbook: dict, live_analysis: dict = None, reg=None):
     """Split the desk's candidate markets into (keep, skipped) by the playbook's rules.
-    candidates are MarketPulse watchlist entries (with fresh quotes): {"venue", "market",
+    candidates are live-desk watchlist entries (with fresh quotes): {"venue", "market",
     "side", "quote", ...}. The side of 'hold' contracts is corrected for the regime."""
     rules = playbook["rules"]
     keep, skipped = [], []

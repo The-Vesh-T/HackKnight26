@@ -7,7 +7,7 @@ web/tradio.html shows a speech the same way it shows a historical one:
   markets  Kalshi's next Fed-decision contracts (public endpoints, no keys), 1-minute
            candles + trades, polled live. Quotes are only written for candles that have
            closed, so the page never shows a half-finished minute.
-  speech   read from MarketPulse's live_state.json, which `python live.py` writes while it
+  speech   read from the live desk's live_state.json, which `python live.py` writes while it
            transcribes and scores the speaker (z vs. that speaker's own baseline). Tradio only
            READS that file; it never imports the trading code. Run live.py with
            `--no-prewarm --mode dry` so no orders are possible.
@@ -19,7 +19,7 @@ the speech shows up as one more History tab next to Bowman, Waller and Warsh.
 
 Usage (on the laptop that has internet; the demo itself still runs offline):
 
-  # 1. Score the speech live (MarketPulse; dry, no watchlist => never trades)
+  # 1. Score the speech live (dry, no watchlist => never trades)
   python speechtxt.py --url https://www.federalreserve.gov/live-broadcast.htm   # terminal 1
   python live.py --speaker christopher_waller --no-prewarm --mode dry           # terminal 2
   # 2. Live market tape + reaction checks for the LIVE tab
@@ -45,7 +45,7 @@ from tradio.common import (DATA_DIR, ROOT, WEB_DATA_DIR, iso_from_unix, parse_ts
 
 LIVE_ID = "live"
 LIVE_DIRS = [os.path.join(DATA_DIR, LIVE_ID), os.path.join(WEB_DATA_DIR, LIVE_ID)]
-LIVE_STATE = os.path.join(ROOT, "live_state.json")       # written by MarketPulse's live.py
+LIVE_STATE = os.path.join(ROOT, "live_state.json")       # written by the live desk (live.py)
 EVENTS_INDEX = os.path.join(WEB_DATA_DIR, "events.json")  # extra history tabs for the page
 DECISION_LEGS = ["H26", "H25", "H0", "C25", "C26"]
 PRE_S = 60 * 60
@@ -118,7 +118,7 @@ class Tape:
 # ------------------------------------------------------------------ speech (live)
 
 def speech_from_state(path: str = LIVE_STATE):
-    """MarketPulse live_state.json -> timeline 'speech' block. Passages arrive over time,
+    """live_state.json -> timeline 'speech' block. Passages arrive over time,
     so each paragraph carries its own time `t` (unlike a prepared text released at T0)."""
     if not os.path.isfile(path):
         return None
@@ -144,7 +144,7 @@ def speech_from_state(path: str = LIVE_STATE):
 # ------------------------------------------------------------------ desk (orders + P&L)
 
 def desk_from_state(st: dict, quotes: list, now: int) -> dict:
-    """MarketPulse's orders from live_state.json, marked to market with the live Kalshi tape.
+    """The live desk's orders from live_state.json, marked to market with the live Kalshi tape.
     Entry = the quote the desk saw when it ordered (ask for YES, 1 - bid for NO; the IOC
     limit as a fallback). Mark = current bid for YES / 1 - ask for NO, i.e. what you'd get
     selling now. At the playbook's planned exit time the mark is frozen as pnl_at_exit.
@@ -398,7 +398,7 @@ def main(argv=None):
     ap.add_argument("--event", help="Kalshi event ticker, default = next Fed decision")
     ap.add_argument("--tickers", nargs="+", help="explicit Kalshi tickers instead of --event")
     ap.add_argument("--title")
-    ap.add_argument("--state", default=LIVE_STATE, help="MarketPulse live_state.json to read the speech from")
+    ap.add_argument("--state", default=LIVE_STATE, help="live_state.json to read the speech from")
     ap.add_argument("--every", type=float, default=None, help="seconds between updates")
     ap.add_argument("--once", action="store_true", help="write one update and exit")
     ap.add_argument("--simulate", metavar="EVENT_ID", help="replay a cached event as if live (offline)")

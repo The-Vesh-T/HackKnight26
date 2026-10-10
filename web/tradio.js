@@ -609,7 +609,7 @@
     const who = E.tl.speaker || sp.speaker;
     const last = lastName(who);
     let h = `<div class="card-head"><span class="step">1</span><h2>What's being said</h2><span class="meta">${esc(cardTitle(E))}</span></div>
-      <div class="live-meta">Transcribed and scored as it's spoken by MarketPulse (<span class="mono">live.py</span>), z against ${esc(last)}'s own history${sp.baseline && sp.baseline.n != null ? ` (n = ${esc(sp.baseline.n)})` : ""}.${sp.status ? ` Status: <b>${esc(sp.status)}</b>.` : ""}</div>`;
+      <div class="live-meta">Transcribed and scored as it's spoken by Tradio's live desk (<span class="mono">live.py</span>), z against ${esc(last)}'s own history${sp.baseline && sp.baseline.n != null ? ` (n = ${esc(sp.baseline.n)})` : ""}.${sp.status ? ` Status: <b>${esc(sp.status)}</b>.` : ""}</div>`;
     if (!heard.length) {
       return h + `<div class="pending-note">No speech passages yet. Start the live scorer on the laptop:<br><span class="mono">python live.py --speaker &lt;name&gt; --no-prewarm --mode dry</span><br>Passages appear here as they're scored, newest on top. The market chart updates either way.</div>`;
     }
@@ -1458,7 +1458,7 @@
       <p><b>Use the buttons above</b> (Practice replays a past speech; Real speech listens, scores and, if you pick it, trades). Or run the commands yourself:</p>
       <p>The LIVE tab shows a Fed speech as it happens: the transcript scored against the speaker's own history, next to Kalshi's live Fed-decision prices, with the same reaction checks as the replays. When it's over, it becomes one more History tab.</p>
       <ol>
-        <li><b>Score the speech</b> (MarketPulse, dry, never trades):<br><span class="mono">python speechtxt.py --url https://www.federalreserve.gov/live-broadcast.htm</span><br><span class="mono">python live.py --speaker christopher_waller --no-prewarm --mode dry</span><br>or let it <b>trade on Kalshi's demo exchange</b> by the learned playbook:<br><span class="mono">python live.py --speaker christopher_waller --fast --playbook --mode demo --venues kalshi</span></li>
+        <li><b>Score the speech</b> (dry, never trades):<br><span class="mono">python speechtxt.py --url https://www.federalreserve.gov/live-broadcast.htm</span><br><span class="mono">python live.py --speaker christopher_waller --no-prewarm --mode dry</span><br>or let it <b>trade on Kalshi's demo exchange</b> by the learned playbook:<br><span class="mono">python live.py --speaker christopher_waller --fast --playbook --mode demo --venues kalshi</span></li>
         <li><b>Stream the market tape</b> into this page:<br><span class="mono">python tradio/live.py --speaker christopher_waller --t0 now</span></li>
         <li><b>Afterwards, keep it</b> as a history event:<br><span class="mono">python tradio/live.py archive waller20261015 --title "Waller, 2026-10-15"</span></li>
       </ol>
