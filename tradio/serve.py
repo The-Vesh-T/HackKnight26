@@ -11,6 +11,7 @@ LIVE tab uses to start and stop Tradio's own commands, so nobody has to juggle t
             python live.py --speaker <s> --fast --playbook --mode <m> --venues kalshi  (desk)
             python tradio/live.py --speaker <s> --t0 now                 (market tape)
   archive   python tradio/live.py archive <event_id> [--title <title>]  (keep a finished session)
+  insights  python -m tradio.warehouse snowflake-insights               (re-ask Snowflake for the Insights panel)
 
 Safety:
   - listens on 127.0.0.1 only; requests must carry the X-Tradio header from this page
@@ -189,7 +190,17 @@ class Runner:
                 self._spawn("archive", f"saving the live session as {eid}",
                             [py, "tradio/live.py", "archive", eid] + (["--title", title] if title else []))
             return self.status()
-        raise ValueError("kind must be practice, live or archive")
+        if kind == "insights":
+            if not has("snowflake.txt"):
+                raise ValueError("Snowflake isn't set up on this laptop (snowflake.txt is missing)")
+            with self.lock:
+                old = self.procs.get("insights")
+                if old and old.running():
+                    raise ValueError("already asking Snowflake")
+                self._spawn("insights", "asking Snowflake for the Insights panel",
+                            [py, "-m", "tradio.warehouse", "snowflake-insights"])
+            return self.status()
+        raise ValueError("kind must be practice, live, archive or insights")
 
     def status(self) -> dict:
         with self.lock:

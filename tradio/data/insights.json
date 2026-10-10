@@ -1,0 +1,160 @@
+{
+ "source": "Snowflake",
+ "ran_at": "2026-10-10T22:19:57Z",
+ "queries": [
+  {
+   "title": "Reaction rate by speaker role",
+   "sql": "SELECT e.role,\n       COUNT(DISTINCT e.event_id)                                        AS speeches,\n       COUNT(*)                                                          AS active_contracts,\n       ROUND(AVG(IFF(r.status IN ('reacted', 'candidate_delay'), 1, 0)), 3) AS reaction_rate\nFROM tradio_reactions r\nJOIN tradio_events e USING (event_id)\nWHERE r.venue = 'kalshi' AND r.liquidity = 'active'\nGROUP BY e.role\nORDER BY reaction_rate DESC",
+   "columns": [
+    "role",
+    "speeches",
+    "active_contracts",
+    "reaction_rate"
+   ],
+   "rows": [
+    [
+     null,
+     3,
+     7,
+     0.571
+    ],
+    [
+     "chair",
+     14,
+     37,
+     0.324
+    ],
+    [
+     "vice_chair",
+     14,
+     25,
+     0.2
+    ],
+    [
+     "governor",
+     76,
+     168,
+     0.101
+    ],
+    [
+     "vice_chair_supervision",
+     29,
+     54,
+     0.074
+    ]
+   ]
+  },
+  {
+   "title": "Reaction rate by stance surprise (|top z|)",
+   "sql": "SELECT CASE WHEN e.top_z IS NULL THEN 'not scored'\n            WHEN ABS(e.top_z) < 1 THEN '|z| < 1'\n            WHEN ABS(e.top_z) < 2 THEN '1 <= |z| < 2'\n            ELSE '|z| >= 2' END                                          AS surprise,\n       COUNT(DISTINCT e.event_id)                                        AS speeches,\n       COUNT(*)                                                          AS active_contracts,\n       ROUND(AVG(IFF(r.status IN ('reacted', 'candidate_delay'), 1, 0)), 3) AS reaction_rate\nFROM tradio_reactions r\nJOIN tradio_events e USING (event_id)\nWHERE r.venue = 'kalshi' AND r.liquidity = 'active'\nGROUP BY surprise\nORDER BY surprise",
+   "columns": [
+    "surprise",
+    "speeches",
+    "active_contracts",
+    "reaction_rate"
+   ],
+   "rows": [
+    [
+     "1 <= |z| < 2",
+     26,
+     46,
+     0.13
+    ],
+    [
+     "not scored",
+     21,
+     45,
+     0.0
+    ],
+    [
+     "|z| < 1",
+     51,
+     118,
+     0.093
+    ],
+    [
+     "|z| >= 2",
+     38,
+     82,
+     0.305
+    ]
+   ]
+  },
+  {
+   "title": "How fast reacting contracts absorbed the move (minutes after T0)",
+   "sql": "SELECT r.contract,\n       COUNT(*)                                     AS reactions,\n       ROUND(MEDIAN(r.t50_min), 1)                  AS median_t50_min,\n       ROUND(MEDIAN(r.t90_min), 1)                  AS median_t90_min,\n       ROUND(MEDIAN(ABS(r.move_ticks)), 1)          AS median_move_ticks\nFROM tradio_reactions r\nWHERE r.venue = 'kalshi' AND r.status = 'reacted'\nGROUP BY r.contract\nORDER BY reactions DESC",
+   "columns": [
+    "contract",
+    "reactions",
+    "median_t50_min",
+    "median_t90_min",
+    "median_move_ticks"
+   ],
+   "rows": [
+    [
+     "H0",
+     20,
+     5.0,
+     19.5,
+     8.0
+    ],
+    [
+     "C25",
+     9,
+     19.0,
+     42.0,
+     8.0
+    ],
+    [
+     "H25",
+     8,
+     6.0,
+     25.5,
+     10.8
+    ]
+   ]
+  },
+  {
+   "title": "Learner scoreboard (Brier score, lower is better; test-then-train predictions)",
+   "sql": "SELECT model,\n       COUNT(*)                            AS predictions,\n       ROUND(AVG(POWER(p - label, 2)), 4)  AS brier\nFROM tradio_predictions\nWHERE label IS NOT NULL\nGROUP BY model\nORDER BY brier",
+   "columns": [
+    "model",
+    "predictions",
+    "brier"
+   ],
+   "rows": [
+    [
+     "ensemble",
+     255,
+     0.075
+    ],
+    [
+     "logistic",
+     255,
+     0.0761
+    ],
+    [
+     "mlp",
+     255,
+     0.0823
+    ],
+    [
+     "boosting",
+     255,
+     0.0863
+    ],
+    [
+     "base_rate",
+     255,
+     0.1106
+    ],
+    [
+     "playbook",
+     255,
+     0.1148
+    ]
+   ]
+  }
+ ],
+ "events": 206
+}

@@ -1426,6 +1426,75 @@
     showDrawer("Model · predicting which markets react", body);
   }
 
+  // ---------- Insights: questions asked of Snowflake across every speech ----------
+  // The page reads data/tradio/insights.json (saved by `python -m tradio.warehouse snowflake-insights`),
+  // so it works offline; "Refresh from Snowflake" re-runs the queries through tradio/serve.py.
+  const CONTRACT_WORDS = { H0: "Hold", C25: "Cut 25 basis points", C26: "Cut more than 25 basis points",
+    H25: "Hike 25 basis points", H26: "Hike more than 25 basis points" };
+  const SURPRISE_WORDS = { "|z| >= 2": "Big surprise for the speaker", "1 <= |z| < 2": "Some surprise", "|z| < 1": "About as usual", "not scored": "Not scored" };
+  const ROLE_WORDS = { chair: "Fed Chair", vice_chair: "Vice Chair", governor: "Governor", vice_chair_supervision: "Vice Chair for Supervision" };
+
+  function insightsHtml(ins) {
+    if (!ins) return `<p class="src">No Snowflake answers saved yet. Press <b>Refresh from Snowflake</b> (needs <span class="mono">python tradio/serve.py</span> and Snowflake set up on this laptop).</p>`;
+    const q = (prefix) => ins.queries.find((x) => x.title.startsWith(prefix));
+    const col = (qq, name) => qq.columns.indexOf(name);
+    const bars = (rows, max) => `<div class="ins-bars">${rows.map(([label, v, note]) => `<div class="ins-bar"><span class="ins-lab">${esc(label)}</span>
+      <span class="ins-track"><i style="width:${Math.max(2, (100 * v) / max).toFixed(1)}%"></i></span><b class="num">${pct(v)}</b>${note ? `<small>${esc(note)}</small>` : ""}</div>`).join("")}</div>`;
+    let h = `<p class="ins-src">Asked of <b>Snowflake</b> across <b>${count(ins.events)}</b> Fed speeches · answers from ${esc(fmtEtShort(parseT(ins.ran_at)))} ET, ${esc(String(ins.ran_at).slice(0, 10))}</p>`;
+    const s = q("Reaction rate by stance surprise");
+    if (s) {
+      const order = ["|z| >= 2", "1 <= |z| < 2", "|z| < 1"];
+      const rows = order.map((k) => s.rows.find((r) => r[0] === k)).filter(Boolean)
+        .map((r) => [SURPRISE_WORDS[r[0]], r[col(s, "reaction_rate")], `${r[col(s, "speeches")]} speeches`]);
+      h += `<h4>Markets react more when the speech surprises</h4><p class="src">Share of busy Kalshi contracts that reacted, by how unusual the speech was for that speaker.</p>${bars(rows, Math.max(...rows.map((r) => r[1])))}`;
+    }
+    const r = q("Reaction rate by speaker role");
+    if (r) {
+      const rows = r.rows.filter((x) => x[0] && ROLE_WORDS[x[0]]).map((x) => [ROLE_WORDS[x[0]], x[col(r, "reaction_rate")], `${x[col(r, "speeches")]} speeches`]);
+      h += `<h4>Who moves markets</h4><p class="src">Same measure, by the speaker's role.</p>${bars(rows, Math.max(...rows.map((x) => x[1])))}`;
+    }
+    const f = q("How fast");
+    if (f) {
+      h += `<h4>How fast markets react</h4><table class="kv"><tr><th>Contract</th><td><b>Halfway</b> · <b>90% done</b> (median minutes after the release)</td></tr>` +
+        f.rows.map((x) => `<tr><th>${esc(CONTRACT_WORDS[x[0]] || x[0])} <small class="muted">(${x[col(f, "reactions")]} reactions)</small></th><td>${x[col(f, "median_t50_min")]} min · ${x[col(f, "median_t90_min")]} min</td></tr>`).join("") + `</table>`;
+    }
+    const m = q("Learner scoreboard");
+    if (m) {
+      h += `<h4>How good the prediction model is</h4><p class="src">Brier score: lower is better. Each prediction was made before the model saw that speech.</p><table class="kv">` +
+        m.rows.map((x) => `<tr><th>${esc(String(x[0]).replace(/_/g, " "))}</th><td class="num">${x[col(m, "brier")]}</td></tr>`).join("") + `</table>`;
+    }
+    return h + `<details><summary>The SQL behind these</summary>${ins.queries.map((x) => `<pre>${esc(x.sql)}</pre>`).join("")}</details>`;
+  }
+
+  async function openInsights(note) {
+    const ins = await fetchJson(DATA_ROOT + "insights.json", true);
+    showDrawer("Insights from Snowflake", `<div class="ins-actions"><button class="btn small" id="insRefresh">↻ Refresh from Snowflake</button><span class="muted" id="insNote">${esc(note || "")}</span></div>` + insightsHtml(ins));
+    $("insRefresh").addEventListener("click", refreshInsights);
+  }
+
+  async function refreshInsights() {
+    const btn = $("insRefresh"), note = $("insNote");
+    btn.disabled = true;
+    note.textContent = "Asking Snowflake…";
+    try {
+      await api("/api/start", { kind: "insights" });
+      for (let i = 0; i < 60; i++) {                       // up to a minute
+        await new Promise((r) => setTimeout(r, 1000));
+        const st = await api("/api/status");
+        const p = (st.processes || {}).insights;
+        if (p && !p.running) {
+          return openInsights(p.exit_code ? `Snowflake didn't answer: ${(p.log.slice(-1)[0] || "").slice(0, 120)}` : "Updated just now from Snowflake.");
+        }
+      }
+      note.textContent = "Still waiting on Snowflake. Try again in a moment.";
+    } catch (e) {
+      note.textContent = /404|Failed to fetch|forbidden/i.test(e.message)
+        ? "Refreshing needs the site to run through python tradio/serve.py. Showing the last saved answers."
+        : e.message;
+    }
+    btn.disabled = false;
+  }
+
   async function openPlaybook() {
     const pb = await fetchJson(DATA_ROOT + "playbook.json", true);
     let h;
@@ -1926,6 +1995,7 @@
     $("scrub").addEventListener("input", (e) => { touch(); setRel(+e.target.value); });
     $("drawerClose").addEventListener("click", closeDrawer);
     $("btnPlaybook").addEventListener("click", openPlaybook);
+    $("btnInsights").addEventListener("click", () => openInsights());
     $("btnModel").addEventListener("click", openModel);
     $("btnGuide").addEventListener("click", toggleGuide);
     $("guideClose").addEventListener("click", () => $("guide").close());

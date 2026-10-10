@@ -740,3 +740,16 @@ mark.key { background: rgba(139, 139, 245, .18); color: inherit; padding: 1px 2p
 .bot-toggle[aria-pressed="true"] { color: var(--text); border-color: #4a4f57; }
 .bot-toggle[aria-pressed="true"]::before { background: currentColor; }
 .bot-toggle:hover { background: #20242a; color: var(--text); }
+
+/* ---------- Insights drawer (Snowflake) ---------- */
+.ins-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+.ins-actions .muted { color: var(--faint); font-size: 12.5px; }
+.ins-src { color: var(--muted); font-size: 13px; margin: 8px 0 4px; }
+.ins-bars { display: grid; gap: 8px; margin: 8px 0 4px; }
+.ins-bar { display: grid; grid-template-columns: 190px 1fr 52px; align-items: center; gap: 10px; font-size: 13px; }
+.ins-bar small { grid-column: 1; color: var(--faint); font-size: 11.5px; margin-top: -6px; }
+.ins-lab { color: var(--text); }
+.ins-track { height: 8px; border-radius: 4px; background: var(--panel-2); overflow: hidden; }
+.ins-track i { display: block; height: 100%; border-radius: 4px; background: var(--cyan); animation: grow .5s var(--ease); transform-origin: left; }
+.ins-bar b { text-align: right; font-weight: 650; }
+@keyframes grow { from { transform: scaleX(0); } to { transform: none; } }
