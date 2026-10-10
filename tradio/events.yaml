@@ -1,7 +1,7 @@
 # Tradio replay events. Owned by role 1 (market data). Times are UTC.
 # Market tickers below were checked to exist via Kalshi's historical API.
 
-defaults: &defaults
+markets_2025: &markets_2025
   kalshi:
     direct:   # July 2025 FOMC decision
       - KXFEDDECISION-25JUL-H26
@@ -20,6 +20,24 @@ defaults: &defaults
     - {id: cut50,    label: "July: cut 50+ bp (Polymarket)", exposure: direct, token: "17028788563275937059830939874003546190073058810431474110375077031370800019934"}
     - {id: hike25,   label: "July: hike 25+ bp (Polymarket)", exposure: direct, token: "100067677053694812730460296850221451830656965871151478092125776330632208052828"}
 
+markets_2026sep: &markets_2026sep
+  kalshi:
+    direct:   # September 2026 FOMC decision (settled: hike 25 bp)
+      - KXFEDDECISION-26SEP-H26
+      - KXFEDDECISION-26SEP-H25
+      - KXFEDDECISION-26SEP-H0
+      - KXFEDDECISION-26SEP-C25
+      - KXFEDDECISION-26SEP-C26
+    partial:  # October 2026 decision. (KXRATEHIKE-2026 "number of hikes" opened 2026-09-15,
+              # after this speech, and KXFEDDECISION-26OCT-H26 had no candles in the window.)
+      - KXFEDDECISION-26OCT-H25
+      - KXFEDDECISION-26OCT-H0
+  polymarket:  # event slug fed-decision-in-september-762 (the $208M one; -568 is a near-empty duplicate)
+    - {id: hike25,   label: "Sep 2026: hike 25 bp (Polymarket)",  exposure: direct, token: "63842529068710005716169325380315470359047749786610778647370693404952498013178"}
+    - {id: hike50,   label: "Sep 2026: hike 50+ bp (Polymarket)", exposure: direct, token: "88912926533493988427719291698947688154042720958310632316541141466409683822293"}
+    - {id: nochange, label: "Sep 2026: no change (Polymarket)",   exposure: direct, token: "5615282760875985231868508008056959876238536896643315063916840237042205273721"}
+    - {id: cut25,    label: "Sep 2026: cut 25 bp (Polymarket)",   exposure: direct, token: "57748138085022719760345772310040703848567377822400132842014290209986511882046"}
+
 events:
   bowman20250623:
     title: "Bowman, Prague, 2025-06-23"
@@ -28,7 +46,7 @@ events:
     source_url: https://www.federalreserve.gov/newsevents/speech/bowman20250623a.htm
     t0: "2025-06-23T14:00:00Z"
     window: {start: "2025-06-23T13:00:00Z", end: "2025-06-23T15:30:00Z"}
-    markets: *defaults
+    markets: *markets_2025
 
   waller20250717:
     title: "Waller, New York, 2025-07-17"
@@ -37,7 +55,16 @@ events:
     source_url: https://www.federalreserve.gov/newsevents/speech/waller20250717a.htm
     t0: "2025-07-17T22:30:00Z"
     window: {start: "2025-07-17T21:30:00Z", end: "2025-07-18T00:00:00Z"}
-    markets: *defaults
+    markets: *markets_2025
+
+  warsh20260828:
+    title: "Warsh, Jackson Hole, 2026-08-28"
+    speaker: kevin_warsh
+    speech_id: warsh20260828a
+    source_url: https://www.federalreserve.gov/newsevents/speech/warsh20260828a.htm
+    t0: "2026-08-28T14:00:00Z"     # PDF: "For release on delivery 10:00 a.m. EDT (8:00 a.m. MDT)"
+    window: {start: "2026-08-28T13:00:00Z", end: "2026-08-28T15:30:00Z"}
+    markets: *markets_2026sep
 
 # Spot checks from our earlier manual pull (see docs/team/role1-market-data.md).
 # build_timeline.py checks these and writes PASS/FAIL into tradio/data/NOTES.md.
@@ -52,3 +79,10 @@ spot_checks:
   waller20250717:
     - {kind: trade, ticker: KXFEDDECISION-25JUL-C25, t: "2025-07-17T22:35:04Z", price: 0.05}
     - {kind: trade, ticker: KXFEDDECISION-25JUL-H0,  t: "2025-07-17T22:35:00Z", price: 0.94}
+  warsh20260828:   # from Kalshi's live candles/trades, read by hand on 2026-10-09
+    - {kind: quote, ticker: KXFEDDECISION-26SEP-H25, t: "2026-08-28T14:00:00Z", bid: 0.29, ask: 0.30}
+    - {kind: quote, ticker: KXFEDDECISION-26SEP-H25, t: "2026-08-28T14:01:00Z", bid: 0.29, ask: 0.32}
+    - {kind: quote, ticker: KXFEDDECISION-26SEP-H25, t: "2026-08-28T14:30:00Z", bid: 0.49, ask: 0.50}
+    - {kind: quote, ticker: KXFEDDECISION-26SEP-H25, t: "2026-08-28T14:33:00Z", bid: 0.51, ask: 0.52}
+    - {kind: quote, ticker: KXFEDDECISION-26SEP-H25, t: "2026-08-28T14:41:00Z", bid: 0.41, ask: 0.43}
+    - {kind: trade, ticker: KXFEDDECISION-26SEP-H25, t: "2026-08-28T15:29:53Z", price: 0.50}

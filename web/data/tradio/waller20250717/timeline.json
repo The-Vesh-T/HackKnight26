@@ -17,7 +17,7 @@
    "id": "kalshi:KXFEDDECISION-25JUL-H26",
    "venue": "kalshi",
    "ticker": "KXFEDDECISION-25JUL-H26",
-   "label": "July: hike >25 bp",
+   "label": "Jul 2025: hike >25 bp",
    "exposure": "direct",
    "indicative": false,
    "tick": 0.01
@@ -26,7 +26,7 @@
    "id": "kalshi:KXFEDDECISION-25JUL-H25",
    "venue": "kalshi",
    "ticker": "KXFEDDECISION-25JUL-H25",
-   "label": "July: hike 25 bp",
+   "label": "Jul 2025: hike 25 bp",
    "exposure": "direct",
    "indicative": false,
    "tick": 0.01
@@ -35,7 +35,7 @@
    "id": "kalshi:KXFEDDECISION-25JUL-H0",
    "venue": "kalshi",
    "ticker": "KXFEDDECISION-25JUL-H0",
-   "label": "July: hold",
+   "label": "Jul 2025: hold",
    "exposure": "direct",
    "indicative": false,
    "tick": 0.01
@@ -44,7 +44,7 @@
    "id": "kalshi:KXFEDDECISION-25JUL-C25",
    "venue": "kalshi",
    "ticker": "KXFEDDECISION-25JUL-C25",
-   "label": "July: cut 25 bp",
+   "label": "Jul 2025: cut 25 bp",
    "exposure": "direct",
    "indicative": false,
    "tick": 0.01
@@ -53,7 +53,7 @@
    "id": "kalshi:KXFEDDECISION-25JUL-C26",
    "venue": "kalshi",
    "ticker": "KXFEDDECISION-25JUL-C26",
-   "label": "July: cut >25 bp",
+   "label": "Jul 2025: cut >25 bp",
    "exposure": "direct",
    "indicative": false,
    "tick": 0.01

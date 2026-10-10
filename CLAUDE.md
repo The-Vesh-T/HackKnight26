@@ -60,6 +60,12 @@ doc (ask Devesh for the link). This file is the short version.
   `TRADIO_ALLOW_LIVE=1`, and the logo is `web/tradio-logo.svg` / `web/tradio-mark.svg`.
   The Auth0 app in `docs/HOSTED_CONTROLS.md` keeps its real name.
 
+- **Role 1 is done:** `tradio/data/` has `timeline.json` + `evidence.json` for three events:
+  `bowman20250623`, `waller20250717` and `warsh20260828` (Warsh, Jackson Hole, 2026-08-28,
+  T0 14:00:00Z, Kalshi September 2026 decision contracts). All spot checks pass; quote
+  times are confirmed to be the END of each 1-minute candle (see `tradio/data/NOTES.md`).
+  Contract labels look like "Sep 2026: hike 25 bp". Warsh's stance baseline already exists.
+
 ## Who owns what
 
 | Role | Person | Owns |
@@ -74,7 +80,7 @@ Touching someone else's file: ask them first. Shared files (`CLAUDE.md`,
 
 ## Data contracts (the only thing roles depend on each other for)
 
-All files live in `tradio/data/<event_id>/`. Event ids: `bowman20250623`, `waller20250717`.
+All files live in `tradio/data/<event_id>/`. Event ids: `bowman20250623`, `waller20250717`, `warsh20260828`.
 
 `timeline.json` — written by role 1 (speech fields filled by role 3's `surprise.py`):
 ```json

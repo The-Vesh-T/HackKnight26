@@ -12,7 +12,9 @@ demo never needs the network:
     python tradio/ingest_markets.py --event bowman20250623
     python tradio/ingest_markets.py --force             # re-download even if cached
 
-No API keys needed. Kalshi's historical endpoints serve settled 2025 markets.
+No API keys needed. Kalshi moves older data to /historical/* endpoints after a cutoff
+(GET /historical/cutoff); newer data stays on the live endpoints. This script asks for
+the cutoff and uses whichever side holds each window, so 2025 and 2026 events both work.
 Polymarket's price history is cached in <=70-minute chunks because the same contract
 returned contradictory values for different query windows; build_timeline.py flags
 any disagreement instead of hiding it.
@@ -36,9 +38,15 @@ POLY_CHUNK_S = 70 * 60
 CANDLE_PAD_S = 60 * 60       # extra hour each side, for placebo/noise estimates
 
 
+class NotFound(Exception):
+    pass
+
+
 def get_json(url: str, params: dict, tries: int = 5) -> dict:
     for attempt in range(tries):
         r = requests.get(url, params=params, headers=HEADERS, timeout=30)
+        if r.status_code in (400, 404):
+            raise NotFound(f"{r.status_code} {url}")
         if r.status_code == 429 or r.status_code >= 500:
             wait = 2 * (attempt + 1)
             print(f"    {r.status_code} from {url}; retrying in {wait}s")
@@ -49,32 +57,76 @@ def get_json(url: str, params: dict, tries: int = 5) -> dict:
     raise RuntimeError(f"Gave up on {url} {params}")
 
 
+_CUTOFF = None
+
+
+def trades_cutoff() -> int:
+    """Unix time before which trades live only on /historical/trades."""
+    global _CUTOFF
+    if _CUTOFF is None:
+        from tradio.common import to_unix
+        data = get_json(f"{KALSHI}/historical/cutoff", {})
+        _CUTOFF = to_unix(data["trades_created_ts"])
+    return _CUTOFF
+
+
 def kalshi_trades(ticker: str, start: int, end: int) -> list:
     trades, seen = [], set()
+    cutoff = trades_cutoff()
     for chunk_start in range(start, end, TRADE_CHUNK_S):
         chunk_end = min(chunk_start + TRADE_CHUNK_S, end)
-        cursor = None
-        while True:
-            params = {"ticker": ticker, "min_ts": chunk_start, "max_ts": chunk_end, "limit": 1000}
-            if cursor:
-                params["cursor"] = cursor
-            page = get_json(f"{KALSHI}/historical/trades", params)
-            for t in page.get("trades", []):
-                key = t.get("trade_id") or (t.get("created_time"), t.get("count_fp"), t.get("yes_price_dollars"))
-                if key not in seen:
-                    seen.add(key)
-                    trades.append(t)
-            cursor = page.get("cursor")
-            if not cursor:
-                break
-            time.sleep(0.2)
+        # A chunk that straddles the cutoff is asked of both endpoints; duplicates are dropped.
+        endpoints = []
+        if chunk_start < cutoff:
+            endpoints.append(f"{KALSHI}/historical/trades")
+        if chunk_end > cutoff:
+            endpoints.append(f"{KALSHI}/markets/trades")
+        for url in endpoints:
+            _page_trades(url, ticker, chunk_start, chunk_end, trades, seen)
     trades.sort(key=lambda t: t.get("created_time", ""))
     return trades
 
 
+def _page_trades(url, ticker, chunk_start, chunk_end, trades, seen):
+    cursor = None
+    while True:
+        params = {"ticker": ticker, "min_ts": chunk_start, "max_ts": chunk_end, "limit": 1000}
+        if cursor:
+            params["cursor"] = cursor
+        page = get_json(url, params)
+        for t in page.get("trades", []):
+            key = t.get("trade_id") or (t.get("created_time"), t.get("count_fp"), t.get("yes_price_dollars"))
+            if key not in seen:
+                seen.add(key)
+                trades.append(t)
+        cursor = page.get("cursor")
+        if not cursor:
+            break
+        time.sleep(0.2)
+
+
 def kalshi_candles(ticker: str, start: int, end: int) -> dict:
+    """Historical candles for markets settled before the cutoff; otherwise the live
+    endpoint, which needs the series ticker (the part before the first '-')."""
     params = {"start_ts": start, "end_ts": end, "period_interval": 1}
-    return get_json(f"{KALSHI}/historical/markets/{ticker}/candlesticks", params)
+    hist = None
+    try:
+        hist = get_json(f"{KALSHI}/historical/markets/{ticker}/candlesticks", params)
+        if hist.get("candlesticks"):
+            hist["_source"] = "historical"
+            return hist
+    except NotFound:
+        pass
+    series = ticker.split("-", 1)[0]
+    try:
+        data = get_json(f"{KALSHI}/series/{series}/markets/{ticker}/candlesticks", params)
+        data["_source"] = "live"
+        return data
+    except NotFound:
+        if hist is not None:          # settled, historical, just no candles in this window
+            hist["_source"] = "historical"
+            return hist
+        raise
 
 
 def poly_chunks(token: str, start: int, end: int) -> list:
