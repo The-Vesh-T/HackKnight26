@@ -86,6 +86,14 @@ class BacktestTest(unittest.TestCase):
         gross = t["qty"] * (t["value"] - t["cost"])
         self.assertLess(t["pnl"], gross)                                 # fees came off
 
+    def test_running_pnl_ends_at_the_final_pnl(self):
+        t = pb.backtest("bowman20250623", obs_all())["trades"][0]
+        path = t["pnl_path"]
+        self.assertEqual((path[0]["t"], path[-1]["t"]), (t["entry_t"], t["exit_t"]))
+        self.assertEqual(len(path), 30)                                  # one point per closed candle
+        self.assertAlmostEqual(path[-1]["pnl"], t["pnl"], places=2)
+        self.assertLess(path[0]["pnl"], 0)                               # entering costs the spread and fees
+
     def test_waller_sits_out(self):
         self.assertEqual(pb.backtest("waller20250717", obs_all())["trades"], [])
 
