@@ -1,11 +1,11 @@
-# HackKnight26 — Tradio (built on MarketPulse)
+# HackKnight26 — Tradio
 
 Read this whole file before doing anything. Then ask the user which role they are
 (1, 2, 3 or 4) and read their file in `docs/team/`. Only work in the files your role owns.
 
 ## What we are building this weekend
 
-MarketPulse (everything already in this repo) listens to Fed speakers and scores each
+The live desk (everything already in this repo) listens to Fed speakers and scores each
 passage's stance against that speaker's own history (`stance_scorer.py`, z-scores).
 
 **Tradio adds the other half: what the markets did next.** For a historical Fed
@@ -31,7 +31,7 @@ doc (ask Devesh for the link). This file is the short version.
    contradictory values depending on the query window. Never use it for timing claims.
 3. **Speech text arrives all at once at T0.** Bowman and Waller released prepared texts.
    Never animate the market reacting to sentences "as she spoke".
-4. **Trading only through the MarketPulse desk, demo money by default** (team decision,
+4. **Trading only through the live desk, demo money by default** (team decision,
    2026-10-09). Tradio's own scripts (`tradio/*.py`) never place orders and never import
    `kalshi_trader.py`, `polymarket_client.py`, `manual_orders.py`, `trading_common.py` or
    `control_worker.py`. Orders come only from `live.py --playbook`, which asks
@@ -44,7 +44,7 @@ doc (ask Devesh for the link). This file is the short version.
 6. **Times:** data files store UTC ISO 8601 (`2025-06-23T14:00:00Z`). The UI shows ET too.
 7. **Demo runs offline.** No network calls during the presentation; everything is
    precomputed into `tradio/data/`.
-8. **Don't break MarketPulse.** Existing files keep working. New code goes in
+8. **Don't break the live desk.** Existing files keep working. New code goes in
    `tradio/` and `web/tradio.html` unless your role file says otherwise.
 
 ## Setup and what's already done
@@ -61,9 +61,8 @@ doc (ask Devesh for the link). This file is the short version.
   `stance_baselines.json` and the new `transcripts/speech_*.json` files.
 - **Keys:** only the Gemini key matters for Tradio. Kalshi/Polymarket historical data is
   public. All keys live in gitignored `*.txt` files; never commit them.
-- **Renamed:** user-facing MarketPulse text is now Tradio, the live-trading opt-in is
+- **Renamed:** all user-facing text says Tradio, the live-trading opt-in is
   `TRADIO_ALLOW_LIVE=1`, and the logo is `web/tradio-logo.svg` / `web/tradio-mark.svg`.
-  The Auth0 app in `docs/HOSTED_CONTROLS.md` keeps its real name.
 
 - **Role 1 is done:** `tradio/data/` has `timeline.json` + `evidence.json` for three events:
   `bowman20250623`, `waller20250717` and `warsh20260828` (Warsh, Jackson Hole, 2026-08-28,
@@ -72,7 +71,7 @@ doc (ask Devesh for the link). This file is the short version.
   Contract labels look like "Sep 2026: hike 25 bp". Warsh's stance baseline already exists.
 
 - **Live + trading (added after Gate 3):** `tradio/live.py` feeds the LIVE tab (live Kalshi
-  tape + MarketPulse's scored transcript; `--simulate` replays a past event offline;
+  tape + the live desk's scored transcript; `--simulate` replays a past event offline;
   `archive` saves a session as a history event and rebuilds the playbook).
   `tradio/playbook.py` learns trading rules from every event and writes a leave-one-out
   `backtest.json` per event; `python live.py --fast --playbook --mode demo --venues kalshi`

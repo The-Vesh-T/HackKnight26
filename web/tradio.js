@@ -85,10 +85,9 @@
     touched: false,      // the viewer has used a control: hides the "press play" prompt
     speechOpen: false,   // full speech text expanded
     showAllParas: false, // include paragraphs that aren't about policy
-    contextOpen: false,  // the paragraph around the key sentence is shown
     groupOpen: {},       // "<view>:<group id>" -> bool, set once the viewer toggles a group
-    deskSkipsOpen: false, // the desk's "skipped by the playbook" list is expanded
-    sig: {},             // last-rendered signature per section, reset whenever the page shell is rebuilt
+    info: null,          // which details bubble is open: speech | speechTop | verdict | desk | chart
+    sig: {},             // last-rendered HTML/signature per section, reset whenever the page shell is rebuilt
     follow: true,        // LIVE view: keep the clock pinned to the newest data
     liveTimer: null,
     liveShellKey: null,
@@ -405,8 +404,9 @@
       g += `<line x1="${x(t)}" x2="${x(t)}" y1="${T}" y2="${H - B}" stroke="#16222a"/>`;
       g += `<text x="${x(t)}" y="${H - 8}" fill="#8aa0aa" font-size="12" text-anchor="middle" font-family="${mono}">${fmtEtShort(t)}</text>`;
     }
+    g += `<text x="${L - 22}" y="${H - 8}" fill="#6f858f" font-size="11" text-anchor="end" font-family="${mono}">ET</text>`;
 
-    // pre-event noise band from analysis (explained in the legend)
+    // pre-event noise band from analysis (explained in the chart key)
     if (m.a && m.a.pre_band) {
       const [a, b] = m.a.pre_band;
       const yt = y(Math.max(a, b)), yb = y(Math.min(a, b));
@@ -535,26 +535,48 @@
     return `<svg class="gauge" viewBox="0 0 ${W} ${H}" role="img" aria-label="Stance of this speech's policy passages compared with the speaker's usual range">${g}</svg>`;
   }
 
-  // "Scored −1.00 (very dovish) against Bowman's usual +0.15 …": every number is from timeline.json.
-  function whyHtml(E, top, last) {
-    const b = E.baseline;
-    const dir = top.z < 0 ? "dovish" : "hawkish";
-    return b && b.mean != null
-      ? `Scored <b class="num">${sgn(top.stance, 2)}</b> (${stanceWords(top.stance)}) against ${esc(last)}'s usual <b class="num">${sgn(b.mean, 2)}</b>${b.n != null ? ` (${esc(b.n)} past passages)` : ""}: <b class="num">${Math.abs(top.z).toFixed(1)} standard deviations</b> more ${dir} than normal (z = ${sgn(top.z, 1)}).`
-      : `Scored <b class="num">${sgn(top.stance, 2)}</b> (${stanceWords(top.stance)}); z = ${sgn(top.z, 1)} against ${esc(last)}'s own history.`;
+  // How a passage compares with the speaker's usual stance, in plain words (no numbers on the card).
+  // 2 standard deviations is the live desk's own "surprise" line (stance_scorer.Z_THRESHOLD); inside 1
+  // is the gauge's darker "usual" band. The numbers themselves are in the details bubble.
+  function vsUsual(z, who) {
+    const a = Math.abs(z);
+    if (a < 1) return `About how ${who} usually sounds`;
+    return `${a < 2 ? "Somewhat" : "Much"} more ${z < 0 ? "dovish" : "hawkish"} than ${who} usually sounds`;
+  }
+  const stanceClass = (p) => (p.z == null || !p.relevant ? "" : p.z < 0 ? "dove" : "hawk");
+
+  // The plain-language score, as a button that opens the details bubble.
+  function scorePill(p, who, kind) {
+    const cls = Math.abs(p.z) < 1 ? "flat" : p.z < 0 ? "dove" : "hawk";
+    return `<button class="score-pill ${cls}" id="${INFO[kind].anchor}" data-act="info" data-info="${kind}" aria-controls="bubble" title="See the scores and the chart behind this">
+      <i class="pip"></i><span>${esc(vsUsual(p.z, who))}</span><span class="i">ⓘ</span></button>`;
   }
 
-  function gaugeBlock(E, top, last, list, dotsLabel) {
-    const b = E.baseline;
-    if (!(b && b.mean != null && b.stdev != null)) return "";
-    return `<div class="gauge-col">
-        <div class="label">How it compares with ${esc(last)}'s usual stance</div>
-        ${gaugeSvg(E, top, list)}
+  // Details bubble for a passage: every number is from timeline.json.
+  function speechInfoHtml(E, p, list, dotsLabel) {
+    const sp = E.tl.speech || {}, b = E.baseline;
+    const who = lastName(E.tl.speaker || sp.speaker);
+    const dir = p.z < 0 ? "dovish" : "hawkish";
+    let h = "";
+    if (p.key_sentence && p.text.includes(p.key_sentence)) h += `<h4>The line in its paragraph</h4><p class="paragraph-ctx">${highlightKey(p)}</p>`;
+    h += `<h4>How it scored</h4><table class="kv">
+      <tr><th>This passage</th><td><b class="num">${sgn(p.stance, 2)}</b> · ${stanceWords(p.stance)}</td></tr>`;
+    if (b && b.mean != null) {
+      h += `<tr><th>${esc(who)}'s usual</th><td><b class="num">${sgn(b.mean, 2)}</b>${b.n != null ? ` · average of ${esc(b.n)} past passages` : ""}</td></tr>
+      <tr><th>Distance from usual</th><td><b class="num">${Math.abs(p.z).toFixed(1)} standard deviations</b> more ${dir} · z = ${sgn(p.z, 1)}</td></tr>`;
+    } else {
+      h += `<tr><th>Against own history</th><td>z = ${sgn(p.z, 1)}</td></tr>`;
+    }
+    h += `</table><p class="src">The scale runs from −1 (very dovish) to +1 (very hawkish). ${sp.model ? `Scored by ${esc(sp.model)}` : "Scored"} against ${esc(who)}'s own past remarks, not against other speakers.</p>`;
+    if (b && b.mean != null && b.stdev != null) {
+      h += `<h4>Against ${esc(who)}'s usual range</h4>${gaugeSvg(E, p, list)}
         <div class="gauge-legend">
           <span><i class="sw"></i>usual range (within 1 and 2 standard deviations)</span>
           <span><i class="dt"></i>${esc(dotsLabel)}</span>
-        </div>
-      </div>`;
+        </div>`;
+    }
+    if (sp.source_url) h += `<p class="src"><a href="${esc(sp.source_url)}" target="_blank" rel="noopener">Read the speech on federalreserve.gov ↗</a></p>`;
+    return h;
   }
 
   // A prepared text, released whole at T0.
@@ -570,28 +592,25 @@
         <div class="embargo-sub">Until then, markets are trading on expectations only. ${E.live ? "The text appears here the moment it's released." : "Press ▶ Play to watch the moment it lands."}</div>
       </div>`;
     }
-    const src = sp.source_url;
-    h += `<div class="released-line"><span class="dot"></span><span>Text released <b class="num" id="releasedAgo"></b></span>${src ? `<a href="${esc(src)}" target="_blank" rel="noopener">Read it on federalreserve.gov ↗</a>` : ""}</div>`;
+    h += `<div class="released-line"><span class="dot"></span><span>Text released <b class="num" id="releasedAgo"></b></span></div>`;
     const ps = E.paragraphs, top = E.top;
     if (!ps.length || !top) {
       return h + `<div class="pending-note">Paragraph scores aren't in <span class="mono">timeline.json</span> yet. <span class="mono">surprise.py</span> fills <span class="mono">speech.paragraphs</span> (stance, and z vs. the speaker's own baseline). Nothing is shown here until then, so no number on this screen is invented.</div>`;
     }
+    // The card stays simple: the line, and how it compares with the speaker's usual, in words.
+    // The paragraph around it, the scores and the gauge are one click away in the details bubble.
     const hasKey = !!(top.key_sentence && top.text.includes(top.key_sentence));
-    h += `<div class="speech-body">
-      <div class="quote-col">
-        <div class="label">Most unusual passage for ${esc(last)}</div>
-        <blockquote class="keyq ${top.z < 0 ? "dove" : "hawk"}">“${esc(hasKey ? top.key_sentence : top.text)}”</blockquote>
-        ${hasKey ? `<button class="linkbtn" data-act="context-toggle" aria-expanded="${state.contextOpen}">${state.contextOpen ? "Hide" : "Show"} the paragraph around it ${state.contextOpen ? "▴" : "▾"}</button>${state.contextOpen ? `<p class="paragraph-ctx">${highlightKey(top)}</p>` : ""}` : ""}
-        <div class="why">${whyHtml(E, top, last)}</div>
-      </div>
-      ${gaugeBlock(E, top, last, ps, "this speech's policy paragraphs")}
-    </div>`;
+    h += `<div class="label">The line that stood out</div>
+      <blockquote class="keyq ${stanceClass(top)}"><span class="${hasKey ? "" : "clamp"}">“${esc(hasKey ? top.key_sentence : top.text)}”</span></blockquote>
+      ${scorePill(top, last, "speech")}`;
     const nRel = ps.filter((p) => p.relevant).length;
     const nOther = ps.length - nRel;
-    h += `<button class="linkbtn" data-act="speech-toggle" aria-expanded="${state.speechOpen}">${state.speechOpen ? "Hide" : "Read"} the full speech · ${nRel} paragraphs about policy ${state.speechOpen ? "▴" : "▾"}</button>`;
+    const src = sp.source_url;
+    h += `<button class="linkbtn" data-act="speech-toggle" aria-expanded="${state.speechOpen}">${state.speechOpen ? "Hide" : "Read"} the full speech ${state.speechOpen ? "▴" : "▾"}</button>`;
     if (state.speechOpen) {
       const list = ps.filter((p) => state.showAllParas || p.relevant);
       h += `<div class="fulltext">`;
+      h += `<div class="para-key">${nRel} paragraphs about policy${src ? ` · <a href="${esc(src)}" target="_blank" rel="noopener">federalreserve.gov ↗</a>` : ""}</div>`;
       if (nOther) h += `<button class="linkbtn" data-act="paras-toggle">${state.showAllParas ? "Hide" : "Also show"} ${nOther} paragraphs that aren't about policy</button>`;
       h += `<div class="para-key">Blue = more dovish, amber = more hawkish; darker = further from ${esc(last)}'s usual.</div>`;
       h += list.map((p) => {
@@ -608,33 +627,40 @@
     const sp = E.tl.speech || {};
     const who = E.tl.speaker || sp.speaker;
     const last = lastName(who);
-    let h = `<div class="card-head"><span class="step">1</span><h2>What's being said</h2><span class="meta">${esc(cardTitle(E))}</span></div>
-      <div class="live-meta">Transcribed and scored as it's spoken by MarketPulse (<span class="mono">live.py</span>), z against ${esc(last)}'s own history${sp.baseline && sp.baseline.n != null ? ` (n = ${esc(sp.baseline.n)})` : ""}.${sp.status ? ` Status: <b>${esc(sp.status)}</b>.` : ""}</div>`;
+    let h = `<div class="card-head"><span class="step">1</span><h2>What's being said</h2><span class="meta">${esc(cardTitle(E))}</span></div>`;
     if (!heard.length) {
-      return h + `<div class="pending-note">No speech passages yet. Start the live scorer on the laptop:<br><span class="mono">python live.py --speaker &lt;name&gt; --no-prewarm --mode dry</span><br>Passages appear here as they're scored, newest on top. The market chart updates either way.</div>`;
+      return h + `<div class="pending-note">No speech passages yet. Start the live scorer on the laptop:<br><span class="mono">python live.py --speaker &lt;name&gt; --no-prewarm --mode dry</span><br>Passages appear here as they're scored. The market chart updates either way.</div>`;
     }
-    const scored = heard.filter((p) => p.relevant && p.z != null);
-    const surprises = scored.filter((p) => Math.abs(p.z) >= 2);
-    const top = scored.slice().sort((a, b) => Math.abs(b.z) - Math.abs(a.z))[0];
-    h += `<div class="released-line"><span class="dot"></span><span><b class="num">${heard.length}</b> passages heard · <b class="num">${surprises.length}</b> surprise${surprises.length === 1 ? "" : "s"} (|z| ≥ 2)</span></div>`;
-    if (top) {
-      h += `<div class="speech-body">
-        <div class="quote-col">
-          <div class="label">Biggest surprise so far · ${fmtEt(top._t)} ET</div>
-          <blockquote class="keyq ${top.z < 0 ? "dove" : "hawk"}">“${esc(top.text)}”</blockquote>
-          <div class="why">${whyHtml(E, top, last)}</div>
-        </div>
-        ${gaugeBlock(E, top, last, heard, "passages heard so far")}
-      </div>`;
+    const { cur, top, surprises } = liveNow(heard);
+    h += `<div class="released-line"><span class="dot"></span><span><b class="num">${heard.length}</b> passage${heard.length === 1 ? "" : "s"} so far · <b class="num">${surprises}</b> surprise${surprises === 1 ? "" : "s"}${sp.status ? ` · ${esc(sp.status)}` : ""}</span></div>`;
+    // These passages carry their own times, so the card can follow the clock: scrub back and it
+    // shows what was being said then.
+    const scoredCur = cur.relevant && cur.z != null;
+    h += `<div class="label">Being said now · ${fmtEt(cur._t)} ET</div>
+      <blockquote class="keyq ${stanceClass(cur)}"><span class="clamp">“${esc(cur.text)}”</span></blockquote>
+      ${scoredCur ? scorePill(cur, last, "speech") : `<div class="unscored">Not scored${cur.role && cur.role !== "speaker" ? `: ${esc(cur.role)} speaking` : ""}</div>`}`;
+    if (top && top !== cur) {
+      h += `<div class="label second">Biggest surprise so far · ${fmtEt(top._t)} ET</div>
+        <blockquote class="keyq small ${stanceClass(top)}"><span class="clamp">“${esc(top.text)}”</span></blockquote>
+        ${scorePill(top, last, "speechTop")}`;
     }
-    h += `<div class="label live-list-label">Transcript, newest first</div>
-      <div class="para-key">Blue = more dovish, amber = more hawkish, grey = reporter or not scored.</div>
-      <div class="fulltext">` +
-      heard.slice().sort((a, b) => b._t - a._t).map((p) => {
-        const z = p.z != null ? `z ${sgn(p.z, 1)}` : (p.role && p.role !== "speaker" ? p.role : "not scored");
-        return `<div class="para ${p.relevant ? "" : "irrelevant"} ${p === top ? "top" : ""}" style="border-left-color:${p.relevant ? tint(p.z) : "var(--line)"}" title="${p.stance != null ? `stance ${sgn(p.stance, 2)} (${stanceWords(p.stance)})` : ""}"><span class="z">${esc(z)}</span><span class="t">${fmtEt(p._t)} ET</span> ${esc(p.text)}</div>`;
-      }).join("") + `</div>`;
+    h += `<button class="linkbtn" data-act="speech-toggle" aria-expanded="${state.speechOpen}">${state.speechOpen ? "Hide" : "Show"} the transcript ${state.speechOpen ? "▴" : "▾"}</button>`;
+    if (state.speechOpen) {
+      h += `<div class="fulltext"><div class="para-key">Newest first. Blue = more dovish, amber = more hawkish, grey = reporter or not scored. Scored as it's spoken by Tradio's live desk (<span class="mono">live.py</span>).</div>` +
+        heard.slice().sort((a, b) => b._t - a._t).map((p) => {
+          const z = p.z != null ? `z ${sgn(p.z, 1)}` : (p.role && p.role !== "speaker" ? p.role : "not scored");
+          return `<div class="para ${p.relevant ? "" : "irrelevant"} ${p === top ? "top" : ""}" style="border-left-color:${p.relevant ? tint(p.z) : "var(--line)"}" title="${p.stance != null ? `stance ${sgn(p.stance, 2)} (${stanceWords(p.stance)})` : ""}"><span class="z">${esc(z)}</span><span class="t">${fmtEt(p._t)} ET</span> ${esc(p.text)}</div>`;
+        }).join("") + `</div>`;
+    }
     return h;
+  }
+
+  // For a live transcript at the clock's time: the passage being said now, and the biggest surprise so far.
+  function liveNow(heard) {
+    const cur = heard.reduce((a, p) => (p._t >= a._t ? p : a), heard[0]);
+    const scored = heard.filter((p) => p.relevant && p.z != null);
+    const top = scored.slice().sort((a, b) => Math.abs(b.z) - Math.abs(a.z))[0] || null;
+    return { cur, top, surprises: scored.filter((p) => Math.abs(p.z) >= 2).length };
   }
 
   function renderSpeech(E, now) {
@@ -642,7 +668,7 @@
     if (!pane) return;
     if (E.overTime) {
       const heard = E.paragraphs.filter((p) => p._t <= now);
-      const sig = ["live", heard.length, E.paragraphs.length, (E.tl.speech || {}).status].join();
+      const sig = ["live", heard.length, E.paragraphs.length, (E.tl.speech || {}).status, state.speechOpen].join();
       if (state.sig.speech !== sig) {
         state.sig.speech = sig;
         pane.innerHTML = liveSpeechHtml(E, heard);
@@ -651,7 +677,7 @@
     }
     const released = now >= E.t0;
     // re-render only when what's shown changes, so the open transcript keeps its scroll position
-    const sig = [released, E.paragraphs.length, E.top && E.top.id, state.speechOpen, state.showAllParas, state.contextOpen].join();
+    const sig = [released, E.paragraphs.length, E.top && E.top.id, state.speechOpen, state.showAllParas].join();
     if (state.sig.speech !== sig) {
       state.sig.speech = sig;
       pane.innerHTML = speechHtml(E, released);
@@ -663,43 +689,114 @@
   }
 
   // ---------- 2 · focused market ----------
+  const infoBtn = (kind, label) => `<button class="info-btn" id="${INFO[kind].anchor}" data-act="info" data-info="${kind}" aria-controls="bubble">ⓘ ${label}</button>`;
+
+  // The short key under the chart; the full one is in the "Chart key" bubble.
   function legendHtml(E, m) {
     const items = [];
     if (m.isKalshi) {
-      items.push(`<span><i style="background:#22d3ee"></i>price (midpoint of buy/sell offers)</span>`);
-      items.push(`<span><i style="background:rgba(34,211,238,.28)"></i>buy–sell gap</span>`);
-      items.push(`<span><i class="dot" style="background:rgba(132,240,79,.75)"></i><i class="dot" style="background:rgba(239,91,91,.75)"></i>trades (green Yes · red No · bigger = more contracts)</span>`);
+      items.push(`<span><i style="background:#22d3ee"></i>price</span>`);
+      items.push(`<span><i class="dot" style="background:rgba(132,240,79,.75)"></i><i class="dot" style="background:rgba(239,91,91,.75)"></i>trades</span>`);
     } else {
-      items.push(`<span><i style="background:#f0b429"></i>Polymarket price (indicative, dashed)</span>`);
+      items.push(`<span><i style="background:#f0b429"></i>Polymarket price (indicative)</span>`);
     }
     if (m.a && m.a.pre_band) items.push(`<span><i style="background:rgba(142,162,171,.3)"></i>usual range before the speech</span>`);
-    if (!m.indicative && m.a && (m.alarm || m.a.t50_min != null)) items.push(`<span><i style="background:#84f04f"></i>reaction detected · <i style="background:#9bafb8;width:3px"></i>halfway / 90% of the final move</span>`);
-    if (E.desk && E.desk.trades.some((t) => t.mid === m.id)) items.push(`<span><i class="diamond"></i>desk order · <i class="sq"></i>its planned exit</span>`);
-    if (E.overTime) items.push(`<span><i class="tri"></i>a passage that was a surprise for this speaker (|z| ≥ 2)</span>`);
-    return items.join("");
+    return items.join("") + infoBtn("chart", "Chart key");
   }
-  const sourceNote = (E, m) => `${m.isKalshi ? (E.live && E.live.kind === "live" ? "Live Kalshi tape · closed 1-minute candles" : "Real Kalshi prices · 1-minute candles") : "Polymarket history"} · times in ET`;
 
-  function verdictHtml(E, m, now) {
-    const a = m.a;
-    const startWord = E.overTime ? "the speech starts" : "the text is released";
-    if (!a) return `<span class="chip watching">no analysis</span><span class="why-text">analysis.json isn't available for this event, so there is no verdict to show.</span>`;
-    if (now < E.t0) return `<span class="chip watching">before the speech</span><span class="why-text">The verdict appears once the clock reaches the moment ${startWord}.</span>`;
-    if (now < verdictAt(E, m)) {
-      return `<span class="chip watching">watching…</span><span class="why-text">${m.indicative
-        ? "Polymarket prices are indicative, so this market gets no timing claims: its verdict appears near the end of the window."
-        : "Waiting to see whether this price leaves its pre-speech range and stays out."}</span>`;
+  function chartInfoHtml(E, m) {
+    const row = (swatch, text) => `<div class="key-row"><span class="sw">${swatch}</span><span>${text}</span></div>`;
+    const sw = (style, cls = "") => `<i class="${cls}" style="${style}"></i>`;
+    let h = "";
+    if (m.isKalshi) {
+      h += row(sw("background:#22d3ee"), "<b>Price</b>: the midpoint between the best buy and sell offers. A price of 22¢ means the market gives this outcome roughly a 22% chance.");
+      h += row(sw("background:rgba(34,211,238,.28)"), "<b>Shaded band around the line</b>: the gap between buy and sell offers.");
+      h += row(sw("background:rgba(132,240,79,.75)", "dot") + sw("background:rgba(239,91,91,.75)", "dot"), "<b>Dots</b>: individual trades. Green took the Yes side, red the No side; bigger means more contracts.");
+    } else {
+      h += row(sw("background:#f0b429"), "<b>Dashed amber line</b>: the Polymarket price. It is indicative only: its history changed depending on how it was queried, so it shows direction and gets no timing claims.");
     }
-    const extra = m.indicative ? " Polymarket price history changed depending on the query window, so it's shown for direction only." : "";
-    const facts = [];
-    if (m.alarm && !m.indicative) facts.push(`Reaction detected: <b>${Math.round((m.alarm - E.t0) / MIN)} min after ${E.overTime ? "the start" : "release"}</b>`);
-    if (a.t50_min != null && !m.indicative && now >= E.t0 + a.t50_min * MIN) facts.push(`Halfway there: <b>${a.t50_min} min</b>`);
-    if (a.t90_min != null && !m.indicative && now >= E.t0 + a.t90_min * MIN) facts.push(`90% of the move: <b>${a.t90_min} min</b>`);
-    if (a.move_ticks != null) facts.push(`Move over the analysed window: <b>${moveText(m, a.move_ticks)}</b>`);
-    if (a.liquidity) facts.push(`Trading before the speech: <b>${esc(LIQ_TEXT[a.liquidity] || a.liquidity)}</b>`);
-    return `<span class="chip ${esc(a.status)}" title="${esc(STATUS_HELP[a.status] || "")}">${esc(STATUS_TEXT[a.status] || a.status)}</span>` +
-      `<span class="why-text">${esc(a.reason || "")}${esc(extra)}</span>` +
-      (facts.length ? `<div class="facts">${facts.map((f) => `<span>${f}</span>`).join("")}</div>` : "");
+    if (m.a && m.a.pre_band) h += row(sw("background:rgba(142,162,171,.3)"), "<b>Grey band</b>: the price's usual range in the hour before the speech.");
+    h += row(sw("background:#e8f0f3;width:2px"), `<b>Dashed white line</b>: ${E.overTime ? "the moment the speech starts" : "the moment the text was released"} (T0).`);
+    if (!m.indicative && m.a && (m.alarm || m.a.t50_min != null)) {
+      h += row(sw("background:#84f04f;width:2px"), "<b>Green line</b>: a reaction was detected. The price left its usual range and stayed out.");
+      h += row(sw("background:#9bafb8;width:2px"), "<b>Dotted grey lines</b>: when half, then 90%, of the final move had happened.");
+    }
+    if (E.desk && E.desk.trades.some((t) => t.mid === m.id)) h += row(`<i class="diamond"></i><i class="sq"></i>`, "<b>White diamond</b>: a desk order. <b>White square</b>: its planned exit.");
+    if (E.overTime) h += row(`<i class="tri"></i>`, "<b>Triangle on the top edge</b>: a passage that was a surprise for this speaker.");
+    const source = m.isKalshi ? (E.live && E.live.kind === "live" ? "Live Kalshi tape, closed 1-minute candles" : "Real Kalshi prices, 1-minute candles (each point is the end of its minute)") : "Polymarket price history";
+    return h + `<p class="src">${source}. Times are Eastern (ET).</p>`;
+  }
+
+  const absMove = (m, ticks) => Math.abs(ticks).toFixed(1).replace(/\.0+$/, "") + (m.tick === 0.01 ? "¢" : " ticks");
+
+  // One plain sentence per verdict. The analyst's own wording, the timings and the placebo
+  // result are in the details bubble; nothing here is computed beyond reading analysis.json.
+  function verdictSummary(E, m, now) {
+    const a = m.a;
+    if (!a) return { chip: `<span class="chip watching">no analysis</span>`, text: "No verdict: this event hasn't been analysed yet." };
+    if (now < E.t0) return { chip: `<span class="chip watching">waiting</span>`, text: E.overTime ? "Waiting for the speech to start." : "Waiting for the text to be released." };
+    if (now < verdictAt(E, m)) {
+      return { chip: `<span class="chip watching">watching…</span>`,
+               text: m.indicative ? "Polymarket shows direction only, so its verdict comes at the end of the window." : "Watching for a move out of its usual range." };
+    }
+    const chip = `<span class="chip ${esc(a.status)}" title="${esc(STATUS_HELP[a.status] || "")}">${esc(STATUS_TEXT[a.status] || a.status)}</span>`;
+    const mv = a.move_ticks;
+    const moved = mv == null || !mv ? "" : `${mv > 0 ? "rose" : "fell"} ${absMove(m, mv)}`;
+    const mins = m.alarm != null ? Math.round((m.alarm - E.t0) / MIN) : null;
+    const when = mins == null ? "" : `${mins} min after ${E.overTime ? "the speech started" : "the release"}`;
+    let text;
+    switch (a.status) {
+      case "reacted":
+        text = moved ? `The price ${moved}.` : "The price moved out of its usual range.";
+        if (m.indicative) text += " Direction only: Polymarket gets no timing claims.";
+        else if (when) text += ` The first clear move came ${when}.`;
+        break;
+      case "alarm": text = `Moving now: it left its usual range${when ? ` ${when}` : ""}. The final verdict comes when the 90-minute window closes.`; break;
+      case "candidate_delay": text = `It moved${moved ? ` (${moved})` : ""}, but only ${when || "late"}. Worth a closer look, not a conclusion.`; break;
+      case "candidate_inconsistency": text = "Related prices disagree here. Worth a closer look, not a conclusion."; break;
+      case "expected_no_reaction": text = "No lasting move out of its usual range."; break;
+      case "watching": text = "No clear move so far. The final verdict comes when the 90-minute window closes."; break;
+      case "cant_tell_illiquid": text = "Too little trading here to tell a slow market from a quiet one."; break;
+      default: text = a.reason || "";
+    }
+    return { chip, text: esc(text) };
+  }
+
+  function verdictBoxHtml(E, m, now) {
+    const v = verdictSummary(E, m, now);
+    return `${v.chip}<span class="why-text">${v.text}</span>${infoBtn("verdict", "Details")}`;
+  }
+
+  // Everything behind the one-line verdict, revealed with the clock like the chart markers.
+  function verdictInfoHtml(E, m, now) {
+    const a = m.a;
+    let h = `<div class="src">${esc(displayLabel(m))} · ${esc(marketSub(m))}</div>`;
+    if (!a) {
+      h += `<p>analysis.json isn't available for this event, so there is no verdict to show.</p>`;
+    } else if (now < E.t0) {
+      h += `<p>The verdict appears once the clock reaches the moment ${E.overTime ? "the speech starts" : "the text is released"}.</p>`;
+    } else if (now < verdictAt(E, m)) {
+      h += `<p>${m.indicative
+        ? "Polymarket prices are indicative, so this market gets no timing claims: its verdict appears near the end of the window."
+        : "Waiting to see whether this price leaves its pre-speech range and stays out."}</p>`;
+    } else {
+      h += `<h4>Tradio's verdict</h4><p><span class="chip ${esc(a.status)}">${esc(STATUS_TEXT[a.status] || a.status)}</span> ${esc(STATUS_HELP[a.status] || "")}</p>`;
+      if (a.reason) h += `<h4>In the analysis's own words</h4><p class="reason">${esc(a.reason)}</p>`;
+      const rows = [];
+      if (m.alarm && !m.indicative) rows.push(["First clear move", `${Math.round((m.alarm - E.t0) / MIN)} min after ${E.overTime ? "the start" : "the release"} · ${fmtEtShort(m.alarm)} ET`]);
+      if (a.t50_min != null && !m.indicative && now >= E.t0 + a.t50_min * MIN) rows.push(["Halfway there", `${a.t50_min} min`]);
+      if (a.t90_min != null && !m.indicative && now >= E.t0 + a.t90_min * MIN) rows.push(["90% of the move", `${a.t90_min} min`]);
+      if (a.move_ticks != null) rows.push(["Move over the analysed window", moveText(m, a.move_ticks)]);
+      if (a.pre_mid != null) rows.push(["Price just before the speech", cents(a.pre_mid)]);
+      if (a.liquidity) rows.push(["Trading before the speech", LIQ_TEXT[a.liquidity] || a.liquidity]);
+      // no separate placebo row: the analysis's sentence above states it with its own caveats
+      // (e.g. "too few ordinary days to count"), which a bare p-value here would lose
+      if (rows.length) h += `<table class="kv">${rows.map(([k, v]) => `<tr><th>${esc(k)}</th><td>${esc(v)}</td></tr>`).join("")}</table>`;
+      if (m.indicative) h += `<p class="src">Polymarket price history changed depending on the query window, so it's shown for direction only.</p>`;
+    }
+    const mp = modelPrediction(E, m);
+    if (mp) h += `<h4>What the model expected</h4>${modelLine(mp)}`;
+    return h + `<p><button class="btn small" data-act="evidence" data-id="${esc(m.id)}">See the raw data ›</button></p>`;
   }
 
   function renderMarketHead(E, m, now) {
@@ -716,56 +813,91 @@
     } else {
       price += `</div>${q && q.bid != null ? `<span class="before">bid ${cents(q.bid)} · ask ${cents(q.ask)}</span>` : ""}`;
     }
-    head.innerHTML = `
+    setHtml("mkHead", `
       <div class="mk-id"><div class="mk-title">${esc(displayLabel(m))}</div><div class="mk-sub"><span>${esc(marketSub(m))}</span>${ind}</div></div>
-      <div class="mk-price" title="A price is the market's implied chance of this outcome: 22¢ means roughly 22%.">${price}</div>`;
+      <div class="mk-price" title="A price is the market's implied chance of this outcome: 22¢ means roughly 22%.">${price}</div>`);
     const evBtn = $("btnEvidence");
     if (evBtn) evBtn.dataset.id = m.id;
-    $("mkMeta").textContent = sourceNote(E, m);
-    $("legend").innerHTML = legendHtml(E, m);
-    // the learner's pre-T0 odds for this contract sit under the verdict (it was made before the event)
-    const mp = modelPrediction(E, m);
-    $("verdict").innerHTML = verdictHtml(E, m, now) + (mp ? modelLine(mp) : "");
+    setHtml("legend", legendHtml(E, m));
+    setHtml("verdict", verdictBoxHtml(E, m, now));
+  }
+
+  // Replace a section's HTML only when it changed, so the buttons inside it stay put (and clickable)
+  // while the replay redraws many times a second.
+  function setHtml(id, html) {
+    const el = $(id);
+    if (!el || state.sig[id] === html) return;
+    state.sig[id] = html;
+    el.innerHTML = html;
   }
 
   // The desk: what the playbook traded (live) or would have traded (backtest). Orders, skips and
-  // P&L are read from the files; the only sum here is the closed total over the rows shown.
+  // P&L are read from the files; the only sum here is the closed total over the orders shown.
+  function deskNow(E, now) {
+    const d = E.desk;
+    const shown = d.trades.filter((t) => t.t <= now).map((t) => {
+      const closed = !!(t.exitT && now >= t.exitT);
+      return { ...t, closed, pnl: closed && t.pnlFinal != null ? t.pnlFinal : (d.backtest ? null : t.pnlNow) };
+    });
+    const done = shown.filter((t) => t.closed && t.pnlFinal != null);
+    return {
+      shown, started: now >= E.t0,
+      skipped: d.skipped.filter((x) => !x.t || x.t <= now),
+      total: done.length ? done.reduce((a, t) => a + t.pnlFinal, 0) : null,
+    };
+  }
+  const deskMode = (d) => (d.backtest ? `<span class="chip indic">PLAYBOOK BACKTEST</span>`
+    : d.mode === "demo" ? `<span class="chip reacted">KALSHI DEMO · FAKE MONEY</span>`
+    : d.mode === "live" ? `<span class="chip candidate_inconsistency">LIVE · REAL MONEY</span>`
+    : `<span class="chip watching">DRY RUN</span>`);
+  const pnlHtml = (x) => `<b class="${x >= 0 ? "gain" : "loss"}">${money(x)}</b>`;
+
+  // One line under the chart; the orders, skips and how the backtest was run are in the details bubble.
   function renderDesk(E, now) {
     const el = $("desk");
     if (!el) return;
     const d = E.desk;
-    $("belowChart").classList.toggle("has-desk", !!d); // verdict and desk sit side by side when both exist
     if (!d) { el.hidden = true; state.sig.desk = ""; return; }
-    const mode = d.backtest ? `<span class="chip indic">PLAYBOOK BACKTEST</span>`
-      : d.mode === "demo" ? `<span class="chip reacted">KALSHI DEMO · FAKE MONEY</span>`
-      : d.mode === "live" ? `<span class="chip candidate_inconsistency">LIVE · REAL MONEY</span>`
-      : `<span class="chip watching">DRY RUN</span>`;
-    const shown = d.trades.filter((t) => t.t <= now);
-    let rows = "";
-    for (const t of shown) {
-      const closed = t.exitT && now >= t.exitT;
-      const pnl = closed && t.pnlFinal != null ? t.pnlFinal : (d.backtest ? null : t.pnlNow);
-      const pnlTxt = pnl == null ? `<span class="muted">open${t.exitT ? `, exit ${fmtEtShort(t.exitT)}` : ""}</span>`
-        : `<b class="${pnl >= 0 ? "up" : "down"}">${money(pnl)}</b>${closed ? "" : ' <span class="muted">so far</span>'}`;
-      rows += `<div class="order" role="button" tabindex="0" data-act="order" data-id="${esc(t.mid)}" title="Show this contract on the chart">
+    const s = deskNow(E, now);
+    let text;
+    if (!s.started) text = "Waiting for the speech.";
+    else if (!s.shown.length) text = d.backtest ? "No trade: the playbook passed on every contract." : "No orders so far.";
+    else if (s.shown.length === 1) {
+      const t = s.shown[0];
+      text = `Bought <b>${esc(String(t.side).toUpperCase())}</b> ×${esc(t.qty)} at <span class="num">${cents(t.cost)}</span> · ` +
+        (t.pnl == null ? `open${t.exitT ? `, exit ${fmtEtShort(t.exitT)}` : ""}` : `${pnlHtml(t.pnl)}${t.closed ? "" : " so far"}`);
+    } else {
+      const open = s.shown.filter((t) => !t.closed).length;
+      text = `${s.shown.length} orders${s.total != null ? ` · ${pnlHtml(s.total)} closed` : ""}${open ? ` · ${open} open` : ""}`;
+    }
+    setHtml("desk", `<b>Desk</b>${deskMode(d)}<span class="why-text">${text}</span>${infoBtn("desk", "Details")}`);
+    el.hidden = false;
+  }
+
+  function deskInfoHtml(E, now) {
+    const d = E.desk, s = deskNow(E, now);
+    const what = d.backtest ? "A backtest: what the playbook would have traded on this speech, using rules learned only from the other events."
+      : d.mode === "demo" ? "Orders the live desk placed on Kalshi's demo exchange. Fake money."
+      : d.mode === "live" ? "Orders the live desk placed with real money."
+      : "A dry run: orders the desk would have placed. Nothing was sent.";
+    let h = `<p>${deskMode(d)} ${what}</p>`;
+    if (d.note) h += `<p class="src">${esc(d.note)}</p>`;
+    h += `<h4>Orders</h4>`;
+    if (!s.started) h += `<p class="muted">Waiting for the speech.</p>`;
+    else if (!s.shown.length) h += `<p class="muted">No orders: the playbook hasn't found a trade.</p>`;
+    else {
+      h += `<div class="orders">` + s.shown.map((t) => `<div class="order" role="button" tabindex="0" data-act="order" data-id="${esc(t.mid)}" title="Show this contract on the chart">
         <span class="mono t">${fmtEtShort(t.t)}</span>
         <span>BUY <b>${esc(String(t.side).toUpperCase())}</b> ×${esc(t.qty)} ${esc(t.label)} @ <span class="num">${cents(t.cost)}</span></span>
-        <span class="pnl">${pnlTxt}</span>
+        <span class="pnl">${t.pnl == null ? `<span class="muted">open${t.exitT ? `, exit ${fmtEtShort(t.exitT)}` : ""}</span>` : `${pnlHtml(t.pnl)}${t.closed ? "" : ' <span class="muted">so far</span>'}`}</span>
         ${t.sideFixed ? `<div class="fix">side corrected by the playbook: ${esc(t.sideFixed)}</div>` : ""}
-      </div>`;
+      </div>`).join("") + `</div>`;
+      if (s.total != null) h += `<p>Closed so far: ${pnlHtml(s.total)}</p>`;
     }
-    const sk = d.skipped.filter((x) => !x.t || x.t <= now);
-    const done = shown.filter((t) => t.exitT && now >= t.exitT && t.pnlFinal != null);
-    const total = done.length ? done.reduce((a, t) => a + t.pnlFinal, 0) : null;
-    const started = now >= E.t0;
-    const html = `
-      <div class="desk-head"><b>Desk</b>${mode}<span class="px">${total != null ? `<span class="${total >= 0 ? "up" : "down"}">${money(total)}</span> <span class="muted">closed</span>` : ""}</span></div>
-      ${rows || `<div class="muted">${started ? "No orders: the playbook hasn't found a trade." : "Waiting for the speech."}</div>`}
-      ${sk.length && started ? `<details ${state.deskSkipsOpen ? "open" : ""}><summary>${sk.length} skipped by the playbook</summary>${sk.map((x) => `<div class="skip"><b>${esc(x.label)}</b>: ${esc(x.why)}</div>`).join("")}</details>` : ""}
-      <div class="muted small">${esc(d.note || "")}</div>`;
-    // only touch the DOM when the content changes, so the open "skipped" list isn't reset every frame
-    if (state.sig.desk !== html) { state.sig.desk = html; el.innerHTML = html; }
-    el.hidden = false;
+    if (s.skipped.length && s.started) {
+      h += `<h4>Skipped by the playbook</h4>` + s.skipped.map((x) => `<div class="skip"><b>${esc(x.label)}</b>: ${esc(x.why)}</div>`).join("");
+    }
+    return h + `<p><button class="btn small" data-act="playbook">Open the playbook ›</button></p>`;
   }
 
   // ---------- 3 · markets list ----------
@@ -794,11 +926,14 @@
     if (m.indicative) tags.push("indicative");
     else if (m.exposure === "partial") tags.push("indirect");
     const isFocus = m.id === focus;
+    // the learner's pre-T0 odds ride along as a tag; the full line is in the verdict's details bubble
     const mp = modelPrediction(E, m);
-    return `<div class="mrow ${isFocus ? "focus" : ""} ${fired ? "fired" : ""}" role="button" tabindex="0" data-act="focus" data-id="${esc(m.id)}" aria-pressed="${isFocus}" title="${esc(m.status && STATUS_HELP[m.status] ? STATUS_HELP[m.status] : "")}">
+    const hasOdds = mp && !mp.none;
+    if (hasOdds) tags.push(`model ${pctText(mp.p)}`);
+    const tip = [m.status && STATUS_HELP[m.status], hasOdds && `Model before T0: ${pctText(mp.p)} chance to react.`].filter(Boolean).join(" ");
+    return `<div class="mrow ${isFocus ? "focus" : ""} ${fired ? "fired" : ""}" role="button" tabindex="0" data-act="focus" data-id="${esc(m.id)}" aria-pressed="${isFocus}" title="${esc(tip)}">
       <div class="mrow-top"><span class="lab">${esc(displayLabel(m))}</span><span class="tag">${esc(tags.join(" · "))}</span><span class="px num">${q ? cents(q.mid) : "—"}</span></div>
       <div class="mrow-bot">${sparkline(E, m, now)}<span class="chg num">${chg}</span>${chip}</div>
-      ${mp ? modelLine(mp) : ""}
     </div>`;
   }
 
@@ -839,7 +974,7 @@
           <section class="card" id="speechCard"></section>
           <section class="card" id="marketCard">
             <div class="card-head"><span class="step">2</span><h2>How the market reacted</h2>
-              <span class="head-right"><span class="meta" id="mkMeta"></span>
+              <span class="head-right">
                 <button class="btn small" id="btnEvidence" data-act="evidence" title="Open the raw rows behind this market's numbers">See the data ›</button></span></div>
             <div class="mk-head" id="mkHead"></div>
             <div class="chart-stage">
@@ -862,6 +997,90 @@
           </aside>
         </div>
       </main>`;
+  }
+
+  // ---------- details bubble: the numbers behind each plain-language summary ----------
+  // The cards stay simple; each "ⓘ" button opens this one bubble with the statistics behind it.
+  // It lives outside the cards (so their redraws don't close it) and follows the clock while open.
+  const INFO = {
+    speech: { title: "The scores behind this", anchor: "infoSpeech" },
+    speechTop: { title: "The scores behind this", anchor: "infoSpeechTop" },
+    verdict: { title: "Behind the verdict", anchor: "infoVerdict" },
+    desk: { title: "Desk details", anchor: "infoDesk" },
+    chart: { title: "How to read the chart", anchor: "infoChart" },
+  };
+
+  function infoHtml(kind, E, m, now) {
+    if (kind === "chart") return chartInfoHtml(E, m);
+    if (kind === "verdict") return verdictInfoHtml(E, m, now);
+    if (kind === "desk") return E.desk ? deskInfoHtml(E, now) : null;
+    if (E.overTime) {
+      const heard = E.paragraphs.filter((p) => p._t <= now);
+      if (!heard.length) return null;
+      const { cur, top } = liveNow(heard);
+      const p = kind === "speechTop" ? top : cur;
+      return p && p.relevant && p.z != null ? speechInfoHtml(E, p, heard, "passages heard so far") : null;
+    }
+    return kind === "speech" && now >= E.t0 && E.top ? speechInfoHtml(E, E.top, E.paragraphs, "this speech's policy paragraphs") : null;
+  }
+
+  function hideInfo() {
+    state.info = null;
+    state.sig.bubble = null;
+    $("bubble").hidden = true;
+    for (const b of document.querySelectorAll("[data-act=info]")) { b.setAttribute("aria-expanded", "false"); b.classList.remove("on"); }
+  }
+
+  function closeInfo() {
+    const anchor = state.info && $(INFO[state.info].anchor);
+    hideInfo();
+    if (anchor && $("bubble").contains(document.activeElement)) anchor.focus();
+  }
+
+  function renderInfo(E, m, now) {
+    if (!state.info) return;
+    const anchor = $(INFO[state.info].anchor);
+    const html = anchor && E && m ? infoHtml(state.info, E, m, now) : null;
+    if (html == null) { hideInfo(); return; }   // nothing to show any more (e.g. scrubbed back before the release)
+    const key = state.info + html;
+    if (state.sig.bubble !== key) {
+      state.sig.bubble = key;
+      $("bubbleTitle").textContent = INFO[state.info].title;
+      $("bubbleBody").innerHTML = html;
+    }
+    for (const b of document.querySelectorAll("[data-act=info]")) {
+      const on = b.dataset.info === state.info;
+      b.setAttribute("aria-expanded", String(on));
+      b.classList.toggle("on", on);
+    }
+    $("bubble").hidden = false;
+    placeInfo();
+  }
+
+  // Sit just below the button that opened it (or above, when there's more room there), inside the
+  // space between the top bar and the player.
+  function placeInfo() {
+    if (!state.info) return;
+    const b = $("bubble"), anchor = $(INFO[state.info].anchor);
+    if (!anchor || b.hidden) return;
+    const r = anchor.getBoundingClientRect();
+    const top = document.querySelector(".topbar").getBoundingClientRect().bottom;
+    const dockTop = document.querySelector(".dock").getBoundingClientRect().top;
+    if (r.bottom < top || r.top > dockTop) { hideInfo(); return; }   // its button scrolled out of view
+    const pad = 12, gap = 10;
+    const w = Math.min(460, window.innerWidth - 2 * pad);
+    b.style.width = w + "px";
+    // full content height, read without un-clipping the body (that would reset its scroll position)
+    const natural = $("bubbleHead").offsetHeight + $("bubbleBody").scrollHeight + 2;
+    const below = dockTop - r.bottom - gap - pad, above = r.top - top - gap - pad;
+    const under = natural <= below || below >= above;
+    const h = Math.min(natural, Math.max(140, under ? below : above));
+    b.style.maxHeight = h + "px";
+    const left = Math.max(pad, Math.min(window.innerWidth - w - pad, r.left + r.width / 2 - w / 2));
+    b.style.left = left + "px";
+    b.style.top = (under ? r.bottom + gap : Math.max(top + pad, r.top - gap - h)) + "px";
+    b.classList.toggle("above", !under);
+    b.style.setProperty("--arrow-x", Math.max(18, Math.min(w - 18, r.left + r.width / 2 - left)) + "px");
   }
 
   // LIVE only: is this a real session, a simulated one, or has the feed gone quiet?
@@ -956,6 +1175,7 @@
   // ---------- drawer: evidence and playbook ----------
   let drawerReturnFocus = null;
   function showDrawer(title, html) {
+    hideInfo();
     $("drawerTitle").textContent = title;
     $("drawerBody").innerHTML = html;
     if (!$("drawer").classList.contains("open")) drawerReturnFocus = document.activeElement;
@@ -1218,15 +1438,25 @@
     s.min = a; s.max = b;
   }
 
-  function setRelClock() {
+  // The bar shows just the clock time (to the minute) and whole minutes from T0. The exact readout
+  // (seconds, UTC, and what T0 means here) is the tooltip. `now` is absent in the compare view,
+  // where two events share the bar and only the T0-relative clock means anything.
+  function setClock(now) {
     const el = $("clkRel");
-    el.textContent = fmtRel(state.rel);
+    const mins = Math.floor(state.rel / MIN);
+    el.textContent = `T${mins < 0 ? "−" : "+"}${Math.abs(mins)}m`;
     el.classList.toggle("post", state.rel >= 0);
+    $("clkAbs").hidden = now == null;
+    if (now != null) $("clkEt").textContent = fmtEtShort(now);
     const E = state.events[state.view];
     const spoken = !!(E && E.overTime);
-    $("clkCap").textContent = state.rel < 0
+    const what = state.rel < 0
       ? (spoken ? "until the speech starts" : "until the text is released")
       : (spoken ? "since the speech started" : "since the text was released");
+    const tip = (now == null ? "" : `${fmtEt(now)} ET · ${fmtUtc(now)} UTC · `) + `${fmtRel(state.rel)} ${what}`;
+    const box = $("clock");
+    box.classList.toggle("rel-only", now == null);
+    if (box.title !== tip) box.title = tip;
   }
 
   // The chart card stays pinned next to the speech and market list only while it fits
@@ -1248,18 +1478,15 @@
     $("scrub").value = state.rel;
 
     if (state.view === "compare") {
-      $("clkAbs").hidden = true; // two events, two wall clocks: only the T0-relative clock means anything here
-      setRelClock();
+      setClock(null); // two events, two wall clocks: only the T0-relative clock means anything here
       drawCompare(state.rel);
+      if (state.info) hideInfo();
       return;
     }
     const E = state.events[state.view];
-    if (!E) return;
+    if (!E) { if (state.info) hideInfo(); return; }
     const now = E.t0 + state.rel;
-    $("clkAbs").hidden = false;
-    $("clkEt").textContent = fmtEt(now);
-    $("clkUtc").textContent = fmtUtc(now);
-    setRelClock();
+    setClock(now);
     renderSpeech(E, now);
     const m = E.byId[state.focus[state.view]] || E.headline;
     if (m) {
@@ -1271,6 +1498,7 @@
     const cta = $("cta");
     if (cta) cta.hidden = state.touched || state.playing || state.view === "live";
     if (force || t - state.lastFit > 500) { state.lastFit = t; fitSticky(); }
+    renderInfo(E, m, now);
   }
 
   let lastTick = null;
@@ -1293,6 +1521,7 @@
 
   async function show(id) {
     closeDrawer();
+    hideInfo();
     stopLive();
     state.view = id;
     $("liveControls").hidden = id !== "live";
@@ -1434,6 +1663,7 @@
     } catch (err) {
       if (state.view !== "live") return;
       state.events.live = null;
+      hideInfo();
       state.liveShellKey = null;
       $("view").innerHTML = liveIdleHtml();
       $("marks").innerHTML = "";
@@ -1458,7 +1688,7 @@
       <p><b>Use the buttons above</b> (Practice replays a past speech; Real speech listens, scores and, if you pick it, trades). Or run the commands yourself:</p>
       <p>The LIVE tab shows a Fed speech as it happens: the transcript scored against the speaker's own history, next to Kalshi's live Fed-decision prices, with the same reaction checks as the replays. When it's over, it becomes one more History tab.</p>
       <ol>
-        <li><b>Score the speech</b> (MarketPulse, dry, never trades):<br><span class="mono">python speechtxt.py --url https://www.federalreserve.gov/live-broadcast.htm</span><br><span class="mono">python live.py --speaker christopher_waller --no-prewarm --mode dry</span><br>or let it <b>trade on Kalshi's demo exchange</b> by the learned playbook:<br><span class="mono">python live.py --speaker christopher_waller --fast --playbook --mode demo --venues kalshi</span></li>
+        <li><b>Score the speech</b> (dry, never trades):<br><span class="mono">python speechtxt.py --url https://www.federalreserve.gov/live-broadcast.htm</span><br><span class="mono">python live.py --speaker christopher_waller --no-prewarm --mode dry</span><br>or let it <b>trade on Kalshi's demo exchange</b> by the learned playbook:<br><span class="mono">python live.py --speaker christopher_waller --fast --playbook --mode demo --venues kalshi</span></li>
         <li><b>Stream the market tape</b> into this page:<br><span class="mono">python tradio/live.py --speaker christopher_waller --t0 now</span></li>
         <li><b>Afterwards, keep it</b> as a history event:<br><span class="mono">python tradio/live.py archive waller20261015 --title "Waller, 2026-10-15"</span></li>
       </ol>
@@ -1491,6 +1721,18 @@
       case "evidence":
         if (E) openEvidence(E, E.byId[el.dataset.id]);
         break;
+      case "playbook":
+        openPlaybook();
+        break;
+      case "info": {
+        // toggle the details bubble for this summary; a second click on the same button closes it
+        const kind = el.dataset.info;
+        if (state.info === kind) { closeInfo(); break; }
+        state.info = kind;
+        draw(true);
+        if (state.info) $("bubble").focus({ preventScroll: true });
+        break;
+      }
       case "group": {
         if (!E) return;
         const g = GROUPS.find((x) => x.id === el.dataset.id);
@@ -1504,10 +1746,6 @@
         break;
       case "paras-toggle":
         state.showAllParas = !state.showAllParas;
-        draw(true);
-        break;
-      case "context-toggle":
-        state.contextOpen = !state.contextOpen;
         draw(true);
         break;
       case "cta":
@@ -1541,10 +1779,22 @@
         onViewClick(e);
       }
     });
-    // <details> toggles don't bubble: remember whether the desk's skipped list is open
-    $("view").addEventListener("toggle", (e) => {
-      if (e.target.closest && e.target.closest("#desk")) state.deskSkipsOpen = e.target.open;
-    }, true);
+    // the details bubble sits outside #view: same actions, plus its own close button
+    $("bubble").addEventListener("click", onViewClick);
+    $("bubble").addEventListener("keydown", (e) => {
+      if ((e.key === "Enter" || e.key === " ") && e.target.closest("[role=button][data-act]")) {
+        e.preventDefault();
+        onViewClick(e);
+      }
+    });
+    $("bubbleClose").addEventListener("click", closeInfo);
+    // a click elsewhere closes it, except on the player: keep it open and watch the details change
+    document.addEventListener("pointerdown", (e) => {
+      if (!state.info || !e.target.closest) return;
+      if (e.target.closest("#bubble, [data-act=info], .dock")) return;
+      closeInfo();
+    });
+    window.addEventListener("scroll", placeInfo, { passive: true });
     $("btnPlay").addEventListener("click", () => {
       touch();
       if (state.view === "live") { state.follow = true; pollLive(); return; }
@@ -1552,8 +1802,6 @@
       if (!state.playing && state.rel >= b) state.rel = START_REL;
       setPlaying(!state.playing);
     });
-    $("btnBack").addEventListener("click", () => { touch(); setRel(state.rel - MIN); });
-    $("btnFwd").addEventListener("click", () => { touch(); setRel(state.rel + MIN); });
     $("btnT0").addEventListener("click", () => { touch(); setPlaying(false); setRel(MIN); });
     $("scrub").addEventListener("input", (e) => { touch(); setRel(+e.target.value); });
     $("drawerClose").addEventListener("click", closeDrawer);
@@ -1574,7 +1822,7 @@
       else if (e.key === "ArrowLeft") { e.preventDefault(); touch(); setRel(state.rel - MIN); }
       else if (e.key === "ArrowRight") { e.preventDefault(); touch(); setRel(state.rel + MIN); }
       else if (e.key === "0") { $("btnT0").click(); }
-      else if (e.key === "Escape") closeDrawer();
+      else if (e.key === "Escape") { if (state.info) closeInfo(); else closeDrawer(); }
     });
     window.addEventListener("resize", () => {
       if (state.view && (state.view === "compare" || state.events[state.view])) renderMarks();
@@ -1591,6 +1839,20 @@
       show(valid ? start : EVENTS[0].id);
       requestAnimationFrame(tick);
     });
+    showSolanaBadge();
+  }
+
+  // Root hash of every cached result file, anchored on Solana (tradio/receipts.py).
+  // Proves when these numbers were fixed; for past events that is publication, not foresight.
+  async function showSolanaBadge() {
+    const r = await fetchJson(DATA_ROOT + "receipts.json", true);
+    const b = $("solanaBadge");
+    if (!r || !r.chain || !r.chain.signature || !b) return;
+    b.href = r.chain.explorer;
+    b.textContent = "◎ Verified on Solana";
+    b.title = `SHA-256 root of ${r.n_files} data files, anchored ${r.created_at} on ${r.chain.cluster}.\n` +
+      `Check it: python -m tradio.receipts verify`;
+    b.hidden = false;
   }
 
   init();

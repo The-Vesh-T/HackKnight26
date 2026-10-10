@@ -4,7 +4,7 @@ Read `CLAUDE.md` first. You own: speaker additions in `fed_speeches.py`, `tradio
 `tradio/surprise.py`, `tradio/validation/`, `docs/pitch.md`.
 
 **Your goal:** (a) score Bowman's and Waller's speeches against their own history,
-reusing MarketPulse's `stance_scorer.py` method, and prove the scores are trustworthy;
+reusing the `stance_scorer.py` method, and prove the scores are trustworthy;
 (b) own the story: demo script and slides.
 
 ## Part A — Surprise (first 8–12 hours)
@@ -43,5 +43,5 @@ reusing MarketPulse's `stance_scorer.py` method, and prove the scores are trustw
 - The pitch script matches what the page actually does.
 
 ## Don't
-- Don't change the rubric or model for existing MarketPulse speakers.
+- Don't change the rubric or model for existing speakers.
 - Don't claim a statistical result in the pitch that we haven't computed.

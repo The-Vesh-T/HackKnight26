@@ -42,7 +42,7 @@ July 2025 cut. Kalshi July cut: +8¢ after Bowman. July hold: −1¢ after Walle
 | Half / 90% of move | 21–24 min / 42–70 min | n/a |
 
 **3. How it works.**
-1. Gemini scores each paragraph −1 (dovish) to +1 (hawkish) with MarketPulse's rubric.
+1. Gemini scores each paragraph −1 (dovish) to +1 (hawkish) with Tradio's stance rubric.
 2. z is computed against that speaker's own baseline, using only policy paragraphs.
 3. Kalshi 1-minute candles and trades go on one timeline with the text release at T0.
 4. Each market gets one of five statuses: reacted, expected no reaction, can't tell

@@ -16,9 +16,9 @@ Replay events (all with real, cached Kalshi + Polymarket data):
 | **Governor Bowman, Jun 23, 2025** | A known hawk said she would support a July cut; July "cut 25 bp" 0.15 → 0.22 over ~30 minutes | Surprise relative to the speaker |
 | **Governor Waller, Jul 17, 2025** | A known dove saying the same thing; the same contracts moved 1–2 cents | Control: expected, so little reaction |
 
-Tradio is built on our earlier project, MarketPulse (live Fed-speech stance scoring and
-prediction-market tooling), which we reuse here with permission. New this weekend: the
-historical market-reaction analysis and the replay terminal (`tradio/`, `web/tradio.*`).
+The live Fed-speech stance scoring and prediction-market tooling in this repo predate the
+hackathon. New this weekend: the historical market-reaction analysis and the replay
+terminal (`tradio/`, `web/tradio.*`).
 
 > Status: in progress during HackKnight26. Numbers in the replay come only from cached
 > Kalshi/Polymarket data; Polymarket series are labeled indicative.
@@ -57,13 +57,13 @@ works for the replays, just without the buttons.
 
 The same screen works during a real Fed speech. The **● LIVE** tab on `web/tradio.html`
 shows the transcript as it's spoken, scored against the speaker's own history by
-MarketPulse's live listener, next to Kalshi's live Fed-decision prices with the same
+Tradio's live listener, next to Kalshi's live Fed-decision prices with the same
 reaction checks. Until the 90-minute window closes it only says "alarm · moving" or
 "watching"; the final verdict appears when the window is complete. Afterwards one command
 keeps the session as a History tab.
 
 ```bash
-# terminal 1+2: transcribe and score the speech (MarketPulse; dry, no watchlist => never trades)
+# terminal 1+2: transcribe and score the speech (dry, no watchlist => never trades)
 python speechtxt.py --url https://www.federalreserve.gov/live-broadcast.htm
 python live.py --speaker christopher_waller --no-prewarm --mode dry
 # terminal 3: live Kalshi tape + reaction checks -> web/data/tradio/live/
@@ -77,7 +77,7 @@ python tradio/live.py archive waller20261015 --title "Waller, 2026-10-15"
 python tradio/live.py --simulate bowman20250623 --speed 30
 ```
 
-`tradio/live.py` only reads MarketPulse's `live_state.json`; it never imports the
+`tradio/live.py` only reads the live listener's `live_state.json`; it never imports the
 trading code. Kalshi's public endpoints need no keys.
 
 ## Trading by the playbook (Kalshi demo exchange)
@@ -92,7 +92,7 @@ with the evidence behind it (the **Playbook** button on the page shows them):
 | Only liquid markets | active | thin/dark markets were "can't tell" |
 | Don't chase | skip once Tradio's alarm has fired | past alarms came 1–7 min after T0 |
 | Planned exit | 36 min | median time to 90% of the move |
-| "Hold" side follows the regime | dovish ⇒ hold NO when the market leans to a cut | fixes MarketPulse's fixed table (3/4 → 4/4) |
+| "Hold" side follows the regime | dovish ⇒ hold NO when the market leans to a cut | fixes the old fixed table (3/4 → 4/4) |
 
 ```bash
 python tradio/playbook.py      # rebuild rules + leave-one-out backtests (also runs on every archive)
@@ -156,10 +156,10 @@ python -m unittest tests.test_timeline tests.test_ingest tests.test_reaction tes
 | `tradio/build_baselines.py` | Role 3: Bowman/Waller speaker baselines |
 | `tradio/playbook.py` | Trading rules learned from all events, leave-one-out backtests; read by `live.py --playbook` |
 | `tradio/serve.py` | Website + LIVE tab Start/Stop buttons (localhost only, fixed commands) |
-| `tradio/live.py` | Live mode: live Kalshi tape + MarketPulse's scored transcript into the LIVE tab; `archive` saves a session as a history event |
+| `tradio/live.py` | Live mode: live Kalshi tape + the scored transcript into the LIVE tab; `archive` saves a session as a history event |
 | `web/tradio.*` | New: the replay terminal (History tabs + LIVE tab) |
 | `stance_scorer.py`, `fed_speeches.py`, `fed_transcripts.py` | Stance rubric, speaker baselines, speech and press-conference downloads |
-| `live.py`, `speechtxt.py`, `mic.py`, `dashboard.py` | MarketPulse live desk (real-time transcription and scoring) |
+| `live.py`, `speechtxt.py`, `mic.py`, `dashboard.py` | Live desk (real-time transcription and scoring) |
 | `market_router.py`, `kalshi_*.py`, `polymarket_client.py`, `run_*.py` | Market search and recommendations (live) |
 | `kalshi_trader.py`, `manual_orders.py`, `trading_common.py`, `control_worker.py` | Order execution and hosted controls (not used by the Tradio replay) |
 | `fred_client.py`, `social_sentiment.py`, `solana_proof.py`, `tiger_store.py`, `backboard_client.py` | Macro context, crowd sentiment, receipts, storage, memory |
@@ -167,7 +167,7 @@ python -m unittest tests.test_timeline tests.test_ingest tests.test_reaction tes
 
 ## Safety
 
-Tradio's own scripts never place orders. Trading happens only in MarketPulse's desk
+Tradio's own scripts never place orders. Trading happens only in the live desk
 (`live.py --playbook`), on Kalshi's demo exchange by default. Real money stays off by default and needs an approved operator, typing `LIVE`, and the local
 `TRADIO_ALLOW_LIVE=1` opt-in (details in [docs/HOSTED_CONTROLS.md](docs/HOSTED_CONTROLS.md)).
 
