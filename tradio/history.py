@@ -7,6 +7,7 @@ measured the same way as the hero events, so the learner has hundreds of example
     python -m tradio.history analyze            # offline: timeline + reaction.py per speech
     python -m tradio.history text               # download speech texts (federalreserve.gov)
     python -m tradio.history score              # optional: Gemini stance scores (gemapi.txt)
+    python -m tradio.history embed              # optional: Gemini text embeddings (gemapi.txt)
     python -m tradio.history all                # pull + analyze + text (no Gemini)
 
 Options: --since 2024-11-01 (default), --limit N (first N speeches, for a quick test).
@@ -18,6 +19,8 @@ Where things go (tradio/data/history/):
                               ~100 KB each; rebuilt offline from raw/ by `analyze`)
     <speech_id>/analysis.json role 2's reaction.py output (committed)
     <speech_id>/speech.json   speech text (gitignored; re-downloadable)
+    embeddings.json           one 256-number Gemini embedding per speech (policy paragraphs,
+                              averaged), for the learner's text features (committed)
     <speech_id>/meta.json     speech facts for the learner: speaker, role, next meeting,
                               policy-paragraph count, stance scores if scored (committed)
 
@@ -355,9 +358,60 @@ def score(speeches):
         print(f"[{i}/{len(speeches)}] {s['id']}: {len(scores)} paragraphs, top z {meta['stance']['top_z']}")
 
 
+EMBED_MODEL = "gemini-embedding-001"
+EMBED_DIM = 256
+
+
+def embed(speeches):
+    """Gemini embedding of each speech: the policy-outlook paragraphs (or, if a speech has
+    none, its first eight paragraphs), embedded one by one and averaged. Resumable."""
+    import stance_scorer
+    from google import genai
+    from google.genai import types
+    from tradio import build_baselines
+    path = os.path.join(HIST_DIR, "embeddings.json")
+    store = read_json(path) if os.path.isfile(path) else {}
+    store.update({"model": EMBED_MODEL, "dim": EMBED_DIM, "task_type": "SEMANTIC_SIMILARITY"})
+    store.setdefault("speeches", {})
+    client = genai.Client(api_key=stance_scorer._read_gemini_key())
+    cfg = types.EmbedContentConfig(task_type="SEMANTIC_SIMILARITY", output_dimensionality=EMBED_DIM)
+    for i, s in enumerate(speeches, 1):
+        if s["id"] in store["speeches"]:
+            continue
+        try:
+            data = speech_text(s["id"])
+        except Exception as exc:
+            print(f"[{i}/{len(speeches)}] {s['id']}: no text ({exc})")
+            continue
+        texts = build_baselines.policy_paragraphs(data) or [g["text"] for g in data.get("segments", [])[:8]]
+        texts = [t[:2000] for t in texts if t.strip()]
+        if not texts:
+            continue
+        vecs = []
+        for start in range(0, len(texts), 50):
+            for attempt in range(6):
+                try:
+                    res = client.models.embed_content(model=EMBED_MODEL, contents=texts[start:start + 50],
+                                                      config=cfg)
+                    vecs += [e.values for e in res.embeddings]
+                    break
+                except Exception as exc:
+                    if attempt == 5:
+                        raise
+                    print(f"  embed retry ({str(exc)[:80]})")
+                    time.sleep(5 * (attempt + 1))
+        mean = [sum(col) / len(vecs) for col in zip(*vecs)]
+        store["speeches"][s["id"]] = [round(x, 5) for x in mean]
+        print(f"[{i}/{len(speeches)}] {s['id']}: {len(texts)} paragraphs embedded", flush=True)
+        if i % 10 == 0:
+            write_json(path, store)
+    write_json(path, store)
+    print(f"wrote {path}: {len(store['speeches'])} speeches")
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("step", choices=("speeches", "pull", "analyze", "text", "score", "all"))
+    ap.add_argument("step", choices=("speeches", "pull", "analyze", "text", "score", "embed", "all"))
     ap.add_argument("--since", default=DEFAULT_SINCE)
     ap.add_argument("--limit", type=int)
     ap.add_argument("--force", action="store_true")
@@ -376,6 +430,8 @@ def main(argv=None):
         text(speeches)
     if a.step == "score":
         score(speeches)
+    if a.step == "embed":
+        embed(speeches)
 
 
 if __name__ == "__main__":

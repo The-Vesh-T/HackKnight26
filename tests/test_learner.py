@@ -260,3 +260,67 @@ class LearnerTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TextAndCalendarTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp()
+        self.hist = os.path.join(self.tmp, "history")
+        os.makedirs(self.hist)
+        self.p = [mock.patch.object(learner, "DATA_DIR", self.tmp),
+                  mock.patch.object(learner, "HIST_DIR", self.hist),
+                  mock.patch.object(learner, "MODEL", os.path.join(self.tmp, "model.json")),
+                  mock.patch.object(learner, "WEB_MODEL", os.path.join(self.tmp, "web_model.json")),
+                  mock.patch.object(learner, "BOOTSTRAP", 100)]
+        for p in self.p:
+            p.start()
+
+    def tearDown(self):
+        for p in self.p:
+            p.stop()
+        shutil.rmtree(self.tmp)
+
+    def test_release_window(self):
+        # 2025-08-01 jobs report at 8:30 ET; a speech at 8:00 ET has it inside its window
+        self.assertEqual(learner.release_features("2025-08-01T12:00:00Z"), (1.0, 1.0))
+        # same day, speech at 1:00 pm ET: release day, but the release was 4.5 h earlier
+        self.assertEqual(learner.release_features("2025-08-01T17:00:00Z"), (0.0, 1.0))
+        self.assertEqual(learner.release_features("2025-08-04T14:00:00Z"), (0.0, 0.0))
+
+    def make(self, n=40, seed=3):
+        rnd = random.Random(seed)
+        t = datetime(2025, 1, 2, 15, tzinfo=timezone.utc)
+        ids, speeches, emb = [], [], {}
+        for i in range(n):
+            sid = synth_event(self.hist, i, t + timedelta(days=i), rnd)
+            an = read_json(os.path.join(self.hist, sid, "analysis.json"))
+            reacted = any(r["status"] == "reacted" for r in an["markets"].values())
+            base = [1.0, 0.0, 0.0] if reacted else [0.0, 1.0, 0.0]
+            emb[sid] = [b + rnd.gauss(0, 0.2) for b in base] + [rnd.gauss(0, 0.2) for _ in range(9)]
+            speeches.append({"id": sid, "t0": iso(t + timedelta(days=i)),
+                             "speaker": "a" if i % 2 else "b", "role": "governor"})
+            ids.append(sid)
+        write_json(os.path.join(self.hist, "embeddings.json"), {"speeches": emb})
+        write_json(os.path.join(self.hist, "speeches.json"), {"speeches": speeches})
+        return ids
+
+    def test_text_models_run_and_novelty_uses_only_the_past(self):
+        ids = self.make()
+        data = learner.dataset()
+        names = [m.name for m in learner.make_models()]
+        self.assertIn("logistic_text", names)
+        self.assertIn("mlp_text", names)
+        self.assertIn("ensemble", names)
+        x10 = next(r for e, rs in data if e["event"] == ids[10] for r in rs)["x"]
+        # change a LATER speech's text: speech 10's novelty must not move
+        path = os.path.join(self.hist, "embeddings.json")
+        E = read_json(path)
+        E["speeches"][ids[30]] = [5.0] * 12
+        write_json(path, E)
+        os.utime(path, (1, 1))
+        data2 = learner.dataset()
+        x10b = next(r for e, rs in data2 if e["event"] == ids[10] for r in rs)["x"]
+        self.assertEqual(x10, x10b)
+        out = learner.build()
+        for n in ("logistic_text", "mlp_text", "ensemble"):
+            self.assertIn(n, out["scoreboard"]["models"])

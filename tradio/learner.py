@@ -72,8 +72,27 @@ BOOTSTRAP = 1000
 FEATURES = (["kind_" + k for k in KINDS.values()]
             + ["pre_mid", "uncertainty", "log_trades", "spread_ticks", "quote_changes"]
             + ["role_" + r for r in ROLES]
-            + ["log_days_to_decision", "after_hours", "n_flags",
-               "has_text", "policy_share", "has_stance", "abs_z", "aligned_z"])
+            + ["log_days_to_decision", "after_hours", "overlap_speeches",
+               "release_in_window", "release_day",
+               "has_text", "policy_share", "has_stance", "abs_z", "aligned_z",
+               "has_embedding", "novelty_vs_speaker", "novelty_vs_recent"])
+EMB_PCA = 8                    # text models compress the speech embedding to this many components
+
+# US data releases that land at 8:30 ET and move rate expectations on their own:
+# BLS Employment Situation and CPI, from bls.gov/bls/news-release/empsit.htm and cpi.htm
+# (read 2026-10-10; the Oct 2025 CPI was not published during the shutdown). If one lands
+# inside a speech's T0-60..T0+90 window, a move may be the data, not the speech.
+RELEASE_DAYS = {
+    "jobs": ["2024-11-01", "2024-12-06", "2025-01-10", "2025-02-07", "2025-03-07", "2025-04-04",
+             "2025-05-02", "2025-06-06", "2025-07-03", "2025-08-01", "2025-09-05", "2025-11-20",
+             "2025-12-16", "2026-01-09", "2026-02-11", "2026-03-06", "2026-04-03", "2026-05-08",
+             "2026-06-05", "2026-07-02", "2026-08-07", "2026-09-04", "2026-10-02"],
+    "cpi": ["2024-11-13", "2024-12-11", "2025-01-15", "2025-02-12", "2025-03-12", "2025-04-10",
+            "2025-05-13", "2025-06-11", "2025-07-15", "2025-08-12", "2025-09-11", "2025-10-24",
+            "2025-12-18", "2026-01-13", "2026-02-13", "2026-03-11", "2026-04-10", "2026-05-12",
+            "2026-06-10", "2026-07-14", "2026-08-12", "2026-09-11"],
+}
+RELEASE_ET = (8, 30)
 
 
 # ------------------------------------------------------------------ dataset
@@ -123,6 +142,65 @@ def _days_to_decision(t0: str, ticker: str, meta: dict):
     return (d - parse_ts(t0).astimezone(history.ET).date()).days if d else None
 
 
+def release_features(t0: str):
+    """(release_in_window, release_day) for a speech T0: was a jobs/CPI report published
+    that day, and did its 8:30 ET release fall inside T0-60..T0+90 min?"""
+    from zoneinfo import ZoneInfo
+    et = ZoneInfo("America/New_York")
+    local = parse_ts(t0).astimezone(et)
+    day = local.date().isoformat()
+    if not any(day in days for days in RELEASE_DAYS.values()):
+        return 0.0, 0.0
+    rel = local.replace(hour=RELEASE_ET[0], minute=RELEASE_ET[1], second=0, microsecond=0)
+    delta = (rel - local).total_seconds()
+    return float(-60 * 60 <= delta <= WINDOW_S), 1.0
+
+
+_EMB = {}
+
+
+def embeddings():
+    """speech_id -> unit vector (history.py embed step), or {} if not built yet."""
+    path = os.path.join(HIST_DIR, "embeddings.json")
+    key = (path, os.path.getmtime(path) if os.path.isfile(path) else None)
+    if key not in _EMB:
+        raw = _read(path) or {}
+        out = {}
+        for sid, v in (raw.get("speeches") or {}).items():
+            n = math.sqrt(sum(a * a for a in v)) or 1.0
+            out[sid] = [a / n for a in v]
+        _EMB.clear()
+        _EMB[key] = out
+    return _EMB[key]
+
+
+def _cos(a, b):
+    return sum(x * y for x, y in zip(a, b))
+
+
+def _mean(vs):
+    n = len(vs)
+    out = [sum(col) / n for col in zip(*vs)]
+    norm = math.sqrt(sum(a * a for a in out)) or 1.0
+    return [a / norm for a in out]
+
+
+def novelty(sid: str, t0: str, speaker: str, speeches: dict):
+    """How different a speech's text is from (a) the same speaker's EARLIER speeches and
+    (b) every Board speech in the 30 days before it. Uses only speeches before T0."""
+    E = embeddings()
+    v = E.get(sid)
+    if v is None:
+        return None
+    t = to_unix(t0)
+    prior = [s for s in speeches.values() if s.get("t0") and s["id"] in E and to_unix(s["t0"]) < t]
+    own = [E[s["id"]] for s in prior if s.get("speaker") == speaker]
+    recent = [E[s["id"]] for s in prior if t - to_unix(s["t0"]) <= 30 * 86400]
+    nv_own = 1 - _cos(v, _mean(own)) if own else None
+    nv_recent = 1 - _cos(v, _mean(recent)) if recent else None
+    return nv_own, nv_recent, v
+
+
 def event_rows(event_dir: str, speeches: dict, for_predict: bool = False):
     """One event folder -> (event dict, rows) or None. for_predict accepts a live,
     still-provisional analysis (only its pre-T0 facts are used)."""
@@ -142,7 +220,12 @@ def event_rows(event_dir: str, speeches: dict, for_predict: bool = False):
         # encoded the same way wherever it came from
         meta = _read(os.path.join(HIST_DIR, sid, "meta.json")) or {}
     info = speeches.get(sid, {})
+    speaker = meta.get("speaker") or info.get("speaker") or tl.get("speaker")
     role = meta.get("role") or info.get("role")
+    if not role and speaker:                  # live sessions: the speaker's latest Board role
+        mine = sorted((s for s in speeches.values() if s.get("speaker") == speaker and s.get("t0")),
+                      key=lambda s: s["t0"])
+        role = mine[-1]["role"] if mine else None
     local = parse_ts(t0).astimezone(__import__("zoneinfo").ZoneInfo("America/New_York"))
     after_hours = int(local.weekday() >= 5 or not (9 * 60 + 30 <= local.hour * 60 + local.minute < 16 * 60))
     z = _top_z(tl, meta)
@@ -161,6 +244,9 @@ def event_rows(event_dir: str, speeches: dict, for_predict: bool = False):
     if not cands:
         return None
     flags = meta.get("flags", [])
+    overlap = sum(1 for f in flags if f.startswith("another Board speech"))
+    rel_win, rel_day = release_features(t0)
+    nov = novelty(sid, t0, speaker, speeches) if sid else None
     days = _days_to_decision(t0, cands[0][1], meta)
     has_text = int(meta.get("policy_paragraphs") is not None)
     policy_share = (meta["policy_paragraphs"] / meta["paragraphs"]
@@ -181,7 +267,12 @@ def event_rows(event_dir: str, speeches: dict, for_predict: bool = False):
             x["role_" + role] = 1.0
         x["log_days_to_decision"] = math.log1p(days) if days is not None else 0.0
         x["after_hours"] = float(after_hours)
-        x["n_flags"] = float(len(flags))
+        x["overlap_speeches"] = float(overlap)
+        x["release_in_window"], x["release_day"] = rel_win, rel_day
+        if nov is not None:
+            x["has_embedding"] = 1.0
+            x["novelty_vs_speaker"] = nov[0] if nov[0] is not None else 0.0
+            x["novelty_vs_recent"] = nov[1] if nov[1] is not None else 0.0
         x["has_text"] = float(has_text)
         x["policy_share"] = policy_share
         if z is not None:
@@ -194,7 +285,8 @@ def event_rows(event_dir: str, speeches: dict, for_predict: bool = False):
             label = None                      # not measurable either way (see docstring)
         rows.append({"market": mid, "kind": k, "status": st, "liquidity": r.get("liquidity"),
                      "move_ticks": r.get("move_ticks"), "label": label,
-                     "x": [x[f] for f in FEATURES]})
+                     "x": [x[f] for f in FEATURES],
+                     "e": nov[2] if nov is not None else None})
     ev = {"event": an.get("event_id") or os.path.basename(event_dir), "speech_id": sid, "t0": t0,
           "role": role, "source": "history" if os.path.dirname(event_dir) == HIST_DIR else "event",
           "z": z}
@@ -291,13 +383,13 @@ class MLPBag:
     def __init__(self, name="mlp_bag", seeds=10, hidden=(16,), alpha=1.0):
         self.name, self.seeds, self.hidden, self.alpha = name, seeds, hidden, alpha
 
-    @staticmethod
-    def _net(hidden, alpha, seed):
+    text = False
+
+    def _net(self, hidden, alpha, seed):
         from sklearn.neural_network import MLPClassifier
         from sklearn.pipeline import make_pipeline
-        from sklearn.preprocessing import StandardScaler
         # L-BFGS: full-batch, the recommended solver for small datasets (and ~3x faster here)
-        return make_pipeline(StandardScaler(), MLPClassifier(
+        return make_pipeline(_prep(self.text), MLPClassifier(
             hidden_layer_sizes=hidden, alpha=alpha, solver="lbfgs", max_iter=500, random_state=seed))
 
     def _fit_bag(self, X, y, hidden, alpha, seeds):
@@ -348,22 +440,88 @@ class MLPTuned(MLPBag):
         return self
 
 
-def make_models(extra_mlps=False):
+class MLPText(MLPBag):
+    """A small bag of nets that also read the speech text: the Gemini embedding of the
+    policy paragraphs, compressed to EMB_PCA components fitted on training rows only."""
+    text = True
+
+    def __init__(self, name="mlp_text", seeds=5):
+        super().__init__(name=name, seeds=seeds, hidden=(16,), alpha=3.0)
+
+
+class Ensemble:
+    """Average of several members' probabilities (usually steadier than any one of them)."""
+
+    def __init__(self, name, members):
+        self.name, self.members = name, members
+
+    def fit(self, X, y, kinds=None):
+        for m in self.members:
+            m.fit(X, y, kinds)
+        return self
+
+    def predict(self, X, kinds=None):
+        cols = [m.predict(X, kinds) for m in self.members]
+        return [sum(c[i] for c in cols) / len(cols) for i in range(len(X))]
+
+
+def _prep(text: bool):
+    """Column front-end: base features standardized; with text, the embedding columns
+    are compressed by PCA (fitted inside the pipeline, so only on training rows)."""
+    from sklearn.compose import ColumnTransformer
+    from sklearn.decomposition import PCA
+    from sklearn.preprocessing import StandardScaler
+    nb = len(FEATURES)
+    parts = [("base", StandardScaler(), list(range(nb)))]
+    if text:
+        parts.append(("text", PCA(n_components=EMB_PCA, random_state=SEED), slice(nb, None)))
+    return ColumnTransformer(parts, remainder="drop")
+
+
+def emb_dim():
+    E = embeddings()
+    return len(next(iter(E.values()))) if E else 0
+
+
+def make_models(extra_mlps=False, text=None):
     from sklearn.ensemble import GradientBoostingClassifier
     from sklearn.linear_model import LogisticRegression
     from sklearn.neural_network import MLPClassifier
     from sklearn.pipeline import make_pipeline
-    from sklearn.preprocessing import StandardScaler
-    return [
+    text = emb_dim() > 0 if text is None else text
+
+    def logistic(t=False):
+        return lambda: make_pipeline(_prep(t), LogisticRegression(C=0.5, max_iter=2000))
+
+    def boosting():
+        return lambda: make_pipeline(_prep(False), GradientBoostingClassifier(
+            n_estimators=100, max_depth=2, learning_rate=0.05, subsample=0.8, random_state=SEED))
+
+    def mlp():
+        return lambda: make_pipeline(_prep(False), MLPClassifier(
+            hidden_layer_sizes=(16,), alpha=1.0, max_iter=2000, random_state=SEED))
+
+    models = [
         BaseRate(),
         PlaybookRule(),
-        Sk("logistic", lambda: make_pipeline(StandardScaler(), LogisticRegression(C=0.5, max_iter=2000))),
-        Sk("boosting", lambda: GradientBoostingClassifier(n_estimators=100, max_depth=2,
-                                                          learning_rate=0.05, subsample=0.8,
-                                                          random_state=SEED)),
-        Sk("mlp", lambda: make_pipeline(StandardScaler(), MLPClassifier(
-            hidden_layer_sizes=(16,), alpha=1.0, max_iter=2000, random_state=SEED))),
+        Sk("logistic", logistic()),
+        Sk("boosting", boosting()),
+        Sk("mlp", mlp()),
     ] + ([MLPBag(), MLPTuned()] if extra_mlps else [])
+    if text:
+        models += [Sk("logistic_text", logistic(True)), MLPText()]
+    members = [Sk("logistic", logistic()), Sk("boosting", boosting()), Sk("mlp", mlp())]
+    if text:
+        members.append(Sk("logistic_text", logistic(True)))
+    models.append(Ensemble("ensemble", members))
+    return models
+
+
+def _matrix(rows):
+    """Feature matrix: base features, then the speech embedding (zeros if none)."""
+    d = emb_dim()
+    return [r["x"] + (r["e"] if r.get("e") is not None and len(r["e"]) == d else [0.0] * d)
+            for r in rows]
 
 
 # ------------------------------------------------------------------ evaluation
@@ -393,13 +551,13 @@ def prequential(data, models=None, extra_mlps=False):
         if not lab:
             continue
         train = _closed_before(data, ev)
-        X = [r["x"] for _, rs in train for r in _labeled(rs)]
+        X = _matrix([r for _, rs in train for r in _labeled(rs)])
         y = [r["label"] for _, rs in train for r in _labeled(rs)]
         kinds = [r["kind"] for _, rs in train for r in _labeled(rs)]
         n_events = sum(1 for _, rs in train if _labeled(rs))
         if n_events < MIN_TRAIN_EVENTS or len(set(y)) < 2:
             continue
-        Xe, ke = [r["x"] for r in lab], [r["kind"] for r in lab]
+        Xe, ke = _matrix(lab), [r["kind"] for r in lab]
         preds = {}
         for m in models:
             m.fit(X, y, kinds)
@@ -476,10 +634,8 @@ def scoreboard(scored, names):
 # ------------------------------------------------------------------ build / predict
 
 def _fit_all(data, name):
-    X, y, kinds = [], [], []
-    for _, rows in data:
-        for r in _labeled(rows):
-            X.append(r["x"]), y.append(r["label"]), kinds.append(r["kind"])
+    lab = [r for _, rows in data for r in _labeled(rows)]
+    X, y, kinds = _matrix(lab), [r["label"] for r in lab], [r["kind"] for r in lab]
     model = next((m for m in make_models(extra_mlps=True) if m.name == name), BaseRate())
     return model.fit(X, y, kinds) if y else None
 
@@ -550,7 +706,7 @@ def predict(event_dir: str, model_name: str = None):
         except (OSError, ValueError, KeyError):
             name = "base_rate"
     model = _fit_all(train, name) or BaseRate().fit([], [])
-    ps = model.predict([r["x"] for r in rows], [r["kind"] for r in rows])
+    ps = model.predict(_matrix(rows), [r["kind"] for r in rows])
     return {"event": ev["event"], "model": name, "trained_on_events": len(train),
             "markets": {r["market"]: {"p_react": round(p, 4) if r["liquidity"] == "active" else None,
                                       "kind": r["kind"], "liquidity": r["liquidity"],
