@@ -29,154 +29,190 @@
     {
      "t": "2025-06-23T14:01:00Z",
      "value": 0.14,
-     "pnl": -0.38
+     "pnl": -0.38,
+     "pnl_account": -472.91
     },
     {
      "t": "2025-06-23T14:02:00Z",
      "value": 0.15,
-     "pnl": -0.28
+     "pnl": -0.28,
+     "pnl_account": -354.13
     },
     {
      "t": "2025-06-23T14:03:00Z",
      "value": 0.15,
-     "pnl": -0.28
+     "pnl": -0.28,
+     "pnl_account": -354.13
     },
     {
      "t": "2025-06-23T14:04:00Z",
      "value": 0.15,
-     "pnl": -0.28
+     "pnl": -0.28,
+     "pnl_account": -354.13
     },
     {
      "t": "2025-06-23T14:05:00Z",
      "value": 0.15,
-     "pnl": -0.28
+     "pnl": -0.28,
+     "pnl_account": -354.13
     },
     {
      "t": "2025-06-23T14:06:00Z",
      "value": 0.15,
-     "pnl": -0.28
+     "pnl": -0.28,
+     "pnl_account": -354.13
     },
     {
      "t": "2025-06-23T14:07:00Z",
      "value": 0.16,
-     "pnl": -0.19
+     "pnl": -0.19,
+     "pnl_account": -235.18
     },
     {
      "t": "2025-06-23T14:08:00Z",
      "value": 0.16,
-     "pnl": -0.19
+     "pnl": -0.19,
+     "pnl_account": -235.18
     },
     {
      "t": "2025-06-23T14:09:00Z",
      "value": 0.16,
-     "pnl": -0.19
+     "pnl": -0.19,
+     "pnl_account": -235.18
     },
     {
      "t": "2025-06-23T14:10:00Z",
      "value": 0.16,
-     "pnl": -0.19
+     "pnl": -0.19,
+     "pnl_account": -235.18
     },
     {
      "t": "2025-06-23T14:11:00Z",
      "value": 0.16,
-     "pnl": -0.19
+     "pnl": -0.19,
+     "pnl_account": -235.18
     },
     {
      "t": "2025-06-23T14:12:00Z",
      "value": 0.16,
-     "pnl": -0.19
+     "pnl": -0.19,
+     "pnl_account": -235.18
     },
     {
      "t": "2025-06-23T14:13:00Z",
      "value": 0.16,
-     "pnl": -0.19
+     "pnl": -0.19,
+     "pnl_account": -235.18
     },
     {
      "t": "2025-06-23T14:14:00Z",
      "value": 0.16,
-     "pnl": -0.19
+     "pnl": -0.19,
+     "pnl_account": -235.18
     },
     {
      "t": "2025-06-23T14:15:00Z",
      "value": 0.16,
-     "pnl": -0.19
+     "pnl": -0.19,
+     "pnl_account": -235.18
     },
     {
      "t": "2025-06-23T14:16:00Z",
      "value": 0.16,
-     "pnl": -0.19
+     "pnl": -0.19,
+     "pnl_account": -235.18
     },
     {
      "t": "2025-06-23T14:17:00Z",
      "value": 0.16,
-     "pnl": -0.19
+     "pnl": -0.19,
+     "pnl_account": -235.18
     },
     {
      "t": "2025-06-23T14:18:00Z",
      "value": 0.17,
-     "pnl": -0.09
+     "pnl": -0.09,
+     "pnl_account": -116.05
     },
     {
      "t": "2025-06-23T14:19:00Z",
      "value": 0.18,
-     "pnl": 0.0
+     "pnl": 0.0,
+     "pnl_account": 3.25
     },
     {
      "t": "2025-06-23T14:20:00Z",
      "value": 0.18,
-     "pnl": 0.0
+     "pnl": 0.0,
+     "pnl_account": 3.25
     },
     {
      "t": "2025-06-23T14:21:00Z",
      "value": 0.19,
-     "pnl": 0.1
+     "pnl": 0.1,
+     "pnl_account": 122.73
     },
     {
      "t": "2025-06-23T14:22:00Z",
      "value": 0.2,
-     "pnl": 0.19
+     "pnl": 0.19,
+     "pnl_account": 242.38
     },
     {
      "t": "2025-06-23T14:23:00Z",
      "value": 0.2,
-     "pnl": 0.19
+     "pnl": 0.19,
+     "pnl_account": 242.38
     },
     {
      "t": "2025-06-23T14:24:00Z",
      "value": 0.2,
-     "pnl": 0.19
+     "pnl": 0.19,
+     "pnl_account": 242.38
     },
     {
      "t": "2025-06-23T14:25:00Z",
      "value": 0.2,
-     "pnl": 0.19
+     "pnl": 0.19,
+     "pnl_account": 242.38
     },
     {
      "t": "2025-06-23T14:26:00Z",
      "value": 0.2,
-     "pnl": 0.19
+     "pnl": 0.19,
+     "pnl_account": 242.38
     },
     {
      "t": "2025-06-23T14:27:00Z",
      "value": 0.2,
-     "pnl": 0.19
+     "pnl": 0.19,
+     "pnl_account": 242.38
     },
     {
      "t": "2025-06-23T14:28:00Z",
      "value": 0.2,
-     "pnl": 0.19
+     "pnl": 0.19,
+     "pnl_account": 242.38
     },
     {
      "t": "2025-06-23T14:29:00Z",
      "value": 0.2,
-     "pnl": 0.19
+     "pnl": 0.19,
+     "pnl_account": 242.38
     },
     {
      "t": "2025-06-23T14:30:00Z",
      "value": 0.2,
-     "pnl": 0.19
+     "pnl": 0.19,
+     "pnl_account": 242.38
     }
-   ]
+   ],
+   "account": {
+    "qty": 12499,
+    "risk_usd": 1999.84,
+    "pnl": 242.38,
+    "entry_candle_volume": 151
+   }
   }
  ],
  "skipped": [
@@ -218,5 +254,12 @@
  "regime": "easing",
  "z": -3.5,
  "total_pnl": 0.19,
- "capital": 1.6
+ "capital": 1.6,
+ "account": {
+  "start_usd": 100000,
+  "risk_pct_per_trade": 2.0,
+  "pnl": 242.38,
+  "return_pct": 0.242,
+  "note": "Hypothetical: the same trades scaled to a fixed risk rule. The quoted prices only covered the contracts that traded in that minute, so real fills would be worse."
+ }
 }

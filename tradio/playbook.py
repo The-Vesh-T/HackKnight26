@@ -182,6 +182,10 @@ def learn(obs: list) -> dict:
 LATENCY_S = 60          # text released at T0 -> scored -> order sent; the live desk
                         # takes seconds, so one minute (the next closed candle) is conservative
 BACKTEST_QTY = 10
+# Hypothetical account view of the same trades. The rule is fixed up front (not tuned on results):
+# risk RISK_PCT of the account on each trade, so qty = account * risk / cost per contract.
+ACCOUNT_USD = 100_000
+RISK_PCT = 2.0
 
 
 def kalshi_fee(price: float) -> float:
@@ -257,6 +261,7 @@ def backtest(event_id: str, obs_all: list, latency_s: int = LATENCY_S, qty: int 
             cost, value = 1 - e["bid"], 1 - x["ask"]
         fees = kalshi_fee(cost) + kalshi_fee(value)
         pnl = qty * (value - cost - fees)
+        acct_qty = int(ACCOUNT_USD * RISK_PCT / 100 / cost) if cost else 0
         # Running profit/loss for the page: after every closed candle from entry to exit, what
         # selling right then would make (same bid / 1 - ask and fees as the real exit). The last
         # point is the trade's final pnl.
@@ -267,8 +272,9 @@ def backtest(event_id: str, obs_all: list, latency_s: int = LATENCY_S, qty: int 
             if q.get("bid") is None or q.get("ask") is None:
                 continue
             v = q["bid"] if m["side"] == "yes" else 1 - q["ask"]
-            path.append({"t": q["t"], "value": round(v, 4),
-                         "pnl": round(qty * (v - cost - kalshi_fee(cost) - kalshi_fee(v)), 2)})
+            per = v - cost - kalshi_fee(cost) - kalshi_fee(v)
+            path.append({"t": q["t"], "value": round(v, 4), "pnl": round(qty * per, 2),
+                         "pnl_account": round(acct_qty * per, 2)})
         out["trades"].append({
             "market": mid, "label": m["label"], "side": m["side"], "qty": qty,
             "entry_t": e["t"], "entry_yes_bid": e["bid"], "entry_yes_ask": e["ask"], "cost": round(cost, 4),
@@ -276,10 +282,20 @@ def backtest(event_id: str, obs_all: list, latency_s: int = LATENCY_S, qty: int 
             "fees": round(qty * fees, 4), "pnl": round(pnl, 2),
             "return_pct": round(100 * pnl / (qty * cost), 1) if cost else None,
             "side_fixed": m["playbook"].get("side_fixed"), "pnl_path": path,
+            # hypothetical: same prices and fees, scaled to the account rule. Real fills at this size
+            # would be worse: entry_candle_volume is all that traded in the minute we buy.
+            "account": {"qty": acct_qty, "risk_usd": round(acct_qty * cost, 2),
+                        "pnl": round(acct_qty * (value - cost - fees), 2),
+                        "entry_candle_volume": e.get("volume")},
         })
     out["regime"], out["z"] = reg, z
     out["total_pnl"] = round(sum(t["pnl"] for t in out["trades"]), 2)
     out["capital"] = round(sum(t["qty"] * t["cost"] for t in out["trades"]), 2)
+    pnl_acct = round(sum(t["account"]["pnl"] for t in out["trades"]), 2)
+    out["account"] = {"start_usd": ACCOUNT_USD, "risk_pct_per_trade": RISK_PCT, "pnl": pnl_acct,
+                      "return_pct": round(100 * pnl_acct / ACCOUNT_USD, 3),
+                      "note": ("Hypothetical: the same trades scaled to a fixed risk rule. The quoted prices only "
+                               "covered the contracts that traded in that minute, so real fills would be worse.")}
     return out
 
 

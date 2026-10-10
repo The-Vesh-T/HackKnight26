@@ -52,5 +52,12 @@
  "regime": null,
  "z": 3.05,
  "total_pnl": 0,
- "capital": 0
+ "capital": 0,
+ "account": {
+  "start_usd": 100000,
+  "risk_pct_per_trade": 2.0,
+  "pnl": 0,
+  "return_pct": 0.0,
+  "note": "Hypothetical: the same trades scaled to a fixed risk rule. The quoted prices only covered the contracts that traded in that minute, so real fills would be worse."
+ }
 }

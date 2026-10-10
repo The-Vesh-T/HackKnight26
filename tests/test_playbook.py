@@ -94,6 +94,16 @@ class BacktestTest(unittest.TestCase):
         self.assertAlmostEqual(path[-1]["pnl"], t["pnl"], places=2)
         self.assertLess(path[0]["pnl"], 0)                               # entering costs the spread and fees
 
+    def test_account_view_follows_the_fixed_risk_rule(self):
+        bt = pb.backtest("bowman20250623", obs_all())
+        t = bt["trades"][0]
+        a = t["account"]
+        self.assertLessEqual(a["risk_usd"], pb.ACCOUNT_USD * pb.RISK_PCT / 100)
+        self.assertAlmostEqual(a["pnl"], t["pnl"] / t["qty"] * a["qty"], delta=a["qty"] * 0.0001 + 0.01)
+        self.assertAlmostEqual(t["pnl_path"][-1]["pnl_account"], a["pnl"], places=2)
+        self.assertEqual(bt["account"]["pnl"], a["pnl"])
+        self.assertGreater(a["qty"], a["entry_candle_volume"])           # the page must warn: fills would be worse
+
     def test_waller_sits_out(self):
         self.assertEqual(pb.backtest("waller20250717", obs_all())["trades"], [])
 
