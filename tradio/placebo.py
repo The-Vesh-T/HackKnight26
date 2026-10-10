@@ -17,15 +17,18 @@ Files (per event, in tradio/data/<event_id>/):
     placebo.json          fake T0s, moves, p-values (run)
 
 Choices (documented so the team can check them):
-- Fake days are weekdays from 300 days before the event up to 2 days before the
-  contract's FOMC decision, never the event day itself.
+- Fake days are weekdays from the day after the contract was listed (LISTED, from
+  Kalshi's market `open_time`; at most 300 days back) up to 2 days before the
+  contract's FOMC decision, never the event day itself. The July 2025 contracts were
+  listed 2025-06-18, so Bowman only has about 25 usable ordinary days, not 200;
+  `n` says exactly how many.
 - "Fed event" days excluded: FOMC decision days and the day before, FOMC minutes days,
   Jackson Hole symposium days, and every date we hold a Fed speech transcript for
   (transcripts/speech_*.json). FOMC_DATES below is typed from the Fed's published
   calendars; check it before quoting p-values.
 - Sampling uses a fixed seed per event, so the fake T0s are the same on every run.
 - Windows with no quotes (market not listed yet, or no candles) are dropped; `n` reports
-  how many were usable. A p-value from fewer than 50 usable windows is reported but
+  how many were usable. A p-value from fewer than 20 usable windows is reported but
   marked `low_n` and does not change any status.
 """
 
@@ -45,7 +48,7 @@ from tradio.common import DATA_DIR, ROOT, iso, parse_ts  # noqa: E402
 
 N_FAKE = 200
 P_THRESHOLD = 0.05
-MIN_N = 50
+MIN_N = 20
 LOOKBACK_DAYS = 300
 TESTED_STATUSES = ("reacted", "candidate_delay")
 
@@ -65,6 +68,9 @@ MINUTES_DATES = [
 ]
 JACKSON_HOLE = ["2025-08-21", "2025-08-22", "2025-08-23",
                 "2026-08-27", "2026-08-28", "2026-08-29"]
+# Kalshi `open_time` of each Fed-decision contract series we test (read from
+# /markets/<ticker> on 2026-10-09). Days before listing have no prices.
+LISTED = {"KXFEDDECISION-25JUL": "2025-06-18", "KXFEDDECISION-26SEP": "2025-09-29"}
 MONTHS = {"JAN": 1, "FEB": 2, "MAR": 3, "APR": 4, "MAY": 5, "JUN": 6, "JUL": 7,
           "AUG": 8, "SEP": 9, "OCT": 10, "NOV": 11, "DEC": 12}
 
@@ -124,6 +130,10 @@ def fake_t0s(event_id, t0, tickers, n=None, excluded=None):
         if dd is not None:
             last = min(last, dd - timedelta(days=2))
     first = real_day - timedelta(days=LOOKBACK_DAYS)
+    for tk in tickers:
+        listed = LISTED.get(tk.rsplit("-", 1)[0])
+        if listed:
+            first = max(first, _d(listed) + timedelta(days=1))
     cands = []
     d = first
     while d <= last:

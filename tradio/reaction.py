@@ -36,7 +36,7 @@ Choices the role file leaves open (flagged for team review):
 - move_ticks is signed (positive = price went up).
 - Placebo (tradio/placebo.py): once tradio/data/<event>/placebo.json exists, a reacted or
   candidate_delay market whose placebo p >= 0.05 becomes expected_no_reaction with the
-  counts in its reason; p from fewer than 50 usable days is shown but changes nothing.
+  counts in its reason; p from fewer than 20 usable days is shown but changes nothing.
 """
 
 import argparse
