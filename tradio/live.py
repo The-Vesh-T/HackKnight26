@@ -141,6 +141,68 @@ def speech_from_state(path: str = LIVE_STATE):
             "arrives_over_time": True}
 
 
+# ------------------------------------------------------------------ desk (orders + P&L)
+
+def desk_from_state(st: dict, quotes: list, now: int) -> dict:
+    """MarketPulse's orders from live_state.json, marked to market with the live Kalshi tape.
+    Entry = the quote the desk saw when it ordered (ask for YES, 1 - bid for NO; the IOC
+    limit as a fallback). Mark = current bid for YES / 1 - ask for NO, i.e. what you'd get
+    selling now. At the playbook's planned exit time the mark is frozen as pnl_at_exit.
+    Before fees; demo-exchange fills can differ from these real-market prices."""
+    by_market = {}
+    for q in quotes:
+        by_market.setdefault(q["market"], []).append(q)
+
+    def quote_at(mid, t):
+        last = None
+        for q in by_market.get(mid, []):
+            if to_unix(q["t"]) <= t and q.get("bid") is not None and q.get("ask") is not None:
+                last = q
+        return last
+
+    trades = []
+    for t in st.get("trades", []):
+        row = {k: t.get(k) for k in ("time", "venue", "market", "title", "side", "qty", "yes_limit",
+                                     "status", "trigger", "skipped", "playbook")}
+        try:
+            row["t"] = iso_from_unix(parse_ts(t["time"]).timestamp())
+        except Exception:
+            continue
+        mid = f"kalshi:{t.get('market')}"
+        row["market_id"] = mid
+        if not t.get("skipped") and t.get("venue") == "kalshi" and t.get("qty"):
+            eq, side = t.get("entry_quote") or {}, t.get("side")
+            if side == "yes":
+                cost = eq.get("ask") if eq.get("ask") is not None else t.get("yes_limit")
+            else:
+                cost = 1 - eq["bid"] if eq.get("bid") is not None else (1 - t["yes_limit"] if t.get("yes_limit") else None)
+            row["cost"] = round(cost, 4) if cost is not None else None
+            exit_min = (t.get("playbook") or {}).get("exit_after_min")
+            entry_ts = to_unix(row["t"])
+            mark_q = quote_at(mid, now)
+            if cost is not None and mark_q:
+                value = mark_q["bid"] if side == "yes" else 1 - mark_q["ask"]
+                row["pnl_now"] = round(t["qty"] * (value - cost), 2)
+            if exit_min:
+                row["exit_t"] = iso_from_unix(entry_ts + exit_min * 60)
+                if now >= entry_ts + exit_min * 60:
+                    xq = quote_at(mid, entry_ts + exit_min * 60)
+                    if cost is not None and xq:
+                        value = xq["bid"] if side == "yes" else 1 - xq["ask"]
+                        row["pnl_at_exit"] = round(t["qty"] * (value - cost), 2)
+        trades.append(row)
+    return {"mode": st.get("mode"), "playbook": st.get("playbook"), "trades": trades,
+            "pnl_now": round(sum(r.get("pnl_now") or 0 for r in trades), 2),
+            "note": "marked with real Kalshi prices, before fees; demo-exchange fills can differ"}
+
+
+def read_state(path: str = LIVE_STATE):
+    try:
+        return read_json(path)
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
 # ------------------------------------------------------------------ writing
 
 POST_WINDOW_S = 90 * 60     # role 2 measures the final move at T0+75..90 min
@@ -214,6 +276,9 @@ def run_live(a) -> None:
         quotes, trades, problems = tape.poll(now)
         tl = base_timeline(title, a.speaker, t0, start, now, "live", "Kalshi public API")
         speech = speech_from_state(a.state)
+        st = read_state(a.state)
+        if st and st.get("trades"):
+            tl["desk"] = desk_from_state(st, quotes, now)
         if speech:
             tl["speech"] = speech
             if speech.get("speaker") and not a.speaker:
@@ -248,6 +313,18 @@ def run_simulate(a) -> None:
         speech["paragraphs"] = ([dict(p, t=src["t0"]) for p in speech.get("paragraphs", [])]
                                 if clock >= t0 else [])
         tl["speech"] = speech
+        bt_path = os.path.join(DATA_DIR, a.simulate, "backtest.json")
+        if os.path.isfile(bt_path):
+            bt = read_json(bt_path)
+            tl["desk"] = {"mode": "backtest", "note": ("what the playbook would have done, with rules learned "
+                                                      f"from {', '.join(bt.get('learned_from', []))} only"),
+                          "backtest": True, "trades": [], "skipped": bt.get("skipped", []) if clock >= t0 + bt.get("latency_s", 60) else []}
+            for t in bt.get("trades", []):
+                if to_unix(t["entry_t"]) <= clock:
+                    row = dict(t, t=t["entry_t"], market_id=t["market"], status="BACKTEST")
+                    if to_unix(t["exit_t"]) > clock:
+                        row.pop("pnl", None)
+                    tl["desk"]["trades"].append(row)
         write_live(tl)
         if a.once or clock >= end:
             log("end of window" if clock >= end else "wrote one frame")
@@ -280,6 +357,12 @@ def archive(event_id: str, title: str = None, sub: str = None) -> None:
                   "sub": sub or f"{tl['t0'][:10]} · recorded live"})
     write_json(EVENTS_INDEX, index)
     log(f"archived as {event_id}; it now appears as a tab on tradio.html")
+    try:                                              # every recorded speech updates the rules
+        from tradio import playbook
+        pb = playbook.build()
+        log(f"playbook rebuilt from {pb['n_events']} events")
+    except Exception as e:
+        log(f"playbook not rebuilt: {e}")
 
 
 def main(argv=None):
