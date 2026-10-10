@@ -1097,7 +1097,7 @@
             <td class="num">${n === "base_rate" ? "baseline" : (sk >= 0 ? "" : "−") + Math.abs(Math.round(sk * 100)) + "% " + (sk >= 0 ? "better" : "worse")}</td>
             <td class="barcol">${n === "base_rate" ? "" : bar(sk)}</td><td class="num">${r.log_loss.toFixed(3)}</td><td>${verdict}</td></tr>`;
         }).join("") + `</table>
-        <p class="src note">"Better" = lower Brier score (squared error of the probability). "Clearly better" needs the whole bootstrap interval over ${sb.n_clusters || "—"} independent speech windows above zero, corrected for picking the best of four. Hover a row for the interval.</p>`;
+        <p class="src note">"Better" = lower Brier score (squared error of the probability). "Clearly better" needs the whole bootstrap interval over ${sb.n_clusters || "—"} independent speech windows above zero, corrected for picking the best of ${Math.max(1, names.length - 1)} candidates. Hover a row for the interval.</p>`;
       const w = M.logistic_weights;
       if (w) {
         const top = Object.entries(w).filter(([, v]) => Math.abs(v) >= 0.15).slice(0, 8);
