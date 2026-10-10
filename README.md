@@ -65,6 +65,36 @@ python tradio/live.py --simulate bowman20250623 --speed 30
 `tradio/live.py` only reads MarketPulse's `live_state.json`; it never imports the
 trading code. Kalshi's public endpoints need no keys.
 
+## Trading by the playbook (Kalshi demo exchange)
+
+`tradio/playbook.py` turns every replayed and recorded speech into trading rules, each
+with the evidence behind it (the **Playbook** button on the page shows them):
+
+| Rule | Learned value (3 events) | From |
+|---|---|---|
+| Trade only if the surprise is big enough | \|z\| ≥ 2.94 | Waller (2.84) didn't move markets, Warsh (3.05) did |
+| Only contract types that have reacted | hold, cut 25, hike 25 | the >25 bp contracts never reacted |
+| Only liquid markets | active | thin/dark markets were "can't tell" |
+| Don't chase | skip once Tradio's alarm has fired | past alarms came 1–7 min after T0 |
+| Planned exit | 36 min | median time to 90% of the move |
+| "Hold" side follows the regime | dovish ⇒ hold NO when the market leans to a cut | fixes MarketPulse's fixed table (3/4 → 4/4) |
+
+```bash
+python tradio/playbook.py      # rebuild rules + leave-one-out backtests (also runs on every archive)
+python live.py --speaker christopher_waller --fast --playbook --mode demo --venues kalshi
+```
+
+The desk then trades only what the playbook allows, on Kalshi's **demo exchange** (fake
+money; needs `kalshikey_demo.txt` + `privkey_demo.txt`). Orders, skips (with the reason)
+and P&L marked with real Kalshi prices appear in the LIVE tab's Desk panel.
+
+**Backtest, leave-one-out** (each event traded with rules learned only from the others;
+real 1-minute prices, entry 1 min after T0 at the ask, exit at the bid, Kalshi fees):
+Bowman: 1 trade (hold NO, 16¢ → 20¢), +$0.19 on $1.60 at 10 contracts. Waller: no trade
+(correct, the market didn't move). Warsh: no trade (missed: learned from only two events,
+the bar came out just above Warsh's surprise). Three events is a demo, not evidence of an
+edge. Not trading advice.
+
 ## Team roles
 
 Work is split into four roles. Each has a file in `docs/team/` that tells its owner (and
@@ -98,7 +128,7 @@ python tradio/build_baselines.py --dry-run # check paragraph counts, no Gemini c
 python tradio/build_baselines.py           # build both baselines into stance_baselines.json
 # Warsh's baseline (June/July 2026 press conferences) is already in stance_baselines.json.
 
-python -m unittest tests.test_timeline tests.test_ingest tests.test_reaction tests.test_live
+python -m unittest tests.test_timeline tests.test_ingest tests.test_reaction tests.test_live tests.test_playbook
 ```
 
 ## Repo map
@@ -109,6 +139,7 @@ python -m unittest tests.test_timeline tests.test_ingest tests.test_reaction tes
 | `tradio/ingest_markets.py`, `build_timeline.py`, `build_evidence.py` | Role 1: market data pipeline |
 | `tradio/data/<event>/` | Cached raw data, `timeline.json`, `evidence.json` (and `analysis.json` from role 2) |
 | `tradio/build_baselines.py` | Role 3: Bowman/Waller speaker baselines |
+| `tradio/playbook.py` | Trading rules learned from all events, leave-one-out backtests; read by `live.py --playbook` |
 | `tradio/live.py` | Live mode: live Kalshi tape + MarketPulse's scored transcript into the LIVE tab; `archive` saves a session as a history event |
 | `web/tradio.*` | New: the replay terminal (History tabs + LIVE tab) |
 | `stance_scorer.py`, `fed_speeches.py`, `fed_transcripts.py` | Stance rubric, speaker baselines, speech and press-conference downloads |
@@ -120,8 +151,8 @@ python -m unittest tests.test_timeline tests.test_ingest tests.test_reaction tes
 
 ## Safety
 
-The Tradio replay is read-only: it never places orders. The inherited live trading
-path stays off by default and needs an approved operator, typing `LIVE`, and the local
+Tradio's own scripts never place orders. Trading happens only in MarketPulse's desk
+(`live.py --playbook`), on Kalshi's demo exchange by default. Real money stays off by default and needs an approved operator, typing `LIVE`, and the local
 `TRADIO_ALLOW_LIVE=1` opt-in (details in [docs/HOSTED_CONTROLS.md](docs/HOSTED_CONTROLS.md)).
 
 ## Team

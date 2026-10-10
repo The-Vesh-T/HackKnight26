@@ -1,0 +1,343 @@
+{
+ "built_at": "2026-10-10T03:17:13Z",
+ "n_events": 3,
+ "caveat": "Learned from 3 events. Rules of thumb, not statistics; every recorded speech updates them. Not trading advice.",
+ "rules": {
+  "min_abs_z": {
+   "value": 2.94,
+   "why": "midpoint between the biggest surprise that didn't move markets (|z| 2.84) and the smallest that did (|z| 3.05)"
+  },
+  "trade_kinds": {
+   "value": [
+    "cut_small",
+    "hike_small",
+    "hold"
+   ],
+   "why": "contract types that have reacted to a surprise at least once",
+   "by_kind": {
+    "hike_big": {
+     "seen": 3,
+     "reacted": 0,
+     "events": [
+      "bowman20250623: cant_tell_illiquid",
+      "waller20250717: cant_tell_illiquid",
+      "warsh20260828: cant_tell_illiquid"
+     ]
+    },
+    "hike_small": {
+     "seen": 3,
+     "reacted": 1,
+     "events": [
+      "bowman20250623: cant_tell_illiquid",
+      "waller20250717: cant_tell_illiquid",
+      "warsh20260828: reacted"
+     ]
+    },
+    "hold": {
+     "seen": 3,
+     "reacted": 2,
+     "events": [
+      "bowman20250623: reacted",
+      "waller20250717: expected_no_reaction",
+      "warsh20260828: reacted"
+     ]
+    },
+    "cut_small": {
+     "seen": 3,
+     "reacted": 1,
+     "events": [
+      "bowman20250623: reacted",
+      "waller20250717: cant_tell_illiquid",
+      "warsh20260828: expected_no_reaction"
+     ]
+    },
+    "cut_big": {
+     "seen": 3,
+     "reacted": 0,
+     "events": [
+      "bowman20250623: expected_no_reaction",
+      "waller20250717: cant_tell_illiquid",
+      "warsh20260828: cant_tell_illiquid"
+     ]
+    }
+   }
+  },
+  "tradeable_liquidity": {
+   "value": [
+    "active"
+   ],
+   "why": "liquidity classes where reactions could be measured; thinner markets were 'can't tell'"
+  },
+  "exit_after_min": {
+   "value": 36,
+   "why": "median time to 90% of the move across 4 reactions ([29.0, 29.0, 42.0, 70.0] min)"
+  },
+  "skip_if_alarmed": {
+   "value": true,
+   "why": "past alarms came [1.0, 2.0, 7.0, 7.0] min after T0; once a market has moved the surprise is priced in, so don't chase"
+  },
+  "direction_hit_rate": {
+   "value": 1.0,
+   "why": "4/4 reactions moved the way the regime-aware mapping predicts; MarketPulse's fixed table got 3/4"
+  },
+  "hold_side_by_regime": {
+   "value": true,
+   "why": "'hold' flips with the regime: in an easing market a dovish surprise lowers the hold (Bowman 2025), in a tightening market it raises it"
+  },
+  "desk_record": {
+   "trades": 0,
+   "pnl_at_exit": null,
+   "why": "orders from recorded live sessions, marked at the planned exit with real Kalshi prices"
+  }
+ },
+ "events": [
+  {
+   "event": "bowman20250623",
+   "title": "Bowman, Prague, 2025-06-23",
+   "top_z": -3.5,
+   "direction": "DOVISH",
+   "regime": "easing",
+   "reacted": true,
+   "markets": [
+    {
+     "market": "kalshi:KXFEDDECISION-25JUL-H26",
+     "kind": "hike_big",
+     "status": "cant_tell_illiquid",
+     "liquidity": "dark",
+     "alarm_min": null,
+     "t50_min": null,
+     "t90_min": null,
+     "move_ticks": 0.0,
+     "side": "no",
+     "direction_right": null,
+     "fixed_table_right": null
+    },
+    {
+     "market": "kalshi:KXFEDDECISION-25JUL-H25",
+     "kind": "hike_small",
+     "status": "cant_tell_illiquid",
+     "liquidity": "dark",
+     "alarm_min": null,
+     "t50_min": null,
+     "t90_min": null,
+     "move_ticks": 0.0,
+     "side": "no",
+     "direction_right": null,
+     "fixed_table_right": null
+    },
+    {
+     "market": "kalshi:KXFEDDECISION-25JUL-H0",
+     "kind": "hold",
+     "status": "reacted",
+     "liquidity": "active",
+     "alarm_min": 7.0,
+     "t50_min": 21.0,
+     "t90_min": 70.0,
+     "move_ticks": -8.5,
+     "side": "no",
+     "direction_right": true,
+     "fixed_table_right": false
+    },
+    {
+     "market": "kalshi:KXFEDDECISION-25JUL-C25",
+     "kind": "cut_small",
+     "status": "reacted",
+     "liquidity": "active",
+     "alarm_min": 7.0,
+     "t50_min": 24.0,
+     "t90_min": 42.0,
+     "move_ticks": 8.0,
+     "side": "yes",
+     "direction_right": true,
+     "fixed_table_right": true
+    },
+    {
+     "market": "kalshi:KXFEDDECISION-25JUL-C26",
+     "kind": "cut_big",
+     "status": "expected_no_reaction",
+     "liquidity": "active",
+     "alarm_min": null,
+     "t50_min": null,
+     "t90_min": null,
+     "move_ticks": 0.0,
+     "side": "yes",
+     "direction_right": null,
+     "fixed_table_right": null
+    }
+   ],
+   "trades": []
+  },
+  {
+   "event": "waller20250717",
+   "title": "Waller, New York, 2025-07-17",
+   "top_z": -2.84,
+   "direction": "DOVISH",
+   "regime": "easing",
+   "reacted": false,
+   "markets": [
+    {
+     "market": "kalshi:KXFEDDECISION-25JUL-H26",
+     "kind": "hike_big",
+     "status": "cant_tell_illiquid",
+     "liquidity": "thin",
+     "alarm_min": null,
+     "t50_min": null,
+     "t90_min": null,
+     "move_ticks": 0.0,
+     "side": "no",
+     "direction_right": null,
+     "fixed_table_right": null
+    },
+    {
+     "market": "kalshi:KXFEDDECISION-25JUL-H25",
+     "kind": "hike_small",
+     "status": "cant_tell_illiquid",
+     "liquidity": "thin",
+     "alarm_min": null,
+     "t50_min": null,
+     "t90_min": null,
+     "move_ticks": 0.0,
+     "side": "no",
+     "direction_right": null,
+     "fixed_table_right": null
+    },
+    {
+     "market": "kalshi:KXFEDDECISION-25JUL-H0",
+     "kind": "hold",
+     "status": "expected_no_reaction",
+     "liquidity": "active",
+     "alarm_min": 6.0,
+     "t50_min": null,
+     "t90_min": null,
+     "move_ticks": -1.0,
+     "side": "no",
+     "direction_right": null,
+     "fixed_table_right": null
+    },
+    {
+     "market": "kalshi:KXFEDDECISION-25JUL-C25",
+     "kind": "cut_small",
+     "status": "cant_tell_illiquid",
+     "liquidity": "thin",
+     "alarm_min": 7.0,
+     "t50_min": null,
+     "t90_min": null,
+     "move_ticks": 1.5,
+     "side": "yes",
+     "direction_right": null,
+     "fixed_table_right": null
+    },
+    {
+     "market": "kalshi:KXFEDDECISION-25JUL-C26",
+     "kind": "cut_big",
+     "status": "cant_tell_illiquid",
+     "liquidity": "thin",
+     "alarm_min": null,
+     "t50_min": null,
+     "t90_min": null,
+     "move_ticks": 0.5,
+     "side": "yes",
+     "direction_right": null,
+     "fixed_table_right": null
+    }
+   ],
+   "trades": []
+  },
+  {
+   "event": "warsh20260828",
+   "title": "Warsh, Jackson Hole, 2026-08-28",
+   "top_z": 3.05,
+   "direction": "HAWKISH",
+   "regime": "tightening",
+   "reacted": true,
+   "markets": [
+    {
+     "market": "kalshi:KXFEDDECISION-26SEP-H26",
+     "kind": "hike_big",
+     "status": "cant_tell_illiquid",
+     "liquidity": "thin",
+     "alarm_min": 42.0,
+     "t50_min": null,
+     "t90_min": null,
+     "move_ticks": 0.5,
+     "side": "yes",
+     "direction_right": null,
+     "fixed_table_right": null
+    },
+    {
+     "market": "kalshi:KXFEDDECISION-26SEP-H25",
+     "kind": "hike_small",
+     "status": "reacted",
+     "liquidity": "active",
+     "alarm_min": 1.0,
+     "t50_min": 13.0,
+     "t90_min": 29.0,
+     "move_ticks": 20.0,
+     "side": "yes",
+     "direction_right": true,
+     "fixed_table_right": true
+    },
+    {
+     "market": "kalshi:KXFEDDECISION-26SEP-H0",
+     "kind": "hold",
+     "status": "reacted",
+     "liquidity": "active",
+     "alarm_min": 2.0,
+     "t50_min": 12.0,
+     "t90_min": 29.0,
+     "move_ticks": -19.0,
+     "side": "no",
+     "direction_right": true,
+     "fixed_table_right": true
+    },
+    {
+     "market": "kalshi:KXFEDDECISION-26SEP-C25",
+     "kind": "cut_small",
+     "status": "expected_no_reaction",
+     "liquidity": "active",
+     "alarm_min": null,
+     "t50_min": null,
+     "t90_min": null,
+     "move_ticks": 0.0,
+     "side": "no",
+     "direction_right": null,
+     "fixed_table_right": null
+    },
+    {
+     "market": "kalshi:KXFEDDECISION-26SEP-C26",
+     "kind": "cut_big",
+     "status": "cant_tell_illiquid",
+     "liquidity": "dark",
+     "alarm_min": null,
+     "t50_min": null,
+     "t90_min": null,
+     "move_ticks": null,
+     "side": "no",
+     "direction_right": null,
+     "fixed_table_right": null
+    }
+   ],
+   "trades": []
+  }
+ ],
+ "backtests": [
+  {
+   "event": "bowman20250623",
+   "trades": 1,
+   "total_pnl": 0.19,
+   "capital": 1.6
+  },
+  {
+   "event": "waller20250717",
+   "trades": 0,
+   "total_pnl": 0,
+   "capital": 0
+  },
+  {
+   "event": "warsh20260828",
+   "trades": 0,
+   "total_pnl": 0,
+   "capital": 0
+  }
+ ]
+}

@@ -99,12 +99,14 @@
   async function loadEvent(id, fresh) {
     if (state.events[id] && !fresh) return state.events[id];
     const base = DATA_ROOT + id + "/";
-    const [tl, an, ev] = await Promise.all([
+    const [tl, an, ev, bt] = await Promise.all([
       fetchJson(base + "timeline.json"),
       fetchJson(base + "analysis.json", true),
       fetchJson(base + "evidence.json", true),
+      id === "live" ? null : fetchJson(base + "backtest.json", true),
     ]);
     const prepared = prep(tl, an, ev);
+    prepared.desk = prepDesk(tl.desk || (bt && backtestDesk(bt)), prepared);
     state.events[id] = prepared;
     return prepared;
   }
@@ -168,6 +170,69 @@
     const xe = live ? Math.max(we, t0 + 30 * MIN, (liveNow || we) + 10 * MIN) : we;
     return { tl, an, t0, ws, we, xe, markets, byId, headline, paragraphs, hasAnalysis: !!an, live, liveNow,
              overTime: !!(tl.speech && tl.speech.arrives_over_time) };
+  }
+
+  // ---------- desk: orders and P&L (all numbers come from the files; nothing is computed here) ----------
+  function backtestDesk(bt) {
+    return { mode: "backtest", backtest: true, trades: bt.trades || [], skipped: bt.skipped || [],
+             learned_from: bt.learned_from || [], total_pnl: bt.total_pnl, capital: bt.capital,
+             note: `rules learned from ${(bt.learned_from || []).join(", ") || "no other events"} only (leave-one-out), real Kalshi prices, fees included` };
+  }
+
+  function prepDesk(d, E) {
+    if (!d) return null;
+    const trades = [], skipped = (d.skipped || []).map((x) => ({ label: x.label || x.market, why: x.why }));
+    for (const t of d.trades || []) {
+      if (t.skipped) {
+        skipped.push({ label: t.title || t.market, why: String(t.status || "").replace(/^skipped: (playbook: )?/, ""), t: parseT(t.t) });
+        continue;
+      }
+      const mid = t.market_id || t.market;
+      trades.push({
+        t: parseT(t.t || t.entry_t), mid, label: (E.byId[mid] || {}).label || t.label || t.title || t.market,
+        side: t.side, qty: t.qty, cost: t.cost, exitT: t.exit_t ? parseT(t.exit_t) : null,
+        pnlFinal: t.pnl != null ? t.pnl : t.pnl_at_exit, pnlNow: t.pnl_now, value: t.value,
+        status: t.status, sideFixed: t.side_fixed || (t.playbook && t.playbook.side_fixed), fees: t.fees,
+      });
+    }
+    return { mode: d.mode, backtest: !!d.backtest, note: d.note, trades, skipped, total: d.total_pnl, capital: d.capital };
+  }
+
+  const money = (x) => (x == null ? "—" : (x >= 0 ? "+$" : "−$") + Math.abs(x).toFixed(2));
+
+  function renderDesk(E, now) {
+    const el = $("desk");
+    if (!el) return;
+    const d = E.desk;
+    if (!d) { el.innerHTML = ""; return; }
+    const mode = d.backtest ? `<span class="chip indic">PLAYBOOK BACKTEST</span>`
+      : d.mode === "demo" ? `<span class="chip reacted">KALSHI DEMO · FAKE MONEY</span>`
+      : d.mode === "live" ? `<span class="chip candidate_inconsistency">LIVE · REAL MONEY</span>`
+      : `<span class="chip watching">DRY RUN</span>`;
+    const shown = d.trades.filter((t) => t.t <= now);
+    let rows = "";
+    for (const t of shown) {
+      const closed = t.exitT && now >= t.exitT;
+      const pnl = closed && t.pnlFinal != null ? t.pnlFinal : (d.backtest ? null : t.pnlNow);
+      const pnlTxt = pnl == null ? `<span class="muted">open${t.exitT ? `, exit ${fmtEtShort(t.exitT)}` : ""}</span>`
+        : `<b class="${pnl >= 0 ? "up" : "down"}">${money(pnl)}</b>${closed ? "" : ' <span class="muted">so far</span>'}`;
+      rows += `<div class="order" data-id="${esc(t.mid)}">
+        <span class="mono t">${fmtEtShort(t.t)}</span>
+        <span>BUY <b>${esc(String(t.side).toUpperCase())}</b> ×${t.qty} ${esc(t.label)} @ <span class="num">${cents(t.cost)}</span></span>
+        <span class="pnl">${pnlTxt}</span>
+        ${t.sideFixed ? `<div class="fix">side corrected by the playbook: ${esc(t.sideFixed)}</div>` : ""}
+      </div>`;
+    }
+    const sk = d.skipped.filter((x) => !x.t || x.t <= now);
+    const done = shown.filter((t) => t.exitT && now >= t.exitT && t.pnlFinal != null);
+    const total = done.length ? done.reduce((a, t) => a + t.pnlFinal, 0) : null;
+    const started = now >= E.t0;
+    el.innerHTML = `<div class="desk">
+      <div class="row"><b>Desk</b> ${mode}<span class="px">${total != null ? `<span class="${total >= 0 ? "up" : "down"}">${money(total)}</span> <span class="muted">closed</span>` : ""}</span></div>
+      ${rows || `<div class="muted">${started ? "No orders: the playbook hasn't found a trade." : "Waiting for the speech."}</div>`}
+      ${sk.length && started ? `<details><summary>${sk.length} skipped by the playbook</summary>${sk.map((x) => `<div class="skip"><b>${esc(x.label)}</b>: ${esc(x.why)}</div>`).join("")}</details>` : ""}
+      <div class="muted small">${esc(d.note || "")}</div>
+    </div>`;
   }
 
   // Latest quote whose candle has ENDED by time t (quote.t is the candle end), so the replay never peeks ahead.
@@ -305,6 +370,21 @@
       }
     }
 
+    // desk orders on this contract: entry (and planned exit) in YES-price terms
+    for (const t of (E.desk ? E.desk.trades : [])) {
+      if (t.mid !== m.id || t.t > now || t.cost == null) continue;
+      const yp = t.side === "yes" ? t.cost : 1 - t.cost;
+      const cx = x(t.t), cy = y(yp);
+      g += `<path d="M${cx},${cy - 8}L${cx + 7},${cy}L${cx},${cy + 8}L${cx - 7},${cy}Z" fill="#ffffff" stroke="#0b1116" stroke-width="1.5"><title>BUY ${t.side.toUpperCase()} ×${t.qty} @ ${cents(t.cost)}</title></path>`;
+      g += `<text x="${cx + 10}" y="${cy - 10}" fill="#ffffff" font-size="11" font-weight="600">BUY ${t.side.toUpperCase()} ×${t.qty}</text>`;
+      if (t.exitT && now >= t.exitT && t.value != null) {
+        const ex = x(t.exitT), ey = y(t.side === "yes" ? t.value : 1 - t.value);
+        g += `<line x1="${cx}" y1="${cy}" x2="${ex}" y2="${ey}" stroke="#ffffff" stroke-dasharray="3 3" opacity=".7"/>`;
+        g += `<rect x="${ex - 5}" y="${ey - 5}" width="10" height="10" fill="#ffffff"/>`;
+        g += `<text x="${ex + 8}" y="${ey + 4}" fill="#ffffff" font-size="11" font-weight="600">exit ${money(t.pnlFinal)}</text>`;
+      }
+    }
+
     // now cursor
     if (now >= E.ws && now <= E.xe) g += `<line x1="${x(now)}" x2="${x(now)}" y1="${T}" y2="${H - B}" stroke="#22d3ee" opacity=".35"/>`;
 
@@ -342,10 +422,19 @@
           <div class="explain" id="explain"></div>
         </section>
         <section class="pane">
+          <div id="desk"></div>
           <h2>Markets · ${E.markets.length} tracked</h2>
           <div class="cards" id="cards"></div>
         </section>
       </main>`;
+    $("desk").addEventListener("click", (ev) => {
+      const o = ev.target.closest(".order");
+      if (!o) return;
+      state.focus[state.view] = o.dataset.id;
+      state.focusPinned = state.focusPinned || {};
+      state.focusPinned[state.view] = true;
+      draw(true);
+    });
     $("cards").addEventListener("click", (ev) => {
       const card = ev.target.closest(".card");
       if (!card) return;
@@ -602,6 +691,34 @@
     $("drawer").classList.add("open");
     $("drawer").setAttribute("aria-hidden", "false");
   }
+  async function openPlaybook() {
+    const pb = await fetchJson(DATA_ROOT + "playbook.json", true);
+    $("drawerTitle").textContent = "Playbook · learned from past speeches";
+    if (!pb) {
+      $("drawerBody").innerHTML = `<p class="src">No playbook yet. Run <span class="mono">python tradio/playbook.py</span>.</p>`;
+    } else {
+      const r = pb.rules, row = (name, k, fmt) => `<tr><th>${name}</th><td><b>${fmt ? fmt(r[k].value) : esc(JSON.stringify(r[k].value))}</b><div class="src">${esc(r[k].why)}</div></td></tr>`;
+      let h = `<p class="src">${esc(pb.caveat)} Built ${esc(pb.built_at)}.</p><h4>Rules the desk follows (<span class="mono">python live.py --playbook</span>)</h4><table>
+        ${row("Trade only if |z| ≥", "min_abs_z", (v) => v)}
+        ${row("Contract types", "trade_kinds", (v) => v.join(", ").replace(/_/g, " "))}
+        ${row("Liquidity", "tradeable_liquidity", (v) => v.join(", "))}
+        ${row("Planned exit after", "exit_after_min", (v) => v + " min")}
+        ${row("Skip if already moved", "skip_if_alarmed", (v) => (v ? "yes" : "no"))}
+        ${row("Direction right", "direction_hit_rate", (v) => (v == null ? "—" : Math.round(v * 100) + "%"))}
+        ${row("Hold side follows the regime", "hold_side_by_regime", (v) => (v ? "yes" : "no"))}
+      </table><h4>What it learned from</h4><table><tr><th>event</th><th>top z</th><th>direction</th><th>market leaning</th><th>reacted</th></tr>` +
+        pb.events.map((o) => `<tr><td>${esc(o.event)}</td><td>${signed(o.top_z, 2)}</td><td>${esc(o.direction)}</td><td>${esc(o.regime || "—")}</td><td>${o.reacted ? "yes" : "no"}</td></tr>`).join("") + `</table>`;
+      if (pb.backtests) {
+        h += `<h4>Backtest, leave-one-out (each event traded with rules learned from the others)</h4><table><tr><th>event</th><th>trades</th><th>P&amp;L</th><th>capital</th></tr>` +
+          pb.backtests.map((b) => `<tr><td>${esc(b.event)}</td><td>${b.trades}</td><td>${money(b.total_pnl)}</td><td>$${(b.capital || 0).toFixed(2)}</td></tr>`).join("") +
+          `</table><p class="src">Real Kalshi 1-minute prices; entry 1 min after T0 at the ask, exit at the bid, Kalshi taker fees on both legs. Not trading advice.</p>`;
+      }
+      $("drawerBody").innerHTML = h;
+    }
+    $("drawer").classList.add("open");
+    $("drawer").setAttribute("aria-hidden", "false");
+  }
+
   function closeDrawer() {
     $("drawer").classList.remove("open");
     $("drawer").setAttribute("aria-hidden", "true");
@@ -684,6 +801,7 @@
     renderSpeech(E, now);
     renderChartHead(E, m, now);
     drawMainChart(E, m, now);
+    renderDesk(E, now);
     renderCards(E, now);
   }
 
@@ -785,7 +903,7 @@
       <h3>No live session running</h3>
       <p>The LIVE tab shows a Fed speech as it happens: the transcript scored against the speaker's own history, next to Kalshi's live Fed-decision prices, with the same reaction checks as the replays. When it's over, it becomes one more History tab.</p>
       <ol>
-        <li><b>Score the speech</b> (MarketPulse, dry, never trades):<br><span class="mono">python speechtxt.py --url https://www.federalreserve.gov/live-broadcast.htm</span><br><span class="mono">python live.py --speaker christopher_waller --no-prewarm --mode dry</span></li>
+        <li><b>Score the speech</b> (MarketPulse, dry, never trades):<br><span class="mono">python speechtxt.py --url https://www.federalreserve.gov/live-broadcast.htm</span><br><span class="mono">python live.py --speaker christopher_waller --no-prewarm --mode dry</span><br>or let it <b>trade on Kalshi's demo exchange</b> by the learned playbook:<br><span class="mono">python live.py --speaker christopher_waller --fast --playbook --mode demo --venues kalshi</span></li>
         <li><b>Stream the market tape</b> into this page:<br><span class="mono">python tradio/live.py --speaker christopher_waller --t0 now</span></li>
         <li><b>Afterwards, keep it</b> as a history event:<br><span class="mono">python tradio/live.py archive waller20261015 --title "Waller, 2026-10-15"</span></li>
       </ol>
@@ -821,6 +939,7 @@
     $("btnT0").addEventListener("click", () => { setPlaying(false); setRel(MIN); });
     $("scrub").addEventListener("input", (e) => setRel(+e.target.value));
     $("drawerClose").addEventListener("click", closeDrawer);
+    $("btnPlaybook").addEventListener("click", openPlaybook);
     document.addEventListener("keydown", (e) => {
       if (e.target.tagName === "INPUT" && e.target.type !== "range") return;
       if (e.key === " ") { e.preventDefault(); $("btnPlay").click(); }
