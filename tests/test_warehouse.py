@@ -95,6 +95,14 @@ class TestSnowflake(unittest.TestCase):
                 cfg = warehouse.snowflake_config()
         self.assertEqual(cfg, {"account": "org-acct", "user": "me", "password": "pw"})
 
+    def test_config_browser_login_and_quotes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with open(os.path.join(tmp, "snowflake.txt"), "w") as f:
+                f.write('account = "ORG-ACCT"\nuser = "ME"\nauthenticator = "externalbrowser"\n')
+            with mock.patch.object(warehouse, "ROOT", tmp), mock.patch.dict(os.environ, {}, clear=False):
+                cfg = warehouse.snowflake_config()
+        self.assertEqual(cfg, {"account": "ORG-ACCT", "user": "ME", "authenticator": "externalbrowser"})
+
 
 class TestExport(unittest.TestCase):
     def test_export_writes_csvs_and_ignores_them(self):

@@ -26,6 +26,9 @@ Both get all six tables, so either one can answer either kind of question.
   schema=PUBLIC
   ```
 
+  If your account signs in through the browser (as in the VS Code extension's
+  `authenticator = "externalbrowser"`), put `authenticator=externalbrowser` instead of
+  `password=`. Each command then opens the Snowflake sign-in page once.
   The database and schema have to exist already. You can also use env vars, like
   `SNOWFLAKE_ACCOUNT`.
 

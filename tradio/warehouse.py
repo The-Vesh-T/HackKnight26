@@ -36,6 +36,7 @@ Keys (gitignored, never in git or chat):
                       account=<org>-<account>
                       user=<user>
                       password=<password or programmatic access token>
+                      (or, instead of password: authenticator=externalbrowser)
                       warehouse=COMPUTE_WH
                       database=TRADIO
                       schema=PUBLIC
@@ -269,7 +270,7 @@ ORDER BY r.status, minute
 
 # ---------------------------------------------------------------- Snowflake
 
-SNOWFLAKE_KEYS = ("account", "user", "password", "warehouse", "database", "schema", "role")
+SNOWFLAKE_KEYS = ("account", "user", "password", "authenticator", "warehouse", "database", "schema", "role")
 
 
 def snowflake_config() -> dict:
@@ -280,7 +281,7 @@ def snowflake_config() -> dict:
             for line in f:
                 key, sep, value = line.strip().partition("=")
                 if sep and not key.startswith("#"):
-                    cfg[key.strip().lower()] = value.strip()
+                    cfg[key.strip().lower()] = value.strip().strip('"')
     for key in SNOWFLAKE_KEYS:
         env = os.environ.get(f"SNOWFLAKE_{key.upper()}")
         if env:
@@ -368,7 +369,10 @@ def main():
         return
 
     cfg = snowflake_config()
-    missing = [k for k in ("account", "user", "password") if k not in cfg]
+    # password, or authenticator=externalbrowser (opens the Snowflake sign-in page once)
+    missing = [k for k in ("account", "user") if k not in cfg]
+    if "password" not in cfg and "authenticator" not in cfg:
+        missing.append("password (or authenticator=externalbrowser)")
     if missing:
         raise SystemExit(f"snowflake.txt is missing {', '.join(missing)} (see the top of this file).")
     import snowflake.connector
