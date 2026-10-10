@@ -1,0 +1,54 @@
+# Tradio replay events. Owned by role 1 (market data). Times are UTC.
+# Market tickers below were checked to exist via Kalshi's historical API.
+
+defaults: &defaults
+  kalshi:
+    direct:   # July 2025 FOMC decision
+      - KXFEDDECISION-25JUL-H26
+      - KXFEDDECISION-25JUL-H25
+      - KXFEDDECISION-25JUL-H0
+      - KXFEDDECISION-25JUL-C25
+      - KXFEDDECISION-25JUL-C26
+    partial:  # number of cuts in 2025
+      - KXRATECUTCOUNT-25DEC31-T0
+      - KXRATECUTCOUNT-25DEC31-T1
+      - KXRATECUTCOUNT-25DEC31-T2
+      - KXRATECUTCOUNT-25DEC31-T3
+  polymarket:  # event slug fed-decision-in-july; YES token ids; always indicative
+    - {id: cut25,    label: "July: cut 25 bp (Polymarket)",   exposure: direct, token: "44274863594881419064755425975616427905570818290480331177906247008783209380302"}
+    - {id: nochange, label: "July: no change (Polymarket)",  exposure: direct, token: "73793697275923646355831824753345919471011673129768736520616870696302293395247"}
+    - {id: cut50,    label: "July: cut 50+ bp (Polymarket)", exposure: direct, token: "17028788563275937059830939874003546190073058810431474110375077031370800019934"}
+    - {id: hike25,   label: "July: hike 25+ bp (Polymarket)", exposure: direct, token: "100067677053694812730460296850221451830656965871151478092125776330632208052828"}
+
+events:
+  bowman20250623:
+    title: "Bowman, Prague, 2025-06-23"
+    speaker: michelle_bowman
+    speech_id: bowman20250623a
+    source_url: https://www.federalreserve.gov/newsevents/speech/bowman20250623a.htm
+    t0: "2025-06-23T14:00:00Z"
+    window: {start: "2025-06-23T13:00:00Z", end: "2025-06-23T15:30:00Z"}
+    markets: *defaults
+
+  waller20250717:
+    title: "Waller, New York, 2025-07-17"
+    speaker: christopher_waller
+    speech_id: waller20250717a
+    source_url: https://www.federalreserve.gov/newsevents/speech/waller20250717a.htm
+    t0: "2025-07-17T22:30:00Z"
+    window: {start: "2025-07-17T21:30:00Z", end: "2025-07-18T00:00:00Z"}
+    markets: *defaults
+
+# Spot checks from our earlier manual pull (see docs/team/role1-market-data.md).
+# build_timeline.py checks these and writes PASS/FAIL into tradio/data/NOTES.md.
+spot_checks:
+  bowman20250623:
+    - {kind: trade, ticker: KXFEDDECISION-25JUL-H0,  t: "2025-06-23T14:01:49Z", price: 0.85}
+    - {kind: trade, ticker: KXFEDDECISION-25JUL-C25, t: "2025-06-23T14:08:43Z", price: 0.16}
+    - {kind: trade, ticker: KXFEDDECISION-25JUL-C25, t: "2025-06-23T14:24:38Z", price: 0.20}
+    - {kind: trade, ticker: KXFEDDECISION-25JUL-C25, t: "2025-06-23T14:29:33Z", price: 0.22}
+    - {kind: quote, ticker: KXFEDDECISION-25JUL-C25, t: "2025-06-23T14:30:00Z", bid: 0.21, ask: 0.22}
+    - {kind: quote, ticker: KXFEDDECISION-25JUL-H0,  t: "2025-06-23T14:41:00Z", bid: 0.77, ask: 0.78}
+  waller20250717:
+    - {kind: trade, ticker: KXFEDDECISION-25JUL-C25, t: "2025-07-17T22:35:04Z", price: 0.05}
+    - {kind: trade, ticker: KXFEDDECISION-25JUL-H0,  t: "2025-07-17T22:35:00Z", price: 0.94}
