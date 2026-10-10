@@ -1,0 +1,19 @@
+{
+ "ticker": "KXFEDDECISION-25JUL-H25",
+ "min_ts": 1752787800,
+ "max_ts": 1752796800,
+ "trades": [
+  {
+   "count_fp": "25.00",
+   "created_time": "2025-07-17T21:55:11.38316Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.9900",
+   "taker_book_side": "bid",
+   "taker_outcome_side": "yes",
+   "taker_side": "yes",
+   "ticker": "KXFEDDECISION-25JUL-H25",
+   "trade_id": "4520a620-6a91-48aa-a77b-24de4da010dc",
+   "yes_price_dollars": "0.0100"
+  }
+ ]
+}

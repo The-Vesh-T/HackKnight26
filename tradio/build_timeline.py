@@ -123,8 +123,9 @@ def poly_quotes(raw: dict, market_id: str, start: int, end: int):
     return [seen[k] for k in sorted(seen)], conflicts
 
 
-def candle_timing(raw_candles: dict, trades: list) -> dict:
-    """For candles with volume, compare with trade volume in [end-60, end) vs [end, end+60)."""
+def candle_timing(raw_candles: dict, trades: list, start: int, end_window: int) -> dict:
+    """For in-window candles with volume, compare with trade volume in [end-60, end) vs
+    [end, end+60). Padding candles are skipped: we only pull trades inside the window."""
     vol_by_sec = defaultdict(float)
     for t in trades:
         vol_by_sec[int(parse_ts(t["t"]).timestamp())] += float(t["size"])
@@ -136,6 +137,8 @@ def candle_timing(raw_candles: dict, trades: list) -> dict:
         if v <= 0:
             continue
         end = int(c["end_period_ts"])
+        if not (start < end <= end_window):
+            continue
         checked += 1
         before += abs(window_sum(end - 60, end) - v) < 0.5
         after += abs(window_sum(end, end + 60) - v) < 0.5
@@ -175,7 +178,7 @@ def build(event_id: str, cfg: dict, spot: list) -> list:
             mq, imputed = kalshi_quotes(cr, mid, start, end)
             trades += mt
             quotes += mq
-            timing = candle_timing(cr, mt)
+            timing = candle_timing(cr, mt, start, end)
             notes.append(f"- `{ticker}`: {len(mt)} trades, {len(mq)} quote minutes "
                          f"({imputed} imputed); candle timing: {timing}")
     for pm in cfg["markets"]["polymarket"]:
