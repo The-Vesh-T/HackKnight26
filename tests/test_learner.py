@@ -324,3 +324,27 @@ class TextAndCalendarTests(unittest.TestCase):
         out = learner.build()
         for n in ("logistic_text", "mlp_text", "ensemble"):
             self.assertIn(n, out["scoreboard"]["models"])
+
+
+class LiveOddsTests(unittest.TestCase):
+    setUp, tearDown, make = LearnerTests.setUp, LearnerTests.tearDown, LearnerTests.make
+
+    def test_live_odds_for_a_provisional_event(self):
+        self.make(20)
+        learner.build(extra_mlps=False)
+        live = os.path.join(self.tmp, "live")
+        sid = sorted(os.listdir(self.hist))[3]
+        an = read_json(os.path.join(self.hist, sid, "analysis.json"))
+        an["provisional"] = True
+        for r in an["markets"].values():
+            r["status"] = "watching"
+        write_json(os.path.join(live, "analysis.json"), an)
+        meta = read_json(os.path.join(self.hist, sid, "meta.json"))
+        meta["t0"] = "2026-10-09T14:00:00Z"
+        meta["speech_id"] = "live-session"
+        write_json(os.path.join(live, "meta.json"), meta)
+        odds = learner.live_odds(live)
+        self.assertEqual(len(odds["markets"]), 5)
+        for mid, p in odds["markets"].items():
+            liq = an["markets"][mid]["liquidity"]
+            self.assertEqual(p is None, liq != "active")

@@ -715,6 +715,30 @@ def predict(event_dir: str, model_name: str = None):
                         for r, p in zip(rows, ps)}}
 
 
+_LIVE = {}
+
+
+def live_odds(event_dir: str):
+    """The champion's P(react) for a live (still provisional) event, from pre-T0 facts.
+    The champion is refitted on every finished event at most once per model.json build,
+    so calling this every few seconds is cheap. None if there is no model yet."""
+    M = _read(MODEL)
+    if not M or not M.get("champion"):
+        return None
+    if _LIVE.get("key") != M.get("built_at"):
+        data = dataset()
+        _LIVE.update(key=M.get("built_at"), name=M["champion"], n=len(data),
+                     model=_fit_all(data, M["champion"]) or BaseRate().fit([], []))
+    got = event_rows(event_dir, _speech_index(), for_predict=True)
+    if not got:
+        return None
+    _, rows = got
+    ps = _LIVE["model"].predict(_matrix(rows), [r["kind"] for r in rows])
+    return {"model": _LIVE["name"], "trained_on_events": _LIVE["n"], "built_at": M.get("built_at"),
+            "markets": {r["market"]: (round(p, 4) if r["liquidity"] == "active" else None)
+                        for r, p in zip(rows, ps)}}
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("step", nargs="?", default="build", choices=("build", "predict"))
