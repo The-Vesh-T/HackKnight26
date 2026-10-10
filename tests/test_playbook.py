@@ -99,7 +99,8 @@ class BacktestTest(unittest.TestCase):
         t = bt["trades"][0]
         a = t["account"]
         self.assertLessEqual(a["risk_usd"], pb.ACCOUNT_USD * pb.RISK_PCT / 100)
-        self.assertAlmostEqual(a["pnl"], t["pnl"] / t["qty"] * a["qty"], delta=a["qty"] * 0.0001 + 0.01)
+        per = t["value"] - t["cost"] - t["fees"] / t["qty"]               # t["pnl"] is rounded to cents
+        self.assertAlmostEqual(a["pnl"], per * a["qty"], delta=a["qty"] * 0.0001 + 0.01)
         self.assertAlmostEqual(t["pnl_path"][-1]["pnl_account"], a["pnl"], places=2)
         self.assertEqual(bt["account"]["pnl"], a["pnl"])
         self.assertGreater(a["qty"], a["entry_candle_volume"])           # the page must warn: fills would be worse
