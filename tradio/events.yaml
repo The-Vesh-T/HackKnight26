@@ -28,15 +28,10 @@ markets_2026sep: &markets_2026sep
       - KXFEDDECISION-26SEP-H0
       - KXFEDDECISION-26SEP-C25
       - KXFEDDECISION-26SEP-C26
-    partial:  # October 2026 decision and number of hikes in 2026
-      - KXFEDDECISION-26OCT-H26
+    partial:  # October 2026 decision. (KXRATEHIKE-2026 "number of hikes" opened 2026-09-15,
+              # after this speech, and KXFEDDECISION-26OCT-H26 had no candles in the window.)
       - KXFEDDECISION-26OCT-H25
       - KXFEDDECISION-26OCT-H0
-      - KXRATEHIKE-2026-0
-      - KXRATEHIKE-2026-1
-      - KXRATEHIKE-2026-2
-      - KXRATEHIKE-2026-3
-      - KXRATEHIKE-2026-4PLUS
   polymarket:  # event slug fed-decision-in-september-762 (the $208M one; -568 is a near-empty duplicate)
     - {id: hike25,   label: "Sep 2026: hike 25 bp (Polymarket)",  exposure: direct, token: "63842529068710005716169325380315470359047749786610778647370693404952498013178"}
     - {id: hike50,   label: "Sep 2026: hike 50+ bp (Polymarket)", exposure: direct, token: "88912926533493988427719291698947688154042720958310632316541141466409683822293"}

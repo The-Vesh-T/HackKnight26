@@ -1,0 +1,67 @@
+{
+ "ticker": "KXFEDDECISION-26SEP-C26",
+ "min_ts": 1787922000,
+ "max_ts": 1787931000,
+ "trades": [
+  {
+   "count_fp": "833.00",
+   "created_time": "2026-08-28T14:00:31.226399Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.9900",
+   "taker_book_side": "bid",
+   "taker_outcome_side": "yes",
+   "taker_side": "yes",
+   "ticker": "KXFEDDECISION-26SEP-C26",
+   "trade_id": "a6e2f146-ea1e-9079-8403-e15514f32c2c",
+   "yes_price_dollars": "0.0100"
+  },
+  {
+   "count_fp": "498.00",
+   "created_time": "2026-08-28T14:34:42.61829Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.9900",
+   "taker_book_side": "bid",
+   "taker_outcome_side": "yes",
+   "taker_side": "yes",
+   "ticker": "KXFEDDECISION-26SEP-C26",
+   "trade_id": "a6e2f0db-c53e-af2d-2ecf-e1ed8484cfc4",
+   "yes_price_dollars": "0.0100"
+  },
+  {
+   "count_fp": "99.66",
+   "created_time": "2026-08-28T15:04:50.236174Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.9900",
+   "taker_book_side": "bid",
+   "taker_outcome_side": "yes",
+   "taker_side": "yes",
+   "ticker": "KXFEDDECISION-26SEP-C26",
+   "trade_id": "a6e2f06d-633e-8fc5-61a2-b85ecf809a34",
+   "yes_price_dollars": "0.0100"
+  },
+  {
+   "count_fp": "93.00",
+   "created_time": "2026-08-28T15:11:10.750489Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.9900",
+   "taker_book_side": "bid",
+   "taker_outcome_side": "yes",
+   "taker_side": "yes",
+   "ticker": "KXFEDDECISION-26SEP-C26",
+   "trade_id": "a6e2f044-50be-bb0d-0aa2-388e256124a4",
+   "yes_price_dollars": "0.0100"
+  },
+  {
+   "count_fp": "366.33",
+   "created_time": "2026-08-28T15:17:56.911256Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.9900",
+   "taker_book_side": "bid",
+   "taker_outcome_side": "yes",
+   "taker_side": "yes",
+   "ticker": "KXFEDDECISION-26SEP-C26",
+   "trade_id": "a6e2f03d-68fe-9069-fc1f-cfc31857c760",
+   "yes_price_dollars": "0.0100"
+  }
+ ]
+}

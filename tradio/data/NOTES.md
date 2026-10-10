@@ -51,3 +51,27 @@ timeline.json: 1950 quotes, 192 trades, 355 KB
 Spot checks:
 - PASS trade KXFEDDECISION-25JUL-C25 2025-07-17T22:35:04Z @ 0.05
 - PASS trade KXFEDDECISION-25JUL-H0 2025-07-17T22:35:00Z @ 0.94
+
+## warsh20260828
+
+timeline.json: 1525 quotes, 1354 trades, 455 KB
+
+- `KXFEDDECISION-26SEP-H26`: 75 trades, 150 quote minutes (133 imputed); candle timing: {'candles_checked': 8, 'match_minute_before_end': 8, 'match_minute_after_end': 0}
+- `KXFEDDECISION-26SEP-H25`: 512 trades, 150 quote minutes (42 imputed); candle timing: {'candles_checked': 85, 'match_minute_before_end': 85, 'match_minute_after_end': 0}
+- `KXFEDDECISION-26SEP-H0`: 676 trades, 150 quote minutes (23 imputed); candle timing: {'candles_checked': 112, 'match_minute_before_end': 112, 'match_minute_after_end': 0}
+- `KXFEDDECISION-26SEP-C25`: 74 trades, 150 quote minutes (124 imputed); candle timing: {'candles_checked': 17, 'match_minute_before_end': 17, 'match_minute_after_end': 1}
+- `KXFEDDECISION-26SEP-C26`: 5 trades, 90 quote minutes (75 imputed); candle timing: {'candles_checked': 5, 'match_minute_before_end': 5, 'match_minute_after_end': 0}
+- `KXFEDDECISION-26OCT-H25`: 6 trades, 85 quote minutes (64 imputed); candle timing: {'candles_checked': 5, 'match_minute_before_end': 5, 'match_minute_after_end': 0}
+- `KXFEDDECISION-26OCT-H0`: 6 trades, 150 quote minutes (116 imputed); candle timing: {'candles_checked': 5, 'match_minute_before_end': 5, 'match_minute_after_end': 0}
+- Polymarket `hike25`: 150 points, 0 chunk disagreements (indicative)
+- Polymarket `hike50`: 150 points, 0 chunk disagreements (indicative)
+- Polymarket `nochange`: 150 points, 0 chunk disagreements (indicative)
+- Polymarket `cut25`: 150 points, 0 chunk disagreements (indicative)
+
+Spot checks:
+- PASS quote KXFEDDECISION-26SEP-H25 2026-08-28T14:00:00Z 0.29/0.3
+- PASS quote KXFEDDECISION-26SEP-H25 2026-08-28T14:01:00Z 0.29/0.32
+- PASS quote KXFEDDECISION-26SEP-H25 2026-08-28T14:30:00Z 0.49/0.5
+- PASS quote KXFEDDECISION-26SEP-H25 2026-08-28T14:33:00Z 0.51/0.52
+- PASS quote KXFEDDECISION-26SEP-H25 2026-08-28T14:41:00Z 0.41/0.43
+- PASS trade KXFEDDECISION-26SEP-H25 2026-08-28T15:29:53Z @ 0.5

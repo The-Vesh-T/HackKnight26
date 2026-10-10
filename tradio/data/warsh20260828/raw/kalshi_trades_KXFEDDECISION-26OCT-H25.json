@@ -1,0 +1,79 @@
+{
+ "ticker": "KXFEDDECISION-26OCT-H25",
+ "min_ts": 1787922000,
+ "max_ts": 1787931000,
+ "trades": [
+  {
+   "count_fp": "19.78",
+   "created_time": "2026-08-28T14:05:46.366698Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.7600",
+   "taker_book_side": "bid",
+   "taker_outcome_side": "yes",
+   "taker_side": "yes",
+   "ticker": "KXFEDDECISION-26OCT-H25",
+   "trade_id": "0721656a-6911-bb6f-036c-a903e58c8c17",
+   "yes_price_dollars": "0.2400"
+  },
+  {
+   "count_fp": "395.61",
+   "created_time": "2026-08-28T14:12:25.456527Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.7600",
+   "taker_book_side": "bid",
+   "taker_outcome_side": "yes",
+   "taker_side": "yes",
+   "ticker": "KXFEDDECISION-26OCT-H25",
+   "trade_id": "07216572-c7f1-8cc7-642d-b4c7db313f23",
+   "yes_price_dollars": "0.2400"
+  },
+  {
+   "count_fp": "104.00",
+   "created_time": "2026-08-28T14:15:12.513252Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.7500",
+   "taker_book_side": "bid",
+   "taker_outcome_side": "yes",
+   "taker_side": "yes",
+   "ticker": "KXFEDDECISION-26OCT-H25",
+   "trade_id": "07216a5f-6441-bcba-9fbd-c3545159146d",
+   "yes_price_dollars": "0.2500"
+  },
+  {
+   "count_fp": "1732.00",
+   "created_time": "2026-08-28T14:15:12.513252Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.7500",
+   "taker_book_side": "bid",
+   "taker_outcome_side": "yes",
+   "taker_side": "yes",
+   "ticker": "KXFEDDECISION-26OCT-H25",
+   "trade_id": "0721641a-feb9-b1b1-a6f1-4ff0a3b15ebf",
+   "yes_price_dollars": "0.2500"
+  },
+  {
+   "count_fp": "800.00",
+   "created_time": "2026-08-28T15:10:57.399949Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.7400",
+   "taker_book_side": "bid",
+   "taker_outcome_side": "yes",
+   "taker_side": "yes",
+   "ticker": "KXFEDDECISION-26OCT-H25",
+   "trade_id": "07216b0b-ae21-a520-980f-f701b71e3ff9",
+   "yes_price_dollars": "0.2600"
+  },
+  {
+   "count_fp": "36.56",
+   "created_time": "2026-08-28T15:25:06.105651Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.7400",
+   "taker_book_side": "bid",
+   "taker_outcome_side": "yes",
+   "taker_side": "yes",
+   "ticker": "KXFEDDECISION-26OCT-H25",
+   "trade_id": "07216b07-afe9-9d6b-597e-4d70b5b912cb",
+   "yes_price_dollars": "0.2600"
+  }
+ ]
+}
