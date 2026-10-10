@@ -90,15 +90,6 @@ class ApiOriginTest(unittest.TestCase):
         with urllib.request.urlopen(self.base + "/tradio.html") as r:
             self.assertEqual(r.status, 200)
 
-    def test_root_is_the_tradio_page(self):
-        with open(os.path.join(serve.WEB, "tradio.html"), "rb") as f:
-            page = f.read()
-        for path in ("/", "/?x=1"):
-            with urllib.request.urlopen(self.base + path) as r:
-                self.assertEqual(r.read(), page)
-        with urllib.request.urlopen(self.base + "/index.html") as r:     # hosted dashboard untouched
-            self.assertNotEqual(r.read(), page)
-
 
 if __name__ == "__main__":
     unittest.main()

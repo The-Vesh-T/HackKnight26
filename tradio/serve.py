@@ -1,11 +1,7 @@
 """Tradio local server: the website plus Start/Stop buttons for the LIVE tab.
 
-    python tradio/serve.py                       # opens http://localhost:8000 in your browser
+    python tradio/serve.py                       # http://localhost:8000/tradio.html
     TRADIO_ALLOW_LIVE=1 python tradio/serve.py   # also allow the real-money button
-    python tradio/serve.py --no-open             # don't open a browser tab
-
-One link for everything: http://localhost:8000 IS the Tradio page (replays, Model,
-Playbook, LIVE tab). If port 8000 is taken it uses the next free one and prints that link.
 
 Replaces `cd web && python3 -m http.server 8000`. Same static files, plus a tiny API the
 LIVE tab uses to start and stop Tradio's own commands, so nobody has to juggle terminals:
@@ -28,7 +24,6 @@ Safety:
 
 import argparse
 import collections
-import errno
 import json
 import os
 import re
@@ -37,7 +32,6 @@ import subprocess
 import sys
 import threading
 import time
-import webbrowser
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse
 
@@ -222,11 +216,6 @@ def make_handler(runner: Runner):
             return origin is None or urlparse(origin).hostname in ("localhost", "127.0.0.1")
 
         def do_GET(self):
-            # one link: the site root is the Tradio page (web/index.html is the separately
-            # hosted dashboard; it stays reachable at /index.html)
-            u = urlparse(self.path)
-            if u.path == "/":
-                self.path = "/tradio.html" + (f"?{u.query}" if u.query else "")
             if self.path == "/api/status":
                 return self._json(200, runner.status()) if self._trusted() else self._json(403, {"error": "forbidden"})
             return super().do_GET()
@@ -256,23 +245,10 @@ def make_handler(runner: Runner):
 def main(argv=None):
     ap = argparse.ArgumentParser(description="Tradio website + LIVE tab controls (localhost only)")
     ap.add_argument("--port", type=int, default=8000)
-    ap.add_argument("--no-open", action="store_true", help="don't open a browser tab")
     a = ap.parse_args(argv)
     runner = Runner(allow_live=os.environ.get("TRADIO_ALLOW_LIVE") == "1")
-    srv = None
-    for port in range(a.port, a.port + 10):          # 8000 busy (an old server)? use the next one
-        try:
-            srv = ThreadingHTTPServer(("127.0.0.1", port), make_handler(runner))
-            break
-        except OSError as e:
-            if e.errno != errno.EADDRINUSE:
-                raise
-    if srv is None:
-        raise SystemExit(f"ports {a.port}-{a.port + 9} are all in use; pass --port")
-    url = f"http://localhost:{srv.server_address[1]}"
-    print(f"Tradio: {url}   (everything is on this one page; LIVE tab has Start/Stop buttons)")
-    if not a.no_open:
-        threading.Timer(0.6, webbrowser.open, [url]).start()
+    srv = ThreadingHTTPServer(("127.0.0.1", a.port), make_handler(runner))
+    print(f"Tradio: http://localhost:{a.port}/tradio.html   (LIVE tab has Start/Stop buttons)")
     print("real-money button: " + ("ENABLED (TRADIO_ALLOW_LIVE=1)" if runner.allow_live else "off"))
     try:
         srv.serve_forever()
