@@ -475,27 +475,28 @@
       }
     }
 
-    // desk orders on this contract: entry (and planned exit) in YES-price terms
+    // desk orders on this contract: the holding period as a faint band, a dot where the bot bought and
+    // one where it sold, both on the price line (YES-price terms), with small labels like the other marks
     for (const t of (E.desk ? E.desk.trades : [])) {
       if (t.mid !== m.id || t.t > now || t.cost == null) continue;
-      const side = String(t.side || "");
+      const side = String(t.side || "").toLowerCase();
+      const col = side === "no" ? "#F2555A" : "#1FCB8A";
       const yp = side === "yes" ? t.cost : 1 - t.cost;
       const cx = x(t.t), cy = y(yp);
-      g += `<path d="M${cx},${cy - 8}L${cx + 7},${cy}L${cx},${cy + 8}L${cx - 7},${cy}Z" fill="#E8EAED" stroke="#0F1114" stroke-width="1.5"><title>BUY ${esc(side.toUpperCase())} ×${esc(t.qty)} @ ${cents(t.cost)}</title></path>`;
-      g += `<text x="${cx + 10}" y="${cy - 10}" fill="#E8EAED" font-size="11.5" font-weight="600">BUY ${esc(side.toUpperCase())} ×${esc(t.qty)}</text>`;
-      if (t.exitT && now >= t.exitT && t.value != null) {
+      const done = t.exitT && now >= t.exitT && t.value != null;
+      const bandEnd = done ? x(t.exitT) : x(until);
+      g += `<rect x="${cx.toFixed(1)}" y="${T}" width="${Math.max(0, bandEnd - cx).toFixed(1)}" height="${H - B - T}" fill="${col}" opacity=".06"/>`;
+      const tag = (px, py, text, above) => {
+        const w = text.length * 6.2 + 12, lx = Math.min(Math.max(px - w / 2, L), W - R - w), ly = above ? py - 26 : py + 10;
+        return `<rect x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" width="${w.toFixed(1)}" height="17" rx="8.5" fill="rgba(15,17,20,.92)" stroke="${col}" stroke-opacity=".7"/>` +
+          `<text x="${(lx + w / 2).toFixed(1)}" y="${(ly + 12).toFixed(1)}" text-anchor="middle" fill="${col}" font-size="11" font-weight="600">${esc(text)}</text>`;
+      };
+      g += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="5" fill="${col}" stroke="#0F1114" stroke-width="2"><title>Bought ${esc(side.toUpperCase())} ×${count(t.qty)} at ${cents(t.cost)}</title></circle>`;
+      g += tag(cx, cy, `Buy ${side.toUpperCase()} ${cents(t.cost)}`, true);
+      if (done) {
         const ex = x(t.exitT), ey = y(side === "yes" ? t.value : 1 - t.value);
-        g += `<line x1="${cx}" y1="${cy}" x2="${ex}" y2="${ey}" stroke="#E8EAED" stroke-dasharray="3 3" opacity=".7"/>`;
-        g += `<rect x="${ex - 5}" y="${ey - 5}" width="10" height="10" fill="#E8EAED"/>`;
-        g += `<text x="${ex + 8}" y="${ey + 4}" fill="#E8EAED" font-size="11.5" font-weight="600">exit ${money(t.pnlFinal)}</text>`;
-      } else if (lineEndY != null) {
-        // still open: a dashed line from the entry to the price dot, and the running P&L under the dot
-        const live = deskTrade(E, t, now);
-        if (live.pnl == null) continue;
-        const dx = x(until);
-        g += `<line x1="${cx}" y1="${cy}" x2="${dx.toFixed(1)}" y2="${lineEndY.toFixed(1)}" stroke="#E8EAED" stroke-dasharray="3 3" opacity=".5"/>`;
-        const right = dx + 150 < W - R;
-        g += `<text x="${(dx + (right ? 10 : -10)).toFixed(1)}" y="${(lineEndY + 22).toFixed(1)}" text-anchor="${right ? "start" : "end"}" fill="${live.pnl >= 0 ? "#1FCB8A" : "#F2555A"}" font-size="11.5" font-weight="600">${money(live.pnl)} if sold now</text>`;
+        g += `<circle cx="${ex.toFixed(1)}" cy="${ey.toFixed(1)}" r="5" fill="#0F1114" stroke="${col}" stroke-width="2"><title>Sold at ${cents(t.value)}: ${money(t.pnlFinal)}</title></circle>`;
+        g += tag(ex, ey, `Sell ${cents(t.value)} · ${money(t.pnlFinal)}`, true);
       }
     }
 
@@ -772,7 +773,7 @@
       h += row(sw("background:#1FCB8A;width:2px"), "<b>Green line</b>: a reaction was detected. The price left its usual range and stayed out.");
       h += row(sw("background:#8B929B;width:2px"), "<b>Dotted grey lines</b>: when half, then 90%, of the final move had happened.");
     }
-    if (E.desk && E.desk.trades.some((t) => t.mid === m.id)) h += row(`<i class="diamond"></i><i class="sq"></i>`, "<b>White diamond</b>: a desk order. <b>White square</b>: its planned exit.");
+    if (E.desk && E.desk.trades.some((t) => t.mid === m.id)) h += row(`<i class="dot" style="background:#F2555A"></i><i class="dot" style="border:2px solid #F2555A;background:none;width:7px;height:7px"></i>`, "<b>Filled dot</b>: where the bot bought. <b>Hollow dot</b>: where it sold. The faint tint between them is the time it held the position (red for a NO bet, green for YES).");
     if (E.overTime) h += row(`<i class="tri"></i>`, "<b>Triangle on the top edge</b>: a passage that was a surprise for this speaker.");
     const source = m.isKalshi ? (E.live && E.live.kind === "live" ? "Live Kalshi tape, closed 1-minute candles" : "Real Kalshi prices, 1-minute candles (each point is the end of its minute)") : "Polymarket price history";
     return h + `<p class="src">${source}. Times are Eastern (ET).</p>`;
@@ -917,8 +918,6 @@
   const pnlHtml = (x) => `<b class="${x >= 0 ? "gain" : "loss"}">${money(x)}</b>`;
 
   // One line under the chart; the orders, skips and how the backtest was run are in the details bubble.
-  // What winning means for a bet, in words: YES wins if the outcome happens, NO if it doesn't.
-  const winsIf = (t) => `wins if “${plain(t.label)}” ${String(t.side).toLowerCase() === "no" ? "doesn't happen" : "happens"}`;
 
   // The bot's trade, under the chart: what it bet on, how big, and the profit or loss so far.
   // Orders, skips and P&L are read from the files; open backtest orders are marked to the tape.
@@ -928,14 +927,14 @@
     const d = E.desk;
     if (!d) { el.hidden = true; state.sig.desk = ""; return; }
     const s = deskNow(E, now);
-    const kind = d.backtest ? `Bot trade · backtest${d.bankroll ? ` with a $${count(d.bankroll)} bankroll` : ""}` : "Bot trade";
+    const kind = d.backtest ? `Bot trade · simulated${d.bankroll ? ` with $${count(d.bankroll)}` : ""}` : "Bot trade";
     let body, pnl = "";
     if (!s.started) body = `<span class="desk-bet muted">Waiting for the speech.</span>`;
     else if (!s.shown.length) body = `<span class="desk-bet muted">${d.backtest ? "No trade: the playbook passed on every contract." : "No orders so far."}</span>`;
     else if (s.shown.length === 1) {
       const t = s.shown[0];
       const side = esc(String(t.side).toUpperCase());
-      body = `<span class="desk-bet">Bet <b class="side-${side.toLowerCase()}">${side}</b> on “${esc(plain(t.label))}” <span class="muted">· ${esc(winsIf(t))}</span></span>
+      body = `<span class="desk-bet">Bet <b class="side-${side.toLowerCase()}">${side}</b> on “${esc(plain(t.label))}”</span>
         <span class="desk-size">${count(t.qty)} contracts at <span class="num">${cents(t.cost)}</span> = <b class="num">$${dollars(t.qty * t.cost)}</b>${d.bankroll ? ` of $${count(d.bankroll)}` : ""}</span>`;
       if (t.pnl != null) {
         pnl = `<div class="desk-pnl"><b class="num ${t.pnl >= 0 ? "gain" : "loss"}">${money(t.pnl)}</b>
@@ -963,8 +962,8 @@
     if (d.sizing) {
       const z = d.sizing;
       h += `<h4>Money and risk limits</h4><table class="kv">
-        <tr><th>Bankroll</th><td>$${count(z.bankroll)}</td></tr>
-        <tr><th>Most in one contract</th><td>${Math.round(z.risk_per_trade * 100)}% of the bankroll ($${count(z.risk_per_trade * z.bankroll)})</td></tr>
+        <tr><th>Starting money</th><td>$${count(z.bankroll)}</td></tr>
+        <tr><th>Most in one contract</th><td>${Math.round(z.risk_per_trade * 100)}% of the starting money ($${count(z.risk_per_trade * z.bankroll)})</td></tr>
         <tr><th>Most across one speech</th><td>${Math.round(z.max_event_exposure * 100)}% ($${count(z.max_event_exposure * z.bankroll)})</td></tr>
         <tr><th>Most of the market's volume</th><td>${Math.round(z.max_share_of_volume * 100)}% of the contracts traded while the position was open, so the prices are ones we could really have got</td></tr></table>`;
     }
