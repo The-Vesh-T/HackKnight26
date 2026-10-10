@@ -323,19 +323,28 @@
   // ---------- SVG helpers ----------
   const svgEl = (w, h, inner) => `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" preserveAspectRatio="none">${inner}</svg>`;
 
-  // Step path: a candle-end value holds until the next candle ends.
-  function stepPath(points, x, y, until) {
-    let d = "", prevY = null;
+  // Step path: a candle-end value holds until the next candle ends. While the replay plays, the
+  // newest step glides to its value over `ease` ms of replay time instead of snapping (display only:
+  // the value is never shown before its candle has ended). Returns the path; `.lastY` is the end point.
+  function stepPath(points, x, y, until, ease = 0) {
+    let d = "", prevY = null, lastT = null;
     for (const p of points) {
       if (p.t > until) break;
-      const px = x(p.t), py = y(p.v);
+      const px = x(p.t);
+      let py = y(p.v);
+      const k = ease > 0 && prevY != null ? (until - p.t) / ease : 1;
+      if (k < 1) py = prevY + (py - prevY) * (1 - Math.pow(1 - k, 3));
       if (prevY == null) d += `M${px.toFixed(1)},${py.toFixed(1)}`;
       else d += `H${px.toFixed(1)}V${py.toFixed(1)}`;
       prevY = py;
+      lastT = p.t;
     }
     if (prevY != null) d += `H${x(until).toFixed(1)}`;
+    stepPath.lastY = prevY;
     return d;
   }
+  // replay time over which a new candle glides in: about a quarter of a second on screen
+  const easeMs = () => (state.playing ? state.speed * 250 : 0);
 
   function bandPath(qs, x, y, until) {
     const pts = qs.filter((q) => q.t <= until && q.bid != null && q.ask != null);
@@ -432,7 +441,8 @@
     const color = m.isKalshi ? "#4C8DFF" : "#F0A43A";
     if (m.isKalshi) g += `<path d="${bandPath(m.q, x, y, until)}" fill="rgba(76,141,255,.16)"/>`;
     const mids = m.q.filter((q) => q.mid != null).map((q) => ({ t: q.t, v: q.mid }));
-    g += `<path d="${stepPath(mids, x, y, until)}" fill="none" stroke="${color}" stroke-width="2.4" ${m.indicative ? 'stroke-dasharray="6 4"' : ""}/>`;
+    g += `<path d="${stepPath(mids, x, y, until, easeMs())}" fill="none" stroke="${color}" stroke-width="2.4" stroke-linejoin="round" ${m.indicative ? 'stroke-dasharray="6 4"' : ""}/>`;
+    const lineEndY = stepPath.lastY;
 
     // trades, sized by contracts
     const maxS = Math.max(1, ...m.tr.map((t) => t.s));
@@ -478,7 +488,7 @@
     if (now >= E.ws && now <= E.xe) {
       g += `<line x1="${x(now)}" x2="${x(now)}" y1="${T}" y2="${H - B}" stroke="#4C8DFF" opacity=".35"/>`;
       const q = quoteAt(m, now);
-      if (q && q.mid != null) g += `<circle cx="${x(until).toFixed(1)}" cy="${y(q.mid).toFixed(1)}" r="5" fill="${color}" stroke="#0F1114" stroke-width="2"/>`;
+      if (q && q.mid != null) g += `<circle cx="${x(until).toFixed(1)}" cy="${(lineEndY != null ? lineEndY : y(q.mid)).toFixed(1)}" r="5" fill="${color}" stroke="#0F1114" stroke-width="2"/>`;
     }
 
     wrap.innerHTML = svgEl(W, H, g);
@@ -492,7 +502,7 @@
     const c = m.isKalshi ? "#4C8DFF" : "#F0A43A";
     const ne = 'vector-effect="non-scaling-stroke"';
     let g = `<line x1="${x(E.t0)}" x2="${x(E.t0)}" y1="0" y2="${h}" stroke="#3A3F46" stroke-dasharray="2 2" ${ne}/>`;
-    g += `<path d="${stepPath(mids, x, y, until)}" fill="none" stroke="${c}" stroke-width="1.6" ${ne} ${m.indicative ? 'stroke-dasharray="4 3"' : ""}/>`;
+    g += `<path d="${stepPath(mids, x, y, until, easeMs())}" fill="none" stroke="${c}" stroke-width="1.6" ${ne} ${m.indicative ? 'stroke-dasharray="4 3"' : ""}/>`;
     if (m.alarm && m.alarm <= now && !m.indicative) g += `<line x1="${x(m.alarm)}" x2="${x(m.alarm)}" y1="0" y2="${h}" stroke="#1FCB8A" stroke-width="1.6" ${ne}/>`;
     return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true">${g}</svg>`;
   }
@@ -859,11 +869,26 @@
 
   // The desk: what the playbook traded (live) or would have traded (backtest). Orders, skips and
   // P&L are read from the files; the only sum here is the closed total over the orders shown.
+  // Kalshi taker fee per contract, the same formula tradio/playbook.py uses for the backtest.
+  const kalshiFee = (p) => 0.07 * p * (1 - p);
+  // An open backtest order marked to the tape: what it would be worth if sold at this replay minute
+  // (YES sells at the bid, NO at 1 − ask), fees on both legs, so at the exit time it equals backtest.json's P&L.
+  function markToMarket(E, t, now) {
+    const m = E.byId[t.mid];
+    const q = m && quoteAt(m, now);
+    if (!q || t.cost == null || !t.qty) return null;
+    const side = String(t.side || "").toLowerCase();
+    const v = side === "no" ? (q.ask != null ? 1 - q.ask : q.mid != null ? 1 - q.mid : null) : (q.bid != null ? q.bid : q.mid);
+    if (v == null) return null;
+    return t.qty * (v - t.cost - kalshiFee(t.cost) - kalshiFee(v));
+  }
+
   function deskNow(E, now) {
     const d = E.desk;
     const shown = d.trades.filter((t) => t.t <= now).map((t) => {
       const closed = !!(t.exitT && now >= t.exitT);
-      return { ...t, closed, pnl: closed && t.pnlFinal != null ? t.pnlFinal : (d.backtest ? null : t.pnlNow) };
+      const pnl = closed && t.pnlFinal != null ? t.pnlFinal : (d.backtest ? markToMarket(E, t, now) : t.pnlNow);
+      return { ...t, closed, pnl, marked: !closed && d.backtest && pnl != null };
     });
     const done = shown.filter((t) => t.closed && t.pnlFinal != null);
     return {
@@ -891,7 +916,9 @@
     else if (s.shown.length === 1) {
       const t = s.shown[0];
       text = `Bought <b>${esc(String(t.side).toUpperCase())}</b> ×${esc(t.qty)} at <span class="num">${cents(t.cost)}</span> · ` +
-        (t.pnl == null ? `open${t.exitT ? `, exit ${fmtEtShort(t.exitT)}` : ""}` : `${pnlHtml(t.pnl)}${t.closed ? "" : " so far"}`);
+        (t.pnl == null ? `open${t.exitT ? `, exit ${fmtEtShort(t.exitT)}` : ""}`
+          : t.marked ? `${pnlHtml(t.pnl)} if sold now${t.exitT ? ` · exits ${fmtEtShort(t.exitT)}` : ""}`
+          : `${pnlHtml(t.pnl)}${t.closed ? " · closed" : " so far"}`);
     } else {
       const open = s.shown.filter((t) => !t.closed).length;
       text = `${s.shown.length} orders${s.total != null ? ` · ${pnlHtml(s.total)} closed` : ""}${open ? ` · ${open} open` : ""}`;
@@ -902,7 +929,7 @@
 
   function deskInfoHtml(E, now) {
     const d = E.desk, s = deskNow(E, now);
-    const what = d.backtest ? "A backtest: what the playbook would have traded on this speech, using rules learned only from the other events."
+    const what = d.backtest ? "A backtest: what the playbook would have traded on this speech, using rules learned only from the other events. While an order is open, its profit or loss updates every minute with what it would fetch if sold at that minute's price, fees included."
       : d.mode === "demo" ? "Orders the live desk placed on Kalshi's demo exchange. Fake money."
       : d.mode === "live" ? "Orders the live desk placed with real money."
       : "A dry run: orders the desk would have placed. Nothing was sent.";
@@ -915,7 +942,7 @@
       h += `<div class="orders">` + s.shown.map((t) => `<div class="order" role="button" tabindex="0" data-act="order" data-id="${esc(t.mid)}" title="Show this contract on the chart">
         <span class="mono t">${fmtEtShort(t.t)}</span>
         <span>BUY <b>${esc(String(t.side).toUpperCase())}</b> ×${esc(t.qty)} ${esc(plain(t.label))} @ <span class="num">${cents(t.cost)}</span></span>
-        <span class="pnl">${t.pnl == null ? `<span class="muted">open${t.exitT ? `, exit ${fmtEtShort(t.exitT)}` : ""}</span>` : `${pnlHtml(t.pnl)}${t.closed ? "" : ' <span class="muted">so far</span>'}`}</span>
+        <span class="pnl">${t.pnl == null ? `<span class="muted">open${t.exitT ? `, exit ${fmtEtShort(t.exitT)}` : ""}</span>` : `${pnlHtml(t.pnl)}${t.closed ? "" : t.marked ? ' <span class="muted">if sold now</span>' : ' <span class="muted">so far</span>'}`}</span>
         ${t.sideFixed ? `<div class="fix">side corrected by the playbook: ${esc(t.sideFixed)}</div>` : ""}
       </div>`).join("") + `</div>`;
       if (s.total != null) h += `<p>Closed so far: ${pnlHtml(s.total)}</p>`;
@@ -1497,7 +1524,7 @@
 
   function draw(force) {
     const t = performance.now();
-    if (!force && t - state.lastDraw < 66) return; // ~15 fps is plenty for minute candles
+    if (!force && t - state.lastDraw < 16) return; // ~60 fps so the playhead and new candles glide
     state.lastDraw = t;
     $("scrub").value = state.rel;
 
