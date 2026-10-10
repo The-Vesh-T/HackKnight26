@@ -1,0 +1,469 @@
+{
+ "event_id": "bowman20250623",
+ "speaker": "michelle_bowman",
+ "speech_id": "bowman20250623a",
+ "model": "gemini-3.5-flash-lite",
+ "baseline": {
+  "n": 289,
+  "mean": 0.15397923875432526,
+  "stdev": 0.32961088454283344,
+  "built_by": "tradio/build_baselines.py"
+ },
+ "paragraphs": [
+  {
+   "id": "p0",
+   "text": "At “Assessing the Effectiveness of Monetary Policy during and after the COVID-19 Pandemic,” a research conference sponsored by the International Journal of Central Banking and the Czech National Bank, Prague, Czech Republic",
+   "relevant": true,
+   "stance": 0.0,
+   "summary": "Conference title and location introductory remarks."
+  },
+  {
+   "id": "p1",
+   "text": "Thank you for the invitation to join you today.1 As the Federal Reserve's Vice Chair for Supervision, I am responsible for, among other things, leading the Board's Division of Supervision and Regulation in its work to promote the safe and sound operation of the U.S. banking system. While this includes the specific activities of bank supervision and regulation, the financial system reaches far beyond the banking system. Regulators must also monitor the effects of activities that extend outside this perimeter, for example activities that have migrated from banks to non-banks, or when there are broader market implications of regulatory actions and their potential effects on financial stability. Regulations should not be created in a static world of \"set it and forget it.\"",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p2",
+   "text": "Today, my remarks will focus specifically on how the passage of time—with underlying changes in the composition of the economy and the financial system, interest rate shifts, and patterns and preferences of banking and financial activity—can lead to unintended policy application and unexpected consequences. Regulators should consider these broader evolving dynamics as they craft regulations to endure beyond today's circumstances.",
+   "relevant": true,
+   "stance": 0.0,
+   "summary": "Remarks on regulatory dynamics and unintended policy consequences."
+  },
+  {
+   "id": "p3",
+   "text": "Typically, these effects are not contemplated in the scope of the usual cost-benefit analysis, as shifts occur over time after a new rule or regulation is implemented or enacted. But shifts can, in effect, become new policy choices with consequences that can pose significant issues.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p4",
+   "text": "One shift in particular is that of the supplementary leverage ratio increasingly becoming the binding capital constraint for the largest banks in the United States. The U.S. banking system includes two basic types of capital requirements: risk-based requirements that impose a capital \"charge\" based on the underlying risk of a particular activity, and leverage-based requirements that do not differentiate based on the risk characteristics of underlying assets. And while leverage-based capital requirements are generally intended to operate as a backstop to risk-based requirements, changes in the financial system and the broader economy can alter this relationship between capital requirements. This shift in the nature of leverage-based capital requirements, from backstop to binding constraint, was not driven by a deliberate policymaking process, but rather by the maintenance of a high level of reserves in the banking system, as well as the introduction of liquidity requirements that compelled banks to replace loans with high-quality liquid assets.2",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p5",
+   "text": "Monetary Policy and Economic Outlook Before turning to the main theme of my remarks, I would like to give a brief update on my outlook for the economy and monetary policy.",
+   "relevant": true,
+   "stance": 0.0,
+   "summary": "Transition to economic outlook and monetary policy update."
+  },
+  {
+   "id": "p6",
+   "text": "At the Federal Open Market Committee (FOMC) meeting last week, the Committee voted to maintain the target range for the federal funds rate at 4-1/4 to 4‑1/2 percent and to continue to reduce the Federal Reserve's securities holdings. I supported this decision because the data shows a solid labor market and I would like to see further confirmation that inflation is close to our 2 percent target on a sustained basis.",
+   "relevant": true,
+   "stance": 0.5,
+   "summary": "Supported maintaining rates and balance sheet reduction awaiting inflation confirmation."
+  },
+  {
+   "id": "p7",
+   "text": "If inflation remains near its current level or continues to move closer to our target, or if the data show signs of weakening in labor market conditions, it would be appropriate to consider lowering the policy rate, moving it closer to a neutral setting.",
+   "relevant": true,
+   "stance": -0.5,
+   "summary": "Open to lowering the policy rate if inflation or labor weakens."
+  },
+  {
+   "id": "p8",
+   "text": "At this point, we have not seen significant economic impacts from trade developments or other factors, and the U.S. economy has continued to be resilient despite some slowing in economic growth. Private domestic final purchases (PDFP) growth slowed to a moderate pace in the first quarter, even as activity was partly boosted by a pull-forward of spending on motor vehicles and high-tech equipment ahead of the implementation of tariffs. Although the pull-forward of spending appears to be unwinding, retail and motor vehicle sales through May provide further evidence that PDFP has softened so far this year.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p9",
+   "text": "The labor market appears to remain solid, with payroll employment rising about 140,000 per month, on average, in April and May, only slightly below the average monthly gains over the past two quarters. This pace of job gains appears consistent with the unemployment rate remaining at a low 4.2 percent through May, which is roughly unchanged since the middle of last year.",
+   "relevant": true,
+   "stance": 0.0,
+   "summary": "Describing solid labor market conditions and steady job gains."
+  },
+  {
+   "id": "p10",
+   "text": "The labor market appears to be stable near estimates of full employment, with layoffs remaining low. The number of job openings relative to job seekers has moved roughly sideways since the middle of last year at, or a touch below, the pre-pandemic level. And the labor market no longer appears to be especially tight or a significant source of inflation pressures, as most wage growth measures have slowed closer to a pace consistent with 2 percent inflation.",
+   "relevant": true,
+   "stance": 0.0,
+   "summary": "Labor market is stable, full employment, and no longer inflationary."
+  },
+  {
+   "id": "p11",
+   "text": "Turning to inflation, we have seen a welcome return to further moderation of personal consumption expenditures (PCE) inflation over the past three months. The May consumer and producer price reports suggest that 12-month core PCE inflation stood at 2.6 percent in May, down meaningfully from its elevated reading of 2.9 percent at the end of last year. Similar to the past two years, elevated monthly inflation readings in January and February have been followed by low readings as we move into the spring.",
+   "relevant": true,
+   "stance": 0.0,
+   "summary": "Discussing recent moderation in personal consumption expenditures inflation."
+  },
+  {
+   "id": "p12",
+   "text": "On a 12-month basis, core PCE goods inflation has picked up somewhat since last December, but this has been more than offset by a considerable slowing in core PCE services inflation. It appears that any upward pressure from higher tariffs on goods prices is being offset by other factors and that the underlying trend in core PCE inflation is moving much closer to our 2 percent target than is currently apparent in the data. With housing services inflation on a sustained downward trajectory, and other core services inflation already consistent with 2 percent inflation, only core goods inflation remains somewhat elevated likely reflecting limited passthrough from tariffs.",
+   "relevant": true,
+   "stance": -0.5,
+   "summary": "Core inflation is nearing the 2 percent target, suggesting easing policy."
+  },
+  {
+   "id": "p13",
+   "text": "With economic growth slowing, it is possible that recent softness in aggregate demand could be starting to translate into weaker labor market conditions. While still strong, the labor market appears to be less dynamic, with modest hiring rates, layoffs edging up from low levels, and job gains concentrated in just a few industries. With inflation on a sustained trajectory toward 2 percent, softness in aggregate demand, and signs of fragility in the labor market, I think that we should put more weight on downside risks to our employment mandate going forward.",
+   "relevant": true,
+   "stance": -1.0,
+   "summary": "Focus shifts to downside employment risks and economic softness, signaling rate cuts."
+  },
+  {
+   "id": "p14",
+   "text": "Despite progress on lowering inflation, there are potential upside risks if negotiations result in higher tariffs or if firms raise goods prices independent of any tariff pass-through. Although we have not seen evidence of disruptive impacts on supply chains, changes in global trade patterns could lead to an increase in prices for goods and services. The current conflict in the Middle East or other geopolitical tensions could also lead to higher commodity prices.",
+   "relevant": true,
+   "stance": 0.5,
+   "summary": "Highlights upside inflation risks from tariffs and geopolitical tensions."
+  },
+  {
+   "id": "p15",
+   "text": "I am certainly attentive to these inflation risks, but I am not yet seeing a major concern, as some retailers seem unwilling to raise prices for essentials due to high price sensitivity among low-income consumers and as supply chains appear to be largely unaffected so far.",
+   "relevant": true,
+   "stance": -0.5,
+   "summary": "Downplays major inflation concerns as consumer price sensitivity limits hikes."
+  },
+  {
+   "id": "p16",
+   "text": "Measures of policy and economic uncertainty have receded from recent highs, and measures of consumer and business sentiment have also improved in recent weeks after having dropped considerably. These developments reinforce my view that concerns will subside as more clarity emerges on trade policy. Businesses appear to be resuming investment and hiring decisions, as they feel increasingly confident that less favorable trade outcomes are unlikely to occur.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p17",
+   "text": "I remain focused on how new policies evolve and whether future data releases will provide perspective about their economic impacts. On trade policy, I expect that negotiations will ultimately result in lower tariff rates than are currently in place, consistent with the resumption of financial market optimism. Further, should we see effects on inflation this year, I expect that increased slack in the economy will limit this to a small, one-off impact.",
+   "relevant": true,
+   "stance": -0.5,
+   "summary": "Expects tariff impacts on inflation to be small and limited."
+  },
+  {
+   "id": "p18",
+   "text": "Small and one-off price increases this year should translate only into a small drag on real activity. I also expect that less restrictive regulations, lower business taxes, and a more friendly business environment will likely boost supply and largely offset any negative effects on economic activity and prices.",
+   "relevant": true,
+   "stance": 0.0,
+   "summary": "Discusses supply-side boosts from friendly business regulations and taxes."
+  },
+  {
+   "id": "p19",
+   "text": "In considering the risks to achieving our dual mandate, I fully supported the revised characterization of uncertainty and the balance of risks in our most recent monetary policy statement, pointing to the diminished uncertainty and removing the emphasis on risks to both sides of our mandate. In my view, it was appropriate to recognize that the balance of risks has shifted. In fact, the data have not shown clear signs of material impacts from tariffs and other policies. I think it is likely that the impact of tariffs on inflation may take longer, be more delayed, and have a smaller effect than initially expected, especially because many firms front-loaded their stocks of inventories. And, all considered, ongoing progress on trade and tariff negotiations has led to an economic environment that is now demonstrably less risky. The change in our monetary policy statement appropriately incorporates this shift in the balance of risks as well as the rapid improvement in many measures of uncertainty.",
+   "relevant": true,
+   "stance": 0.0,
+   "summary": "Notes diminished economic uncertainty and balanced risks in recent data."
+  },
+  {
+   "id": "p20",
+   "text": "As we think about the path forward, it is time to consider adjusting the policy rate. As inflation has declined or come in below expectations over the past few months, we should recognize that inflation appears to be on a sustained path toward 2 percent and that there will likely be only minimal impacts on overall core PCE inflation from changes to trade policy. We should also recognize that downside risks to our employment mandate could soon become more salient, given recent softness in spending and signs of fragility in the labor market.",
+   "relevant": true,
+   "stance": -1.0,
+   "summary": "Calls for policy rate adjustments due to inflation progress and employment risks."
+  },
+  {
+   "id": "p21",
+   "text": "Before our next meeting in July, we will have received one additional month of employment and inflation data. If upcoming data show inflation continuing to evolve favorably, with upward pressures remaining limited to goods prices, or if we see signs that softer spending is spilling over into weaker labor market conditions, such developments should be addressed in our policy discussions and reflected in our deliberations. Should inflation pressures remain contained, I would support lowering the policy rate as soon as our next meeting in order to bring it closer to its neutral setting and to sustain a healthy labor market. In the meantime, I will continue to carefully monitor economic conditions as the Administration's policies, the economy, and financial markets continue to evolve.",
+   "relevant": true,
+   "stance": -0.8,
+   "summary": "Supports lowering the policy rate soon if inflation and employment soften."
+  },
+  {
+   "id": "p22",
+   "text": "It is important to note that monetary policy is not on a preset course. At each FOMC meeting, my colleagues and I will make our decisions based on the incoming data and the implications for and risks to the outlook, guided by the Fed's dual-mandate goals of maximum employment and stable prices. I will also continue to meet with a broad range of contacts as I assess the appropriateness of our monetary policy stance.",
+   "relevant": true,
+   "stance": 0.0,
+   "summary": "Neutral procedural remarks emphasizing data-dependent decision-making."
+  },
+  {
+   "id": "p23",
+   "text": "Bringing inflation in line with our price-stability goal is essential for sustaining a healthy labor market and fostering an economy that works for everyone in the longer run.",
+   "relevant": true,
+   "stance": 0.0,
+   "summary": "Balanced statement on the dual mandate and price stability goals."
+  },
+  {
+   "id": "p24",
+   "text": "Policy Shifts and Unintended Consequences In my responsibilities over bank regulation and supervision at the Federal Reserve, I intend to apply a pragmatic approach. We will review data and evidence, identify problems that need to be resolved, and develop efficient solutions to address those identified issues.3 While the regulatory authority of the Federal Reserve is primarily related to the banking system, the consequences of banking regulation and supervisory efforts are not limited to the banking system. Bank regulation and supervision affect how financial activities are conducted, the cost and availability of credit and financial services, and even what types of entities provide those services. While it is important to consider the consequences of regulatory actions as they evolve over time, in cases where regulation may create or exacerbate financial stability risks, we must examine whether those risks are justified by the safety and soundness benefits of the regulation.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p25",
+   "text": "Bank-affiliated broker-dealers play a critical role in U.S. capital markets, including in Treasury market intermediation activities. Today I will discuss the lessons we have learned about how bank regulatory requirements, specifically leverage ratios in the United States, can have unintended consequences. Leverage ratio impacts on bank-affiliated broker-dealers can have broader impacts, including market impacts like those observed in Treasury market intermediation activities. Once we've identified \"emerging\" unintended consequences—issues that were not contemplated during the development of a regulatory approach—we must consider how to revisit earlier regulatory and policy decisions.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p26",
+   "text": "As I will discuss in greater detail shortly, regulators must act quickly to address the growing problems with increasingly binding leverage ratios. In 2021, in connection with the expiration of temporary, emergency changes to the supplementary leverage ratio (SLR), the Federal Reserve committed to \"soon\" inviting public comment on potential modifications.4 Over four years later, a proposal has not been issued, and problems with Treasury market intermediation continue to emerge. The time has come for the federal banking agencies to revisit leverage ratios and their impacts on the Treasury markets.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p27",
+   "text": "Looking at the Data: Treasury Market Functioning As a first step in this pragmatic approach, it is important to look at what the data says about Treasury market functioning. This is a necessary first step before we determine whether there are issues or problems that can be addressed through adjustments to bank regulatory requirements.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p28",
+   "text": "A review of Treasury market data provides a history of growing issues with Treasury market functioning. In recent years, U.S. policy debates have highlighted the need to take preventative measures to ensure smooth market functioning. One issue that continues to persist is low levels of Treasury market liquidity as the Board's semiannual Financial Stability Report noted.5 In addition, some dealers experienced balance sheet pressure in intermediating record volumes of Treasury market transactions in the spring, at a time when reports from market participants also indicated reduced demand from other Treasury investors.6",
+   "relevant": true,
+   "stance": 0.0,
+   "summary": "Discussion of Treasury market liquidity and financial stability issues."
+  },
+  {
+   "id": "p29",
+   "text": "A survey of market participants from the Fed's most recent Financial Stability Report noted that more than a quarter of respondents cited Treasury market functioning as a risk to the U.S. financial system and the broader global economy. This was an increase from the same survey conducted last fall when 17 percent of those surveyed cited Treasury market functioning as a risk.7",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p30",
+   "text": "Recent changes to Treasury market clearing activities from the Securities and Exchange Commission's central clearing requirement for U.S. Treasuries were implemented to improve Treasury market functioning. Once fully implemented, these changes may improve market functioning. The Federal Reserve's Standing Repo Facility may also help to promote smooth functioning in the Treasury market. But it is unclear how the ongoing increases in the volume of Treasury issuance, the volume of Treasury securities outstanding, and changes to the Fed's balance sheet over time, may also affect market liquidity.",
+   "relevant": true,
+   "stance": 0.0,
+   "summary": "Remarks on Treasury market clearing, repo facilities, and issuance volumes."
+  },
+  {
+   "id": "p31",
+   "text": "Treasury markets have experienced stress events as recently as the September 2019 repo market stress, and the so-called \"dash for cash\" in March of 2020. In early April, we also saw strains in Treasury cash markets. Although markets continued to function, there were unexpected moves in Treasury yields, with an initial drop in yields followed by a sharp increase that seems to have been driven in part by the unwinding of the swap spread trade by leveraged investors in response to declining swap spreads.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p32",
+   "text": "We do not know exactly what circumstances may lead to a future stress event or how it will manifest, and continuing to impose unwarranted limits on dealers' intermediation capacity could exacerbate a future stress event in this critical market. But we do know that these events have raised concerns about the resilience of U.S. Treasury markets. Therefore, we should continue to actively monitor indicators of market functioning. Recent trends in both market liquidity indicators and survey responses suggest that this problem has persisted and may be becoming more severe. Low liquidity can create more volatility in prices, exacerbate the effects of market shocks, and threaten market functioning.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p33",
+   "text": "Identifying the Problem: Looking Beyond Treasury Market Intermediation Large bank-affiliated primary dealers play a vital role in the intermediation of U.S. Treasury markets. These dealers are subject to, not insulated from, the effect of banking regulation. While many factors can affect market liquidity, including the growing volume of Treasury issuance, Treasury market saturation, and interest rate volatility, we must consider whether some of the pressure is a byproduct of bank regulation. Due to the role of large banks in the intermediation of Treasury markets, there is a direct link between banking regulation and Treasury market liquidity, particularly when it comes to the growth of \"safe\" assets in the banking system and the increase in leverage-based capital requirements becoming the binding capital constraint on some large banks. In 2018, the Federal Reserve along with the Office of the Comptroller of the Currency (OCC) proposed significant changes to the enhanced supplementary leverage ratio (eSLR) that applies to the largest banks.8 These revisions were never finalized, but the intent behind them was to return the eSLR to its traditional role as a backstop capital requirement instead of what has become a substantial balance sheet constraint.",
+   "relevant": true,
+   "stance": 0.0,
+   "summary": "Analysis of bank regulation, leverage capital requirements, and Treasury liquidity."
+  },
+  {
+   "id": "p34",
+   "text": "The proposed change was designed to promote resilience in the banking system and to protect financial stability, while also maximizing credit availability and economic growth throughout the credit cycle.9 During the COVID-19 pandemic, the Federal Reserve addressed constraints on the ability of U.S. banks to support efficient Treasury market functioning by temporarily excluding Fed reserves and Treasuries from the denominator of the SLR.10",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p35",
+   "text": "The central role of bank-affiliated broker-dealers in Treasury market intermediation has led us to take a close look at bank regulatory requirements to clarify how these requirements, particularly their calibration, may impact Treasury market functioning. Although designed to address low risk activities, like Treasury market intermediation, leverage ratios have become increasingly binding as a bank capital constraint as market conditions change.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p36",
+   "text": "While issues around the use of leverage ratios require close examination, a solid capital foundation in the banking system is critical to support safety and soundness and financial stability. Revisiting the calibration of leverage ratios to ensure that they remain backstops instead of creating binding constraints, especially in times of stress, should not be interpreted as a critique of the role of capital in a robust regulatory and supervisory framework.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p37",
+   "text": "But to be clear, the consequences of an overly restrictive leverage ratio go well beyond just Treasury market intermediation, and impact a wide range of low-risk activities. Leverage capital requirements do not differentiate between the risk of different asset classes or exposures.",
+   "relevant": true,
+   "stance": 0.0,
+   "summary": "Discussion of leverage capital requirements and low-risk market activities."
+  },
+  {
+   "id": "p38",
+   "text": "However, in periods when bank balance sheets are expanding—like the significant deposit inflows during COVID-19—leverage capital requirements can unintentionally become the binding constraint on both banks and their affiliates. This increases the amount of required capital as bank balance sheets grow, regardless of the underlying risk. When constrained in this way, bank-affiliated primary dealers may pull back on the market intermediation of low-risk assets like U.S. Treasuries. A binding leverage capital requirement can create perverse incentives for banks to shift their balance sheets into higher risk assets, since doing so could generate larger returns without requiring additional capital. This is simply a cause and effect of overly restrictive leverage capital.",
+   "relevant": true,
+   "stance": 0.0,
+   "summary": "Examination of bank balance sheets, leverage constraints, and asset incentives."
+  },
+  {
+   "id": "p39",
+   "text": "The fact of leverage ratios becoming increasingly binding is evident in simple metrics like the ratio of risk-weighted assets to total leverage exposure. These are, respectively, the denominators of risk-based capital ratios and the SLR. Shortly after the SLR was adopted in the U.S. in the mid-2010s, this ratio stood at 48 percent in the aggregate for the eight largest U.S. banks, the global systemically important banks (G-SIBs). Since then, the ratio of risk-weighted assets to total leverage exposure has declined and currently stands at 40 percent, primarily due to higher reserves and other types of high-quality liquid assets on bank balance sheets. This downward trend results in the SLR increasingly becoming the binding constraint and reflects banks' growing holdings of high-quality liquid assets, most of which carry a risk weight of zero under risk-based capital ratios but have a 100 percent weighting under leverage capital ratios.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p40",
+   "text": "Efficient Solutions One example of the SLR's unintended consequence is the erosion of liquidity in U.S. Treasury markets because it is driven, in part, by leverage ratio requirements increasingly becoming the binding constraints on the largest U.S. banks. This example also illustrates the necessity of evaluating tradeoffs in regulation and speaks to a larger issue with the calibration of leverage.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p41",
+   "text": "The banking regulators are uniquely positioned to both analyze and remediate components of the bank regulatory framework that may disrupt banks' participation in low-risk, but economically critical activities. This includes the exacerbation of Treasury market illiquidity. Treasury markets play a critical role in the U.S. and global financial systems, and we should be proactive in addressing the unintended consequences of bank regulation, while ensuring the framework continues to promote safety, soundness, and financial stability.11 We should start by addressing potential constraints on Treasury market functioning before issues arise, lessening impacts from stress, and mitigating the need to intervene in future market events.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p42",
+   "text": "On Wednesday, the Board is scheduled to consider specific amendments to the eSLR, which is the requirement that applies at both the holding company and bank levels of the largest U.S. banks. While I do not want to front-run the proposal, I will note that the proposal's goal is to address a long-identified—and growing—problem with the calibration of this leverage requirement. The proposal would solicit public comment on the impacts of this miscalibration, potential fixes, and work to develop an appropriate and effective solution. This proposal takes a first step toward what I view as long overdue follow-up to review and reform what have become distorted capital requirements. This proposal, while meaningful, addresses only one element of the capital framework. More work on capital requirements remains, especially to consider how they have evolved and whether changes in market conditions have revealed issues that should be addressed.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p43",
+   "text": "In a few weeks, on July 22, the Federal Reserve will host a conference to bring together a wide range of thought leaders to discuss the U.S. bank capital framework, including the design and calibration of leverage ratios. Fixing the design and calibration of leverage capital requirements will not resolve every issue with U.S. Treasury market functioning. But, simple reforms to return leverage ratio requirements to their traditional role as a capital backstop could improve Treasury market functioning by building resilience in advance of future stress events. And this could reduce the chances that we would need to intervene in Treasury markets should a future stress event arise. While we know well the issues created by the eSLR, there are many potential improvements that could address other issues within the capital framework.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p44",
+   "text": "As I have noted previously, a broader set of reforms could include amending not only the leverage capital ratio, but also G-SIB surcharge requirements. We should also reconsider capital requirements for a wider range of banks, including the SLR's application to banks with more than $250 billion in assets, Tier 1 leverage requirements, and the calibration of the community bank leverage ratio.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p45",
+   "text": "The unintended shift over time in the eSLR increasingly becoming a binding capital constraint demonstrates that we need to think about regulatory policies in a dynamic way based on the evolution in the banking and financial systems, and the broader economy.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p46",
+   "text": "Other examples of regulations that must take into account the impact of economic growth and inflation include elements of the G-SIB surcharge, as well as regulatory thresholds that define the broader categories of banks. Thresholds like the $10 billion definition of a \"community bank\" and the $700 billion in total assets and $75 billion for cross-jurisdictional activity separating Category II and III banks determine which regulatory requirements apply to each group.",
+   "relevant": true,
+   "stance": 0.0,
+   "summary": "Discusses banking regulations and thresholds without monetary policy stance."
+  },
+  {
+   "id": "p47",
+   "text": "One way to prevent the original calibration from becoming divorced from the foundational policy decisions over time is to index the relevant G-SIB surcharge coefficients and regulatory thresholds to nominal gross domestic product. While approaches like indexing thresholds and requirements can make our regulations more robust and durable over time, we should also acknowledge the essential role of supervision as a tool to promote safety and soundness, and financial stability. Just as our capital requirements are intended to operate in a complementary manner, so do regulation and supervision act in a complementary way.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p48",
+   "text": "These are only a handful of relevant examples, but they are representative of an effective approach to regulatory reform. Regulations should not be created in a static world of \"set it and forget it.\" The economy evolves over time, as do the banking and financial systems and the needs of businesses and consumers.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p49",
+   "text": "Increasingly, regulators are expected to conduct a more thorough and detailed analysis as part of the ordinary rulemaking process, which includes a proposal's costs and benefits. Yet, over time, we tend to devote fewer resources to the work of conducting maintenance of our regulations. Maintenance of the regulatory system should include reviewing the basis for earlier policy decisions, considering whether the policies embedded in regulations have been distorted over time through market developments, and examining whether emerging issues in the market should lead to further review and revision.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p50",
+   "text": "Closing Thoughts Thank you for the opportunity to join you today and to provide my views on the U.S. economic outlook and current regulatory proposals. In the United States, regulatory policy objectives are prescribed by law, and bank regulators focus primarily on promoting the safe and sound operation of U.S. banks, and financial stability. Despite this limited purpose, we must understand the consequences of regulations, which can extend well beyond the banking system. Recent trends—including providing more fact-based and analytical support for proposals—are a positive step in achieving responsible regulation.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p51",
+   "text": "But we need a broad commitment to follow the approach I have just described. We must consider relevant data and information, identify the source of any problems or opportunity for greater efficiency, and then develop targeted and effective policy solutions and approaches.",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p52",
+   "text": "1. The views expressed here are my own and are not necessarily those of my colleagues on the Federal Reserve Board or the Federal Open Market Committee. Return to text",
+   "relevant": true,
+   "stance": 0.0,
+   "summary": "Standard institutional disclaimer regarding personal views."
+  },
+  {
+   "id": "p53",
+   "text": "2. See 12 CFR 249.3; 249.20 (defining categories of high-quality liquid assets based on asset characteristics). Return to text",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p54",
+   "text": "3. See Michelle W. Bowman, \"Taking a Fresh Look at Supervision and Regulation (PDF),\" (speech at the Georgetown University McDonough School of Business, Psaros Center for Financial Markets Policy, Washington, D.C., June 6, 2025). Return to text",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p55",
+   "text": "4. Board of Governors of the Federal Reserve System, \"Federal Reserve Board Announces that the Temporary Change to its Supplementary Leverage Ratio (SLR) for Bank Holding Companies Will Expire as Scheduled on March 31,\" press release, March 19, 2021, (\"To ensure that the SLR—which was established in 2014 as an additional capital requirement—remains effective in an environment of higher reserves, the Board will soon be inviting public comment on several potential SLR modifications. The proposal and comments will contribute to ongoing discussions with the Department of the Treasury and other regulators on future work to ensure the resiliency of the Treasury market.\"). Return to text",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p56",
+   "text": "5. See Board of Governors of the Federal Reserve System, Financial Stability Report (PDF) (Washington, D.C., April 2025), 10–11. Return to text",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p57",
+   "text": "6. Board of Governors, Financial Stability Report, at 32. Return to text",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p58",
+   "text": "7. See Board of Governors, Financial Stability Report, at 3. Return to text",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p59",
+   "text": "8. See Office of the Comptroller of the Currency and Federal Reserve System (2018), \"Regulatory Capital Rules: Regulatory Capital, Enhanced Supplementary Leverage Ratio Standards for U.S. Global Systemically Important Bank Holding Companies and Certain of Their Subsidiary Insured Depository Institutions; Total Loss-Absorbing Capacity Requirements for U.S. Global Systemically Important Bank Holding Companies,\" Federal Register, vol. 83 (April 19), pp. 17317–27. Return to text",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p60",
+   "text": "9. See Office of the Comptroller of the Currency and Federal Reserve System (2018), \"II. Revisions to the Enhanced Supplementary Leverage Ratio Standards,\" Federal Register, vol. 83 (April 19), p. 17319, paragraph 3: \"Leverage capital requirements should generally act as a backstop to the risk-based requirements. If a leverage ratio is calibrated at a level that makes it generally a binding constraint through the economic and credit cycle, it can create incentives for firms to reduce participation in or increase costs for low-risk, low-return businesses.\" Return to text",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p61",
+   "text": "10. See, for example, Federal Reserve System (2020), \"Temporary Exclusion of U.S. Treasury Securities and Deposits at Federal Reserve Banks from the Supplementary Leverage Ratio (PDF),\" Federal Register, vol. 85, (April 14), pp. 20578–79. Return to text",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  },
+  {
+   "id": "p62",
+   "text": "11. For more information, see the press release in note 4 indicating that the Board would seek comment on changes to the SLR. Return to text",
+   "relevant": false,
+   "stance": null,
+   "summary": null
+  }
+ ],
+ "top_sentences": [
+  {
+   "text": "With economic growth slowing, it is possible that recent softness in aggregate demand could be starting to translate into weaker labor market conditions.",
+   "stance": -0.5
+  },
+  {
+   "text": "While still strong, the labor market appears to be less dynamic, with modest hiring rates, layoffs edging up from low levels, and job gains concentrated in just a few industries.",
+   "stance": -0.5
+  },
+  {
+   "text": "With inflation on a sustained trajectory toward 2 percent, softness in aggregate demand, and signs of fragility in the labor market, I think that we should put more weight on downside risks to our employment mandate going forward.",
+   "stance": -1.0
+  }
+ ]
+}
