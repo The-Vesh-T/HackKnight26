@@ -23,9 +23,12 @@ Choices (documented so the team can check them):
   listed 2025-06-18, so Bowman only has about 25 usable ordinary days, not 200;
   `n` says exactly how many.
 - "Fed event" days excluded: FOMC decision days and the day before, FOMC minutes days,
-  Jackson Hole symposium days, and every date we hold a Fed speech transcript for
-  (transcripts/speech_*.json). FOMC_DATES below is typed from the Fed's published
-  calendars; check it before quoting p-values.
+  Jackson Hole symposium days, every Board speech and congressional testimony day in the
+  Fed's own feeds (testimony plus the next day), Powell's 2025-07-01 Sintra panel, and
+  every date we hold a Fed speech transcript for (transcripts/speech_*.json). FOMC and
+  minutes dates were checked against federalreserve.gov/monetarypolicy/fomccalendars.htm
+  on 2026-10-09. Regional Fed presidents' speeches are not in the Board feed, so some
+  "ordinary" days still carry Fed news; that can only make p larger (more cautious).
 - Sampling uses a fixed seed per event, so the fake T0s are the same on every run.
 - Windows with no quotes (market not listed yet, or no candles) are dropped; `n` reports
   how many were usable. A p-value from fewer than 20 usable windows is reported but
@@ -52,7 +55,7 @@ MIN_N = 20
 LOOKBACK_DAYS = 300
 TESTED_STATUSES = ("reacted", "candidate_delay")
 
-# FOMC statement days (decision announced). 2025 and 2026 published schedules.
+# FOMC statement days (decision announced), checked against the Fed's calendar page.
 FOMC_DATES = [
     "2025-01-29", "2025-03-19", "2025-05-07", "2025-06-18", "2025-07-30", "2025-09-17",
     "2025-10-29", "2025-12-10",
@@ -68,6 +71,39 @@ MINUTES_DATES = [
 ]
 JACKSON_HOLE = ["2025-08-21", "2025-08-22", "2025-08-23",
                 "2026-08-27", "2026-08-28", "2026-08-29"]
+# Federal Reserve Board speeches and congressional testimony, from the Fed's own feeds
+# (federalreserve.gov/json/ne-speeches.json and ne-testimony.json, read 2026-10-09).
+BOARD_SPEECH_DATES = [
+    "2025-01-06", "2025-01-08", "2025-01-09", "2025-01-31", "2025-02-04", "2025-02-05",
+    "2025-02-07", "2025-02-11", "2025-02-12", "2025-02-17", "2025-02-18", "2025-02-19",
+    "2025-02-20", "2025-02-21", "2025-02-25", "2025-02-27", "2025-03-07", "2025-03-21",
+    "2025-03-24", "2025-03-25", "2025-04-02", "2025-04-03", "2025-04-04", "2025-04-07",
+    "2025-04-14", "2025-04-15", "2025-04-16", "2025-04-17", "2025-04-22", "2025-04-23",
+    "2025-05-03", "2025-05-09", "2025-05-12", "2025-05-14", "2025-05-15", "2025-05-19",
+    "2025-05-20", "2025-05-23", "2025-05-25", "2025-05-29", "2025-06-01", "2025-06-02",
+    "2025-06-03", "2025-06-04", "2025-06-05", "2025-06-06", "2025-06-23", "2025-06-24",
+    "2025-06-26", "2025-07-10", "2025-07-15", "2025-07-16", "2025-07-17", "2025-07-22",
+    "2025-08-01", "2025-08-09", "2025-08-19", "2025-08-20", "2025-08-22", "2025-08-28",
+    "2025-09-22", "2025-09-23", "2025-09-25", "2025-09-26", "2025-09-29", "2025-09-30",
+    "2025-10-03", "2025-10-07", "2025-10-08", "2025-10-09", "2025-10-14", "2025-10-15",
+    "2025-10-16", "2025-10-21", "2025-10-22", "2025-10-23", "2025-10-30", "2025-11-03",
+    "2025-11-07", "2025-11-11", "2025-11-17", "2025-11-18", "2025-11-19", "2025-11-20",
+    "2025-11-21", "2025-12-01", "2025-12-15", "2026-01-07", "2026-01-11", "2026-01-14",
+    "2026-01-16", "2026-01-30", "2026-02-04", "2026-02-06", "2026-02-16", "2026-02-17",
+    "2026-02-19", "2026-02-23", "2026-02-24", "2026-03-03", "2026-03-12", "2026-03-21",
+    "2026-03-24", "2026-03-26", "2026-03-31", "2026-04-07", "2026-04-14", "2026-04-17",
+    "2026-04-21", "2026-05-01", "2026-05-05", "2026-05-08", "2026-05-14", "2026-05-20",
+    "2026-05-22", "2026-05-27", "2026-05-29", "2026-05-31", "2026-06-06", "2026-06-22",
+    "2026-06-24", "2026-07-06", "2026-07-07", "2026-07-13", "2026-07-14", "2026-07-15",
+    "2026-07-16", "2026-08-05", "2026-08-28", "2026-09-01", "2026-09-03", "2026-09-18",
+    "2026-09-22", "2026-09-23", "2026-09-28", "2026-09-29", "2026-09-30",
+]
+TESTIMONY_DATES = [
+    "2025-02-11", "2025-04-10", "2025-06-24", "2025-12-02", "2026-02-26", "2026-03-26",
+    "2026-06-04", "2026-07-14",
+]
+# Not in either feed but plainly a Fed event: Powell on the ECB Forum (Sintra) policy panel.
+OTHER_FED_EVENTS = ["2025-07-01"]
 # Kalshi `open_time` of each Fed-decision contract series we test (read from
 # /markets/<ticker> on 2026-10-09). Days before listing have no prices.
 LISTED = {"KXFEDDECISION-25JUL": "2025-06-18", "KXFEDDECISION-26SEP": "2025-09-29"}
@@ -96,9 +132,11 @@ def transcript_dates():
 
 
 def excluded_days():
-    days = set(map(_d, MINUTES_DATES + JACKSON_HOLE))
+    days = set(map(_d, MINUTES_DATES + JACKSON_HOLE + BOARD_SPEECH_DATES + OTHER_FED_EVENTS))
     for s in FOMC_DATES:
         days |= {_d(s), _d(s) - timedelta(days=1)}
+    for s in TESTIMONY_DATES:   # semiannual testimony runs two days (House, then Senate)
+        days |= {_d(s), _d(s) + timedelta(days=1)}
     return days | transcript_dates()
 
 

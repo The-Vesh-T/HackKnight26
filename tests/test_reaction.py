@@ -242,14 +242,30 @@ def candles_for(start, end, path):
     return {"candlesticks": out}
 
 
+class PlaceboCalendarTests(unittest.TestCase):
+    def test_real_calendar_rules(self):
+        """With the real calendar: after listing (2025-06-18), no Fed-event days."""
+        fakes = placebo.fake_t0s("bowman20250623", T0, ["KXFEDDECISION-25JUL-C25"])
+        excluded = placebo.excluded_days()
+        self.assertTrue(fakes)
+        for f in fakes:
+            self.assertGreater(f.date(), date(2025, 6, 18))
+            self.assertNotIn(f.date(), excluded)
+        for d in (date(2025, 6, 24), date(2025, 6, 25), date(2025, 7, 1), date(2025, 7, 9)):
+            self.assertIn(d, excluded)          # testimony x2, Sintra, June minutes
+
+
 class PlaceboTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.mkdtemp()
         os.makedirs(os.path.join(self.tmp, "testevent"))
         with open(os.path.join(self.tmp, "testevent", "timeline.json"), "w") as f:
             json.dump(stepped_timeline(), f)
+        # Synthetic calendar: no listing date, no Fed-event days, so enough fake days exist.
         self.patches = [mock.patch.object(placebo, "DATA_DIR", self.tmp),
-                        mock.patch.object(reaction, "DATA_DIR", self.tmp)]
+                        mock.patch.object(reaction, "DATA_DIR", self.tmp),
+                        mock.patch.object(placebo, "LISTED", {}),
+                        mock.patch.object(placebo, "excluded_days", lambda: set())]
         for p in self.patches:
             p.start()
 
@@ -262,14 +278,11 @@ class PlaceboTests(unittest.TestCase):
         fakes = placebo.fake_t0s("testevent", T0, ["KXFEDDECISION-25JUL-C25"])
         self.assertEqual(fakes, placebo.fake_t0s("testevent", T0, ["KXFEDDECISION-25JUL-C25"]))
         self.assertEqual(len(fakes), len(set(fakes)))
-        excluded = placebo.excluded_days()
         for f in fakes:
             self.assertEqual(f.timetz(), T0.timetz())
             self.assertLess(f.weekday(), 5)
             self.assertNotEqual(f.date(), T0.date())
-            self.assertNotIn(f.date(), excluded)
             self.assertLessEqual(f.date(), date(2025, 7, 28))   # 2 days before Jul 30 FOMC
-        self.assertNotIn(date(2025, 6, 18), {f.date() for f in fakes})  # June FOMC day
 
     def test_decision_day(self):
         self.assertEqual(placebo.decision_day("KXFEDDECISION-25JUL-C25"), date(2025, 7, 30))
