@@ -36,6 +36,8 @@ Keys (gitignored, never in git or chat):
                       account=<org>-<account>
                       user=<user>
                       password=<password or programmatic access token>
+                      (or key-pair login instead of password:
+                       private_key_file=snowflake_key.pem, path relative to the repo)
                       warehouse=COMPUTE_WH
                       database=TRADIO
                       schema=PUBLIC
@@ -269,7 +271,8 @@ ORDER BY r.status, minute
 
 # ---------------------------------------------------------------- Snowflake
 
-SNOWFLAKE_KEYS = ("account", "user", "password", "warehouse", "database", "schema", "role")
+SNOWFLAKE_KEYS = ("account", "user", "password", "private_key_file", "warehouse", "database",
+                  "schema", "role")
 
 
 def snowflake_config() -> dict:
@@ -286,6 +289,22 @@ def snowflake_config() -> dict:
         if env:
             cfg[key] = env
     return {k: v for k, v in cfg.items() if k in SNOWFLAKE_KEYS and v}
+
+
+def snowflake_connect_args(cfg: dict) -> dict:
+    """Connector kwargs from snowflake_config(): password, or key-pair login via a PEM file."""
+    missing = [k for k in ("account", "user") if k not in cfg]
+    if "password" not in cfg and "private_key_file" not in cfg:
+        missing.append("password (or private_key_file)")
+    if missing:
+        raise SystemExit(f"snowflake.txt is missing {', '.join(missing)} (see the top of this file).")
+    args = dict(cfg)
+    if "private_key_file" in args:
+        args.pop("password", None)
+        if not os.path.isabs(args["private_key_file"]):
+            args["private_key_file"] = os.path.join(ROOT, args["private_key_file"])
+        args["authenticator"] = "SNOWFLAKE_JWT"
+    return args
 
 
 def snowflake_type(pg_type: str) -> str:
@@ -367,10 +386,7 @@ def main():
         conn.close()
         return
 
-    cfg = snowflake_config()
-    missing = [k for k in ("account", "user", "password") if k not in cfg]
-    if missing:
-        raise SystemExit(f"snowflake.txt is missing {', '.join(missing)} (see the top of this file).")
+    cfg = snowflake_connect_args(snowflake_config())
     import snowflake.connector
     conn = snowflake.connector.connect(**cfg)
     if args.step == "snowflake":
