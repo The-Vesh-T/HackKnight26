@@ -52,3 +52,7 @@ trade_risk.lock
 scratch/
 social_cache.json
 macro_cache.json
+
+# Tradio live mode: rewritten every few seconds during a speech (archive to keep one)
+tradio/data/live/
+web/data/tradio/live/

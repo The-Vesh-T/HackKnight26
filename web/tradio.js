@@ -20,10 +20,14 @@
     { id: "warsh20260828", short: "Warsh", sub: "Aug 28 2026 · Jackson Hole" },
   ];
   const COMPARE = { id: "compare", short: "Bowman vs Waller", sub: "same contracts, aligned at T0" };
+  // LIVE reads data/tradio/live/, which tradio/live.py rewrites every few seconds during a speech.
+  const LIVE = { id: "live", short: "● LIVE", sub: "Fed speech happening now" };
+  const LIVE_POLL_MS = 3000;
+  const STALE_MS = 90 * 1000;
   const COMPARE_PAIR = ["bowman20250623", "waller20250717"];
   const COMPARE_SUFFIXES = [["-C25", "July cut 25 bp"], ["-H0", "July hold"]];
   const SPEEDS = [1, 10, 30, 60];
-  const ALARM_STATUSES = new Set(["reacted", "candidate_delay", "candidate_inconsistency"]);
+  const ALARM_STATUSES = new Set(["reacted", "alarm", "candidate_delay", "candidate_inconsistency"]);
   const MIN = 60000;
 
   const STATUS_TEXT = {
@@ -32,8 +36,11 @@
     cant_tell_illiquid: "Can't tell · illiquid",
     candidate_delay: "Possible delay",
     candidate_inconsistency: "Possible inconsistency",
+    // live only, before the 90-minute window closes (see tradio/live.py provisional())
+    alarm: "Alarm · moving",
+    watching: "Watching",
   };
-  const STATUS_ORDER = ["reacted", "candidate_delay", "candidate_inconsistency", "expected_no_reaction", "cant_tell_illiquid"];
+  const STATUS_ORDER = ["reacted", "alarm", "candidate_delay", "candidate_inconsistency", "expected_no_reaction", "watching", "cant_tell_illiquid"];
 
   const state = {
     view: null,          // event id or "compare"
@@ -44,6 +51,9 @@
     focus: {},           // event id -> focused market id
     fired: new Set(),    // alarm pulses already shown
     lastDraw: 0,
+    follow: true,        // LIVE view: keep the clock pinned to the newest data
+    liveTimer: null,
+    liveShellKey: null,
   };
 
   const $ = (id) => document.getElementById(id);
@@ -86,15 +96,17 @@
     }
   }
 
-  async function loadEvent(id) {
-    if (state.events[id]) return state.events[id];
+  async function loadEvent(id, fresh) {
+    if (state.events[id] && !fresh) return state.events[id];
     const base = DATA_ROOT + id + "/";
-    const [tl, an, ev] = await Promise.all([
+    const [tl, an, ev, bt] = await Promise.all([
       fetchJson(base + "timeline.json"),
       fetchJson(base + "analysis.json", true),
       fetchJson(base + "evidence.json", true),
+      id === "live" ? null : fetchJson(base + "backtest.json", true),
     ]);
     const prepared = prep(tl, an, ev);
+    prepared.desk = prepDesk(tl.desk || (bt && backtestDesk(bt)), prepared);
     state.events[id] = prepared;
     return prepared;
   }
@@ -144,11 +156,83 @@
     const kal = markets.filter((m) => m.isKalshi && m.a);
     const headline =
       kal.filter((m) => m.status === "reacted").sort((a, b) => Math.abs(b.a.move_ticks) - Math.abs(a.a.move_ticks))[0] ||
-      kal.slice().sort((a, b) => Math.abs(b.a.move_ticks || 0) - Math.abs(a.a.move_ticks || 0))[0] ||
+      kal.filter((m) => m.status === "alarm").sort((a, b) => a.alarm - b.alarm)[0] ||
+      kal.filter((m) => m.a.move_ticks).sort((a, b) => Math.abs(b.a.move_ticks) - Math.abs(a.a.move_ticks))[0] ||
+      kal.slice().sort((a, b) => b.tr.length - a.tr.length)[0] ||   // nothing has moved: most-traded contract
       markets[0];
 
-    const paragraphs = (tl.speech && tl.speech.paragraphs) || [];
-    return { tl, an, t0, ws, we, markets, byId, headline, paragraphs, hasAnalysis: !!an };
+    // A prepared text is released whole at T0; a live transcript arrives passage by passage,
+    // each with its own time `t`.
+    const paragraphs = ((tl.speech && tl.speech.paragraphs) || []).map((p) => ({ ...p, _t: p.t ? parseT(p.t) : t0 }));
+    const live = tl.live || null;
+    const liveNow = live ? parseT(live.now) : null;
+    // While live, leave room to the right of "now" so the line grows into the chart.
+    const xe = live ? Math.max(we, t0 + 30 * MIN, (liveNow || we) + 10 * MIN) : we;
+    return { tl, an, t0, ws, we, xe, markets, byId, headline, paragraphs, hasAnalysis: !!an, live, liveNow,
+             overTime: !!(tl.speech && tl.speech.arrives_over_time) };
+  }
+
+  // ---------- desk: orders and P&L (all numbers come from the files; nothing is computed here) ----------
+  function backtestDesk(bt) {
+    return { mode: "backtest", backtest: true, trades: bt.trades || [], skipped: bt.skipped || [],
+             learned_from: bt.learned_from || [], total_pnl: bt.total_pnl, capital: bt.capital,
+             note: `rules learned from ${(bt.learned_from || []).join(", ") || "no other events"} only (leave-one-out), real Kalshi prices, fees included` };
+  }
+
+  function prepDesk(d, E) {
+    if (!d) return null;
+    const trades = [], skipped = (d.skipped || []).map((x) => ({ label: x.label || x.market, why: x.why }));
+    for (const t of d.trades || []) {
+      if (t.skipped) {
+        skipped.push({ label: t.title || t.market, why: String(t.status || "").replace(/^skipped: (playbook: )?/, ""), t: parseT(t.t) });
+        continue;
+      }
+      const mid = t.market_id || t.market;
+      trades.push({
+        t: parseT(t.t || t.entry_t), mid, label: (E.byId[mid] || {}).label || t.label || t.title || t.market,
+        side: t.side, qty: t.qty, cost: t.cost, exitT: t.exit_t ? parseT(t.exit_t) : null,
+        pnlFinal: t.pnl != null ? t.pnl : t.pnl_at_exit, pnlNow: t.pnl_now, value: t.value,
+        status: t.status, sideFixed: t.side_fixed || (t.playbook && t.playbook.side_fixed), fees: t.fees,
+      });
+    }
+    return { mode: d.mode, backtest: !!d.backtest, note: d.note, trades, skipped, total: d.total_pnl, capital: d.capital };
+  }
+
+  const money = (x) => (x == null ? "—" : (x >= 0 ? "+$" : "−$") + Math.abs(x).toFixed(2));
+
+  function renderDesk(E, now) {
+    const el = $("desk");
+    if (!el) return;
+    const d = E.desk;
+    if (!d) { el.innerHTML = ""; return; }
+    const mode = d.backtest ? `<span class="chip indic">PLAYBOOK BACKTEST</span>`
+      : d.mode === "demo" ? `<span class="chip reacted">KALSHI DEMO · FAKE MONEY</span>`
+      : d.mode === "live" ? `<span class="chip candidate_inconsistency">LIVE · REAL MONEY</span>`
+      : `<span class="chip watching">DRY RUN</span>`;
+    const shown = d.trades.filter((t) => t.t <= now);
+    let rows = "";
+    for (const t of shown) {
+      const closed = t.exitT && now >= t.exitT;
+      const pnl = closed && t.pnlFinal != null ? t.pnlFinal : (d.backtest ? null : t.pnlNow);
+      const pnlTxt = pnl == null ? `<span class="muted">open${t.exitT ? `, exit ${fmtEtShort(t.exitT)}` : ""}</span>`
+        : `<b class="${pnl >= 0 ? "up" : "down"}">${money(pnl)}</b>${closed ? "" : ' <span class="muted">so far</span>'}`;
+      rows += `<div class="order" data-id="${esc(t.mid)}">
+        <span class="mono t">${fmtEtShort(t.t)}</span>
+        <span>BUY <b>${esc(String(t.side).toUpperCase())}</b> ×${t.qty} ${esc(t.label)} @ <span class="num">${cents(t.cost)}</span></span>
+        <span class="pnl">${pnlTxt}</span>
+        ${t.sideFixed ? `<div class="fix">side corrected by the playbook: ${esc(t.sideFixed)}</div>` : ""}
+      </div>`;
+    }
+    const sk = d.skipped.filter((x) => !x.t || x.t <= now);
+    const done = shown.filter((t) => t.exitT && now >= t.exitT && t.pnlFinal != null);
+    const total = done.length ? done.reduce((a, t) => a + t.pnlFinal, 0) : null;
+    const started = now >= E.t0;
+    el.innerHTML = `<div class="desk">
+      <div class="row"><b>Desk</b> ${mode}<span class="px">${total != null ? `<span class="${total >= 0 ? "up" : "down"}">${money(total)}</span> <span class="muted">closed</span>` : ""}</span></div>
+      ${rows || `<div class="muted">${started ? "No orders: the playbook hasn't found a trade." : "Waiting for the speech."}</div>`}
+      ${sk.length && started ? `<details><summary>${sk.length} skipped by the playbook</summary>${sk.map((x) => `<div class="skip"><b>${esc(x.label)}</b>: ${esc(x.why)}</div>`).join("")}</details>` : ""}
+      <div class="muted small">${esc(d.note || "")}</div>
+    </div>`;
   }
 
   // Latest quote whose candle has ENDED by time t (quote.t is the candle end), so the replay never peeks ahead.
@@ -226,7 +310,7 @@
     if (!wrap) return;
     const W = Math.max(320, wrap.clientWidth), H = Math.max(220, wrap.clientHeight);
     const L = 52, R = 14, T = 22, B = 26;
-    const x = (t) => L + ((t - E.ws) / (E.we - E.ws)) * (W - L - R);
+    const x = (t) => L + ((t - E.ws) / (E.xe - E.ws)) * (W - L - R);
     const y = yScale(m.lo, m.hi, m.tick, T, H - B);
     const until = Math.min(now, E.we);
     let g = "";
@@ -237,7 +321,7 @@
       g += `<text x="${L - 6}" y="${y(v) + 4}" fill="#8ea2ab" font-size="11" text-anchor="end" font-family="ui-monospace,Menlo,monospace">${cents(v)}</text>`;
     }
     // x labels every 15 min (ET)
-    for (let t = Math.ceil(E.ws / (15 * MIN)) * 15 * MIN; t <= E.we; t += 15 * MIN) {
+    for (let t = Math.ceil(E.ws / (15 * MIN)) * 15 * MIN; t <= E.xe; t += 15 * MIN) {
       g += `<line x1="${x(t)}" x2="${x(t)}" y1="${T}" y2="${H - B}" stroke="#16222a"/>`;
       g += `<text x="${x(t)}" y="${H - 8}" fill="#5d717b" font-size="11" text-anchor="middle" font-family="ui-monospace,Menlo,monospace">${fmtEtShort(t)}</text>`;
     }
@@ -250,7 +334,7 @@
     }
     // T0
     g += `<line x1="${x(E.t0)}" x2="${x(E.t0)}" y1="${T - 8}" y2="${H - B}" stroke="#e3edf0" stroke-dasharray="3 3"/>`;
-    g += `<text x="${x(E.t0) + 5}" y="${T - 8}" fill="#e3edf0" font-size="11">T0 · text released ${fmtEtShort(E.t0)} ET</text>`;
+    g += `<text x="${x(E.t0) + 5}" y="${T - 8}" fill="#e3edf0" font-size="11">T0 · ${E.overTime ? "speech starts" : "text released"} ${fmtEtShort(E.t0)} ET</text>`;
 
     // bid-ask band + midpoint
     const color = m.isKalshi ? "#22d3ee" : "#f0b429";
@@ -277,14 +361,38 @@
       g += `<text x="${x(t) + 4}" y="${T + 12 + i * 13}" fill="${c}" font-size="11">${label}</text>`;
     });
 
+    // live transcript: a tick on the top edge for every passage that was a surprise for this speaker
+    if (E.overTime) {
+      for (const p of E.paragraphs) {
+        if (p._t > now || !p.relevant || p.z == null || Math.abs(p.z) < 2) continue;
+        const c = p.z < 0 ? "#4f9dff" : "#f0b429";
+        g += `<path d="M${x(p._t) - 5},${T - 2}L${x(p._t) + 5},${T - 2}L${x(p._t)},${T + 7}Z" fill="${c}"><title>z ${signed(p.z, 1)}: ${esc((p.summary || p.text).slice(0, 80))}</title></path>`;
+      }
+    }
+
+    // desk orders on this contract: entry (and planned exit) in YES-price terms
+    for (const t of (E.desk ? E.desk.trades : [])) {
+      if (t.mid !== m.id || t.t > now || t.cost == null) continue;
+      const yp = t.side === "yes" ? t.cost : 1 - t.cost;
+      const cx = x(t.t), cy = y(yp);
+      g += `<path d="M${cx},${cy - 8}L${cx + 7},${cy}L${cx},${cy + 8}L${cx - 7},${cy}Z" fill="#ffffff" stroke="#0b1116" stroke-width="1.5"><title>BUY ${t.side.toUpperCase()} ×${t.qty} @ ${cents(t.cost)}</title></path>`;
+      g += `<text x="${cx + 10}" y="${cy - 10}" fill="#ffffff" font-size="11" font-weight="600">BUY ${t.side.toUpperCase()} ×${t.qty}</text>`;
+      if (t.exitT && now >= t.exitT && t.value != null) {
+        const ex = x(t.exitT), ey = y(t.side === "yes" ? t.value : 1 - t.value);
+        g += `<line x1="${cx}" y1="${cy}" x2="${ex}" y2="${ey}" stroke="#ffffff" stroke-dasharray="3 3" opacity=".7"/>`;
+        g += `<rect x="${ex - 5}" y="${ey - 5}" width="10" height="10" fill="#ffffff"/>`;
+        g += `<text x="${ex + 8}" y="${ey + 4}" fill="#ffffff" font-size="11" font-weight="600">exit ${money(t.pnlFinal)}</text>`;
+      }
+    }
+
     // now cursor
-    if (now >= E.ws && now <= E.we) g += `<line x1="${x(now)}" x2="${x(now)}" y1="${T}" y2="${H - B}" stroke="#22d3ee" opacity=".35"/>`;
+    if (now >= E.ws && now <= E.xe) g += `<line x1="${x(now)}" x2="${x(now)}" y1="${T}" y2="${H - B}" stroke="#22d3ee" opacity=".35"/>`;
 
     wrap.innerHTML = svgEl(W, H, g);
   }
 
   function sparkline(E, m, now, w = 260, h = 28) {
-    const x = (t) => ((t - E.ws) / (E.we - E.ws)) * w;
+    const x = (t) => ((t - E.ws) / (E.xe - E.ws)) * w;
     const y = yScale(m.lo, m.hi, m.tick, 2, h - 2, 4);
     const mids = m.q.filter((q) => q.mid != null).map((q) => ({ t: q.t, v: q.mid }));
     const until = Math.min(now, E.we);
@@ -314,15 +422,27 @@
           <div class="explain" id="explain"></div>
         </section>
         <section class="pane">
+          <div id="desk"></div>
           <h2>Markets · ${E.markets.length} tracked</h2>
           <div class="cards" id="cards"></div>
         </section>
       </main>`;
+    $("desk").addEventListener("click", (ev) => {
+      const o = ev.target.closest(".order");
+      if (!o) return;
+      state.focus[state.view] = o.dataset.id;
+      state.focusPinned = state.focusPinned || {};
+      state.focusPinned[state.view] = true;
+      draw(true);
+    });
     $("cards").addEventListener("click", (ev) => {
       const card = ev.target.closest(".card");
       if (!card) return;
-      if (ev.target.closest(".evlink")) { openEvidence(E, E.byId[card.dataset.id]); return; }
+      const cur = state.events[state.view] || E;
+      if (ev.target.closest(".evlink")) { openEvidence(cur, cur.byId[card.dataset.id]); return; }
       state.focus[state.view] = card.dataset.id;
+      state.focusPinned = state.focusPinned || {};
+      state.focusPinned[state.view] = true;
       draw(true);
     });
   }
@@ -333,11 +453,24 @@
     const h = E.headline;
     const a = h && h.a;
     let headline = "";
-    if (a) {
+    if (a && a.final_status_pending) {
+      headline = `<span class="headline">${esc(h.label)}${h.alarm ? `: alarm at <b class="num">${relMin(h.alarm - E.t0)}</b>` : ""} · <span class="chip ${a.status}">${STATUS_TEXT[a.status] || a.status}</span></span>`;
+    } else if (a) {
       const when = h.alarm ? `, alarm at ${relMin(h.alarm - E.t0)}` : "";
       headline = `<span class="headline">${esc(h.label)}: <b class="num">${cents(a.pre_mid)}</b> before T0, move <b class="num">${signed(a.move_ticks)} ticks</b>${when} · <span class="chip ${a.status}">${STATUS_TEXT[a.status] || a.status}</span></span>`;
     }
     const parts = STATUS_ORDER.filter((s) => counts[s]).map((s) => `<span><b class="num">${counts[s]}</b> ${STATUS_TEXT[s].toLowerCase()}</span>`);
+    if (E.live) {
+      const sim = E.live.kind === "simulated";
+      const age = Date.now() - parseT(E.live.updated_at);
+      const stale = !sim && age > STALE_MS;
+      const badge = sim
+        ? `<span class="chip indic">SIMULATED LIVE · ${esc(E.live.source || "")}</span>`
+        : stale ? `<span class="chip candidate_inconsistency">STALE · last update ${Math.round(age / 1000)}s ago, is tradio/live.py running?</span>`
+                : `<span class="chip live-chip"><span class="dot"></span>LIVE</span>`;
+      if (parts.length) parts.unshift(`<span style="color:var(--faint)">so far (final verdicts at T0+90m):</span>`);
+      headline = badge + (headline ? " " + headline : "");
+    }
     $("summary").innerHTML = `<b>${esc(E.tl.title)}</b>${headline}<span style="margin-left:auto"></span>${parts.join("")}` +
       (E.hasAnalysis ? "" : `<span class="chip cant_tell_illiquid">analysis.json missing</span>`);
   }
@@ -347,6 +480,7 @@
     const released = now >= E.t0;
     const src = E.tl.speech && E.tl.speech.source_url;
     const speaker = (E.tl.speaker || "").replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+    if (E.overTime) return renderLiveSpeech(E, now, speaker);
     let html = `<h2>Speech · ${esc(speaker)}</h2>
       <div class="speech-meta">Prepared text released whole at <b class="num">${fmtEt(E.t0)} ET</b> (${fmtUtc(E.t0)} UTC). ${src ? `<a href="${esc(src)}" target="_blank" rel="noopener">federalreserve.gov ↗</a>` : ""}</div>`;
     if (!released) {
@@ -381,6 +515,36 @@
     html += `<div class="group-title">Full text · blue = dovish, amber = hawkish, grey = not about policy</div>`;
     html += ps.filter((p) => p !== top).map((p) => one(p, false)).join("");
     pane.innerHTML = html;
+  }
+
+  function paraHtml(p, pinned, withTime) {
+    const tint = (z) => {
+      if (z == null) return "var(--line-2)";
+      const k = Math.min(1, Math.abs(z) / 3);
+      return z < 0 ? `rgba(79,157,255,${0.25 + 0.75 * k})` : `rgba(240,180,41,${0.25 + 0.75 * k})`;
+    };
+    const z = p.z != null ? `z ${signed(p.z, 1)} · stance ${signed(p.stance, 2)}` : (p.role && p.role !== "speaker" ? esc(p.role) : "not scored");
+    const when = withTime ? `<span class="t">${fmtEt(p._t)} ET</span> ` : "";
+    return `<div class="para ${p.relevant ? "" : "irrelevant"} ${pinned ? "pinned" : ""}" style="border-left-color:${p.relevant ? tint(p.z) : "var(--line)"}"><span class="z">${z}</span>${when}${esc(p.text)}</div>`;
+  }
+
+  function renderLiveSpeech(E, now, speaker) {
+    const sp = E.tl.speech || {};
+    const heard = E.paragraphs.filter((p) => p._t <= now);
+    let html = `<h2>Speech · ${esc(speaker || sp.speaker || "")} · live transcript</h2>
+      <div class="speech-meta">Transcribed and scored as it's spoken by MarketPulse (<span class="mono">live.py</span>), z against ${esc((speaker || "the speaker").split(" ").pop())}'s own history${sp.baseline ? ` (n = ${sp.baseline.n})` : ""}. ${sp.status ? `Status: <b>${esc(sp.status)}</b>.` : ""}</div>`;
+    if (!heard.length) {
+      html += `<div class="pending-note">No speech passages yet. Start the live scorer on the laptop:<br><span class="mono">python live.py --speaker &lt;name&gt; --no-prewarm --mode dry</span><br>Passages appear here as they're scored, newest on top. Markets on the right update either way.</div>`;
+      $("speechPane").innerHTML = html;
+      return;
+    }
+    const surprises = heard.filter((p) => p.relevant && p.z != null && Math.abs(p.z) >= 2);
+    const top = heard.filter((p) => p.relevant && p.z != null).sort((a, b) => Math.abs(b.z) - Math.abs(a.z))[0];
+    html += `<div class="released">● ${heard.length} passages heard · ${surprises.length} surprise${surprises.length === 1 ? "" : "s"} (|z| ≥ 2)</div>`;
+    if (top) html += `<div class="group-title">Biggest surprise so far</div>` + paraHtml(top, true, true);
+    html += `<div class="group-title">Newest first · blue = dovish, amber = hawkish, grey = reporter / not scored</div>`;
+    html += heard.slice().sort((a, b) => b._t - a._t).map((p) => paraHtml(p, false, true)).join("");
+    $("speechPane").innerHTML = html;
   }
 
   function renderChartHead(E, m, now) {
@@ -527,6 +691,34 @@
     $("drawer").classList.add("open");
     $("drawer").setAttribute("aria-hidden", "false");
   }
+  async function openPlaybook() {
+    const pb = await fetchJson(DATA_ROOT + "playbook.json", true);
+    $("drawerTitle").textContent = "Playbook · learned from past speeches";
+    if (!pb) {
+      $("drawerBody").innerHTML = `<p class="src">No playbook yet. Run <span class="mono">python tradio/playbook.py</span>.</p>`;
+    } else {
+      const r = pb.rules, row = (name, k, fmt) => `<tr><th>${name}</th><td><b>${fmt ? fmt(r[k].value) : esc(JSON.stringify(r[k].value))}</b><div class="src">${esc(r[k].why)}</div></td></tr>`;
+      let h = `<p class="src">${esc(pb.caveat)} Built ${esc(pb.built_at)}.</p><h4>Rules the desk follows (<span class="mono">python live.py --playbook</span>)</h4><table>
+        ${row("Trade only if |z| ≥", "min_abs_z", (v) => v)}
+        ${row("Contract types", "trade_kinds", (v) => v.join(", ").replace(/_/g, " "))}
+        ${row("Liquidity", "tradeable_liquidity", (v) => v.join(", "))}
+        ${row("Planned exit after", "exit_after_min", (v) => v + " min")}
+        ${row("Skip if already moved", "skip_if_alarmed", (v) => (v ? "yes" : "no"))}
+        ${row("Direction right", "direction_hit_rate", (v) => (v == null ? "—" : Math.round(v * 100) + "%"))}
+        ${row("Hold side follows the regime", "hold_side_by_regime", (v) => (v ? "yes" : "no"))}
+      </table><h4>What it learned from</h4><table><tr><th>event</th><th>top z</th><th>direction</th><th>market leaning</th><th>reacted</th></tr>` +
+        pb.events.map((o) => `<tr><td>${esc(o.event)}</td><td>${signed(o.top_z, 2)}</td><td>${esc(o.direction)}</td><td>${esc(o.regime || "—")}</td><td>${o.reacted ? "yes" : "no"}</td></tr>`).join("") + `</table>`;
+      if (pb.backtests) {
+        h += `<h4>Backtest, leave-one-out (each event traded with rules learned from the others)</h4><table><tr><th>event</th><th>trades</th><th>P&amp;L</th><th>capital</th></tr>` +
+          pb.backtests.map((b) => `<tr><td>${esc(b.event)}</td><td>${b.trades}</td><td>${money(b.total_pnl)}</td><td>$${(b.capital || 0).toFixed(2)}</td></tr>`).join("") +
+          `</table><p class="src">Real Kalshi 1-minute prices; entry 1 min after T0 at the ask, exit at the bid, Kalshi taker fees on both legs. Not trading advice.</p>`;
+      }
+      $("drawerBody").innerHTML = h;
+    }
+    $("drawer").classList.add("open");
+    $("drawer").setAttribute("aria-hidden", "false");
+  }
+
   function closeDrawer() {
     $("drawer").classList.remove("open");
     $("drawer").setAttribute("aria-hidden", "true");
@@ -536,17 +728,28 @@
   function currentRange() {
     if (state.view === "compare") return [-30 * MIN, 90 * MIN];
     const E = state.events[state.view];
+    if (E && E.live) return [E.ws - E.t0, (E.liveNow || E.we) - E.t0];
     return E ? [E.ws - E.t0, E.we - E.t0] : [-60 * MIN, 90 * MIN];
   }
 
-  function setRel(rel) {
+  function setRel(rel, keepFollow) {
     const [a, b] = currentRange();
     state.rel = Math.max(a, Math.min(b, rel));
+    if (state.view === "live" && !keepFollow) {
+      state.follow = state.rel >= b - 1000;
+      setPlaying(false);
+    }
     if (state.rel >= b) setPlaying(false);
     draw(true);
   }
 
   function setPlaying(p) {
+    if (state.view === "live") {
+      state.playing = false;
+      $("btnPlay").textContent = state.follow ? "● Live" : "Go live";
+      $("btnPlay").classList.toggle("on", state.follow);
+      return;
+    }
     state.playing = p;
     $("btnPlay").textContent = p ? "❚❚ Pause" : "▶ Play";
     $("btnPlay").classList.toggle("on", p);
@@ -566,7 +769,7 @@
         if (label) lastPct = p;
         html += `<span class="mark alarm" style="left:${p}%" title="${esc(m.label)}: alarm ${relMin(r)}">${label}</span>`;
       }
-      html += `<span class="mark" style="left:2%">${fmtEtShort(E.ws)} ET</span><span class="mark" style="left:98%">${fmtEtShort(E.we)} ET</span>`;
+      html += `<span class="mark" style="left:2%">${fmtEtShort(E.ws)} ET</span><span class="mark" style="left:98%">${E.live ? "now" : fmtEtShort(E.we) + " ET"}</span>`;
     }
     $("marks").innerHTML = html;
     const s = $("scrub");
@@ -598,6 +801,7 @@
     renderSpeech(E, now);
     renderChartHead(E, m, now);
     drawMainChart(E, m, now);
+    renderDesk(E, now);
     renderCards(E, now);
   }
 
@@ -621,21 +825,26 @@
   }
 
   function renderTabs() {
-    const all = [...EVENTS, COMPARE];
-    $("tabs").innerHTML = all.map((e) => `<button class="tab ${e.id === "compare" ? "compare" : ""} ${state.view === e.id ? "on" : ""}" data-id="${e.id}"><b>${esc(e.short)}</b><small>${esc(e.sub)}</small></button>`).join("");
+    const all = [LIVE, ...EVENTS, COMPARE];
+    $("tabs").innerHTML = all.map((e) => `<button class="tab ${e.id === "compare" ? "compare" : ""} ${e.id === "live" ? "live" : ""} ${state.view === e.id ? "on" : ""}" data-id="${e.id}"><b>${esc(e.short)}</b><small>${esc(e.sub)}</small></button>`).join("");
   }
 
   async function show(id) {
     closeDrawer();
+    stopLive();
     state.view = id;
+    $("liveControls").hidden = id !== "live";
     renderTabs();
+    $("speeds").hidden = id === "live";
+    if (id === "live") { if (location.hash !== "#live") history.replaceState(null, "", "#live"); return startLive(); }
+    setPlaying(false);
     try {
       if (id === "compare") {
         await Promise.all(COMPARE_PAIR.map(loadEvent));
         renderCompareShell();
       } else {
         const E = await loadEvent(id);
-        const pref = EVENTS.find((e) => e.id === id).focus;
+        const pref = (EVENTS.find((e) => e.id === id) || {}).focus;
         if (pref && E.byId[pref]) E.headline = E.byId[pref];
         if (!state.focus[id]) state.focus[id] = E.headline.id;
         renderReplayShell(E);
@@ -650,6 +859,155 @@
     setRel(state.rel);
   }
 
+  // ---------- live controls (only when served by tradio/serve.py) ----------
+  const ctl = { ok: null, status: null, built: false, error: "", seq: 0 };
+
+  async function api(path, body) {
+    const r = await fetch(path, {
+      method: body ? "POST" : "GET", cache: "no-store",
+      headers: { "X-Tradio": "1", "Content-Type": "application/json" },
+      body: body ? JSON.stringify(body) : undefined,
+    });
+    const data = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(data.error || `HTTP ${r.status}`);
+    return data;
+  }
+
+  async function refreshControls() {
+    const box = $("liveControls");
+    box.hidden = state.view !== "live";
+    if (state.view !== "live") return;
+    const seq = ctl.seq;
+    let st = null;
+    try { st = await api("/api/status"); } catch (e) { st = null; }
+    if (seq !== ctl.seq) return;           // a Start/Stop happened meanwhile; its answer is newer
+    ctl.status = st || ctl.status;
+    ctl.ok = !!st && st.server === "tradio";
+    renderControls();
+  }
+
+  function renderControls() {
+    const box = $("liveControls");
+    if (!ctl.ok) {
+      ctl.built = false;
+      box.innerHTML = `<span class="muted">Want Start/Stop buttons here? Run the site with <span class="mono">python3 tradio/serve.py</span> instead of <span class="mono">python3 -m http.server</span>.</span>`;
+      return;
+    }
+    const st = ctl.status, k = st.keys;
+    if (!ctl.built) {
+      const opt = (v, t, dis) => `<option value="${esc(v)}" ${dis ? "disabled" : ""}>${esc(t)}</option>`;
+      box.innerHTML = `
+        <div class="ctl-group"><b>Practice</b>
+          <select id="ctlEvent">${st.events.map((e) => opt(e, e)).join("")}</select>
+          <select id="ctlSpeed">${st.speeds.map((v) => `<option value="${v}" ${v === 30 ? "selected" : ""}>${v}×</option>`).join("")}</select>
+          <button class="btn" id="ctlPractice">▶ Start practice</button></div>
+        <div class="ctl-group"><b>Real speech</b>
+          <select id="ctlSpeaker">${st.speakers.map((v) => opt(v, v.replace(/_/g, " "))).join("")}</select>
+          <select id="ctlMode">
+            ${opt("dry", "Guide only (no orders)")}
+            ${opt("demo", "Trade: Kalshi demo (fake money)" + (k.kalshi_demo ? "" : " · needs demo keys"), !k.kalshi_demo)}
+            ${opt("live", "Trade: REAL MONEY" + (!st.allow_live ? " · off (TRADIO_ALLOW_LIVE=1)" : !k.kalshi_live ? " · needs Kalshi keys" : ""), !(st.allow_live && k.kalshi_live))}
+          </select>
+          <label><input type="checkbox" id="ctlTranscribe" checked> transcribe</label>
+          <input id="ctlUrl" placeholder="stream (default: Fed live broadcast)" size="28">
+          <input id="ctlConfirm" placeholder="type LIVE" size="9" hidden>
+          <button class="btn" id="ctlLive">▶ Start live</button></div>
+        <button class="btn stop" id="ctlStop">■ Stop</button>
+        <div class="ctl-status" id="ctlStatus"></div>`;
+      $("ctlMode").addEventListener("change", () => { $("ctlConfirm").hidden = $("ctlMode").value !== "live"; });
+      $("ctlPractice").addEventListener("click", () => startSession({ kind: "practice", event: $("ctlEvent").value, speed: +$("ctlSpeed").value }));
+      $("ctlLive").addEventListener("click", () => startSession({
+        kind: "live", speaker: $("ctlSpeaker").value, mode: $("ctlMode").value, transcribe: $("ctlTranscribe").checked,
+        url: $("ctlUrl").value.trim() || undefined, confirm: $("ctlConfirm").value.trim() }));
+      $("ctlStop").addEventListener("click", async () => { ctl.seq++; try { ctl.status = await api("/api/stop", {}); ctl.error = ""; } catch (e) { ctl.error = e.message; } renderControls(); });
+      ctl.built = true;
+    }
+    const procs = Object.entries(st.processes || {});
+    const missing = [!k.gemini && "gemapi.txt", !k.elevenlabs && "elevenapi.txt", !k.kalshi_demo && "Kalshi demo keys"].filter(Boolean);
+    $("ctlStatus").innerHTML =
+      (ctl.error ? `<div class="err">${esc(ctl.error)}</div>` : "") +
+      (procs.length ? procs.map(([n, p]) => `<details><summary><span class="chip ${p.running ? "reacted" : "watching"}">${p.running ? "running" : "stopped" + (p.exit_code ? ` (exit ${p.exit_code})` : "")}</span> <b>${esc(n)}</b> · ${esc(p.label)} <span class="muted mono">${esc((p.log.slice(-1)[0] || "").slice(0, 90))}</span></summary><pre>${esc(p.log.join("\n"))}</pre></details>`).join("")
+        : `<span class="muted">Nothing running.${missing.length ? " Missing: " + missing.join(", ") + "." : ""}</span>`);
+  }
+
+  async function startSession(req) {
+    ctl.seq++;
+    ctl.error = "";
+    try {
+      ctl.status = await api("/api/start", req);
+      state.liveShellKey = null;
+      state.follow = true;
+      state.focusPinned = {};
+      setTimeout(pollLive, 1500);
+    } catch (e) {
+      ctl.error = e.message;
+    }
+    renderControls();
+  }
+
+  // ---------- live view ----------
+  function stopLive() {
+    if (state.liveTimer) clearInterval(state.liveTimer);
+    state.liveTimer = null;
+    state.liveShellKey = null;
+  }
+
+  function startLive() {
+    state.follow = true;
+    setPlaying(false);
+    pollLive();
+    state.liveTimer = setInterval(pollLive, LIVE_POLL_MS);
+  }
+
+  async function pollLive() {
+    refreshControls();
+    let E;
+    try {
+      E = await loadEvent("live", true);
+    } catch (err) {
+      if (state.view !== "live") return;
+      state.events.live = null;
+      state.liveShellKey = null;
+      $("summary").innerHTML = `<b>LIVE</b><span class="chip watching">nothing running</span>`;
+      $("view").innerHTML = liveIdleHtml();
+      $("marks").innerHTML = "";
+      return;
+    }
+    if (state.view !== "live") return;
+    const key = E.tl.t0 + "|" + E.markets.map((m) => m.id).join(",");
+    // Follow the story (first alarm, then the biggest reaction) unless the viewer picked a market.
+    const pinned = state.focusPinned && state.focusPinned.live && E.byId[state.focus.live];
+    if (!pinned) state.focus.live = E.headline && E.headline.id;
+    if (state.liveShellKey !== key) { renderReplayShell(E); state.liveShellKey = key; }
+    renderSummary(E);
+    renderMarks();
+    if (state.follow) state.rel = (E.liveNow || E.we) - E.t0;
+    setRel(state.rel, true);
+    setPlaying(false);
+  }
+
+  function liveIdleHtml() {
+    return `<div class="idle">
+      <h3>No live session running</h3>
+      <p><b>Use the buttons above</b> (Practice replays a past speech; Real speech listens, scores and, if you pick it, trades). Or run the commands yourself:</p>
+      <p>The LIVE tab shows a Fed speech as it happens: the transcript scored against the speaker's own history, next to Kalshi's live Fed-decision prices, with the same reaction checks as the replays. When it's over, it becomes one more History tab.</p>
+      <ol>
+        <li><b>Score the speech</b> (MarketPulse, dry, never trades):<br><span class="mono">python speechtxt.py --url https://www.federalreserve.gov/live-broadcast.htm</span><br><span class="mono">python live.py --speaker christopher_waller --no-prewarm --mode dry</span><br>or let it <b>trade on Kalshi's demo exchange</b> by the learned playbook:<br><span class="mono">python live.py --speaker christopher_waller --fast --playbook --mode demo --venues kalshi</span></li>
+        <li><b>Stream the market tape</b> into this page:<br><span class="mono">python tradio/live.py --speaker christopher_waller --t0 now</span></li>
+        <li><b>Afterwards, keep it</b> as a history event:<br><span class="mono">python tradio/live.py archive waller20261015 --title "Waller, 2026-10-15"</span></li>
+      </ol>
+      <p><b>No speech on right now?</b> Rehearse with a past event replayed as if live (offline, clearly labelled SIMULATED):<br><span class="mono">python tradio/live.py --simulate bowman20250623 --speed 30</span></p>
+      <p class="muted">This page checks for <span class="mono">data/tradio/live/</span> every ${LIVE_POLL_MS / 1000} s and starts by itself.</p>
+    </div>`;
+  }
+
+  async function loadArchivedEvents() {
+    const extra = await fetchJson(DATA_ROOT + "events.json", true);
+    for (const e of Array.isArray(extra) ? extra : []) {
+      if (e && e.id && !EVENTS.some((x) => x.id === e.id)) EVENTS.push({ id: e.id, short: e.short || e.id, sub: e.sub || "recorded live", focus: e.focus });
+    }
+  }
+
   function init() {
     $("speeds").innerHTML = SPEEDS.map((s) => `<button class="btn ${s === state.speed ? "on" : ""}" data-speed="${s}">${s}×</button>`).join(" ");
     $("speeds").addEventListener("click", (e) => {
@@ -660,6 +1018,7 @@
     });
     $("tabs").addEventListener("click", (e) => { const b = e.target.closest(".tab"); if (b) show(b.dataset.id); });
     $("btnPlay").addEventListener("click", () => {
+      if (state.view === "live") { state.follow = true; pollLive(); return; }
       const [, b] = currentRange();
       if (!state.playing && state.rel >= b) state.rel = -10 * MIN;
       setPlaying(!state.playing);
@@ -669,6 +1028,7 @@
     $("btnT0").addEventListener("click", () => { setPlaying(false); setRel(MIN); });
     $("scrub").addEventListener("input", (e) => setRel(+e.target.value));
     $("drawerClose").addEventListener("click", closeDrawer);
+    $("btnPlaybook").addEventListener("click", openPlaybook);
     document.addEventListener("keydown", (e) => {
       if (e.target.tagName === "INPUT" && e.target.type !== "range") return;
       if (e.key === " ") { e.preventDefault(); $("btnPlay").click(); }
@@ -680,10 +1040,12 @@
     window.addEventListener("resize", () => draw(true));
     window.addEventListener("hashchange", () => { const id = location.hash.slice(1); if (id && id !== state.view) show(id); });
 
-    const start = location.hash.slice(1);
-    const valid = [...EVENTS, COMPARE].some((e) => e.id === start);
-    show(valid ? start : EVENTS[0].id);
-    requestAnimationFrame(tick);
+    loadArchivedEvents().finally(() => {
+      const start = location.hash.slice(1);
+      const valid = [LIVE, ...EVENTS, COMPARE].some((e) => e.id === start);
+      show(valid ? start : EVENTS[0].id);
+      requestAnimationFrame(tick);
+    });
   }
 
   init();

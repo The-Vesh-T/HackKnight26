@@ -31,9 +31,14 @@ doc (ask Devesh for the link). This file is the short version.
    contradictory values depending on the query window. Never use it for timing claims.
 3. **Speech text arrives all at once at T0.** Bowman and Waller released prepared texts.
    Never animate the market reacting to sentences "as she spoke".
-4. **No trading in Tradio.** Do not import or modify `kalshi_trader.py`,
-   `polymarket_client.py` order code, `manual_orders.py`, `trading_common.py`,
-   `control_worker.py`. Tradio is read-only market data.
+4. **Trading only through the MarketPulse desk, demo money by default** (team decision,
+   2026-10-09). Tradio's own scripts (`tradio/*.py`) never place orders and never import
+   `kalshi_trader.py`, `polymarket_client.py`, `manual_orders.py`, `trading_common.py` or
+   `control_worker.py`. Orders come only from `live.py --playbook`, which asks
+   `tradio/playbook.py` which trades its learned rules allow. Use `--mode demo` (Kalshi's
+   fake-money exchange) for building and the demo; real money stays behind the existing
+   LIVE opt-ins and is the operator's call, never switched on in code. Don't change
+   `kalshi_trader.py`, `trading_common.py` or the risk limits.
 5. **No keys in git.** Keys stay in the gitignored `*.txt` files. Kalshi/Polymarket
    historical endpoints we use need no auth.
 6. **Times:** data files store UTC ISO 8601 (`2025-06-23T14:00:00Z`). The UI shows ET too.
@@ -65,6 +70,13 @@ doc (ask Devesh for the link). This file is the short version.
   T0 14:00:00Z, Kalshi September 2026 decision contracts). All spot checks pass; quote
   times are confirmed to be the END of each 1-minute candle (see `tradio/data/NOTES.md`).
   Contract labels look like "Sep 2026: hike 25 bp". Warsh's stance baseline already exists.
+
+- **Live + trading (added after Gate 3):** `tradio/live.py` feeds the LIVE tab (live Kalshi
+  tape + MarketPulse's scored transcript; `--simulate` replays a past event offline;
+  `archive` saves a session as a history event and rebuilds the playbook).
+  `tradio/playbook.py` learns trading rules from every event and writes a leave-one-out
+  `backtest.json` per event; `python live.py --fast --playbook --mode demo --venues kalshi`
+  trades by those rules on Kalshi's demo exchange.
 
 ## Who owns what
 
