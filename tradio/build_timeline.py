@@ -27,11 +27,29 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from tradio.common import (DATA_DIR, WEB_DATA_DIR, iso_from_unix, load_events,  # noqa: E402
                            parse_ts, raw_dir, read_json, to_unix, write_json)
 
-KALSHI_LABELS = {
-    "H26": "July: hike >25 bp", "H25": "July: hike 25 bp", "H0": "July: hold",
-    "C25": "July: cut 25 bp", "C26": "July: cut >25 bp",
-    "T0": "2025: 0 cuts", "T1": "2025: 1 cut", "T2": "2025: 2 cuts", "T3": "2025: 3 cuts",
-}
+DECISION_OUTCOMES = {"H26": "hike >25 bp", "H25": "hike 25 bp", "H0": "hold",
+                     "C25": "cut 25 bp", "C26": "cut >25 bp"}
+MONTHS = {"JAN": "Jan", "FEB": "Feb", "MAR": "Mar", "APR": "Apr", "MAY": "May", "JUN": "Jun",
+          "JUL": "Jul", "AUG": "Aug", "SEP": "Sep", "OCT": "Oct", "NOV": "Nov", "DEC": "Dec"}
+
+
+def kalshi_label(ticker: str) -> str:
+    """KXFEDDECISION-25JUL-C25 -> 'Jul 2025: cut 25 bp'; KXRATECUTCOUNT-25DEC31-T2 ->
+    '2025: 2 cuts'; KXRATEHIKE-2026-4PLUS -> '2026: 4+ hikes'. Falls back to the ticker."""
+    parts = ticker.split("-")
+    try:
+        if parts[0] == "KXFEDDECISION":
+            yy, mon = parts[1][:2], parts[1][2:5]
+            return f"{MONTHS[mon]} 20{yy}: {DECISION_OUTCOMES[parts[2]]}"
+        if parts[0] == "KXRATECUTCOUNT":
+            n = int(parts[2].lstrip("T"))
+            return f"20{parts[1][:2]}: {n} cut{'s' if n != 1 else ''}"
+        if parts[0] == "KXRATEHIKE":
+            n = parts[2].replace("PLUS", "+")
+            return f"{parts[1]}: {n} hike{'' if n == '1' else 's'}"
+    except (IndexError, KeyError, ValueError):
+        pass
+    return ticker
 
 
 # ------------------------------------------------------------------ parsing helpers
@@ -170,7 +188,7 @@ def build(event_id: str, cfg: dict, spot: list) -> list:
         for ticker in tickers:
             mid = f"kalshi:{ticker}"
             markets.append({"id": mid, "venue": "kalshi", "ticker": ticker,
-                            "label": KALSHI_LABELS.get(ticker.rsplit("-", 1)[-1], ticker),
+                            "label": kalshi_label(ticker),
                             "exposure": exposure, "indicative": False, "tick": 0.01})
             tr = read_json(os.path.join(rdir, f"kalshi_trades_{ticker}.json"))
             cr = read_json(os.path.join(rdir, f"kalshi_candles_{ticker}.json"))

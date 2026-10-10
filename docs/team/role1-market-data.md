@@ -51,8 +51,11 @@ roles 2 and 3 can build on. You are the source of truth for every price on scree
    - `-C25` candle 14:30: bid 0.21 / ask 0.22. `-H0` candle 14:41: 0.77 / 0.78
    - Waller: `-C25` first trade at 0.05, 2025-07-17T22:35:04Z; `-H0` first 0.94 at 22:35:00Z
 
-6. After Gate 1: give role 4 a tiny `evidence.json` per event (the raw trade/candle rows
-   behind every number the page shows) for the evidence drawer.
+6. Done: `python tradio/build_evidence.py` writes `evidence.json` per event (raw candles and
+   trades behind the key facts) into `tradio/data/<event>/` and `web/data/tradio/<event>/`.
+   Third event added: `warsh20260828` (Warsh, Jackson Hole, 10:00 a.m. EDT). Its markets are
+   past Kalshi's historical cutoff, so `ingest_markets.py` now picks historical or live
+   endpoints automatically.
 7. After Gate 3, only if the team agrees: pull data for the next candidate events
    (Powell Jackson Hole 2025-08-22, Powell 2025-10-29 press conference) and the
    placebo windows role 2 needs.

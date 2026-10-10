@@ -1,0 +1,1364 @@
+{
+ "event_id": "waller20250717",
+ "t0": "2025-07-17T22:30:00Z",
+ "markets": [
+  {
+   "market": "kalshi:KXFEDDECISION-25JUL-H26",
+   "label": "Jul 2025: hike >25 bp",
+   "venue": "kalshi",
+   "pre_event": {
+    "quote": {
+     "t": "2025-07-17T22:30:00Z",
+     "market": "kalshi:KXFEDDECISION-25JUL-H26",
+     "bid": 0.0,
+     "ask": 0.01,
+     "mid": 0.005,
+     "imputed": true,
+     "volume": 0
+    },
+    "raw_candle": null
+   },
+   "first_quote_change": null,
+   "first_trade_outside_spread": null,
+   "biggest_trades": [],
+   "end_of_window": {
+    "quote": {
+     "t": "2025-07-18T00:00:00Z",
+     "market": "kalshi:KXFEDDECISION-25JUL-H26",
+     "bid": 0.0,
+     "ask": 0.01,
+     "mid": 0.005,
+     "imputed": true,
+     "volume": 0
+    },
+    "raw_candle": null
+   },
+   "source": {
+    "candles": {
+     "endpoint": "https://api.elections.kalshi.com/trade-api/v2/historical/markets/{ticker}/candlesticks",
+     "start_ts": 1752784200,
+     "end_ts": 1752800400,
+     "period_interval": 1,
+     "raw_file": "tradio/data/waller20250717/raw/kalshi_candles_KXFEDDECISION-25JUL-H26.json"
+    },
+    "trades": {
+     "endpoint_hint": "https://api.elections.kalshi.com/trade-api/v2/historical/trades",
+     "min_ts": 1752787800,
+     "max_ts": 1752796800,
+     "raw_file": "tradio/data/waller20250717/raw/kalshi_trades_KXFEDDECISION-25JUL-H26.json"
+    },
+    "note": "Quote time = END of the 1-minute candle (verified: candle volume equals trades in the minute before end_period_ts)."
+   }
+  },
+  {
+   "market": "kalshi:KXFEDDECISION-25JUL-H25",
+   "label": "Jul 2025: hike 25 bp",
+   "venue": "kalshi",
+   "pre_event": {
+    "quote": {
+     "t": "2025-07-17T22:30:00Z",
+     "market": "kalshi:KXFEDDECISION-25JUL-H25",
+     "bid": 0.0,
+     "ask": 0.01,
+     "mid": 0.005,
+     "imputed": true,
+     "volume": 0
+    },
+    "raw_candle": null
+   },
+   "first_quote_change": null,
+   "first_trade_outside_spread": null,
+   "biggest_trades": [],
+   "end_of_window": {
+    "quote": {
+     "t": "2025-07-18T00:00:00Z",
+     "market": "kalshi:KXFEDDECISION-25JUL-H25",
+     "bid": 0.0,
+     "ask": 0.01,
+     "mid": 0.005,
+     "imputed": true,
+     "volume": 0
+    },
+    "raw_candle": null
+   },
+   "source": {
+    "candles": {
+     "endpoint": "https://api.elections.kalshi.com/trade-api/v2/historical/markets/{ticker}/candlesticks",
+     "start_ts": 1752784200,
+     "end_ts": 1752800400,
+     "period_interval": 1,
+     "raw_file": "tradio/data/waller20250717/raw/kalshi_candles_KXFEDDECISION-25JUL-H25.json"
+    },
+    "trades": {
+     "endpoint_hint": "https://api.elections.kalshi.com/trade-api/v2/historical/trades",
+     "min_ts": 1752787800,
+     "max_ts": 1752796800,
+     "raw_file": "tradio/data/waller20250717/raw/kalshi_trades_KXFEDDECISION-25JUL-H25.json"
+    },
+    "note": "Quote time = END of the 1-minute candle (verified: candle volume equals trades in the minute before end_period_ts)."
+   }
+  },
+  {
+   "market": "kalshi:KXFEDDECISION-25JUL-H0",
+   "label": "Jul 2025: hold",
+   "venue": "kalshi",
+   "pre_event": {
+    "quote": {
+     "t": "2025-07-17T22:30:00Z",
+     "market": "kalshi:KXFEDDECISION-25JUL-H0",
+     "bid": 0.95,
+     "ask": 0.96,
+     "mid": 0.955,
+     "imputed": false,
+     "volume": 0
+    },
+    "raw_candle": {
+     "end_period_ts": 1752791400,
+     "open_interest": "4471569.00",
+     "price": {
+      "close": null,
+      "high": null,
+      "low": null,
+      "mean": null,
+      "open": null,
+      "previous": "0.9500"
+     },
+     "volume": "0.00",
+     "yes_ask": {
+      "close": "0.9600",
+      "high": "0.9600",
+      "low": "0.9600",
+      "open": "0.9600"
+     },
+     "yes_bid": {
+      "close": "0.9500",
+      "high": "0.9500",
+      "low": "0.9500",
+      "open": "0.9500"
+     }
+    }
+   },
+   "first_quote_change": {
+    "quote": {
+     "t": "2025-07-17T22:34:00Z",
+     "market": "kalshi:KXFEDDECISION-25JUL-H0",
+     "bid": 0.94,
+     "ask": 0.96,
+     "mid": 0.95,
+     "imputed": false,
+     "volume": 46378
+    },
+    "raw_candle": {
+     "end_period_ts": 1752791640,
+     "open_interest": "4614305.00",
+     "price": {
+      "close": "0.9500",
+      "high": "0.9500",
+      "low": "0.9500",
+      "mean": "0.9500",
+      "open": "0.9500",
+      "previous": "0.9500"
+     },
+     "volume": "46378.00",
+     "yes_ask": {
+      "close": "0.9600",
+      "high": "0.9600",
+      "low": "0.9600",
+      "open": "0.9600"
+     },
+     "yes_bid": {
+      "close": "0.9400",
+      "high": "0.9500",
+      "low": "0.9400",
+      "open": "0.9500"
+     }
+    },
+    "previous_quote": {
+     "t": "2025-07-17T22:33:00Z",
+     "market": "kalshi:KXFEDDECISION-25JUL-H0",
+     "bid": 0.95,
+     "ask": 0.96,
+     "mid": 0.955,
+     "imputed": false,
+     "volume": 0
+    },
+    "previous_raw_candle": {
+     "end_period_ts": 1752791580,
+     "open_interest": "4571366.00",
+     "price": {
+      "close": null,
+      "high": null,
+      "low": null,
+      "mean": null,
+      "open": null,
+      "previous": "0.9500"
+     },
+     "volume": "0.00",
+     "yes_ask": {
+      "close": "0.9600",
+      "high": "0.9600",
+      "low": "0.9600",
+      "open": "0.9600"
+     },
+     "yes_bid": {
+      "close": "0.9500",
+      "high": "0.9500",
+      "low": "0.9500",
+      "open": "0.9500"
+     }
+    },
+    "minutes_after_t0": 4.0
+   },
+   "first_trade_outside_spread": {
+    "trade": {
+     "t": "2025-07-17T22:35:00.861847Z",
+     "market": "kalshi:KXFEDDECISION-25JUL-H0",
+     "price": 0.94,
+     "size": 500,
+     "taker_side": "no"
+    },
+    "raw_trade": {
+     "count_fp": "500.00",
+     "created_time": "2025-07-17T22:35:00.861847Z",
+     "is_block_trade": false,
+     "no_price_dollars": "0.0600",
+     "taker_book_side": "ask",
+     "taker_outcome_side": "no",
+     "taker_side": "no",
+     "ticker": "KXFEDDECISION-25JUL-H0",
+     "trade_id": "9843361b-80c6-4100-9c61-4a9bb6236944",
+     "yes_price_dollars": "0.9400"
+    },
+    "pre_event_spread": [
+     0.95,
+     0.96
+    ],
+    "seconds_after_t0": 300.862
+   },
+   "biggest_trades": [
+    {
+     "trade": {
+      "t": "2025-07-17T22:31:45.919325Z",
+      "market": "kalshi:KXFEDDECISION-25JUL-H0",
+      "price": 0.95,
+      "size": 82611,
+      "taker_side": "no"
+     },
+     "raw_trade": {
+      "count_fp": "82611.00",
+      "created_time": "2025-07-17T22:31:45.919325Z",
+      "is_block_trade": false,
+      "no_price_dollars": "0.0500",
+      "taker_book_side": "ask",
+      "taker_outcome_side": "no",
+      "taker_side": "no",
+      "ticker": "KXFEDDECISION-25JUL-H0",
+      "trade_id": "629e1e8c-ec4d-45b8-b826-6286d9bf85bb",
+      "yes_price_dollars": "0.9500"
+     }
+    },
+    {
+     "trade": {
+      "t": "2025-07-17T22:33:13.703100Z",
+      "market": "kalshi:KXFEDDECISION-25JUL-H0",
+      "price": 0.95,
+      "size": 42389,
+      "taker_side": "no"
+     },
+     "raw_trade": {
+      "count_fp": "42389.00",
+      "created_time": "2025-07-17T22:33:13.7031Z",
+      "is_block_trade": false,
+      "no_price_dollars": "0.0500",
+      "taker_book_side": "ask",
+      "taker_outcome_side": "no",
+      "taker_side": "no",
+      "ticker": "KXFEDDECISION-25JUL-H0",
+      "trade_id": "5122618f-0618-416d-b1ae-356021a16a01",
+      "yes_price_dollars": "0.9500"
+     }
+    },
+    {
+     "trade": {
+      "t": "2025-07-17T22:59:23.139403Z",
+      "market": "kalshi:KXFEDDECISION-25JUL-H0",
+      "price": 0.94,
+      "size": 10458,
+      "taker_side": "no"
+     },
+     "raw_trade": {
+      "count_fp": "10458.00",
+      "created_time": "2025-07-17T22:59:23.139403Z",
+      "is_block_trade": false,
+      "no_price_dollars": "0.0600",
+      "taker_book_side": "ask",
+      "taker_outcome_side": "no",
+      "taker_side": "no",
+      "ticker": "KXFEDDECISION-25JUL-H0",
+      "trade_id": "f074a1f7-a8bc-4680-8d08-c591458e1972",
+      "yes_price_dollars": "0.9400"
+     }
+    }
+   ],
+   "end_of_window": {
+    "quote": {
+     "t": "2025-07-18T00:00:00Z",
+     "market": "kalshi:KXFEDDECISION-25JUL-H0",
+     "bid": 0.94,
+     "ask": 0.95,
+     "mid": 0.945,
+     "imputed": false,
+     "volume": 0
+    },
+    "raw_candle": {
+     "end_period_ts": 1752796800,
+     "open_interest": "4654260.00",
+     "price": {
+      "close": null,
+      "high": null,
+      "low": null,
+      "mean": null,
+      "open": null,
+      "previous": "0.9400"
+     },
+     "volume": "0.00",
+     "yes_ask": {
+      "close": "0.9500",
+      "high": "0.9500",
+      "low": "0.9500",
+      "open": "0.9500"
+     },
+     "yes_bid": {
+      "close": "0.9400",
+      "high": "0.9400",
+      "low": "0.9400",
+      "open": "0.9400"
+     }
+    }
+   },
+   "source": {
+    "candles": {
+     "endpoint": "https://api.elections.kalshi.com/trade-api/v2/historical/markets/{ticker}/candlesticks",
+     "start_ts": 1752784200,
+     "end_ts": 1752800400,
+     "period_interval": 1,
+     "raw_file": "tradio/data/waller20250717/raw/kalshi_candles_KXFEDDECISION-25JUL-H0.json"
+    },
+    "trades": {
+     "endpoint_hint": "https://api.elections.kalshi.com/trade-api/v2/historical/trades",
+     "min_ts": 1752787800,
+     "max_ts": 1752796800,
+     "raw_file": "tradio/data/waller20250717/raw/kalshi_trades_KXFEDDECISION-25JUL-H0.json"
+    },
+    "note": "Quote time = END of the 1-minute candle (verified: candle volume equals trades in the minute before end_period_ts)."
+   }
+  },
+  {
+   "market": "kalshi:KXFEDDECISION-25JUL-C25",
+   "label": "Jul 2025: cut 25 bp",
+   "venue": "kalshi",
+   "pre_event": {
+    "quote": {
+     "t": "2025-07-17T22:30:00Z",
+     "market": "kalshi:KXFEDDECISION-25JUL-C25",
+     "bid": 0.03,
+     "ask": 0.04,
+     "mid": 0.035,
+     "imputed": true,
+     "volume": 0
+    },
+    "raw_candle": null
+   },
+   "first_quote_change": {
+    "quote": {
+     "t": "2025-07-17T22:34:00Z",
+     "market": "kalshi:KXFEDDECISION-25JUL-C25",
+     "bid": 0.03,
+     "ask": 0.05,
+     "mid": 0.04,
+     "imputed": false,
+     "volume": 2348
+    },
+    "raw_candle": {
+     "end_period_ts": 1752791640,
+     "open_interest": "4536671.00",
+     "price": {
+      "close": "0.0400",
+      "high": "0.0400",
+      "low": "0.0400",
+      "mean": "0.0400",
+      "open": "0.0400",
+      "previous": "0.0400"
+     },
+     "volume": "2348.00",
+     "yes_ask": {
+      "close": "0.0500",
+      "high": "0.0500",
+      "low": "0.0400",
+      "open": "0.0400"
+     },
+     "yes_bid": {
+      "close": "0.0300",
+      "high": "0.0300",
+      "low": "0.0300",
+      "open": "0.0300"
+     }
+    },
+    "previous_quote": {
+     "t": "2025-07-17T22:33:00Z",
+     "market": "kalshi:KXFEDDECISION-25JUL-C25",
+     "bid": 0.03,
+     "ask": 0.04,
+     "mid": 0.035,
+     "imputed": false,
+     "volume": 0
+    },
+    "previous_raw_candle": {
+     "end_period_ts": 1752791580,
+     "open_interest": "4536671.00",
+     "price": {
+      "close": null,
+      "high": null,
+      "low": null,
+      "mean": null,
+      "open": null,
+      "previous": "0.0400"
+     },
+     "volume": "0.00",
+     "yes_ask": {
+      "close": "0.0400",
+      "high": "0.0400",
+      "low": "0.0400",
+      "open": "0.0400"
+     },
+     "yes_bid": {
+      "close": "0.0300",
+      "high": "0.0300",
+      "low": "0.0300",
+      "open": "0.0300"
+     }
+    },
+    "minutes_after_t0": 4.0
+   },
+   "first_trade_outside_spread": {
+    "trade": {
+     "t": "2025-07-17T22:35:04.082934Z",
+     "market": "kalshi:KXFEDDECISION-25JUL-C25",
+     "price": 0.05,
+     "size": 100,
+     "taker_side": "yes"
+    },
+    "raw_trade": {
+     "count_fp": "100.00",
+     "created_time": "2025-07-17T22:35:04.082934Z",
+     "is_block_trade": false,
+     "no_price_dollars": "0.9500",
+     "taker_book_side": "bid",
+     "taker_outcome_side": "yes",
+     "taker_side": "yes",
+     "ticker": "KXFEDDECISION-25JUL-C25",
+     "trade_id": "e3199c81-3db9-4585-a178-a988deb30f44",
+     "yes_price_dollars": "0.0500"
+    },
+    "pre_event_spread": [
+     0.03,
+     0.04
+    ],
+    "seconds_after_t0": 304.083
+   },
+   "biggest_trades": [
+    {
+     "trade": {
+      "t": "2025-07-17T22:38:06.246221Z",
+      "market": "kalshi:KXFEDDECISION-25JUL-C25",
+      "price": 0.05,
+      "size": 47924,
+      "taker_side": "yes"
+     },
+     "raw_trade": {
+      "count_fp": "47924.00",
+      "created_time": "2025-07-17T22:38:06.246221Z",
+      "is_block_trade": false,
+      "no_price_dollars": "0.9500",
+      "taker_book_side": "bid",
+      "taker_outcome_side": "yes",
+      "taker_side": "yes",
+      "ticker": "KXFEDDECISION-25JUL-C25",
+      "trade_id": "9880d4e0-de9d-466f-99d0-f5bcc1f57e2a",
+      "yes_price_dollars": "0.0500"
+     }
+    },
+    {
+     "trade": {
+      "t": "2025-07-17T22:35:28.083071Z",
+      "market": "kalshi:KXFEDDECISION-25JUL-C25",
+      "price": 0.05,
+      "size": 30000,
+      "taker_side": "yes"
+     },
+     "raw_trade": {
+      "count_fp": "30000.00",
+      "created_time": "2025-07-17T22:35:28.083071Z",
+      "is_block_trade": false,
+      "no_price_dollars": "0.9500",
+      "taker_book_side": "bid",
+      "taker_outcome_side": "yes",
+      "taker_side": "yes",
+      "ticker": "KXFEDDECISION-25JUL-C25",
+      "trade_id": "2b5ee58b-a4ca-4f5b-b9fa-54d21ea758bf",
+      "yes_price_dollars": "0.0500"
+     }
+    },
+    {
+     "trade": {
+      "t": "2025-07-17T22:35:28.083071Z",
+      "market": "kalshi:KXFEDDECISION-25JUL-C25",
+      "price": 0.05,
+      "size": 25000,
+      "taker_side": "yes"
+     },
+     "raw_trade": {
+      "count_fp": "25000.00",
+      "created_time": "2025-07-17T22:35:28.083071Z",
+      "is_block_trade": false,
+      "no_price_dollars": "0.9500",
+      "taker_book_side": "bid",
+      "taker_outcome_side": "yes",
+      "taker_side": "yes",
+      "ticker": "KXFEDDECISION-25JUL-C25",
+      "trade_id": "536bd065-b3b8-4add-bed6-5c783eefc55f",
+      "yes_price_dollars": "0.0500"
+     }
+    }
+   ],
+   "end_of_window": {
+    "quote": {
+     "t": "2025-07-18T00:00:00Z",
+     "market": "kalshi:KXFEDDECISION-25JUL-C25",
+     "bid": 0.04,
+     "ask": 0.05,
+     "mid": 0.045,
+     "imputed": false,
+     "volume": 0
+    },
+    "raw_candle": {
+     "end_period_ts": 1752796800,
+     "open_interest": "4577740.00",
+     "price": {
+      "close": null,
+      "high": null,
+      "low": null,
+      "mean": null,
+      "open": null,
+      "previous": "0.0500"
+     },
+     "volume": "0.00",
+     "yes_ask": {
+      "close": "0.0500",
+      "high": "0.0500",
+      "low": "0.0500",
+      "open": "0.0500"
+     },
+     "yes_bid": {
+      "close": "0.0400",
+      "high": "0.0400",
+      "low": "0.0400",
+      "open": "0.0400"
+     }
+    }
+   },
+   "source": {
+    "candles": {
+     "endpoint": "https://api.elections.kalshi.com/trade-api/v2/historical/markets/{ticker}/candlesticks",
+     "start_ts": 1752784200,
+     "end_ts": 1752800400,
+     "period_interval": 1,
+     "raw_file": "tradio/data/waller20250717/raw/kalshi_candles_KXFEDDECISION-25JUL-C25.json"
+    },
+    "trades": {
+     "endpoint_hint": "https://api.elections.kalshi.com/trade-api/v2/historical/trades",
+     "min_ts": 1752787800,
+     "max_ts": 1752796800,
+     "raw_file": "tradio/data/waller20250717/raw/kalshi_trades_KXFEDDECISION-25JUL-C25.json"
+    },
+    "note": "Quote time = END of the 1-minute candle (verified: candle volume equals trades in the minute before end_period_ts)."
+   }
+  },
+  {
+   "market": "kalshi:KXFEDDECISION-25JUL-C26",
+   "label": "Jul 2025: cut >25 bp",
+   "venue": "kalshi",
+   "pre_event": {
+    "quote": {
+     "t": "2025-07-17T22:30:00Z",
+     "market": "kalshi:KXFEDDECISION-25JUL-C26",
+     "bid": 0.0,
+     "ask": 0.01,
+     "mid": 0.005,
+     "imputed": true,
+     "volume": 0
+    },
+    "raw_candle": null
+   },
+   "first_quote_change": {
+    "quote": {
+     "t": "2025-07-17T22:50:00Z",
+     "market": "kalshi:KXFEDDECISION-25JUL-C26",
+     "bid": 0.0,
+     "ask": 0.02,
+     "mid": 0.01,
+     "imputed": false,
+     "volume": 2000
+    },
+    "raw_candle": {
+     "end_period_ts": 1752792600,
+     "open_interest": "3829601.00",
+     "price": {
+      "close": "0.0100",
+      "high": "0.0100",
+      "low": "0.0100",
+      "mean": "0.0100",
+      "open": "0.0100",
+      "previous": "0.0100"
+     },
+     "volume": "2000.00",
+     "yes_ask": {
+      "close": "0.0200",
+      "high": "0.0200",
+      "low": "0.0100",
+      "open": "0.0100"
+     },
+     "yes_bid": {
+      "close": "0.0000",
+      "high": "0.0100",
+      "low": "0.0000",
+      "open": "0.0000"
+     }
+    },
+    "previous_quote": {
+     "t": "2025-07-17T22:49:00Z",
+     "market": "kalshi:KXFEDDECISION-25JUL-C26",
+     "bid": 0.0,
+     "ask": 0.01,
+     "mid": 0.005,
+     "imputed": false,
+     "volume": 0
+    },
+    "previous_raw_candle": {
+     "end_period_ts": 1752792540,
+     "open_interest": "3829635.00",
+     "price": {
+      "close": null,
+      "high": null,
+      "low": null,
+      "mean": null,
+      "open": null,
+      "previous": "0.0100"
+     },
+     "volume": "0.00",
+     "yes_ask": {
+      "close": "0.0100",
+      "high": "0.0100",
+      "low": "0.0100",
+      "open": "0.0100"
+     },
+     "yes_bid": {
+      "close": "0.0000",
+      "high": "0.0000",
+      "low": "0.0000",
+      "open": "0.0000"
+     }
+    },
+    "minutes_after_t0": 20.0
+   },
+   "first_trade_outside_spread": {
+    "trade": {
+     "t": "2025-07-17T23:03:49.263356Z",
+     "market": "kalshi:KXFEDDECISION-25JUL-C26",
+     "price": 0.02,
+     "size": 1000,
+     "taker_side": "yes"
+    },
+    "raw_trade": {
+     "count_fp": "1000.00",
+     "created_time": "2025-07-17T23:03:49.263356Z",
+     "is_block_trade": false,
+     "no_price_dollars": "0.9800",
+     "taker_book_side": "bid",
+     "taker_outcome_side": "yes",
+     "taker_side": "yes",
+     "ticker": "KXFEDDECISION-25JUL-C26",
+     "trade_id": "50c26c21-1f93-4e4a-ac8a-ee0e76b3defb",
+     "yes_price_dollars": "0.0200"
+    },
+    "pre_event_spread": [
+     0.0,
+     0.01
+    ],
+    "seconds_after_t0": 2029.263
+   },
+   "biggest_trades": [
+    {
+     "trade": {
+      "t": "2025-07-17T22:47:28.438452Z",
+      "market": "kalshi:KXFEDDECISION-25JUL-C26",
+      "price": 0.01,
+      "size": 7000,
+      "taker_side": "yes"
+     },
+     "raw_trade": {
+      "count_fp": "7000.00",
+      "created_time": "2025-07-17T22:47:28.438452Z",
+      "is_block_trade": false,
+      "no_price_dollars": "0.9900",
+      "taker_book_side": "bid",
+      "taker_outcome_side": "yes",
+      "taker_side": "yes",
+      "ticker": "KXFEDDECISION-25JUL-C26",
+      "trade_id": "9c63a701-a6be-4460-be47-757bfc178c48",
+      "yes_price_dollars": "0.0100"
+     }
+    },
+    {
+     "trade": {
+      "t": "2025-07-17T22:49:49.071540Z",
+      "market": "kalshi:KXFEDDECISION-25JUL-C26",
+      "price": 0.01,
+      "size": 1966,
+      "taker_side": "no"
+     },
+     "raw_trade": {
+      "count_fp": "1966.00",
+      "created_time": "2025-07-17T22:49:49.07154Z",
+      "is_block_trade": false,
+      "no_price_dollars": "0.9900",
+      "taker_book_side": "ask",
+      "taker_outcome_side": "no",
+      "taker_side": "no",
+      "ticker": "KXFEDDECISION-25JUL-C26",
+      "trade_id": "de012701-efa7-428b-a560-efae3e86e639",
+      "yes_price_dollars": "0.0100"
+     }
+    },
+    {
+     "trade": {
+      "t": "2025-07-17T22:53:00.266166Z",
+      "market": "kalshi:KXFEDDECISION-25JUL-C26",
+      "price": 0.01,
+      "size": 500,
+      "taker_side": "no"
+     },
+     "raw_trade": {
+      "count_fp": "500.00",
+      "created_time": "2025-07-17T22:53:00.266166Z",
+      "is_block_trade": false,
+      "no_price_dollars": "0.9900",
+      "taker_book_side": "ask",
+      "taker_outcome_side": "no",
+      "taker_side": "no",
+      "ticker": "KXFEDDECISION-25JUL-C26",
+      "trade_id": "1ef45b8a-7fb8-4fc2-a95b-e45295f78383",
+      "yes_price_dollars": "0.0100"
+     }
+    }
+   ],
+   "end_of_window": {
+    "quote": {
+     "t": "2025-07-18T00:00:00Z",
+     "market": "kalshi:KXFEDDECISION-25JUL-C26",
+     "bid": 0.0,
+     "ask": 0.02,
+     "mid": 0.01,
+     "imputed": false,
+     "volume": 0
+    },
+    "raw_candle": {
+     "end_period_ts": 1752796800,
+     "open_interest": "3867122.00",
+     "price": {
+      "close": null,
+      "high": null,
+      "low": null,
+      "mean": null,
+      "open": null,
+      "previous": "0.0200"
+     },
+     "volume": "0.00",
+     "yes_ask": {
+      "close": "0.0200",
+      "high": "0.0200",
+      "low": "0.0200",
+      "open": "0.0200"
+     },
+     "yes_bid": {
+      "close": "0.0000",
+      "high": "0.0000",
+      "low": "0.0000",
+      "open": "0.0000"
+     }
+    }
+   },
+   "source": {
+    "candles": {
+     "endpoint": "https://api.elections.kalshi.com/trade-api/v2/historical/markets/{ticker}/candlesticks",
+     "start_ts": 1752784200,
+     "end_ts": 1752800400,
+     "period_interval": 1,
+     "raw_file": "tradio/data/waller20250717/raw/kalshi_candles_KXFEDDECISION-25JUL-C26.json"
+    },
+    "trades": {
+     "endpoint_hint": "https://api.elections.kalshi.com/trade-api/v2/historical/trades",
+     "min_ts": 1752787800,
+     "max_ts": 1752796800,
+     "raw_file": "tradio/data/waller20250717/raw/kalshi_trades_KXFEDDECISION-25JUL-C26.json"
+    },
+    "note": "Quote time = END of the 1-minute candle (verified: candle volume equals trades in the minute before end_period_ts)."
+   }
+  },
+  {
+   "market": "kalshi:KXRATECUTCOUNT-25DEC31-T0",
+   "label": "2025: 0 cuts",
+   "venue": "kalshi",
+   "pre_event": {
+    "quote": {
+     "t": "2025-07-17T22:30:00Z",
+     "market": "kalshi:KXRATECUTCOUNT-25DEC31-T0",
+     "bid": 0.18,
+     "ask": 0.2,
+     "mid": 0.19,
+     "imputed": true,
+     "volume": 0
+    },
+    "raw_candle": null
+   },
+   "first_quote_change": null,
+   "first_trade_outside_spread": null,
+   "biggest_trades": [],
+   "end_of_window": {
+    "quote": {
+     "t": "2025-07-18T00:00:00Z",
+     "market": "kalshi:KXRATECUTCOUNT-25DEC31-T0",
+     "bid": 0.18,
+     "ask": 0.2,
+     "mid": 0.19,
+     "imputed": false,
+     "volume": 5
+    },
+    "raw_candle": {
+     "end_period_ts": 1752796800,
+     "open_interest": "320233.00",
+     "price": {
+      "close": "0.1800",
+      "high": "0.1800",
+      "low": "0.1800",
+      "mean": "0.1800",
+      "open": "0.1800",
+      "previous": "0.2000"
+     },
+     "volume": "5.00",
+     "yes_ask": {
+      "close": "0.2000",
+      "high": "0.2000",
+      "low": "0.2000",
+      "open": "0.2000"
+     },
+     "yes_bid": {
+      "close": "0.1800",
+      "high": "0.1800",
+      "low": "0.1800",
+      "open": "0.1800"
+     }
+    }
+   },
+   "source": {
+    "candles": {
+     "endpoint": "https://api.elections.kalshi.com/trade-api/v2/historical/markets/{ticker}/candlesticks",
+     "start_ts": 1752784200,
+     "end_ts": 1752800400,
+     "period_interval": 1,
+     "raw_file": "tradio/data/waller20250717/raw/kalshi_candles_KXRATECUTCOUNT-25DEC31-T0.json"
+    },
+    "trades": {
+     "endpoint_hint": "https://api.elections.kalshi.com/trade-api/v2/historical/trades",
+     "min_ts": 1752787800,
+     "max_ts": 1752796800,
+     "raw_file": "tradio/data/waller20250717/raw/kalshi_trades_KXRATECUTCOUNT-25DEC31-T0.json"
+    },
+    "note": "Quote time = END of the 1-minute candle (verified: candle volume equals trades in the minute before end_period_ts)."
+   }
+  },
+  {
+   "market": "kalshi:KXRATECUTCOUNT-25DEC31-T1",
+   "label": "2025: 1 cut",
+   "venue": "kalshi",
+   "pre_event": {
+    "quote": {
+     "t": "2025-07-17T22:30:00Z",
+     "market": "kalshi:KXRATECUTCOUNT-25DEC31-T1",
+     "bid": 0.25,
+     "ask": 0.26,
+     "mid": 0.255,
+     "imputed": false,
+     "volume": 0
+    },
+    "raw_candle": {
+     "end_period_ts": 1752791400,
+     "open_interest": "166913.00",
+     "price": {
+      "close": null,
+      "high": null,
+      "low": null,
+      "mean": null,
+      "open": null,
+      "previous": "0.2600"
+     },
+     "volume": "0.00",
+     "yes_ask": {
+      "close": "0.2600",
+      "high": "0.2600",
+      "low": "0.2600",
+      "open": "0.2600"
+     },
+     "yes_bid": {
+      "close": "0.2500",
+      "high": "0.2500",
+      "low": "0.2500",
+      "open": "0.2500"
+     }
+    }
+   },
+   "first_quote_change": null,
+   "first_trade_outside_spread": null,
+   "biggest_trades": [
+    {
+     "trade": {
+      "t": "2025-07-17T22:35:26.682076Z",
+      "market": "kalshi:KXRATECUTCOUNT-25DEC31-T1",
+      "price": 0.26,
+      "size": 100,
+      "taker_side": "yes"
+     },
+     "raw_trade": {
+      "count_fp": "100.00",
+      "created_time": "2025-07-17T22:35:26.682076Z",
+      "is_block_trade": false,
+      "no_price_dollars": "0.7400",
+      "taker_book_side": "bid",
+      "taker_outcome_side": "yes",
+      "taker_side": "yes",
+      "ticker": "KXRATECUTCOUNT-25DEC31-T1",
+      "trade_id": "4fec2f26-526d-48ef-a9f0-4e9277cd9cb0",
+      "yes_price_dollars": "0.2600"
+     }
+    }
+   ],
+   "end_of_window": {
+    "quote": {
+     "t": "2025-07-18T00:00:00Z",
+     "market": "kalshi:KXRATECUTCOUNT-25DEC31-T1",
+     "bid": 0.25,
+     "ask": 0.26,
+     "mid": 0.255,
+     "imputed": false,
+     "volume": 0
+    },
+    "raw_candle": {
+     "end_period_ts": 1752796800,
+     "open_interest": "167013.00",
+     "price": {
+      "close": null,
+      "high": null,
+      "low": null,
+      "mean": null,
+      "open": null,
+      "previous": "0.2600"
+     },
+     "volume": "0.00",
+     "yes_ask": {
+      "close": "0.2600",
+      "high": "0.2600",
+      "low": "0.2600",
+      "open": "0.2600"
+     },
+     "yes_bid": {
+      "close": "0.2500",
+      "high": "0.2500",
+      "low": "0.2500",
+      "open": "0.2500"
+     }
+    }
+   },
+   "source": {
+    "candles": {
+     "endpoint": "https://api.elections.kalshi.com/trade-api/v2/historical/markets/{ticker}/candlesticks",
+     "start_ts": 1752784200,
+     "end_ts": 1752800400,
+     "period_interval": 1,
+     "raw_file": "tradio/data/waller20250717/raw/kalshi_candles_KXRATECUTCOUNT-25DEC31-T1.json"
+    },
+    "trades": {
+     "endpoint_hint": "https://api.elections.kalshi.com/trade-api/v2/historical/trades",
+     "min_ts": 1752787800,
+     "max_ts": 1752796800,
+     "raw_file": "tradio/data/waller20250717/raw/kalshi_trades_KXRATECUTCOUNT-25DEC31-T1.json"
+    },
+    "note": "Quote time = END of the 1-minute candle (verified: candle volume equals trades in the minute before end_period_ts)."
+   }
+  },
+  {
+   "market": "kalshi:KXRATECUTCOUNT-25DEC31-T2",
+   "label": "2025: 2 cuts",
+   "venue": "kalshi",
+   "pre_event": {
+    "quote": {
+     "t": "2025-07-17T22:30:00Z",
+     "market": "kalshi:KXRATECUTCOUNT-25DEC31-T2",
+     "bid": 0.36,
+     "ask": 0.37,
+     "mid": 0.365,
+     "imputed": true,
+     "volume": 0
+    },
+    "raw_candle": null
+   },
+   "first_quote_change": null,
+   "first_trade_outside_spread": null,
+   "biggest_trades": [
+    {
+     "trade": {
+      "t": "2025-07-17T22:34:53.879579Z",
+      "market": "kalshi:KXRATECUTCOUNT-25DEC31-T2",
+      "price": 0.37,
+      "size": 300,
+      "taker_side": "yes"
+     },
+     "raw_trade": {
+      "count_fp": "300.00",
+      "created_time": "2025-07-17T22:34:53.879579Z",
+      "is_block_trade": false,
+      "no_price_dollars": "0.6300",
+      "taker_book_side": "bid",
+      "taker_outcome_side": "yes",
+      "taker_side": "yes",
+      "ticker": "KXRATECUTCOUNT-25DEC31-T2",
+      "trade_id": "93cd3eb5-2d1c-42cf-ae55-20ca64232345",
+      "yes_price_dollars": "0.3700"
+     }
+    },
+    {
+     "trade": {
+      "t": "2025-07-17T22:53:59.397152Z",
+      "market": "kalshi:KXRATECUTCOUNT-25DEC31-T2",
+      "price": 0.37,
+      "size": 5,
+      "taker_side": "yes"
+     },
+     "raw_trade": {
+      "count_fp": "5.00",
+      "created_time": "2025-07-17T22:53:59.397152Z",
+      "is_block_trade": false,
+      "no_price_dollars": "0.6300",
+      "taker_book_side": "bid",
+      "taker_outcome_side": "yes",
+      "taker_side": "yes",
+      "ticker": "KXRATECUTCOUNT-25DEC31-T2",
+      "trade_id": "ae8d70c6-8765-4443-9876-ad8ade5010eb",
+      "yes_price_dollars": "0.3700"
+     }
+    }
+   ],
+   "end_of_window": {
+    "quote": {
+     "t": "2025-07-18T00:00:00Z",
+     "market": "kalshi:KXRATECUTCOUNT-25DEC31-T2",
+     "bid": 0.36,
+     "ask": 0.37,
+     "mid": 0.365,
+     "imputed": false,
+     "volume": 0
+    },
+    "raw_candle": {
+     "end_period_ts": 1752796800,
+     "open_interest": "228942.00",
+     "price": {
+      "close": null,
+      "high": null,
+      "low": null,
+      "mean": null,
+      "open": null,
+      "previous": "0.3700"
+     },
+     "volume": "0.00",
+     "yes_ask": {
+      "close": "0.3700",
+      "high": "0.3700",
+      "low": "0.3700",
+      "open": "0.3700"
+     },
+     "yes_bid": {
+      "close": "0.3600",
+      "high": "0.3600",
+      "low": "0.3600",
+      "open": "0.3600"
+     }
+    }
+   },
+   "source": {
+    "candles": {
+     "endpoint": "https://api.elections.kalshi.com/trade-api/v2/historical/markets/{ticker}/candlesticks",
+     "start_ts": 1752784200,
+     "end_ts": 1752800400,
+     "period_interval": 1,
+     "raw_file": "tradio/data/waller20250717/raw/kalshi_candles_KXRATECUTCOUNT-25DEC31-T2.json"
+    },
+    "trades": {
+     "endpoint_hint": "https://api.elections.kalshi.com/trade-api/v2/historical/trades",
+     "min_ts": 1752787800,
+     "max_ts": 1752796800,
+     "raw_file": "tradio/data/waller20250717/raw/kalshi_trades_KXRATECUTCOUNT-25DEC31-T2.json"
+    },
+    "note": "Quote time = END of the 1-minute candle (verified: candle volume equals trades in the minute before end_period_ts)."
+   }
+  },
+  {
+   "market": "kalshi:KXRATECUTCOUNT-25DEC31-T3",
+   "label": "2025: 3 cuts",
+   "venue": "kalshi",
+   "pre_event": {
+    "quote": {
+     "t": "2025-07-17T22:30:00Z",
+     "market": "kalshi:KXRATECUTCOUNT-25DEC31-T3",
+     "bid": 0.12,
+     "ask": 0.13,
+     "mid": 0.125,
+     "imputed": false,
+     "volume": 0
+    },
+    "raw_candle": {
+     "end_period_ts": 1752791400,
+     "open_interest": "175504.00",
+     "price": {
+      "close": null,
+      "high": null,
+      "low": null,
+      "mean": null,
+      "open": null,
+      "previous": "0.1200"
+     },
+     "volume": "0.00",
+     "yes_ask": {
+      "close": "0.1300",
+      "high": "0.1300",
+      "low": "0.1300",
+      "open": "0.1300"
+     },
+     "yes_bid": {
+      "close": "0.1200",
+      "high": "0.1200",
+      "low": "0.1200",
+      "open": "0.1200"
+     }
+    }
+   },
+   "first_quote_change": null,
+   "first_trade_outside_spread": null,
+   "biggest_trades": [],
+   "end_of_window": {
+    "quote": {
+     "t": "2025-07-18T00:00:00Z",
+     "market": "kalshi:KXRATECUTCOUNT-25DEC31-T3",
+     "bid": 0.12,
+     "ask": 0.13,
+     "mid": 0.125,
+     "imputed": false,
+     "volume": 0
+    },
+    "raw_candle": {
+     "end_period_ts": 1752796800,
+     "open_interest": "175504.00",
+     "price": {
+      "close": null,
+      "high": null,
+      "low": null,
+      "mean": null,
+      "open": null,
+      "previous": "0.1200"
+     },
+     "volume": "0.00",
+     "yes_ask": {
+      "close": "0.1300",
+      "high": "0.1300",
+      "low": "0.1300",
+      "open": "0.1300"
+     },
+     "yes_bid": {
+      "close": "0.1200",
+      "high": "0.1200",
+      "low": "0.1200",
+      "open": "0.1200"
+     }
+    }
+   },
+   "source": {
+    "candles": {
+     "endpoint": "https://api.elections.kalshi.com/trade-api/v2/historical/markets/{ticker}/candlesticks",
+     "start_ts": 1752784200,
+     "end_ts": 1752800400,
+     "period_interval": 1,
+     "raw_file": "tradio/data/waller20250717/raw/kalshi_candles_KXRATECUTCOUNT-25DEC31-T3.json"
+    },
+    "trades": {
+     "endpoint_hint": "https://api.elections.kalshi.com/trade-api/v2/historical/trades",
+     "min_ts": 1752787800,
+     "max_ts": 1752796800,
+     "raw_file": "tradio/data/waller20250717/raw/kalshi_trades_KXRATECUTCOUNT-25DEC31-T3.json"
+    },
+    "note": "Quote time = END of the 1-minute candle (verified: candle volume equals trades in the minute before end_period_ts)."
+   }
+  },
+  {
+   "market": "polymarket:cut25",
+   "label": "July: cut 25 bp (Polymarket)",
+   "venue": "polymarket",
+   "indicative": true,
+   "pre_event": {
+    "point": {
+     "t": "2025-07-17T22:29:07Z",
+     "market": "polymarket:cut25",
+     "bid": null,
+     "ask": null,
+     "mid": 0.025,
+     "imputed": false,
+     "volume": null
+    }
+   },
+   "end_of_window": {
+    "point": {
+     "t": "2025-07-17T23:59:07Z",
+     "market": "polymarket:cut25",
+     "bid": null,
+     "ask": null,
+     "mid": 0.038,
+     "imputed": false,
+     "volume": null
+    }
+   },
+   "conflicting_points": [],
+   "source": {
+    "endpoint": "https://clob.polymarket.com/prices-history",
+    "token": "44274863594881419064755425975616427905570818290480331177906247008783209380302",
+    "fidelity": 1,
+    "raw_file": "tradio/data/waller20250717/raw/poly_cut25.json",
+    "note": "Indicative only: undocumented whether p is a trade or a midpoint."
+   }
+  },
+  {
+   "market": "polymarket:nochange",
+   "label": "July: no change (Polymarket)",
+   "venue": "polymarket",
+   "indicative": true,
+   "pre_event": {
+    "point": {
+     "t": "2025-07-17T22:29:07Z",
+     "market": "polymarket:nochange",
+     "bid": null,
+     "ask": null,
+     "mid": 0.9665,
+     "imputed": false,
+     "volume": null
+    }
+   },
+   "end_of_window": {
+    "point": {
+     "t": "2025-07-17T23:59:07Z",
+     "market": "polymarket:nochange",
+     "bid": null,
+     "ask": null,
+     "mid": 0.9505,
+     "imputed": false,
+     "volume": null
+    }
+   },
+   "conflicting_points": [],
+   "source": {
+    "endpoint": "https://clob.polymarket.com/prices-history",
+    "token": "73793697275923646355831824753345919471011673129768736520616870696302293395247",
+    "fidelity": 1,
+    "raw_file": "tradio/data/waller20250717/raw/poly_nochange.json",
+    "note": "Indicative only: undocumented whether p is a trade or a midpoint."
+   }
+  },
+  {
+   "market": "polymarket:cut50",
+   "label": "July: cut 50+ bp (Polymarket)",
+   "venue": "polymarket",
+   "indicative": true,
+   "pre_event": {
+    "point": {
+     "t": "2025-07-17T22:29:07Z",
+     "market": "polymarket:cut50",
+     "bid": null,
+     "ask": null,
+     "mid": 0.0075,
+     "imputed": false,
+     "volume": null
+    }
+   },
+   "end_of_window": {
+    "point": {
+     "t": "2025-07-17T23:59:07Z",
+     "market": "polymarket:cut50",
+     "bid": null,
+     "ask": null,
+     "mid": 0.0085,
+     "imputed": false,
+     "volume": null
+    }
+   },
+   "conflicting_points": [],
+   "source": {
+    "endpoint": "https://clob.polymarket.com/prices-history",
+    "token": "17028788563275937059830939874003546190073058810431474110375077031370800019934",
+    "fidelity": 1,
+    "raw_file": "tradio/data/waller20250717/raw/poly_cut50.json",
+    "note": "Indicative only: undocumented whether p is a trade or a midpoint."
+   }
+  },
+  {
+   "market": "polymarket:hike25",
+   "label": "July: hike 25+ bp (Polymarket)",
+   "venue": "polymarket",
+   "indicative": true,
+   "pre_event": {
+    "point": {
+     "t": "2025-07-17T22:29:07Z",
+     "market": "polymarket:hike25",
+     "bid": null,
+     "ask": null,
+     "mid": 0.0025,
+     "imputed": false,
+     "volume": null
+    }
+   },
+   "end_of_window": {
+    "point": {
+     "t": "2025-07-17T23:59:07Z",
+     "market": "polymarket:hike25",
+     "bid": null,
+     "ask": null,
+     "mid": 0.0025,
+     "imputed": false,
+     "volume": null
+    }
+   },
+   "conflicting_points": [],
+   "source": {
+    "endpoint": "https://clob.polymarket.com/prices-history",
+    "token": "100067677053694812730460296850221451830656965871151478092125776330632208052828",
+    "fidelity": 1,
+    "raw_file": "tradio/data/waller20250717/raw/poly_hike25.json",
+    "note": "Indicative only: undocumented whether p is a trade or a midpoint."
+   }
+  }
+ ]
+}
