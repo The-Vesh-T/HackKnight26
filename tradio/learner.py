@@ -165,6 +165,8 @@ def embeddings():
     key = (path, os.path.getmtime(path) if os.path.isfile(path) else None)
     if key not in _EMB:
         raw = _read(path) or {}
+        if not raw.get("complete"):
+            raw = {}                  # partial coverage would tie "has text" to the date: wait
         out = {}
         for sid, v in (raw.get("speeches") or {}).items():
             n = math.sqrt(sum(a * a for a in v)) or 1.0

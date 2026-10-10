@@ -375,53 +375,67 @@ def score(speeches):
 
 EMBED_MODEL = "gemini-embedding-001"
 EMBED_DIM = 256
+EMBED_METHOD = "speech_text_v2"   # one vector per speech from its joined policy paragraphs
+EMBED_CHARS = 7000                # stays under the model's ~2k-token input limit
+EMBED_BATCH = 20                  # speeches per API call
 
 
-def embed(speeches):
-    """Gemini embedding of each speech: the policy-outlook paragraphs (or, if a speech has
-    none, its first eight paragraphs), embedded one by one and averaged. Resumable."""
+def embed(speeches, force=False):
+    """Gemini embedding of each speech: its policy-outlook paragraphs (or, if it has none,
+    its first eight paragraphs) joined and embedded as ONE text, so a full run is one
+    request per speech (~200; the free tier allows 1,000 a day). Several speeches go in
+    one call. Resumable; `complete` is set once every speech has a vector, and the
+    learner only uses embeddings when complete (partial coverage would tie "has text"
+    to the date)."""
     import stance_scorer
     from google import genai
     from google.genai import types
     from tradio import build_baselines
     path = os.path.join(HIST_DIR, "embeddings.json")
     store = read_json(path) if os.path.isfile(path) else {}
-    store.update({"model": EMBED_MODEL, "dim": EMBED_DIM, "task_type": "SEMANTIC_SIMILARITY"})
+    if force or store.get("method") != EMBED_METHOD:
+        store = {}                                # older per-paragraph vectors: start over
+    store.update({"model": EMBED_MODEL, "dim": EMBED_DIM, "task_type": "SEMANTIC_SIMILARITY",
+                  "method": EMBED_METHOD, "complete": False})
     store.setdefault("speeches", {})
     client = genai.Client(api_key=stance_scorer._read_gemini_key())
     cfg = types.EmbedContentConfig(task_type="SEMANTIC_SIMILARITY", output_dimensionality=EMBED_DIM)
-    for i, s in enumerate(speeches, 1):
+    todo = []
+    for s in speeches:
         if s["id"] in store["speeches"]:
             continue
         try:
             data = speech_text(s["id"])
         except Exception as exc:
-            print(f"[{i}/{len(speeches)}] {s['id']}: no text ({exc})")
+            print(f"{s['id']}: no text ({exc})")
             continue
         texts = build_baselines.policy_paragraphs(data) or [g["text"] for g in data.get("segments", [])[:8]]
-        texts = [t[:2000] for t in texts if t.strip()]
-        if not texts:
-            continue
-        vecs = []
-        for start in range(0, len(texts), 50):
-            for attempt in range(6):
-                try:
-                    res = client.models.embed_content(model=EMBED_MODEL, contents=texts[start:start + 50],
-                                                      config=cfg)
-                    vecs += [e.values for e in res.embeddings]
-                    break
-                except Exception as exc:
-                    if attempt == 5:
-                        raise
-                    print(f"  embed retry ({str(exc)[:80]})")
-                    time.sleep(5 * (attempt + 1))
-        mean = [sum(col) / len(vecs) for col in zip(*vecs)]
-        store["speeches"][s["id"]] = [round(x, 5) for x in mean]
-        print(f"[{i}/{len(speeches)}] {s['id']}: {len(texts)} paragraphs embedded", flush=True)
-        if i % 10 == 0:
-            write_json(path, store)
+        text = "\n\n".join(t for t in texts if t.strip())[:EMBED_CHARS]
+        if text:
+            todo.append((s["id"], text))
+    print(f"{len(todo)} speeches to embed ({len(store['speeches'])} already done)")
+    for start in range(0, len(todo), EMBED_BATCH):
+        chunk = todo[start:start + EMBED_BATCH]
+        for attempt in range(6):
+            try:
+                res = client.models.embed_content(model=EMBED_MODEL, contents=[t for _, t in chunk],
+                                                  config=cfg)
+                break
+            except Exception as exc:
+                if "per day" in str(exc).lower() or "PerDay" in str(exc) or attempt == 5:
+                    write_json(path, store)
+                    raise SystemExit(f"Gemini quota: {str(exc)[:200]}\nSaved {len(store['speeches'])}; "
+                                     "rerun later to continue.")
+                print(f"  embed retry ({str(exc)[:80]})")
+                time.sleep(10 * (attempt + 1))
+        for (sid, _), e in zip(chunk, res.embeddings):
+            store["speeches"][sid] = [round(x, 5) for x in e.values]
+        write_json(path, store)
+        print(f"  embedded {min(start + EMBED_BATCH, len(todo))}/{len(todo)}", flush=True)
+    store["complete"] = all(s["id"] in store["speeches"] for s in speeches
+                            if os.path.isfile(os.path.join(HIST_DIR, s["id"], "meta.json")))
     write_json(path, store)
-    print(f"wrote {path}: {len(store['speeches'])} speeches")
+    print(f"wrote {path}: {len(store['speeches'])} speeches, complete={store['complete']}")
 
 
 def main(argv=None):
@@ -446,7 +460,7 @@ def main(argv=None):
     if a.step == "score":
         score(speeches)
     if a.step == "embed":
-        embed(speeches)
+        embed(speeches, a.force)
 
 
 if __name__ == "__main__":

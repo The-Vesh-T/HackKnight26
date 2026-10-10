@@ -303,9 +303,18 @@ class TextAndCalendarTests(unittest.TestCase):
             speeches.append({"id": sid, "t0": iso(t + timedelta(days=i)),
                              "speaker": "a" if i % 2 else "b", "role": "governor"})
             ids.append(sid)
-        write_json(os.path.join(self.hist, "embeddings.json"), {"speeches": emb})
+        write_json(os.path.join(self.hist, "embeddings.json"), {"complete": True, "speeches": emb})
         write_json(os.path.join(self.hist, "speeches.json"), {"speeches": speeches})
         return ids
+
+    def test_partial_embeddings_are_ignored(self):
+        self.make()
+        path = os.path.join(self.hist, "embeddings.json")
+        E = read_json(path)
+        E["complete"] = False
+        write_json(path, E)
+        self.assertEqual(learner.emb_dim(), 0)
+        self.assertNotIn("logistic_text", [m.name for m in learner.make_models()])
 
     def test_text_models_run_and_novelty_uses_only_the_past(self):
         ids = self.make()
