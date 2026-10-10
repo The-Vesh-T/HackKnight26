@@ -116,7 +116,10 @@ def refresh_speeches():
 
 def load_speeches(since=DEFAULT_SINCE, limit=None):
     data = read_json(SPEECHES)["speeches"]
-    out = [s for s in data if s["t0"] and s["t0"][:10] >= since]
+    now = datetime.now(timezone.utc)
+    # a window still open (T0+90 min in the future) would be cached as if final: skip it
+    out = [s for s in data if s["t0"] and s["t0"][:10] >= since
+           and parse_ts(s["t0"]) + timedelta(minutes=POST_MIN + 5) <= now]
     return out[:limit] if limit else out
 
 

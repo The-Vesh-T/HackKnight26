@@ -130,9 +130,14 @@ def synth_event(base, i, t0, rnd, learnable=True):
     markets = {}
     for leg in LEGS:
         active = rnd.random() < 0.6
-        signal = active and (role == "chair" or abs(z) > 2.5)
-        react = signal if learnable else rnd.random() < 0.3
-        st = "reacted" if react else ("expected_no_reaction" if active or not learnable else "cant_tell_illiquid")
+        # like reaction.py: an active market ends reacted / no reaction; a thin one can
+        # only end reacted or can't-tell
+        if active:
+            react = (role == "chair" or abs(z) > 2.5) if learnable else rnd.random() < 0.3
+            st = "reacted" if react else "expected_no_reaction"
+        else:
+            react = rnd.random() < 0.3
+            st = "reacted" if react else "cant_tell_illiquid"
         markets[f"kalshi:KXFEDDECISION-25JUL-{leg}"] = {
             "liquidity": "active" if active else "thin", "pre_mid": round(rnd.uniform(0.05, 0.9), 3),
             "status": st, "move_ticks": 5 if react else 0, "indicative": False,
@@ -168,11 +173,33 @@ class LearnerTests(unittest.TestCase):
         t = datetime(2025, 1, 2, 15, tzinfo=timezone.utc)
         return [synth_event(self.hist, i, t + timedelta(days=i), rnd, learnable) for i in range(n)]
 
-    def test_cant_tell_rows_are_not_labels(self):
-        self.make(5)
+    def test_only_active_rows_are_labels(self):
+        # thin rows can only be reacted/can't-tell, so labeling them would leak
+        self.make(10)
+        n_thin_reacted = 0
         for ev, rows in learner.dataset():
             for r in rows:
-                self.assertEqual(r["label"] is None, r["status"] == "cant_tell_illiquid")
+                self.assertEqual(r["label"] is None, r["liquidity"] != "active")
+                n_thin_reacted += r["liquidity"] == "thin" and r["status"] == "reacted"
+        self.assertGreater(n_thin_reacted, 0)       # the case exists and is excluded
+
+    def test_overlapping_events_never_train_on_each_other(self):
+        ids = self.make(25)
+        # make event 20 start 30 min after event 19 (same tape, both open)
+        e19 = read_json(os.path.join(self.hist, ids[19], "meta.json"))
+        m20 = os.path.join(self.hist, ids[20], "meta.json")
+        e20 = read_json(m20)
+        e20["t0"] = iso(datetime.fromisoformat(e19["t0"].replace("Z", "+00:00")) + timedelta(minutes=30))
+        write_json(m20, e20)
+        data = learner.dataset()
+        ev20 = next(e for e, _ in data if e["event"] == ids[20])
+        ev19 = next(e for e, _ in data if e["event"] == ids[19])
+        self.assertNotIn(ids[19], [e["event"] for e, _ in learner._closed_before(data, ev20)])
+        self.assertNotIn(ids[20], [e["event"] for e, _ in learner._closed_before(data, ev19)])
+        scored = learner.prequential(data)
+        groups = learner.clusters(scored)
+        pos = {s["event"]: i for i, s in enumerate(scored)}
+        self.assertTrue(any(pos[ids[19]] in g and pos[ids[20]] in g for g in groups))
 
     def test_no_peeking(self):
         """An event's prequential prediction must not change when its own labels (or any
@@ -225,7 +252,10 @@ class LearnerTests(unittest.TestCase):
         self.assertEqual(res["trained_on_events"], 12)
         self.assertEqual(len(res["markets"]), 5)
         for r in res["markets"].values():
-            self.assertTrue(0 < r["p_react"] < 1)
+            if r["liquidity"] == "active":
+                self.assertTrue(0 < r["p_react"] < 1)
+            else:
+                self.assertIsNone(r["p_react"])
 
 
 if __name__ == "__main__":

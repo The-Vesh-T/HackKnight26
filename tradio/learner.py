@@ -10,10 +10,13 @@ archived live sessions, tradio/data/<id>/) plus every backfilled Board speech
 KXFEDDECISION contract).
 
 Label: 1 if reaction.py says `reacted` or `candidate_delay`, 0 if `expected_no_reaction` /
-`candidate_inconsistency`. Rows reaction.py calls `cant_tell_illiquid` are left out of
-training and scoring: a quiet thin market is "unknown", not "no reaction".
+`candidate_inconsistency`. Only contracts that were ACTIVE before T0 are labeled: in
+reaction.py a thin market can only end `reacted` or `cant_tell_illiquid`, never "no
+reaction", so keeping thin rows would let "thin" predict the label by construction.
+Thin/dark contracts get no prediction ("not measurable"), same as on screen.
 
-Features (all known before T0, so the model can run live):
+Features (known at T0, so the model can run live; market facts are strictly pre-T0, the
+text features come from the text released AT T0):
   contract kind, pre-T0 price and its uncertainty p(1-p), pre-T0 trades / spread / quote
   changes / liquidity class, speaker role, days to the decision, after-hours release,
   overlap flags, share of the text about the policy outlook (if downloaded), and the
@@ -21,16 +24,19 @@ Features (all known before T0, so the model can run live):
   up (if scored).
 
 How it is judged (prequential, "test then train"): events are taken in time order; each
-event is predicted by models fitted only on earlier events, scored, and only then added
-to the training set. That is exactly what happens live. Models:
+event is predicted by models fitted only on events whose 90-minute window had already
+CLOSED at its T0 (so two overlapping speeches never see each other's outcome), scored,
+and only then added to the training set. That is exactly what happens live. Models:
   base_rate   share of past rows that reacted (the bar to beat)
   playbook    the playbook's idea: contract kinds that reacted before, in active markets
   logistic    L2 logistic regression on standardized features
   boosting    shallow gradient-boosted trees
   mlp         a small neural net (one hidden layer of 16, strong weight decay)
 The champion is the model with the lowest prequential log loss; it only counts as
-"beats the base rate" if a bootstrap over events puts the whole 95% interval of its
-log-loss gain above zero. With few events that honestly says "not yet".
+"beats the base rate" if a bootstrap over clusters of overlapping speeches puts its whole
+log-loss gain interval above zero, at 95% split across the four candidate models
+(Bonferroni), because the champion is picked from four. With few events that honestly
+says "not yet".
 """
 
 import argparse
@@ -53,18 +59,25 @@ NEGATIVE = ("expected_no_reaction", "candidate_inconsistency")
 KINDS = {"H0": "hold", "H25": "hike_small", "H26": "hike_big", "C25": "cut_small", "C26": "cut_big"}
 ROLES = ("chair", "vice_chair", "vice_chair_supervision", "governor")
 MIN_TRAIN_EVENTS = 10          # models start predicting once this many events are known
+WINDOW_S = 90 * 60             # an event's label exists only once T0+90 min has passed
 SEED = 0
 BOOTSTRAP = 1000
 
 FEATURES = (["kind_" + k for k in KINDS.values()]
-            + ["pre_mid", "uncertainty", "log_trades", "spread_ticks", "quote_changes",
-               "active", "thin"]
+            + ["pre_mid", "uncertainty", "log_trades", "spread_ticks", "quote_changes"]
             + ["role_" + r for r in ROLES]
             + ["log_days_to_decision", "after_hours", "n_flags",
                "has_text", "policy_share", "has_stance", "abs_z", "aligned_z"])
 
 
 # ------------------------------------------------------------------ dataset
+
+def _read(path):
+    try:
+        return read_json(path)
+    except (OSError, ValueError):
+        return None
+
 
 def _speech_index():
     path = os.path.join(HIST_DIR, "speeches.json")
@@ -107,20 +120,21 @@ def _days_to_decision(t0: str, ticker: str, meta: dict):
 def event_rows(event_dir: str, speeches: dict, for_predict: bool = False):
     """One event folder -> (event dict, rows) or None. for_predict accepts a live,
     still-provisional analysis (only its pre-T0 facts are used)."""
-    try:
-        an = read_json(os.path.join(event_dir, "analysis.json"))
-    except (OSError, ValueError):
+    an = _read(os.path.join(event_dir, "analysis.json"))
+    if not an:
         return None
     if an.get("provisional") and not for_predict:
         return None
-    meta_path = os.path.join(event_dir, "meta.json")
-    meta = read_json(meta_path) if os.path.isfile(meta_path) else {}
-    tl_path = os.path.join(event_dir, "timeline.json")
-    tl = read_json(tl_path) if os.path.isfile(tl_path) else {}
+    meta = _read(os.path.join(event_dir, "meta.json")) or {}
+    tl = _read(os.path.join(event_dir, "timeline.json")) or {}
     t0 = meta.get("t0") or tl.get("t0")
     if not t0:
         return None
     sid = meta.get("speech_id") or (tl.get("speech") or {}).get("speech_id")
+    if not meta and sid:
+        # hero/live events: use the backfill's facts for the same speech, so a speech is
+        # encoded the same way wherever it came from
+        meta = _read(os.path.join(HIST_DIR, sid, "meta.json")) or {}
     info = speeches.get(sid, {})
     role = meta.get("role") or info.get("role")
     local = parse_ts(t0).astimezone(__import__("zoneinfo").ZoneInfo("America/New_York"))
@@ -154,10 +168,9 @@ def event_rows(event_dir: str, speeches: dict, for_predict: bool = False):
         x["pre_mid"] = p if p is not None else 0.5
         x["uncertainty"] = (p * (1 - p)) if p is not None else 0.25
         x["log_trades"] = math.log1p(det.get("trades") or 0)
-        x["spread_ticks"] = min(det.get("median_spread_ticks") or 10.0, 10.0)
+        sp = det.get("median_spread_ticks")
+        x["spread_ticks"] = min(sp if sp is not None else 10.0, 10.0)
         x["quote_changes"] = det.get("quote_change_minutes") or 0
-        x["active"] = float(r.get("liquidity") == "active")
-        x["thin"] = float(r.get("liquidity") == "thin")
         if role in ROLES:
             x["role_" + role] = 1.0
         x["log_days_to_decision"] = math.log1p(days) if days is not None else 0.0
@@ -171,6 +184,8 @@ def event_rows(event_dir: str, speeches: dict, for_predict: bool = False):
             x["aligned_z"] = z * _hawkish_pushes_up(k, pre)
         st = r.get("status")
         label = 1 if st in POSITIVE else 0 if st in NEGATIVE else None
+        if r.get("liquidity") != "active":
+            label = None                      # not measurable either way (see docstring)
         rows.append({"market": mid, "kind": k, "status": st, "liquidity": r.get("liquidity"),
                      "move_ticks": r.get("move_ticks"), "label": label,
                      "x": [x[f] for f in FEATURES]})
@@ -227,7 +242,7 @@ class PlaybookRule:
     name = "playbook"
 
     def _fires(self, x, kind):
-        return kind in self.kinds and x[FEATURES.index("active")] == 1.0
+        return kind in self.kinds             # every labeled row is an active market
 
     def fit(self, X, y, kinds):
         self.kinds = {k for k, lab in zip(kinds, y) if lab == 1}
@@ -294,41 +309,58 @@ def _logloss(p, y):
 
 
 def _avg_precision(ps, ys):
-    pos = sum(ys)
-    if not pos:
+    if not sum(ys) or sum(ys) == len(ys):
         return None
-    order = sorted(range(len(ps)), key=lambda i: -ps[i])
-    hits, total = 0, 0.0
-    for rank, i in enumerate(order, 1):
-        if ys[i]:
-            hits += 1
-            total += hits / rank
-    return total / pos
+    from sklearn.metrics import average_precision_score
+    return float(average_precision_score(ys, ps))
 
 
 def prequential(data, models=None):
     """Test-then-train over events in time order. Returns per-event scored predictions."""
     models = models or make_models()
-    X, y, kinds, n_events = [], [], [], 0
     scored = []
     for ev, rows in data:
         lab = _labeled(rows)
-        if lab and n_events >= MIN_TRAIN_EVENTS and len(set(y)) == 2:
-            Xe, ke = [r["x"] for r in lab], [r["kind"] for r in lab]
-            preds = {}
-            for m in models:
-                m.fit(X, y, kinds)
-                preds[m.name] = m.predict(Xe, ke)
-            scored.append({"event": ev["event"], "t0": ev["t0"],
-                           "rows": [{"market": r["market"], "label": r["label"],
-                                     **{n: round(preds[n][i], 4) for n in preds}}
-                                    for i, r in enumerate(lab)]})
-        if lab:
-            X += [r["x"] for r in lab]
-            y += [r["label"] for r in lab]
-            kinds += [r["kind"] for r in lab]
-            n_events += 1
+        if not lab:
+            continue
+        train = _closed_before(data, ev)
+        X = [r["x"] for _, rs in train for r in _labeled(rs)]
+        y = [r["label"] for _, rs in train for r in _labeled(rs)]
+        kinds = [r["kind"] for _, rs in train for r in _labeled(rs)]
+        n_events = sum(1 for _, rs in train if _labeled(rs))
+        if n_events < MIN_TRAIN_EVENTS or len(set(y)) < 2:
+            continue
+        Xe, ke = [r["x"] for r in lab], [r["kind"] for r in lab]
+        preds = {}
+        for m in models:
+            m.fit(X, y, kinds)
+            preds[m.name] = m.predict(Xe, ke)
+        scored.append({"event": ev["event"], "t0": ev["t0"], "trained_on": n_events,
+                       "rows": [{"market": r["market"], "label": r["label"],
+                                 **{n: round(preds[n][i], 4) for n in preds}}
+                                for i, r in enumerate(lab)]})
     return scored
+
+
+def _closed_before(data, ev):
+    """Events whose label already existed at ev's T0 (their T0+90 min had passed)."""
+    t = to_unix(ev["t0"])
+    return [(e, r) for e, r in data if e["event"] != ev["event"] and to_unix(e["t0"]) + WINDOW_S <= t]
+
+
+def clusters(scored):
+    """Group scored events whose windows overlap (same contracts, same tape): they are
+    one observation for the bootstrap, not two. Returns lists of indexes into scored."""
+    groups, end = [], None
+    for i in sorted(range(len(scored)), key=lambda j: to_unix(scored[j]["t0"])):
+        t = to_unix(scored[i]["t0"])
+        if groups and t < end:
+            groups[-1].append(i)
+            end = max(end, t + WINDOW_S)
+        else:
+            groups.append([i])
+            end = t + WINDOW_S
+    return groups
 
 
 def scoreboard(scored, names):
@@ -348,21 +380,26 @@ def scoreboard(scored, names):
     for n in names:
         m = board["models"][n]
         m["brier_skill"] = round(1 - m["brier"] / base, 4) if base else None
-    # bootstrap over events: log-loss gain vs base rate (positive = better than base rate)
+    # bootstrap over clusters of overlapping events: log-loss gain vs base rate
+    # (positive = better). 95% split over the candidate models (Bonferroni).
     rnd = random.Random(SEED)
-    per_event = [[(_logloss(r["base_rate"], r["label"]), {n: _logloss(r[n], r["label"]) for n in names})
-                  for r in e["rows"]] for e in scored]
-    for n in names:
-        if n == "base_rate":
-            continue
+    groups = clusters(scored)
+    per_group = [[(_logloss(r["base_rate"], r["label"]), {n: _logloss(r[n], r["label"]) for n in names})
+                  for i in g for r in scored[i]["rows"]] for g in groups]
+    others = [n for n in names if n != "base_rate"]
+    alpha = 0.05 / max(len(others), 1)
+    board["n_clusters"] = len(groups)
+    board["ci_level"] = round(1 - alpha, 4)
+    for n in others:
         gains = []
         for _ in range(BOOTSTRAP):
-            pick = [per_event[rnd.randrange(len(per_event))] for _ in per_event]
-            flat = [x for e in pick for x in e]
+            pick = [per_group[rnd.randrange(len(per_group))] for _ in per_group]
+            flat = [x for g in pick for x in g]
             gains.append(sum(b - m[n] for b, m in flat) / len(flat))
         gains.sort()
-        lo, hi = gains[int(0.025 * BOOTSTRAP)], gains[int(0.975 * BOOTSTRAP) - 1]
-        board["models"][n]["gain_vs_base_ci95"] = [round(lo, 4), round(hi, 4)]
+        lo = gains[int(alpha / 2 * BOOTSTRAP)]
+        hi = gains[min(BOOTSTRAP - 1, int((1 - alpha / 2) * BOOTSTRAP))]
+        board["models"][n]["gain_vs_base_ci"] = [round(lo, 4), round(hi, 4)]
         board["models"][n]["beats_base_rate"] = lo > 0
     return board
 
@@ -374,7 +411,7 @@ def _fit_all(data, name):
     for _, rows in data:
         for r in _labeled(rows):
             X.append(r["x"]), y.append(r["label"]), kinds.append(r["kind"])
-    model = next(m for m in make_models() if m.name == name)
+    model = next((m for m in make_models() if m.name == name), BaseRate())
     return model.fit(X, y, kinds) if y else None
 
 
@@ -404,7 +441,7 @@ def build():
                    "Run tradio/history.py to backfill Board speeches.")
     elif beats:
         verdict = (f"{champion} beats the base rate on {board['n_events']} events predicted in time order "
-                   f"(log-loss gain 95% CI {board['models'][champion]['gain_vs_base_ci95']}).")
+                   f"(log-loss gain 95% CI {board['models'][champion]['gain_vs_base_ci']}).")
     else:
         verdict = (f"No model beats the base rate yet on {board['n_events']} events predicted in time "
                    f"order; best is {champion}. Each new event is a new test.")
@@ -412,14 +449,14 @@ def build():
         "built_at": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
         "n_events": len(data), "n_history_events": n_hist, "n_rows": len(all_rows),
         "n_labeled": len(lab), "positives": sum(r["label"] for r in lab),
-        "excluded_cant_tell": sum(1 for r in all_rows if r["label"] is None),
+        "excluded_not_measurable": sum(1 for r in all_rows if r["label"] is None),
         "features": FEATURES, "min_train_events": MIN_TRAIN_EVENTS,
         "champion": champion, "champion_beats_base_rate": beats, "verdict": verdict,
         "scoreboard": board, "logistic_weights": logistic_weights(data),
         "events": [{"event": ev["event"], "t0": ev["t0"], "source": ev["source"], "role": ev["role"],
                     "z": ev["z"], "rows": len(rows),
                     "reacted": sum(1 for r in rows if r["label"] == 1),
-                    "cant_tell": sum(1 for r in rows if r["label"] is None)} for ev, rows in data],
+                    "not_measurable": sum(1 for r in rows if r["label"] is None)} for ev, rows in data],
         "predictions": scored,
         "caveat": ("Predictions use only facts known before T0. Scores are out-of-sample: every event "
                    "was predicted before the model saw it. Not trading advice."),
@@ -436,8 +473,7 @@ def predict(event_dir: str, model_name: str = None):
     if not got:
         return None
     ev, rows = got
-    train = [(e, r) for e, r in data if e["event"] != ev["event"]
-             and to_unix(e["t0"]) < to_unix(ev["t0"])]
+    train = _closed_before(data, ev)
     name = model_name
     if name is None:
         try:
@@ -447,8 +483,11 @@ def predict(event_dir: str, model_name: str = None):
     model = _fit_all(train, name) or BaseRate().fit([], [])
     ps = model.predict([r["x"] for r in rows], [r["kind"] for r in rows])
     return {"event": ev["event"], "model": name, "trained_on_events": len(train),
-            "markets": {r["market"]: {"p_react": round(p, 4), "kind": r["kind"],
-                                      "liquidity": r["liquidity"]} for r, p in zip(rows, ps)}}
+            "markets": {r["market"]: {"p_react": round(p, 4) if r["liquidity"] == "active" else None,
+                                      "kind": r["kind"], "liquidity": r["liquidity"],
+                                      "note": None if r["liquidity"] == "active" else
+                                      "not measurable before T0 (not active); no prediction"}
+                        for r, p in zip(rows, ps)}}
 
 
 def main(argv=None):
@@ -464,15 +503,16 @@ def main(argv=None):
             raise SystemExit(f"no usable analysis.json in {d}")
         print(f"{res['event']}: {res['model']} trained on {res['trained_on_events']} earlier events")
         for mid, r in res["markets"].items():
-            print(f"  {mid:36s} {r['liquidity'] or '':7s} P(react) {r['p_react']:.2f}")
+            p = f"P(react) {r['p_react']:.2f}" if r["p_react"] is not None else r["note"]
+            print(f"  {mid:36s} {r['liquidity'] or '':7s} {p}")
         return
     out = build()
     print(f"model.json: {out['n_events']} events ({out['n_history_events']} backfilled), "
           f"{out['n_labeled']} labeled rows, {out['positives']} reacted, "
-          f"{out['excluded_cant_tell']} can't-tell rows left out")
+          f"{out['excluded_not_measurable']} not-active rows left out")
     for n, m in out["scoreboard"].get("models", {}).items():
         print(f"  {n:10s} log loss {m['log_loss']:.4f}  brier {m['brier']:.4f}  "
-              f"skill {m['brier_skill']}  gain CI {m.get('gain_vs_base_ci95', '-')}")
+              f"skill {m['brier_skill']}  gain CI {m.get('gain_vs_base_ci', '-')}")
     print(out["verdict"])
 
 
