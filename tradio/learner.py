@@ -71,7 +71,7 @@ BOOTSTRAP = 1000
 
 FEATURES = (["kind_" + k for k in KINDS.values()]
             + ["pre_mid", "uncertainty", "log_trades", "spread_ticks", "quote_changes"]
-            + ["role_" + r for r in ROLES]
+            + ["role_" + r for r in ROLES] + ["is_testimony"]
             + ["log_days_to_decision", "after_hours", "overlap_speeches",
                "release_in_window", "release_day",
                "has_text", "policy_share", "has_stance", "abs_z", "aligned_z",
@@ -265,6 +265,7 @@ def event_rows(event_dir: str, speeches: dict, for_predict: bool = False):
         x["quote_changes"] = det.get("quote_change_minutes") or 0
         if role in ROLES:
             x["role_" + role] = 1.0
+        x["is_testimony"] = float((meta.get("kind") or info.get("kind")) == "testimony")
         x["log_days_to_decision"] = math.log1p(days) if days is not None else 0.0
         x["after_hours"] = float(after_hours)
         x["overlap_speeches"] = float(overlap)

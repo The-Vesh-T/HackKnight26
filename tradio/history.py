@@ -28,7 +28,8 @@ The history events live in their own folder so the demo's replay tabs and the pl
 are unchanged; tradio/learner.py reads both.
 
 Choices:
-- T0 = the time on the Fed's own speech feed (federalreserve.gov/json/ne-speeches.json),
+- T0 = the time on the Fed's own speech feed (federalreserve.gov/json/ne-speeches.json;
+  congressional testimony by Board members comes from ne-testimony.json),
   which is US Eastern. It matches the hand-checked T0s of all three hero events. Speeches
   without a time on the feed are skipped (no T0 = no reaction time).
 - Markets = the five KXFEDDECISION contracts for the NEXT FOMC decision after the speech
@@ -56,6 +57,7 @@ from tradio.common import DATA_DIR, iso, parse_ts, read_json, to_unix, write_jso
 HIST_DIR = os.path.join(DATA_DIR, "history")
 SPEECHES = os.path.join(HIST_DIR, "speeches.json")
 FEED = "https://www.federalreserve.gov/json/ne-speeches.json"
+TESTIMONY_FEED = "https://www.federalreserve.gov/json/ne-testimony.json"
 ET = ZoneInfo("America/New_York")
 PRE_MIN, POST_MIN, PAD_MIN = 60, 90, 60
 DEFAULT_SINCE = "2024-11-01"
@@ -80,10 +82,10 @@ RELEASE_TIMES_ET = {(8, 30), (10, 0)}     # when most US data releases land
 def parse_feed_entry(e: dict):
     """One ne-speeches.json entry -> speech dict, or None if it has no usable link."""
     link = e.get("l") or ""
-    m = re.search(r"/newsevents/speech/([a-z]+\d{8}[a-z])\.htm", link)
+    m = re.search(r"/newsevents/(speech|testimony)/([a-z]+\d{8}[a-z])\.htm", link)
     if not m:
         return None
-    sid = m.group(1)
+    kind, sid = m.group(1), m.group(2)
     d = (e.get("d") or "").strip()
     t0 = None
     try:
@@ -100,17 +102,22 @@ def parse_feed_entry(e: dict):
             break
     words = [w for w in re.sub(r"[^A-Za-z\s-]", " ", name).split() if len(w) > 1]
     speaker = f"{words[0]}_{words[-1]}".lower() if len(words) >= 2 else sid.rstrip("abcdefgh")
-    return {"id": sid, "date": sid[-9:-1], "t0": t0, "who": who, "role": role, "speaker": speaker,
-            "title": (e.get("t") or "").strip(), "url": f"https://www.federalreserve.gov{link}"}
+    return {"id": sid, "kind": kind, "date": sid[-9:-1], "t0": t0, "who": who, "role": role,
+            "speaker": speaker, "title": (e.get("t") or "").strip(),
+            "url": f"https://www.federalreserve.gov{link}"}
 
 
 def refresh_speeches():
     from tradio.ingest_markets import HEADERS
     import requests
-    r = requests.get(FEED, headers=HEADERS, timeout=30)
-    r.raise_for_status()
-    feed = json.loads(r.content.decode("utf-8-sig"))
-    speeches = [s for s in (parse_feed_entry(e) for e in feed) if s]
+    feed = []
+    for url in (FEED, TESTIMONY_FEED):
+        r = requests.get(url, headers=HEADERS, timeout=30)
+        r.raise_for_status()
+        feed += json.loads(r.content.decode("utf-8-sig"))
+    # testimony by Board staff (division directors) is not a policymaker speaking
+    speeches = [s for s in (parse_feed_entry(e) for e in feed) if s
+                and not (s["kind"] == "testimony" and s["role"] == "other")]
     speeches.sort(key=lambda s: (s["t0"] or s["date"], s["id"]))
     write_json(SPEECHES, {"source": FEED, "fetched_at": iso(datetime.now(timezone.utc)),
                           "speeches": speeches})
@@ -267,7 +274,8 @@ def analyze(speeches, all_speeches):
         meta_path = os.path.join(d, "meta.json")
         meta = read_json(meta_path) if os.path.isfile(meta_path) else {}
         decision = next_decision(s["t0"])
-        meta.update({"speech_id": s["id"], "t0": s["t0"], "speaker": s["speaker"], "who": s["who"],
+        meta.update({"speech_id": s["id"], "kind": s.get("kind", "speech"),
+                     "t0": s["t0"], "speaker": s["speaker"], "who": s["who"],
                      "role": s["role"], "title": s["title"], "url": s["url"],
                      "next_decision": decision.isoformat() if decision else None,
                      "days_to_decision": ((decision - parse_ts(s["t0"]).astimezone(ET).date()).days
@@ -286,7 +294,14 @@ def speech_text(sid: str) -> dict:
     path = os.path.join(HIST_DIR, sid, "speech.json")
     if not os.path.isfile(path):
         import fed_speeches
-        write_json(path, fed_speeches.fetch_speech(sid))
+        kind = next((s.get("kind") for s in read_json(SPEECHES)["speeches"] if s["id"] == sid), "speech")
+        saved = fed_speeches.SPEECH_URL
+        if kind == "testimony":           # same page layout, different folder
+            fed_speeches.SPEECH_URL = saved.replace("/speech/", "/testimony/")
+        try:
+            write_json(path, fed_speeches.fetch_speech(sid))
+        finally:
+            fed_speeches.SPEECH_URL = saved
     return read_json(path)
 
 

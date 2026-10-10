@@ -56,6 +56,9 @@ class FeedParsing(unittest.TestCase):
         self.assertEqual(ids["bowman20250623a"]["t0"], "2025-06-23T14:00:00Z")
         self.assertEqual(ids["waller20250717a"]["t0"], "2025-07-17T22:30:00Z")
         self.assertTrue(all(s["t0"] >= history.DEFAULT_SINCE for s in sp))
+        t = {s["id"]: s for s in sp if s.get("kind") == "testimony"}
+        self.assertEqual(t["powell20250624a"]["t0"], "2025-06-24T12:30:00Z")   # 8:30 ET
+        self.assertNotIn("guynn20260326a", t)                                   # staff, not a policymaker
 
 
 def candles(start, end, mid_at):

@@ -712,7 +712,7 @@
     role_vice_chair_supervision: "speaker is the Vice Chair for Supervision", role_governor: "speaker is a governor",
     has_stance: "speech has a stance score", has_text: "speech text downloaded", after_hours: "released outside market hours",
     log_days_to_decision: "more days until the FOMC decision", pre_mid: "higher price before T0",
-    overlap_speeches: "another Board speech within 90 min", release_in_window: "jobs/CPI report lands inside the window",
+    overlap_speeches: "another Board speech within 90 min", is_testimony: "testimony to Congress (not a speech)", release_in_window: "jobs/CPI report lands inside the window",
     release_day: "jobs/CPI report day", has_embedding: "speech text embedded",
     novelty_vs_speaker: "speech unlike the speaker's earlier ones", novelty_vs_recent: "speech unlike recent Board speeches",
   };
