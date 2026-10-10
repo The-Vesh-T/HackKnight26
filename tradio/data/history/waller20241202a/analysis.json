@@ -1,0 +1,77 @@
+{
+ "event_id": "waller20241202a",
+ "markets": {
+  "kalshi:KXFEDDECISION-24DEC-C25": {
+   "liquidity": "thin",
+   "pre_mid": 0.645,
+   "alarm_t": "2024-12-02T20:19:00Z",
+   "confirmed_by_trade": "2024-12-02T20:18:49.059681Z",
+   "move_ticks": 6.0,
+   "t50_min": 4.0,
+   "t90_min": 13.0,
+   "status": "reacted",
+   "reason": "Alarm 20:19 UTC (T0+4 min), move +6 ticks, confirmed by a trade; thin market, timing is rough.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": null,
+   "pre_band": [
+    0.64,
+    0.655
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 10,
+    "quote_change_minutes": 5,
+    "median_spread_ticks": 3.0,
+    "imputed_minutes": 51
+   }
+  },
+  "kalshi:KXFEDDECISION-24DEC-C26": {
+   "liquidity": "dark",
+   "pre_mid": null,
+   "alarm_t": null,
+   "confirmed_by_trade": null,
+   "move_ticks": null,
+   "t50_min": null,
+   "t90_min": null,
+   "status": "cant_tell_illiquid",
+   "reason": "Not enough quotes around T0 to measure anything.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": null,
+   "pre_band": null,
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 0,
+    "quote_change_minutes": 0,
+    "median_spread_ticks": null,
+    "imputed_minutes": 0
+   }
+  },
+  "kalshi:KXFEDDECISION-24DEC-H0": {
+   "liquidity": "thin",
+   "pre_mid": 0.33,
+   "alarm_t": "2024-12-02T20:18:00Z",
+   "confirmed_by_trade": "2024-12-02T20:17:36.812344Z",
+   "move_ticks": -4.5,
+   "t50_min": 4.0,
+   "t90_min": 4.0,
+   "status": "reacted",
+   "reason": "Alarm 20:18 UTC (T0+3 min), move -4.5 ticks, confirmed by a trade; thin market, timing is rough.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": "2024-12-02T20:19:00Z",
+   "pre_band": [
+    0.325,
+    0.335
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 0,
+    "quote_change_minutes": 5,
+    "median_spread_ticks": 3.0,
+    "imputed_minutes": 52
+   }
+  }
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "speech_id": "cook20260224a",
+ "t0": "2026-02-24T14:30:00Z",
+ "speaker": "lisa_cook",
+ "who": "Governor Lisa D. Cook",
+ "role": "governor",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/cook20260224a.htm",
+ "next_decision": "2026-03-18",
+ "days_to_decision": 22,
+ "flags": [
+  "another Board speech within 90 min (waller20260224a)"
+ ],
+ "paragraphs": 19,
+ "policy_paragraphs": 8
+}

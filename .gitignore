@@ -56,3 +56,8 @@ macro_cache.json
 # Tradio live mode: rewritten every few seconds during a speech (archive to keep one)
 tradio/data/live/
 web/data/tradio/live/
+
+# Tradio history backfill: raw API responses, rebuilt timelines and speech texts stay local
+tradio/data/history/*/raw/
+tradio/data/history/*/timeline.json
+tradio/data/history/*/speech.json
