@@ -364,3 +364,20 @@ footer .keys { margin-left: auto; color: var(--faint); }
 .ctl-status .err { color: var(--red); margin-bottom: 4px; }
 .controls-bar .muted { color: var(--faint); }
 .controls-bar[hidden] { display: none; }
+
+/* Model (tradio/learner.py) */
+.model-line { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); margin-top: 4px; }
+.model-line b { color: var(--text); }
+.model-line.muted { color: var(--faint); }
+.mbar { position: relative; width: 60px; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.mbar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--cyan); border-radius: 0 3px 3px 0; }
+.drawer .verdict { font-size: 14px; margin: 4px 0 8px; }
+.drawer tr.champ td { color: var(--text); }
+.skill { position: relative; display: inline-block; width: 120px; height: 10px; vertical-align: middle; }
+.skill .axis { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: var(--line-2); }
+.skill i { position: absolute; top: 1px; bottom: 1px; }
+.skill i.pos { background: var(--cyan); border-radius: 0 4px 4px 0; }
+.skill i.neg { background: var(--muted); border-radius: 4px 0 0 4px; }
+.drawer .src.note { word-break: normal; overflow-wrap: anywhere; }
+.drawer td.nowrap { white-space: nowrap; }
+@media (max-width: 600px) { .drawer .barcol { display: none; } }

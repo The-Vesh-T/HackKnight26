@@ -1,0 +1,16 @@
+{
+ "speech_id": "barr20250509a",
+ "t0": "2025-05-09T09:55:00Z",
+ "speaker": "michael_barr",
+ "who": "Governor Michael S. Barr",
+ "role": "governor",
+ "title": "",
+ "url": "https://www.federalreserve.gov/newsevents/speech/barr20250509a.htm",
+ "next_decision": "2025-06-18",
+ "days_to_decision": 40,
+ "flags": [
+  "another Board speech within 90 min (kugler20250509a)"
+ ],
+ "paragraphs": 60,
+ "policy_paragraphs": 27
+}
