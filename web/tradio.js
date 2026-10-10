@@ -368,8 +368,8 @@
     // Labelled marks: the release, plus analysis.json's reaction / halfway / 90% times. Their labels
     // sit in lanes above the plot so they never cover the price line; lanes are worked out from every
     // mark (revealed or not) so the plot doesn't resize as the replay reveals them.
-    const marks = [{ t: E.t0, color: "#15181D", label: `${E.overTime ? "Speech starts" : "Text released"} ${fmtEtShort(E.t0)} ET`, dash: "4 3", always: true }];
-    if (m.alarm && !m.indicative) marks.push({ t: m.alarm, color: "#00A86B", label: `Reaction ${relMin(m.alarm - E.t0)}`, dash: "0" });
+    const marks = [{ t: E.t0, color: "#E8EAED", label: `${E.overTime ? "Speech starts" : "Text released"} ${fmtEtShort(E.t0)} ET`, dash: "4 3", always: true }];
+    if (m.alarm && !m.indicative) marks.push({ t: m.alarm, color: "#1FCB8A", label: `Reaction ${relMin(m.alarm - E.t0)}`, dash: "0" });
     if (m.a && m.a.t50_min != null && !m.indicative) marks.push({ t: E.t0 + m.a.t50_min * MIN, color: "#8B929B", label: `Halfway +${m.a.t50_min}m`, dash: "2 3" });
     if (m.a && m.a.t90_min != null && !m.indicative) marks.push({ t: E.t0 + m.a.t90_min * MIN, color: "#8B929B", label: `90% done +${m.a.t90_min}m`, dash: "2 3" });
     for (const k of marks) {
@@ -388,13 +388,13 @@
     const y = yScale(m.lo, m.hi, m.tick, T, H - B);
     const pill = (k) => {
       const py = 4 + k.lane * 22;
-      return `<rect x="${k.x0.toFixed(1)}" y="${py}" width="${k.w.toFixed(1)}" height="18" rx="4" fill="rgba(255,255,255,.96)" stroke="${k.color}" stroke-opacity=".6"/>` +
+      return `<rect x="${k.x0.toFixed(1)}" y="${py}" width="${k.w.toFixed(1)}" height="18" rx="4" fill="rgba(15,17,20,.92)" stroke="${k.color}" stroke-opacity=".6"/>` +
         `<text x="${(k.x0 + 7).toFixed(1)}" y="${py + 13}" fill="${k.color}" font-size="11.5">${esc(k.label)}</text>`;
     };
 
     // grid + y labels
     for (const v of yTicks(y)) {
-      g += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="#E6E8EB" stroke-dasharray="2 4"/>`;
+      g += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="#2A2E34" stroke-dasharray="2 4"/>`;
       g += `<text x="${W - R + 10}" y="${y(v) + 4}" fill="#8B929B" font-size="12" text-anchor="start" font-family="${mono}">${cents(v)}</text>`;
     }
     // x labels in ET: every 15 min when there's room, else 30 or 60
@@ -410,12 +410,12 @@
     if (m.a && m.a.pre_band) {
       const [a, b] = m.a.pre_band;
       const yt = y(Math.max(a, b)), yb = y(Math.min(a, b));
-      g += `<rect x="${L}" y="${yt - 1}" width="${W - L - R}" height="${Math.max(2, yb - yt + 2)}" fill="rgba(21,24,29,.05)"/>`;
+      g += `<rect x="${L}" y="${yt - 1}" width="${W - L - R}" height="${Math.max(2, yb - yt + 2)}" fill="rgba(255,255,255,.05)"/>`;
     }
 
     // bid-ask band + midpoint
-    const color = m.isKalshi ? "#2F6BFF" : "#D98A00";
-    if (m.isKalshi) g += `<path d="${bandPath(m.q, x, y, until)}" fill="rgba(47,107,255,.10)"/>`;
+    const color = m.isKalshi ? "#4C8DFF" : "#F0A43A";
+    if (m.isKalshi) g += `<path d="${bandPath(m.q, x, y, until)}" fill="rgba(76,141,255,.16)"/>`;
     const mids = m.q.filter((q) => q.mid != null).map((q) => ({ t: q.t, v: q.mid }));
     g += `<path d="${stepPath(mids, x, y, until)}" fill="none" stroke="${color}" stroke-width="2.4" ${m.indicative ? 'stroke-dasharray="6 4"' : ""}/>`;
 
@@ -424,7 +424,7 @@
     for (const t of m.tr) {
       if (t.t > until) break;
       const r = 1.8 + 6 * Math.sqrt(t.s / maxS);
-      g += `<circle cx="${x(t.t).toFixed(1)}" cy="${y(t.p).toFixed(1)}" r="${r.toFixed(1)}" fill="${t.side === "no" ? "rgba(229,72,77,.45)" : "rgba(0,168,107,.45)"}"/>`;
+      g += `<circle cx="${x(t.t).toFixed(1)}" cy="${y(t.p).toFixed(1)}" r="${r.toFixed(1)}" fill="${t.side === "no" ? "rgba(242,85,90,.45)" : "rgba(31,203,138,.45)"}"/>`;
     }
 
     // marks: the release is always shown, analysis.json's times only once the replay clock reaches them
@@ -438,7 +438,7 @@
     if (E.overTime) {
       for (const p of E.paragraphs) {
         if (p._t > now || !p.relevant || p.z == null || Math.abs(p.z) < 2) continue;
-        const c = p.z < 0 ? "#5B5BD6" : "#D98A00";
+        const c = p.z < 0 ? "#8B8BF5" : "#F0A43A";
         g += `<path d="M${x(p._t) - 5},${T - 2}L${x(p._t) + 5},${T - 2}L${x(p._t)},${T + 7}Z" fill="${c}"><title>z ${sgn(p.z, 1)}: ${esc((p.summary || p.text || "").slice(0, 80))}</title></path>`;
       }
     }
@@ -449,21 +449,21 @@
       const side = String(t.side || "");
       const yp = side === "yes" ? t.cost : 1 - t.cost;
       const cx = x(t.t), cy = y(yp);
-      g += `<path d="M${cx},${cy - 8}L${cx + 7},${cy}L${cx},${cy + 8}L${cx - 7},${cy}Z" fill="#15181D" stroke="#FFFFFF" stroke-width="1.5"><title>BUY ${esc(side.toUpperCase())} ×${esc(t.qty)} @ ${cents(t.cost)}</title></path>`;
-      g += `<text x="${cx + 10}" y="${cy - 10}" fill="#15181D" font-size="11.5" font-weight="600">BUY ${esc(side.toUpperCase())} ×${esc(t.qty)}</text>`;
+      g += `<path d="M${cx},${cy - 8}L${cx + 7},${cy}L${cx},${cy + 8}L${cx - 7},${cy}Z" fill="#E8EAED" stroke="#0F1114" stroke-width="1.5"><title>BUY ${esc(side.toUpperCase())} ×${esc(t.qty)} @ ${cents(t.cost)}</title></path>`;
+      g += `<text x="${cx + 10}" y="${cy - 10}" fill="#E8EAED" font-size="11.5" font-weight="600">BUY ${esc(side.toUpperCase())} ×${esc(t.qty)}</text>`;
       if (t.exitT && now >= t.exitT && t.value != null) {
         const ex = x(t.exitT), ey = y(side === "yes" ? t.value : 1 - t.value);
-        g += `<line x1="${cx}" y1="${cy}" x2="${ex}" y2="${ey}" stroke="#15181D" stroke-dasharray="3 3" opacity=".7"/>`;
-        g += `<rect x="${ex - 5}" y="${ey - 5}" width="10" height="10" fill="#15181D"/>`;
-        g += `<text x="${ex + 8}" y="${ey + 4}" fill="#15181D" font-size="11.5" font-weight="600">exit ${money(t.pnlFinal)}</text>`;
+        g += `<line x1="${cx}" y1="${cy}" x2="${ex}" y2="${ey}" stroke="#E8EAED" stroke-dasharray="3 3" opacity=".7"/>`;
+        g += `<rect x="${ex - 5}" y="${ey - 5}" width="10" height="10" fill="#E8EAED"/>`;
+        g += `<text x="${ex + 8}" y="${ey + 4}" fill="#E8EAED" font-size="11.5" font-weight="600">exit ${money(t.pnlFinal)}</text>`;
       }
     }
 
     // playhead: a line at "now" and a dot on the price
     if (now >= E.ws && now <= E.xe) {
-      g += `<line x1="${x(now)}" x2="${x(now)}" y1="${T}" y2="${H - B}" stroke="#2F6BFF" opacity=".35"/>`;
+      g += `<line x1="${x(now)}" x2="${x(now)}" y1="${T}" y2="${H - B}" stroke="#4C8DFF" opacity=".35"/>`;
       const q = quoteAt(m, now);
-      if (q && q.mid != null) g += `<circle cx="${x(until).toFixed(1)}" cy="${y(q.mid).toFixed(1)}" r="5" fill="${color}" stroke="#FFFFFF" stroke-width="2"/>`;
+      if (q && q.mid != null) g += `<circle cx="${x(until).toFixed(1)}" cy="${y(q.mid).toFixed(1)}" r="5" fill="${color}" stroke="#0F1114" stroke-width="2"/>`;
     }
 
     wrap.innerHTML = svgEl(W, H, g);
@@ -474,11 +474,11 @@
     const y = yScale(m.lo, m.hi, m.tick, 2, h - 2, 4);
     const mids = m.q.filter((q) => q.mid != null).map((q) => ({ t: q.t, v: q.mid }));
     const until = Math.min(now, E.we);
-    const c = m.isKalshi ? "#2F6BFF" : "#D98A00";
+    const c = m.isKalshi ? "#4C8DFF" : "#F0A43A";
     const ne = 'vector-effect="non-scaling-stroke"';
-    let g = `<line x1="${x(E.t0)}" x2="${x(E.t0)}" y1="0" y2="${h}" stroke="#C9CDD2" stroke-dasharray="2 2" ${ne}/>`;
+    let g = `<line x1="${x(E.t0)}" x2="${x(E.t0)}" y1="0" y2="${h}" stroke="#3A3F46" stroke-dasharray="2 2" ${ne}/>`;
     g += `<path d="${stepPath(mids, x, y, until)}" fill="none" stroke="${c}" stroke-width="1.6" ${ne} ${m.indicative ? 'stroke-dasharray="4 3"' : ""}/>`;
-    if (m.alarm && m.alarm <= now && !m.indicative) g += `<line x1="${x(m.alarm)}" x2="${x(m.alarm)}" y1="0" y2="${h}" stroke="#00A86B" stroke-width="1.6" ${ne}/>`;
+    if (m.alarm && m.alarm <= now && !m.indicative) g += `<line x1="${x(m.alarm)}" x2="${x(m.alarm)}" y1="0" y2="${h}" stroke="#1FCB8A" stroke-width="1.6" ${ne}/>`;
     return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true">${g}</svg>`;
   }
 
@@ -486,7 +486,7 @@
   const tint = (z) => {
     if (z == null) return "var(--line-2)";
     const k = Math.min(1, Math.abs(z) / 3);
-    return z < 0 ? `rgba(91,91,214,${0.25 + 0.75 * k})` : `rgba(217,138,0,${0.25 + 0.75 * k})`;
+    return z < 0 ? `rgba(139,139,245,${0.25 + 0.75 * k})` : `rgba(240,164,58,${0.25 + 0.75 * k})`;
   };
 
   function highlightKey(p) {
@@ -507,10 +507,10 @@
     let g = "";
     if (b && b.mean != null && b.stdev != null) {
       const band = (k, fill) => `<rect x="${x(b.mean - k * b.stdev).toFixed(1)}" y="34" width="${(x(b.mean + k * b.stdev) - x(b.mean - k * b.stdev)).toFixed(1)}" height="${axisY - 34}" rx="3" fill="${fill}"/>`;
-      g += band(2, "rgba(21,24,29,.06)") + band(1, "rgba(21,24,29,.10)");
+      g += band(2, "rgba(255,255,255,.06)") + band(1, "rgba(255,255,255,.10)");
       g += `<line x1="${x(b.mean).toFixed(1)}" x2="${x(b.mean).toFixed(1)}" y1="34" y2="${axisY}" stroke="#8B929B" stroke-dasharray="3 3"/>`;
     }
-    g += `<line x1="${L}" x2="${W - R}" y1="${axisY}" y2="${axisY}" stroke="#C9CDD2"/>`;
+    g += `<line x1="${L}" x2="${W - R}" y1="${axisY}" y2="${axisY}" stroke="#3A3F46"/>`;
     // the other policy passages: dots stacked where stances coincide
     const stack = {};
     for (const p of list || E.paragraphs) {
@@ -519,15 +519,15 @@
       const k = (stack[key] = (stack[key] || 0) + 1) - 1;
       const row = k % 5, col = Math.floor(k / 5);
       const dx = col === 0 ? 0 : (col % 2 ? 1 : -1) * Math.ceil(col / 2) * 6;
-      g += `<circle cx="${(x(p.stance) + dx).toFixed(1)}" cy="${(axisY - 6 - row * 6.5).toFixed(1)}" r="2.8" fill="${p.stance < 0 ? "#5B5BD6" : "#D98A00"}" opacity=".75"/>`;
+      g += `<circle cx="${(x(p.stance) + dx).toFixed(1)}" cy="${(axisY - 6 - row * 6.5).toFixed(1)}" r="2.8" fill="${p.stance < 0 ? "#8B8BF5" : "#F0A43A"}" opacity=".75"/>`;
     }
     // the most unusual passage
     const tx = x(top.stance);
     const anchor = tx < 70 ? "start" : tx > W - 70 ? "end" : "middle";
-    const tcol = top.stance < 0 ? "#5B5BD6" : "#D98A00";
-    g += `<line x1="${tx.toFixed(1)}" x2="${tx.toFixed(1)}" y1="26" y2="${axisY}" stroke="#15181D" stroke-width="1.5"/>`;
-    g += `<circle cx="${tx.toFixed(1)}" cy="22" r="6" fill="${tcol}" stroke="#15181D" stroke-width="2"/>`;
-    g += `<text x="${(anchor === "start" ? tx - 6 : anchor === "end" ? tx + 6 : tx).toFixed(1)}" y="10" fill="#15181D" font-size="12" font-weight="600" text-anchor="${anchor}">this passage</text>`;
+    const tcol = top.stance < 0 ? "#8B8BF5" : "#F0A43A";
+    g += `<line x1="${tx.toFixed(1)}" x2="${tx.toFixed(1)}" y1="26" y2="${axisY}" stroke="#E8EAED" stroke-width="1.5"/>`;
+    g += `<circle cx="${tx.toFixed(1)}" cy="22" r="6" fill="${tcol}" stroke="#E8EAED" stroke-width="2"/>`;
+    g += `<text x="${(anchor === "start" ? tx - 6 : anchor === "end" ? tx + 6 : tx).toFixed(1)}" y="10" fill="#E8EAED" font-size="12" font-weight="600" text-anchor="${anchor}">this passage</text>`;
     // axis labels
     g += `<text x="${L}" y="90" fill="#8B929B" font-size="12" text-anchor="start">← more dovish</text>`;
     g += `<text x="${x(0).toFixed(1)}" y="90" fill="#8B929B" font-size="12" text-anchor="middle">neutral</text>`;
@@ -695,12 +695,12 @@
   function legendHtml(E, m) {
     const items = [];
     if (m.isKalshi) {
-      items.push(`<span><i style="background:#2F6BFF"></i>price</span>`);
-      items.push(`<span><i class="dot" style="background:rgba(0,168,107,.65)"></i><i class="dot" style="background:rgba(229,72,77,.65)"></i>trades</span>`);
+      items.push(`<span><i style="background:#4C8DFF"></i>price</span>`);
+      items.push(`<span><i class="dot" style="background:rgba(31,203,138,.65)"></i><i class="dot" style="background:rgba(242,85,90,.65)"></i>trades</span>`);
     } else {
-      items.push(`<span><i style="background:#D98A00"></i>Polymarket price (indicative)</span>`);
+      items.push(`<span><i style="background:#F0A43A"></i>Polymarket price (indicative)</span>`);
     }
-    if (m.a && m.a.pre_band) items.push(`<span><i style="background:rgba(21,24,29,.10)"></i>usual range before the speech</span>`);
+    if (m.a && m.a.pre_band) items.push(`<span><i style="background:rgba(255,255,255,.10)"></i>usual range before the speech</span>`);
     return items.join("") + infoBtn("chart", "Chart key");
   }
 
@@ -709,19 +709,19 @@
     const sw = (style, cls = "") => `<i class="${cls}" style="${style}"></i>`;
     let h = "";
     if (m.isKalshi) {
-      h += row(sw("background:#2F6BFF"), "<b>Price</b>: the midpoint between the best buy and sell offers. A price of 22¢ means the market gives this outcome roughly a 22% chance.");
-      h += row(sw("background:rgba(47,107,255,.18)"), "<b>Shaded band around the line</b>: the gap between buy and sell offers.");
-      h += row(sw("background:rgba(0,168,107,.65)", "dot") + sw("background:rgba(229,72,77,.65)", "dot"), "<b>Dots</b>: individual trades. Green took the Yes side, red the No side; bigger means more contracts.");
+      h += row(sw("background:#4C8DFF"), "<b>Price</b>: the midpoint between the best buy and sell offers. A price of 22¢ means the market gives this outcome roughly a 22% chance.");
+      h += row(sw("background:rgba(76,141,255,.26)"), "<b>Shaded band around the line</b>: the gap between buy and sell offers.");
+      h += row(sw("background:rgba(31,203,138,.65)", "dot") + sw("background:rgba(242,85,90,.65)", "dot"), "<b>Dots</b>: individual trades. Green took the Yes side, red the No side; bigger means more contracts.");
     } else {
-      h += row(sw("background:#D98A00"), "<b>Dashed amber line</b>: the Polymarket price. It is indicative only: its history changed depending on how it was queried, so it shows direction and gets no timing claims.");
+      h += row(sw("background:#F0A43A"), "<b>Dashed amber line</b>: the Polymarket price. It is indicative only: its history changed depending on how it was queried, so it shows direction and gets no timing claims.");
     }
-    if (m.a && m.a.pre_band) h += row(sw("background:rgba(21,24,29,.10)"), "<b>Grey band</b>: the price's usual range in the hour before the speech.");
-    h += row(sw("background:#15181D;width:2px"), `<b>Dashed black line</b>: ${E.overTime ? "the moment the speech starts" : "the moment the text was released"} (T0).`);
+    if (m.a && m.a.pre_band) h += row(sw("background:rgba(255,255,255,.10)"), "<b>Grey band</b>: the price's usual range in the hour before the speech.");
+    h += row(sw("background:#E8EAED;width:2px"), `<b>Dashed white line</b>: ${E.overTime ? "the moment the speech starts" : "the moment the text was released"} (T0).`);
     if (!m.indicative && m.a && (m.alarm || m.a.t50_min != null)) {
-      h += row(sw("background:#00A86B;width:2px"), "<b>Green line</b>: a reaction was detected. The price left its usual range and stayed out.");
+      h += row(sw("background:#1FCB8A;width:2px"), "<b>Green line</b>: a reaction was detected. The price left its usual range and stayed out.");
       h += row(sw("background:#8B929B;width:2px"), "<b>Dotted grey lines</b>: when half, then 90%, of the final move had happened.");
     }
-    if (E.desk && E.desk.trades.some((t) => t.mid === m.id)) h += row(`<i class="diamond"></i><i class="sq"></i>`, "<b>Black diamond</b>: a desk order. <b>Black square</b>: its planned exit.");
+    if (E.desk && E.desk.trades.some((t) => t.mid === m.id)) h += row(`<i class="diamond"></i><i class="sq"></i>`, "<b>White diamond</b>: a desk order. <b>White square</b>: its planned exit.");
     if (E.overTime) h += row(`<i class="tri"></i>`, "<b>Triangle on the top edge</b>: a passage that was a surprise for this speaker.");
     const source = m.isKalshi ? (E.live && E.live.kind === "live" ? "Live Kalshi tape, closed 1-minute candles" : "Real Kalshi prices, 1-minute candles (each point is the end of its minute)") : "Polymarket price history";
     return h + `<p class="src">${source}. Times are Eastern (ET).</p>`;
@@ -1145,16 +1145,16 @@
         const y = yScale(c - r.span / 2, c + r.span / 2, m.tick, T, H - B, 2);
         let g = "";
         for (const v of yTicks(y, 4)) {
-          g += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="#EEF0F2"/><text x="${L - 6}" y="${y(v) + 4}" fill="#8B929B" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">${cents(v)}</text>`;
+          g += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="#2A2E34"/><text x="${L - 6}" y="${y(v) + 4}" fill="#8B929B" font-size="11" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">${cents(v)}</text>`;
         }
         for (const mm of [-30, 0, 30, 60, 90]) {
           g += `<text x="${x(E.t0 + mm * MIN)}" y="${H - 5}" fill="#8B929B" font-size="11" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">${mm === 0 ? "release" : (mm > 0 ? "+" : "−") + Math.abs(mm) + "m"}</text>`;
         }
-        g += `<line x1="${x(E.t0)}" x2="${x(E.t0)}" y1="${T}" y2="${H - B}" stroke="#15181D" stroke-dasharray="3 3"/>`;
+        g += `<line x1="${x(E.t0)}" x2="${x(E.t0)}" y1="${T}" y2="${H - B}" stroke="#E8EAED" stroke-dasharray="3 3"/>`;
         const until = Math.min(now, we);
-        g += `<path d="${bandPath(m.q.filter((q) => q.t >= ws), x, y, until)}" fill="rgba(47,107,255,.10)"/>`;
-        g += `<path d="${stepPath(m.q.filter((q) => q.t >= ws && q.mid != null).map((q) => ({ t: q.t, v: q.mid })), x, y, until)}" fill="none" stroke="#2F6BFF" stroke-width="2.2"/>`;
-        if (m.alarm && m.alarm <= now) g += `<line x1="${x(m.alarm)}" x2="${x(m.alarm)}" y1="${T}" y2="${H - B}" stroke="#00A86B"/><text x="${x(m.alarm) + 4}" y="${T + 11}" fill="#00A86B" font-size="11">reaction detected ${relMin(m.alarm - E.t0)}</text>`;
+        g += `<path d="${bandPath(m.q.filter((q) => q.t >= ws), x, y, until)}" fill="rgba(76,141,255,.16)"/>`;
+        g += `<path d="${stepPath(m.q.filter((q) => q.t >= ws && q.mid != null).map((q) => ({ t: q.t, v: q.mid })), x, y, until)}" fill="none" stroke="#4C8DFF" stroke-width="2.2"/>`;
+        if (m.alarm && m.alarm <= now) g += `<line x1="${x(m.alarm)}" x2="${x(m.alarm)}" y1="${T}" y2="${H - B}" stroke="#1FCB8A"/><text x="${x(m.alarm) + 4}" y="${T + 11}" fill="#1FCB8A" font-size="11">reaction detected ${relMin(m.alarm - E.t0)}</text>`;
         const q = quoteAt(m, now);
         // same reveal rule as the single-event view: no verdict or final move before its time
         const shown = m.status && now >= verdictAt(E, m);
