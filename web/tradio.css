@@ -720,3 +720,23 @@ mark.key { background: rgba(139, 139, 245, .18); color: inherit; padding: 1px 2p
 .desk-pnl { display: grid; justify-items: end; gap: 1px; text-align: right; }
 .desk-pnl b { font-size: 26px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; }
 .desk-pnl small { color: var(--faint); font-size: 12px; white-space: nowrap; }
+.bot-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px 3px 8px;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  background: var(--panel-2);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 550;
+  transition: background-color .15s var(--ease), color .15s var(--ease), border-color .15s var(--ease);
+}
+.bot-toggle::before { content: ""; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid currentColor; }
+.bot-toggle[aria-pressed="true"] { color: var(--text); border-color: #4a4f57; }
+.bot-toggle[aria-pressed="true"]::before { background: currentColor; }
+.bot-toggle:hover { background: #20242a; color: var(--text); }

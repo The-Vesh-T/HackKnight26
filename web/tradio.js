@@ -87,6 +87,7 @@
     touched: false,      // the viewer has used a control: hides the "press play" prompt
     speechOpen: false,   // full speech text expanded
     alsoOpen: false,     // "other lines that could move prices" expanded
+    showBot: (() => { try { return localStorage.getItem("tradio.showBot") !== "0"; } catch (e) { return true; } })(),
     showAllParas: false, // include paragraphs that aren't about policy
     groupOpen: {},       // "<view>:<group id>" -> bool, set once the viewer toggles a group
     info: null,          // which details bubble is open: speech | speechTop | verdict | desk | chart
@@ -478,25 +479,25 @@
     // desk orders on this contract: the holding period as a faint band, a dot where the bot bought and
     // one where it sold, both on the price line (YES-price terms), with small labels like the other marks
     for (const t of (E.desk ? E.desk.trades : [])) {
-      if (t.mid !== m.id || t.t > now || t.cost == null) continue;
+      if (!state.showBot || t.mid !== m.id || t.t > now || t.cost == null) continue;
       const side = String(t.side || "").toLowerCase();
-      const col = side === "no" ? "#F2555A" : "#1FCB8A";
+      const col = "#E8EAED";   // the bot's marks are neutral; only the profit is green or red
       const yp = side === "yes" ? t.cost : 1 - t.cost;
       const cx = x(t.t), cy = y(yp);
       const done = t.exitT && now >= t.exitT && t.value != null;
       const bandEnd = done ? x(t.exitT) : x(until);
-      g += `<rect x="${cx.toFixed(1)}" y="${T}" width="${Math.max(0, bandEnd - cx).toFixed(1)}" height="${H - B - T}" fill="${col}" opacity=".06"/>`;
-      const tag = (px, py, text, above) => {
+      g += `<rect x="${cx.toFixed(1)}" y="${T}" width="${Math.max(0, bandEnd - cx).toFixed(1)}" height="${H - B - T}" fill="${col}" opacity=".045"/>`;
+      const tag = (px, py, text, above, tcol = col) => {
         const w = text.length * 6.2 + 12, lx = Math.min(Math.max(px - w / 2, L), W - R - w), ly = above ? py - 26 : py + 10;
         return `<rect x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" width="${w.toFixed(1)}" height="17" rx="8.5" fill="rgba(15,17,20,.92)" stroke="${col}" stroke-opacity=".7"/>` +
-          `<text x="${(lx + w / 2).toFixed(1)}" y="${(ly + 12).toFixed(1)}" text-anchor="middle" fill="${col}" font-size="11" font-weight="600">${esc(text)}</text>`;
+          `<text x="${(lx + w / 2).toFixed(1)}" y="${(ly + 12).toFixed(1)}" text-anchor="middle" fill="${tcol}" font-size="11" font-weight="600">${esc(text)}</text>`;
       };
       g += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="5" fill="${col}" stroke="#0F1114" stroke-width="2"><title>Bought ${esc(side.toUpperCase())} ×${count(t.qty)} at ${cents(t.cost)}</title></circle>`;
       g += tag(cx, cy, `Buy ${side.toUpperCase()} ${cents(t.cost)}`, true);
       if (done) {
         const ex = x(t.exitT), ey = y(side === "yes" ? t.value : 1 - t.value);
         g += `<circle cx="${ex.toFixed(1)}" cy="${ey.toFixed(1)}" r="5" fill="#0F1114" stroke="${col}" stroke-width="2"><title>Sold at ${cents(t.value)}: ${money(t.pnlFinal)}</title></circle>`;
-        g += tag(ex, ey, `Sell ${cents(t.value)} · ${money(t.pnlFinal)}`, true);
+        g += tag(ex, ey, `Sell ${cents(t.value)} · ${money(t.pnlFinal)}`, true, t.pnlFinal >= 0 ? "#1FCB8A" : "#F2555A");
       }
     }
 
@@ -508,6 +509,8 @@
     }
 
     wrap.innerHTML = svgEl(W, H, g);
+    const bt = $("botToggle");
+    if (bt) bt.hidden = !(E.desk && E.desk.trades.some((t) => t.mid === m.id && t.t <= now));
   }
 
   function sparkline(E, m, now, w = 260, h = 24) {
@@ -773,7 +776,7 @@
       h += row(sw("background:#1FCB8A;width:2px"), "<b>Green line</b>: a reaction was detected. The price left its usual range and stayed out.");
       h += row(sw("background:#8B929B;width:2px"), "<b>Dotted grey lines</b>: when half, then 90%, of the final move had happened.");
     }
-    if (E.desk && E.desk.trades.some((t) => t.mid === m.id)) h += row(`<i class="dot" style="background:#F2555A"></i><i class="dot" style="border:2px solid #F2555A;background:none;width:7px;height:7px"></i>`, "<b>Filled dot</b>: where the bot bought. <b>Hollow dot</b>: where it sold. The faint tint between them is the time it held the position (red for a NO bet, green for YES).");
+    if (E.desk && E.desk.trades.some((t) => t.mid === m.id)) h += row(`<i class="dot" style="background:#E8EAED"></i><i class="dot" style="border:2px solid #E8EAED;background:none;width:7px;height:7px"></i>`, "<b>Filled dot</b>: where the bot bought. <b>Hollow dot</b>: where it sold, with the profit or loss in green or red. The faint tint between them is the time it held the position. Hide them with <b>Bot trades</b> at the top right of the chart.");
     if (E.overTime) h += row(`<i class="tri"></i>`, "<b>Triangle on the top edge</b>: a passage that was a surprise for this speaker.");
     const source = m.isKalshi ? (E.live && E.live.kind === "live" ? "Live Kalshi tape, closed 1-minute candles" : "Real Kalshi prices, 1-minute candles (each point is the end of its minute)") : "Polymarket price history";
     return h + `<p class="src">${source}. Times are Eastern (ET).</p>`;
@@ -1062,6 +1065,7 @@
             <div class="mk-head" id="mkHead"></div>
             <div class="chart-stage">
               <div class="chart-wrap" id="chartWrap"></div>
+              <button class="bot-toggle" id="botToggle" data-act="bot-toggle" aria-pressed="${state.showBot}" title="Show or hide the bot's simulated buys and sells on the chart" hidden>Bot trades</button>
               <button class="cta" id="cta" data-act="cta" hidden>
                 <span class="big-play">▶</span>
                 <span><b>Watch the replay</b><small>It starts ${Math.round(-START_REL / MIN)} minutes before the text is released</small></span>
@@ -1836,6 +1840,12 @@
       }
       case "speech-toggle":
         state.speechOpen = !state.speechOpen;
+        draw(true);
+        break;
+      case "bot-toggle":
+        state.showBot = !state.showBot;
+        try { localStorage.setItem("tradio.showBot", state.showBot ? "1" : "0"); } catch (e) { /* private window: keep it for this visit */ }
+        el.setAttribute("aria-pressed", String(state.showBot));
         draw(true);
         break;
       case "also-toggle":
