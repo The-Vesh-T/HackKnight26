@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tradio Replay</title>
+  <link rel="icon" href="tradio-mark.svg">
+  <link rel="stylesheet" href="tradio.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><img src="tradio-mark.svg" alt=""> Tradio <small>Fed speech → market reaction replay</small></div>
+    <nav class="tabs" id="tabs"></nav>
+    <div class="clock">
+      <span><span class="big num" id="clkEt">--:--:--</span><span class="lbl">ET</span></span>
+      <span><span class="num" id="clkUtc">--:--:--</span><span class="lbl">UTC</span></span>
+      <span class="big num rel" id="clkRel">T-00:00</span>
+    </div>
+    <div class="controls">
+      <button class="btn" id="btnBack" title="Back 1 min (←)">−1m</button>
+      <button class="btn play" id="btnPlay" title="Play / pause (space)">▶ Play</button>
+      <button class="btn" id="btnFwd" title="Forward 1 min (→)">+1m</button>
+      <span id="speeds"></span>
+      <button class="btn" id="btnT0" title="Jump to T0+1 min (0)">T0</button>
+    </div>
+  </header>
+
+  <div class="scrub">
+    <input type="range" id="scrub" min="0" max="1" step="1000" value="0" aria-label="Replay time">
+    <div class="marks" id="marks"></div>
+  </div>
+
+  <div class="summary" id="summary"></div>
+
+  <div id="view"><div class="loading">Loading replay data…</div></div>
+
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <header><h3 id="drawerTitle">Evidence</h3><button class="btn" id="drawerClose">Close ✕</button></header>
+    <div class="body" id="drawerBody"></div>
+  </aside>
+
+  <footer>
+    <span>Historical replay of cached data · Polymarket series indicative (no timing claims) · not trading advice</span>
+    <span class="keys">space play · ←/→ 1 min · 0 jump to T0 · click a market for its evidence</span>
+  </footer>
+
+  <script src="tradio.js"></script>
+</body>
+</html>
