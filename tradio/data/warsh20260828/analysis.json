@@ -1,0 +1,274 @@
+{
+ "event_id": "warsh20260828",
+ "markets": {
+  "kalshi:KXFEDDECISION-26SEP-H26": {
+   "liquidity": "thin",
+   "pre_mid": 0.005,
+   "alarm_t": "2026-08-28T14:42:00Z",
+   "confirmed_by_trade": "2026-08-28T14:41:28.914368Z",
+   "move_ticks": 0.5,
+   "t50_min": null,
+   "t90_min": null,
+   "status": "cant_tell_illiquid",
+   "reason": "Thin before T0 (1 trades in 60 min) and no clear reaction (move +0.5 ticks); can't tell slow from quiet.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": null,
+   "pre_band": [
+    0.005,
+    0.005
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 1,
+    "quote_change_minutes": 0,
+    "median_spread_ticks": 1.0,
+    "imputed_minutes": 59
+   }
+  },
+  "kalshi:KXFEDDECISION-26SEP-H25": {
+   "liquidity": "active",
+   "pre_mid": 0.295,
+   "alarm_t": "2026-08-28T14:01:00Z",
+   "confirmed_by_trade": "2026-08-28T14:00:19.299743Z",
+   "move_ticks": 20.0,
+   "t50_min": 13.0,
+   "t90_min": 29.0,
+   "status": "reacted",
+   "reason": "Alarm 14:01 UTC (T0+1 min), move +20 ticks, confirmed by a trade.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": "2026-08-28T14:03:00Z",
+   "pre_band": [
+    0.295,
+    0.295
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 22,
+    "quote_change_minutes": 0,
+    "median_spread_ticks": 1.0,
+    "imputed_minutes": 36
+   }
+  },
+  "kalshi:KXFEDDECISION-26SEP-H0": {
+   "liquidity": "active",
+   "pre_mid": 0.695,
+   "alarm_t": "2026-08-28T14:02:00Z",
+   "confirmed_by_trade": "2026-08-28T14:01:57.626442Z",
+   "move_ticks": -19.0,
+   "t50_min": 12.0,
+   "t90_min": 29.0,
+   "status": "reacted",
+   "reason": "Alarm 14:02 UTC (T0+2 min), move -19 ticks, confirmed by a trade.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": "2026-08-28T14:02:00Z",
+   "pre_band": [
+    0.695,
+    0.705
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 48,
+    "quote_change_minutes": 10,
+    "median_spread_ticks": 1.5,
+    "imputed_minutes": 22
+   }
+  },
+  "kalshi:KXFEDDECISION-26SEP-C25": {
+   "liquidity": "active",
+   "pre_mid": 0.005,
+   "alarm_t": null,
+   "confirmed_by_trade": null,
+   "move_ticks": 0.0,
+   "t50_min": null,
+   "t90_min": null,
+   "status": "expected_no_reaction",
+   "reason": "Active market stayed inside its pre-event range; final move 0 ticks.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": null,
+   "pre_band": [
+    0.005,
+    0.005
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 70,
+    "quote_change_minutes": 0,
+    "median_spread_ticks": 1.0,
+    "imputed_minutes": 45
+   }
+  },
+  "kalshi:KXFEDDECISION-26SEP-C26": {
+   "liquidity": "dark",
+   "pre_mid": null,
+   "alarm_t": null,
+   "confirmed_by_trade": null,
+   "move_ticks": null,
+   "t50_min": null,
+   "t90_min": null,
+   "status": "cant_tell_illiquid",
+   "reason": "Not enough quotes around T0 to measure anything.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": null,
+   "pre_band": null,
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 0,
+    "quote_change_minutes": 0,
+    "median_spread_ticks": null,
+    "imputed_minutes": 0
+   }
+  },
+  "kalshi:KXFEDDECISION-26OCT-H25": {
+   "liquidity": "dark",
+   "pre_mid": null,
+   "alarm_t": null,
+   "confirmed_by_trade": null,
+   "move_ticks": null,
+   "t50_min": null,
+   "t90_min": null,
+   "status": "cant_tell_illiquid",
+   "reason": "Not enough quotes around T0 to measure anything.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": null,
+   "pre_band": null,
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 0,
+    "quote_change_minutes": 0,
+    "median_spread_ticks": null,
+    "imputed_minutes": 0
+   }
+  },
+  "kalshi:KXFEDDECISION-26OCT-H0": {
+   "liquidity": "thin",
+   "pre_mid": 0.715,
+   "alarm_t": "2026-08-28T14:16:00Z",
+   "confirmed_by_trade": null,
+   "move_ticks": -1.0,
+   "t50_min": null,
+   "t90_min": null,
+   "status": "cant_tell_illiquid",
+   "reason": "Thin before T0 (1 trades in 60 min) and no clear reaction (move -1 ticks); can't tell slow from quiet.",
+   "placebo_p": null,
+   "indicative": false,
+   "cusum_alarm_t": null,
+   "pre_band": [
+    0.715,
+    0.715
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 1,
+    "quote_change_minutes": 0,
+    "median_spread_ticks": 1.0,
+    "imputed_minutes": 51
+   }
+  },
+  "polymarket:hike25": {
+   "liquidity": "indicative",
+   "pre_mid": 0.305,
+   "alarm_t": null,
+   "confirmed_by_trade": null,
+   "move_ticks": 18.0,
+   "t50_min": null,
+   "t90_min": null,
+   "status": "reacted",
+   "reason": "Indicative: moved +18 ticks from before T0 to T0+75..90 min; Polymarket history is not used for timing.",
+   "placebo_p": null,
+   "indicative": true,
+   "cusum_alarm_t": null,
+   "pre_band": [
+    0.295,
+    0.305
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 0,
+    "quote_change_minutes": 2,
+    "median_spread_ticks": null,
+    "imputed_minutes": 0
+   }
+  },
+  "polymarket:hike50": {
+   "liquidity": "indicative",
+   "pre_mid": 0.0035,
+   "alarm_t": null,
+   "confirmed_by_trade": null,
+   "move_ticks": 0.2,
+   "t50_min": null,
+   "t90_min": null,
+   "status": "cant_tell_illiquid",
+   "reason": "Indicative: final move +0.2 ticks; no depth or trade data, so no judgement on speed.",
+   "placebo_p": null,
+   "indicative": true,
+   "cusum_alarm_t": null,
+   "pre_band": [
+    0.0035,
+    0.0035
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 0,
+    "quote_change_minutes": 0,
+    "median_spread_ticks": null,
+    "imputed_minutes": 0
+   }
+  },
+  "polymarket:nochange": {
+   "liquidity": "indicative",
+   "pre_mid": 0.685,
+   "alarm_t": null,
+   "confirmed_by_trade": null,
+   "move_ticks": -18.0,
+   "t50_min": null,
+   "t90_min": null,
+   "status": "reacted",
+   "reason": "Indicative: moved -18 ticks from before T0 to T0+75..90 min; Polymarket history is not used for timing.",
+   "placebo_p": null,
+   "indicative": true,
+   "cusum_alarm_t": null,
+   "pre_band": [
+    0.685,
+    0.695
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 0,
+    "quote_change_minutes": 2,
+    "median_spread_ticks": null,
+    "imputed_minutes": 0
+   }
+  },
+  "polymarket:cut25": {
+   "liquidity": "indicative",
+   "pre_mid": 0.0138,
+   "alarm_t": null,
+   "confirmed_by_trade": null,
+   "move_ticks": -0.525,
+   "t50_min": null,
+   "t90_min": null,
+   "status": "cant_tell_illiquid",
+   "reason": "Indicative: final move -0.525 ticks; no depth or trade data, so no judgement on speed.",
+   "placebo_p": null,
+   "indicative": true,
+   "cusum_alarm_t": null,
+   "pre_band": [
+    0.0125,
+    0.0155
+   ],
+   "flags": [],
+   "liquidity_detail": {
+    "trades": 0,
+    "quote_change_minutes": 10,
+    "median_spread_ticks": null,
+    "imputed_minutes": 0
+   }
+  }
+ }
+}

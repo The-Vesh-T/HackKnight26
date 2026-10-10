@@ -3,7 +3,8 @@
 For every market: did it react, how fast, how fully, and -- most importantly -- never
 call an illiquid market "slow". Method follows docs/team/role2-reaction-analytics.md.
 
-    python -m tradio.reaction bowman20250623 waller20250717
+    python -m tradio.reaction bowman20250623 waller20250717 warsh20260828
+    python -m tradio.reaction --all
     python -m tradio.reaction --in path/to/timeline.json --out path/to/analysis.json
 
 Reaction time (deviation from the role file, agreed by the team lead 2026-10-09):
@@ -30,8 +31,8 @@ Choices the role file leaves open (flagged for team review):
   Dark market -> always cant_tell_illiquid.
 - Inconsistency checks only override expected_no_reaction; they never hide a reaction
   or an illiquid verdict. Every market also gets a "flags" list with any check that fired.
-- The outcome-sum check runs only on events whose outcome list we know is complete
-  (EXHAUSTIVE_EVENTS); a partial ladder legitimately sums to less than 1.
+- The outcome-sum check runs only on Fed-decision events whose five legs are all in the
+  timeline; a partial ladder (e.g. Warsh's Oct 2026 H25/H0) legitimately sums to < 1.
 - move_ticks is signed (positive = price went up).
 """
 
@@ -56,10 +57,12 @@ DELAY_AFTER_MIN = 10
 SUM_LO, SUM_HI = 0.97, 1.03
 XVENUE_TICKS = 2
 INCONSISTENT_FOR_MIN = 5             # must persist MORE than this many minutes
-EXHAUSTIVE_EVENTS = {"KXFEDDECISION-25JUL"}
-# Same outcome on both venues (Kalshi id suffix -> Polymarket id).
-CROSS_VENUE = {"KXFEDDECISION-25JUL-C25": "polymarket:cut25",
-               "KXFEDDECISION-25JUL-H0": "polymarket:nochange"}
+# A Fed-decision event's outcome list is complete only if every leg is in the timeline.
+FED_DECISION_PREFIX = "KXFEDDECISION-"
+FED_DECISION_LEGS = {"H26", "H25", "H0", "C25", "C26"}
+# Same outcome on both venues: Kalshi decision leg -> Polymarket id. Only applied to the
+# meeting with "direct" exposure, which is the one the Polymarket series cover.
+CROSS_VENUE = {"C25": "polymarket:cut25", "H0": "polymarket:nochange"}
 STATUSES = ("reacted", "expected_no_reaction", "cant_tell_illiquid",
             "candidate_delay", "candidate_inconsistency")
 
@@ -211,7 +214,8 @@ def inconsistency_flags(markets, series_by_id, t0):
             ticker = m["id"].split(":", 1)[1]
             by_event.setdefault(ticker.rsplit("-", 1)[0], []).append(m["id"])
     for event, ids in by_event.items():
-        if event not in EXHAUSTIVE_EVENTS:
+        legs = {i.rsplit("-", 1)[-1] for i in ids}
+        if not (event.startswith(FED_DECISION_PREFIX) and FED_DECISION_LEGS <= legs):
             continue
         maps = [{t: mid for t, mid, _ in series_by_id[i]} for i in ids]
         times = sorted(set.intersection(*(set(mp) for mp in maps))) if maps else []
@@ -221,9 +225,15 @@ def inconsistency_flags(markets, series_by_id, t0):
             for i in ids:
                 flags[i].append(f"{event} outcome midpoints summed outside "
                                 f"{SUM_LO:.2f}-{SUM_HI:.2f} for {run} straight minutes")
-    for k_suffix, pm_id in CROSS_VENUE.items():
-        k_id = "kalshi:" + k_suffix
-        if k_id not in series_by_id or pm_id not in series_by_id:
+    pairs = []
+    for m in markets:
+        ticker = m["id"].split(":", 1)[1]
+        leg = ticker.rsplit("-", 1)[-1]
+        if (m["venue"] == "kalshi" and ticker.startswith(FED_DECISION_PREFIX)
+                and m.get("exposure") == "direct" and leg in CROSS_VENUE):
+            pairs.append((m["id"], CROSS_VENUE[leg]))
+    for k_id, pm_id in pairs:
+        if pm_id not in series_by_id:
             continue
         km = {t: mid for t, mid, _ in series_by_id[k_id]}
         pm = {t: mid for t, mid, _ in series_by_id[pm_id]}
@@ -353,7 +363,11 @@ def main(argv=None):
     ap.add_argument("events", nargs="*", help="event ids under tradio/data/")
     ap.add_argument("--in", dest="inp")
     ap.add_argument("--out")
+    ap.add_argument("--all", action="store_true", help="every event with a timeline.json")
     a = ap.parse_args(argv)
+    if a.all:
+        a.events = sorted(e for e in os.listdir(DATA_DIR)
+                          if os.path.isfile(os.path.join(DATA_DIR, e, "timeline.json")))
     jobs = [(a.inp, a.out)] if a.inp else [
         (os.path.join(DATA_DIR, e, "timeline.json"), os.path.join(DATA_DIR, e, "analysis.json"))
         for e in a.events]

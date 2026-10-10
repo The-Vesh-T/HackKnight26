@@ -139,6 +139,19 @@ class ReactionTests(unittest.TestCase):
         r = reaction.analyze(tl)["markets"][mid]
         self.assertEqual(r["status"], "candidate_delay")
 
+    def test_outcome_sum_check_only_on_complete_ladder(self):
+        legs = {"H26": 0.01, "H25": 0.01, "H0": 0.60, "C25": 0.40, "C26": 0.02}  # sums 1.04
+        ms, qs = [], []
+        for leg, p in legs.items():
+            mid = f"kalshi:KXFEDDECISION-25JUL-{leg}"
+            ms.append(market(mid))
+            qs += quotes(mid, lambda o, p=p: p)
+        res = reaction.analyze(timeline(ms, qs, []))["markets"]
+        self.assertTrue(res["kalshi:KXFEDDECISION-25JUL-H0"]["flags"])
+        partial = reaction.analyze(timeline(ms[2:4], [q for q in qs if q["market"] in
+                                                      (ms[2]["id"], ms[3]["id"])], []))
+        self.assertFalse(partial["markets"]["kalshi:KXFEDDECISION-25JUL-H0"]["flags"])
+
     def test_statuses_and_wording(self):
         for r in self.res.values():
             self.assertIn(r["status"], reaction.STATUSES)
@@ -179,6 +192,17 @@ class RealDataChecks(unittest.TestCase):
             self.skipTest("no Waller timeline")
         for k, r in res.items():
             self.assertNotIn(r["status"], ("reacted", "candidate_delay"), k)
+
+    def test_every_event_runs(self):
+        events = [e for e in os.listdir(os.path.join(ROOT, "tradio", "data"))
+                  if os.path.isfile(os.path.join(ROOT, "tradio", "data", e, "timeline.json"))]
+        if not events:
+            self.skipTest("no timelines")
+        for e in events:
+            for k, r in _real(e).items():
+                self.assertIn(r["status"], reaction.STATUSES, (e, k))
+                if r["indicative"]:
+                    self.assertIsNone(r["alarm_t"], (e, k))
 
     def test_contract_fields(self):
         res = _real("bowman20250623")
