@@ -38,6 +38,21 @@ historical market-reaction analysis and the replay terminal (`tradio/`, `web/tra
  replay terminal: transcript, speaker baseline, price chart, propagation network
 ```
 
+## Run it
+
+```bash
+python3 tradio/serve.py          # then open http://localhost:8000/tradio.html
+```
+
+`serve.py` is the website plus **Start/Stop buttons on the LIVE tab**: *Practice* replays
+a past speech as if live (offline); *Real speech* starts transcription, scoring, the
+market tape and (optionally) the trading desk. Modes: Guide only (no orders), Kalshi demo
+(fake money, needs `kalshikey_demo.txt` + `privkey_demo.txt`), or real money (only if the
+server was started with `TRADIO_ALLOW_LIVE=1`, the real Kalshi keys exist, and you type
+LIVE; the desk's $10/order and $50/day limits still apply). It listens on localhost only
+and runs nothing but those fixed commands. `cd web && python3 -m http.server 8000` still
+works for the replays, just without the buttons.
+
 ## Live mode
 
 The same screen works during a real Fed speech. The **● LIVE** tab on `web/tradio.html`
@@ -128,7 +143,7 @@ python tradio/build_baselines.py --dry-run # check paragraph counts, no Gemini c
 python tradio/build_baselines.py           # build both baselines into stance_baselines.json
 # Warsh's baseline (June/July 2026 press conferences) is already in stance_baselines.json.
 
-python -m unittest tests.test_timeline tests.test_ingest tests.test_reaction tests.test_live tests.test_playbook
+python -m unittest tests.test_timeline tests.test_ingest tests.test_reaction tests.test_live tests.test_playbook tests.test_serve
 ```
 
 ## Repo map
@@ -140,6 +155,7 @@ python -m unittest tests.test_timeline tests.test_ingest tests.test_reaction tes
 | `tradio/data/<event>/` | Cached raw data, `timeline.json`, `evidence.json` (and `analysis.json` from role 2) |
 | `tradio/build_baselines.py` | Role 3: Bowman/Waller speaker baselines |
 | `tradio/playbook.py` | Trading rules learned from all events, leave-one-out backtests; read by `live.py --playbook` |
+| `tradio/serve.py` | Website + LIVE tab Start/Stop buttons (localhost only, fixed commands) |
 | `tradio/live.py` | Live mode: live Kalshi tape + MarketPulse's scored transcript into the LIVE tab; `archive` saves a session as a history event |
 | `web/tradio.*` | New: the replay terminal (History tabs + LIVE tab) |
 | `stance_scorer.py`, `fed_speeches.py`, `fed_transcripts.py` | Stance rubric, speaker baselines, speech and press-conference downloads |
