@@ -158,10 +158,21 @@
   const niceName = (s) => (s || "").replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
   // the LIVE banner already says "LIVE" / "SIMULATED LIVE", so the cards show just the event name
   const cardTitle = (E) => (E.live ? String(E.tl.title || "").replace(/^(SIMULATED )?LIVE · /, "") : E.tl.title);
+  // Card label: place and date, e.g. "Warsh, Jackson Hole, 2026-08-28" -> "Jackson Hole · Aug 28, 2026"
+  // (the speaker is already in the tab). Anything that doesn't match that shape is shown as is.
+  function placeDate(E) {
+    const t = cardTitle(E);
+    const m = /^[^,]+,\s*(.+?),\s*(\d{4})-(\d{2})-(\d{2})$/.exec(t);
+    if (!m) return t;
+    const d = new Date(Date.UTC(+m[2], +m[3] - 1, +m[4]));
+    return `${m[1]} · ${d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })}`;
+  }
   const lastName = (s) => (niceName(s) || "the speaker").split(" ").pop();
   // Spell out trading shorthand for viewers: "25 bp" -> "25 basis points", ">25 bp" -> "more than 25 basis points".
   const plain = (s) => String(s ?? "")
     .replace(/>\s*(\d+)\s*bps?\b/gi, "more than $1 basis points")
+    .replace(/(\d+)\+\s*bps?\b/gi, "$1 or more basis points")
+    .replace(/\bno change\b/gi, "hold")
     .replace(/(\d+)\s*bps?\b/gi, "$1 basis points")
     .replace(/\bFOMC\b/g, "Fed");
   const displayLabel = (m) => plain(String(m.label || m.id).replace(/\s*\(Polymarket\)\s*$/, ""));
@@ -223,6 +234,17 @@
       tr: [],
     }));
     const byId = Object.fromEntries(markets.map((m) => [m.id, m]));
+    const monthYear = {};   // "jul" -> "Jul 2025", from the Kalshi labels
+    for (const m of markets) {
+      const k = /^([A-Z][a-z]{2}) (\d{4}):/.exec(m.label || "");
+      if (k && m.venue === "kalshi") monthYear[k[1].toLowerCase()] ||= `${k[1]} ${k[2]}`;
+    }
+    for (const m of markets) {
+      if (m.venue === "kalshi") continue;
+      const p = /^([A-Za-z]+):\s*/.exec(m.label || "");
+      const my = p && monthYear[p[1].slice(0, 3).toLowerCase()];
+      if (my) m.label = my + ": " + m.label.slice(p[0].length);
+    }
     for (const q of tl.quotes) {
       const m = byId[q.market];
       if (m) m.q.push({ t: parseT(q.t), bid: q.bid, ask: q.ask, mid: q.mid, imp: !!q.imputed, vol: q.volume });
@@ -628,7 +650,7 @@
     const tl = E.tl, sp = tl.speech || {};
     const speaker = niceName(tl.speaker);
     const last = lastName(tl.speaker);
-    let h = `<div class="card-head"><h2>What was said</h2><span class="meta">${esc(cardTitle(E))}</span></div>`;
+    let h = `<div class="card-head"><h2>What was said</h2><span class="meta" title="${esc(cardTitle(E))}">${esc(placeDate(E))}</span></div>`;
     if (!released) {
       return h + `<div class="embargo">
         <div class="embargo-main"><b>The text isn't public yet.</b> ${esc(speaker || "The speaker")}'s prepared remarks come out at <b class="num">${fmtEtShort(E.t0)} ET</b> (${fmtUtc(E.t0)} UTC).</div>
@@ -682,7 +704,7 @@
     const sp = E.tl.speech || {};
     const who = E.tl.speaker || sp.speaker;
     const last = lastName(who);
-    let h = `<div class="card-head"><h2>What's being said</h2><span class="meta">${esc(cardTitle(E))}</span></div>`;
+    let h = `<div class="card-head"><h2>What's being said</h2><span class="meta" title="${esc(cardTitle(E))}">${esc(placeDate(E))}</span></div>`;
     if (!heard.length) {
       return h + `<div class="pending-note">No speech passages yet. Start the live scorer on the laptop:<br><span class="mono">python live.py --speaker &lt;name&gt; --no-prewarm --mode dry</span><br>Passages appear here as they're scored. The market chart updates either way.</div>`;
     }
@@ -1018,7 +1040,6 @@
     // the learner's pre-T0 odds ride along as a tag; the full line is in the verdict's details bubble
     const mp = modelPrediction(E, m);
     const hasOdds = mp && !mp.none;
-    if (hasOdds) tags.push(`model ${pctText(mp.p)}`);
     const tip = [m.status && STATUS_HELP[m.status], hasOdds && `Model, before the release: ${pctText(mp.p)} chance to react.`].filter(Boolean).join(" ");
     return `<div class="mrow ${isFocus ? "focus" : ""} ${fired ? "fired" : ""}" role="button" tabindex="0" data-act="focus" data-id="${esc(m.id)}" aria-pressed="${isFocus}" title="${esc(tip)}">
       <div class="mrow-top"><span class="lab">${esc(displayLabel(m))}</span><span class="tag">${esc(tags.join(" · "))}</span><span class="px num">${q ? pct(q.mid) : "—"}</span></div>
@@ -1209,7 +1230,7 @@
     const last = lastName(E.tl.speaker);
     const b = E.baseline;
     const quote = top.key_sentence || top.text.slice(0, 180);
-    return `<div class="cmp-speech"><div class="label">Most unusual passage</div><q>${esc(quote)}</q>
+    return `<div class="cmp-speech"><div class="label">The line that stood out</div><q>${esc(quote)}</q>
       <div class="why"><b>${esc(vsUsual(top.z, last))}</b> (${Math.abs(top.z).toFixed(1)} standard deviations from ${esc(last)}'s usual) · stance <b class="num">${sgn(top.stance, 2)}</b> (${stanceWords(top.stance)})${b && b.mean != null ? ` vs usual <b class="num">${sgn(b.mean, 2)}</b>` : ""}</div></div>`;
   }
 
@@ -1226,7 +1247,7 @@
     evs.forEach((E, i) => {
       const meta = EVENTS.find((e) => state.events[e.id] === E);
       const now = E.t0 + nowRel;
-      html += `<div class="cmp-col"><h3>${esc(E.tl.title)}</h3><div class="sub">${esc(meta ? meta.sub : "")} · text released ${fmtEtShort(E.t0)} ET</div>${cmpSpeech(E, now)}`;
+      html += `<div class="cmp-col"><h3>${esc(lastName(E.tl.speaker))} <span class="cmp-where">${esc(placeDate(E))}</span></h3><div class="sub">${esc(meta ? meta.sub.split(" · ").slice(1).join(" · ") : "")}${meta ? " · " : ""}text released ${fmtEtShort(E.t0)} ET</div>${cmpSpeech(E, now)}`;
       for (const r of rows) {
         const m = r.ms[i];
         if (!m) { html += `<div class="cmp-chart">missing ${esc(r.name)}</div>`; continue; }

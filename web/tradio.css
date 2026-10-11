@@ -167,9 +167,10 @@ dialog.guide::backdrop { background: rgba(0, 0, 0, .55); }
 .layout > #speechCard, .layout > .markets { padding-left: 28px; border-left: 1px solid var(--line); }
 .layout > #speechCard { padding-bottom: 22px; }
 .layout > .markets { padding-top: 20px; border-top: 1px solid var(--line); }
-.card-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
-.card-head h2 { margin: 0; font-size: 15px; font-weight: 650; }
-.card-head .meta { margin-left: auto; color: var(--faint); font-size: 12.5px; }
+.card-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; min-width: 0; }
+.card-head h2 { margin: 0; font-size: 15px; font-weight: 650; flex: none; white-space: nowrap; }
+/* the event name sits on the heading's line on every page; a long one is shortened with "…" (full text on hover) */
+.card-head .meta { margin-left: auto; color: var(--faint); font-size: 12.5px; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .head-right { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
 .head-right .meta { margin-left: 0; }
 .card-head .count { color: var(--faint); font-weight: 500; margin-left: 6px; font-variant-numeric: tabular-nums; }
@@ -753,3 +754,4 @@ mark.key { background: rgba(139, 139, 245, .18); color: inherit; padding: 1px 2p
 .ins-track i { display: block; height: 100%; border-radius: 4px; background: var(--cyan); animation: grow .5s var(--ease); transform-origin: left; }
 .ins-bar b { text-align: right; font-weight: 650; }
 @keyframes grow { from { transform: scaleX(0); } to { transform: none; } }
+.cmp-col h3 .cmp-where { color: var(--faint); font-size: 13px; font-weight: 500; margin-left: 8px; }
