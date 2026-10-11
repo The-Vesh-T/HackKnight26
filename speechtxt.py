@@ -22,6 +22,18 @@ SAMPLE_RATE = 16000
 AUDIO_CHUNK_BYTES = 3200
 
 
+
+def _tls_context():
+    """TLS settings for the ElevenLabs websocket. Python from python.org on macOS ships without
+    root certificates until 'Install Certificates.command' is run, so use certifi's bundle
+    (installed with requests) when it's there."""
+    import ssl
+    try:
+        import certifi
+        return ssl.create_default_context(cafile=certifi.where())
+    except ImportError:
+        return ssl.create_default_context()
+
 def load_api_key() -> str:
     if API_KEY_PATH.is_file():
         return API_KEY_PATH.read_text(encoding="utf-8").strip()
@@ -272,6 +284,7 @@ async def stream_realtime_audio(
         uri,
         additional_headers={"xi-api-key": api_key},
         ping_interval=20,
+        ssl=_tls_context(),
     ) as websocket:
         async def receive_transcripts() -> None:
             nonlocal last_transcript_at

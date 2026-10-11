@@ -36,6 +36,18 @@ SAMPLE_RATE = 16000
 CHUNK_SECONDS = 0.1
 
 
+
+def _tls_context():
+    """TLS settings for the ElevenLabs websocket. Python from python.org on macOS ships without
+    root certificates until 'Install Certificates.command' is run, so use certifi's bundle
+    (installed with requests) when it's there."""
+    import ssl
+    try:
+        import certifi
+        return ssl.create_default_context(cafile=certifi.where())
+    except ImportError:
+        return ssl.create_default_context()
+
 def api_key() -> str:
     key = os.environ.get("ELEVENLABS_API_KEY", "")
     path = os.path.join(SCRIPT_DIR, "elevenapi.txt")
@@ -85,7 +97,8 @@ async def run(device=None):
     save_segments(segments)      # fresh transcript for this session
     save_partial("")
 
-    async with websockets.connect(uri, additional_headers={"xi-api-key": key}, max_size=None) as ws:
+    async with websockets.connect(uri, additional_headers={"xi-api-key": key}, max_size=None,
+                                  ssl=_tls_context()) as ws:
         async def receive():
             async for raw in ws:
                 msg = json.loads(raw)
