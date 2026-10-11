@@ -1207,10 +1207,13 @@
     const sim = E.live.kind === "simulated", rec = E.live.kind === "recorded";
     const age = Date.now() - parseT(E.live.updated_at);
     const stale = !sim && age > STALE_MS;
+    // served by tradio/serve.py and nothing is running: Stop was pressed (or the session ended), not a crash
+    const stopped = ctl.ok && ctl.status && !Object.values(ctl.status.processes || {}).some((p) => p.running);
     const badge = rec && !stale
       ? `<span class="chip indic" title="The clock runs from when the video was recorded, with the Kalshi prices from then">Recorded video · ${esc(String(E.live.source || "").replace(/^recorded video; /, ""))}</span>`
       : sim
       ? `<span class="chip indic">Simulation · ${esc(String(E.live.source || "").replace(/replay of (\S+)/, (x, id) => { const ev = EVENTS.find((e) => e.id === id); return "replay of " + (ev ? ev.short + ", " + ev.sub.split(" · ")[0] : id); }))}</span>`
+      : stale && stopped ? `<span class="chip watching">STOPPED · the session was stopped; this is its last update</span>`
       : stale ? `<span class="chip candidate_inconsistency">STALE · last update ${Math.round(age / 1000)}s ago, is tradio/live.py running?</span>`
               : `<span class="chip live-chip"><span class="dot"></span>LIVE</span>`;
     const pending = E.markets.some((m) => m.a && m.a.final_status_pending);
