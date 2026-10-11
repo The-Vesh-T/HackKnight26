@@ -167,9 +167,10 @@ dialog.guide::backdrop { background: rgba(0, 0, 0, .55); }
 .layout > #speechCard, .layout > .markets { padding-left: 28px; border-left: 1px solid var(--line); }
 .layout > #speechCard { padding-bottom: 22px; }
 .layout > .markets { padding-top: 20px; border-top: 1px solid var(--line); }
-.card-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
-.card-head h2 { margin: 0; font-size: 15px; font-weight: 650; }
-.card-head .meta { margin-left: auto; color: var(--faint); font-size: 12.5px; }
+.card-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; min-width: 0; }
+.card-head h2 { margin: 0; font-size: 15px; font-weight: 650; flex: none; white-space: nowrap; }
+/* the event name sits on the heading's line on every page; a long one is shortened with "…" (full text on hover) */
+.card-head .meta { margin-left: auto; color: var(--faint); font-size: 12.5px; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .head-right { margin-left: auto; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
 .head-right .meta { margin-left: 0; }
 .card-head .count { color: var(--faint); font-weight: 500; margin-left: 6px; font-variant-numeric: tabular-nums; }
@@ -552,7 +553,7 @@ mark.key { background: rgba(139, 139, 245, .18); color: inherit; padding: 1px 2p
   color: #c9cdd3;
 }
 .drawer details summary { cursor: pointer; color: var(--muted); font-size: 12.5px; margin-top: 4px; }
-.drawer .src { color: var(--faint); font-size: 12.5px; word-break: break-all; }
+.drawer .src { color: var(--faint); font-size: 12.5px; overflow-wrap: anywhere; }
 
 .loading, .error { padding: 80px 20px; text-align: center; color: var(--faint); }
 .error { color: var(--red); max-width: 800px; margin: 0 auto; }
@@ -620,6 +621,18 @@ mark.key { background: rgba(139, 139, 245, .18); color: inherit; padding: 1px 2p
   .stage { padding: 16px; }
   .dock-main, .dock-note { padding-left: 16px; padding-right: 16px; }
 }
+
+/* Phones: the top-bar buttons stay on one line, and the tab row fades at the edge to show it scrolls. */
+@media (max-width: 600px) {
+  .topbar { gap: 2px; padding: 8px 12px 0; }
+  .brand { margin-right: auto; }
+  .topbar > .btn { padding: 6px 8px; white-space: nowrap; }
+  .tab { padding: 0 9px; }
+  .tab::after { left: 9px; right: 9px; }
+  .tab b { font-size: 13.5px; white-space: nowrap; }
+  .tabs { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); }
+}
+@media (max-width: 420px) { .brand-text { display: none; } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -740,3 +753,17 @@ mark.key { background: rgba(139, 139, 245, .18); color: inherit; padding: 1px 2p
 .bot-toggle[aria-pressed="true"] { color: var(--text); border-color: #4a4f57; }
 .bot-toggle[aria-pressed="true"]::before { background: currentColor; }
 .bot-toggle:hover { background: #20242a; color: var(--text); }
+
+/* ---------- Insights drawer (Snowflake) ---------- */
+.ins-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+.ins-actions .muted { color: var(--faint); font-size: 12.5px; }
+.ins-src { color: var(--muted); font-size: 13px; margin: 8px 0 4px; }
+.ins-bars { display: grid; gap: 8px; margin: 8px 0 4px; }
+.ins-bar { display: grid; grid-template-columns: 190px 1fr 52px; align-items: center; gap: 10px; font-size: 13px; }
+.ins-bar small { grid-column: 1; color: var(--faint); font-size: 11.5px; margin-top: -6px; }
+.ins-lab { color: var(--text); }
+.ins-track { height: 8px; border-radius: 4px; background: var(--panel-2); overflow: hidden; }
+.ins-track i { display: block; height: 100%; border-radius: 4px; background: var(--cyan); animation: grow .5s var(--ease); transform-origin: left; }
+.ins-bar b { text-align: right; font-weight: 650; }
+@keyframes grow { from { transform: scaleX(0); } to { transform: none; } }
+.cmp-col h3 .cmp-where { color: var(--faint); font-size: 13px; font-weight: 500; margin-left: 8px; }

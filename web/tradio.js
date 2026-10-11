@@ -32,7 +32,7 @@
   const LIVE_POLL_MS = 3000;
   const STALE_MS = 90 * 1000;
   const COMPARE_PAIR = ["bowman20250623", "waller20250717"];
-  const COMPARE_SUFFIXES = [["-C25", "July cut 25 basis points"], ["-H0", "July hold"]];
+  const COMPARE_SUFFIXES = [["-C25", "Jul 2025: cut 25 basis points"], ["-H0", "Jul 2025: hold"]];
   const SPEEDS = [1, 10, 30, 60];
   const ALARM_STATUSES = new Set(["reacted", "alarm", "candidate_delay", "candidate_inconsistency"]);
   const MIN = 60000;
@@ -56,7 +56,7 @@
     candidate_delay: "A busy market that did move, but later than expected. A candidate to look at, not a conclusion.",
     candidate_inconsistency: "Related prices disagree (outcome odds don't add up, or Kalshi and Polymarket differ). A candidate, not a conclusion.",
     expected_no_reaction: "No lasting move out of its pre-speech range, which is what you'd expect for this market.",
-    watching: "Live only: no alarm so far. The final verdict comes when the 90-minute window closes.",
+    watching: "No verdict yet. On a replay it shows until the market's verdict time on the clock; live, until the 90-minute window closes.",
     cant_tell_illiquid: "Too little trading to tell a slow market from a quiet one, so Tradio says it can't tell instead of calling it slow.",
   };
   const STATUS_ORDER = ["reacted", "alarm", "candidate_delay", "candidate_inconsistency", "expected_no_reaction", "watching", "cant_tell_illiquid"];
@@ -147,21 +147,39 @@
     if (d == null || Number.isNaN(d)) return "";
     const c = d * 100, a = Math.abs(c);
     if (a < 0.05) return `<span class="flat">unchanged</span>`;
-    const t = (Math.abs(a - Math.round(a)) < 0.05 ? a.toFixed(0) : a.toFixed(1)) + "%";
+    const t = (Math.abs(a - Math.round(a)) < 0.05 ? a.toFixed(0) : a.toFixed(1)) + " pts";
     return `<span class="${c > 0 ? "up" : "dn"}">${c > 0 ? "▲" : "▼"} ${t}</span>`;
   }
   // Signed dollars: cents for small amounts, whole dollars with commas once it's in the hundreds.
-  const money = (x) => (x == null ? "—" : (x >= 0 ? "+$" : "−$") + dollars(Math.abs(x)));
+  const money = (x) => (x == null ? "—" : Math.abs(x) < 0.005 ? "$0.00" : (x > 0 ? "+$" : "−$") + dollars(Math.abs(x)));
   const dollars = (x) => (x >= 100 ? Math.round(x).toLocaleString("en-US") : x.toFixed(2));
   const count = (n) => Number(n).toLocaleString("en-US");
   const moveText = (m, ticks) => (ticks == null ? "—" : sgn(ticks, 1, true) + (m.tick === 0.01 ? " percentage points" : " ticks"));
   const niceName = (s) => (s || "").replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
   // the LIVE banner already says "LIVE" / "SIMULATED LIVE", so the cards show just the event name
   const cardTitle = (E) => (E.live ? String(E.tl.title || "").replace(/^(SIMULATED )?LIVE · /, "") : E.tl.title);
+  // Card label: place and date, e.g. "Warsh, Jackson Hole, 2026-08-28" -> "Jackson Hole · Aug 28, 2026"
+  // (the speaker is already in the tab). Anything that doesn't match that shape is shown as is.
+  function placeDate(E) {
+    const t = cardTitle(E);
+    const m = /^[^,]+,\s*(.+?),\s*(\d{4})-(\d{2})-(\d{2})$/.exec(t);
+    if (!m) return t;
+    const d = new Date(Date.UTC(+m[2], +m[3] - 1, +m[4]));
+    return `${m[1]} · ${d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })}`;
+  }
+  // Event id -> "Bowman · Jun 23, 2025" (ids look like bowman20250623); anything else is shown as is.
+  function eventName(id) {
+    const m = /^([a-z_]+?)(\d{4})(\d{2})(\d{2})$/.exec(String(id || ""));
+    if (!m) return String(id || "");
+    const d = new Date(Date.UTC(+m[2], +m[3] - 1, +m[4]));
+    return `${niceName(m[1])} · ${d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })}`;
+  }
   const lastName = (s) => (niceName(s) || "the speaker").split(" ").pop();
   // Spell out trading shorthand for viewers: "25 bp" -> "25 basis points", ">25 bp" -> "more than 25 basis points".
   const plain = (s) => String(s ?? "")
     .replace(/>\s*(\d+)\s*bps?\b/gi, "more than $1 basis points")
+    .replace(/(\d+)\+\s*bps?\b/gi, "$1 or more basis points")
+    .replace(/\bno change\b/gi, "hold")
     .replace(/(\d+)\s*bps?\b/gi, "$1 basis points")
     .replace(/\bFOMC\b/g, "Fed");
   const displayLabel = (m) => plain(String(m.label || m.id).replace(/\s*\(Polymarket\)\s*$/, ""));
@@ -223,6 +241,17 @@
       tr: [],
     }));
     const byId = Object.fromEntries(markets.map((m) => [m.id, m]));
+    const monthYear = {};   // "jul" -> "Jul 2025", from the Kalshi labels
+    for (const m of markets) {
+      const k = /^([A-Z][a-z]{2}) (\d{4}):/.exec(m.label || "");
+      if (k && m.venue === "kalshi") monthYear[k[1].toLowerCase()] ||= `${k[1]} ${k[2]}`;
+    }
+    for (const m of markets) {
+      if (m.venue === "kalshi") continue;
+      const p = /^([A-Za-z]+):\s*/.exec(m.label || "");
+      const my = p && monthYear[p[1].slice(0, 3).toLowerCase()];
+      if (my) m.label = my + ": " + m.label.slice(p[0].length);
+    }
     for (const q of tl.quotes) {
       const m = byId[q.market];
       if (m) m.q.push({ t: parseT(q.t), bid: q.bid, ask: q.ask, mid: q.mid, imp: !!q.imputed, vol: q.volume });
@@ -407,7 +436,7 @@
     for (const k of marks) {
       k.w = k.label.length * 6.4 + 14;
       k.x0 = x(k.t) + 6;
-      if (k.x0 + k.w > W - R) k.x0 = x(k.t) - 6 - k.w;
+      if (k.x0 + k.w > W - R) k.x0 = Math.max(L, W - R - k.w); // still over its line, and keeps time order
     }
     const laneEnds = [];
     for (const k of marks.slice().sort((a, b) => a.x0 - b.x0)) {
@@ -628,7 +657,7 @@
     const tl = E.tl, sp = tl.speech || {};
     const speaker = niceName(tl.speaker);
     const last = lastName(tl.speaker);
-    let h = `<div class="card-head"><h2>What was said</h2><span class="meta">${esc(cardTitle(E))}</span></div>`;
+    let h = `<div class="card-head"><h2>What was said</h2><span class="meta" title="${esc(cardTitle(E))}">${esc(placeDate(E))}</span></div>`;
     if (!released) {
       return h + `<div class="embargo">
         <div class="embargo-main"><b>The text isn't public yet.</b> ${esc(speaker || "The speaker")}'s prepared remarks come out at <b class="num">${fmtEtShort(E.t0)} ET</b> (${fmtUtc(E.t0)} UTC).</div>
@@ -682,7 +711,7 @@
     const sp = E.tl.speech || {};
     const who = E.tl.speaker || sp.speaker;
     const last = lastName(who);
-    let h = `<div class="card-head"><h2>What's being said</h2><span class="meta">${esc(cardTitle(E))}</span></div>`;
+    let h = `<div class="card-head"><h2>What's being said</h2><span class="meta" title="${esc(cardTitle(E))}">${esc(placeDate(E))}</span></div>`;
     if (!heard.length) {
       return h + `<div class="pending-note">No speech passages yet. Start the live scorer on the laptop:<br><span class="mono">python live.py --speaker &lt;name&gt; --no-prewarm --mode dry</span><br>Passages appear here as they're scored. The market chart updates either way.</div>`;
     }
@@ -1018,7 +1047,6 @@
     // the learner's pre-T0 odds ride along as a tag; the full line is in the verdict's details bubble
     const mp = modelPrediction(E, m);
     const hasOdds = mp && !mp.none;
-    if (hasOdds) tags.push(`model ${pctText(mp.p)}`);
     const tip = [m.status && STATUS_HELP[m.status], hasOdds && `Model, before the release: ${pctText(mp.p)} chance to react.`].filter(Boolean).join(" ");
     return `<div class="mrow ${isFocus ? "focus" : ""} ${fired ? "fired" : ""}" role="button" tabindex="0" data-act="focus" data-id="${esc(m.id)}" aria-pressed="${isFocus}" title="${esc(tip)}">
       <div class="mrow-top"><span class="lab">${esc(displayLabel(m))}</span><span class="tag">${esc(tags.join(" · "))}</span><span class="px num">${q ? pct(q.mid) : "—"}</span></div>
@@ -1209,7 +1237,7 @@
     const last = lastName(E.tl.speaker);
     const b = E.baseline;
     const quote = top.key_sentence || top.text.slice(0, 180);
-    return `<div class="cmp-speech"><div class="label">Most unusual passage</div><q>${esc(quote)}</q>
+    return `<div class="cmp-speech"><div class="label">The line that stood out</div><q>${esc(quote)}</q>
       <div class="why"><b>${esc(vsUsual(top.z, last))}</b> (${Math.abs(top.z).toFixed(1)} standard deviations from ${esc(last)}'s usual) · stance <b class="num">${sgn(top.stance, 2)}</b> (${stanceWords(top.stance)})${b && b.mean != null ? ` vs usual <b class="num">${sgn(b.mean, 2)}</b>` : ""}</div></div>`;
   }
 
@@ -1226,7 +1254,7 @@
     evs.forEach((E, i) => {
       const meta = EVENTS.find((e) => state.events[e.id] === E);
       const now = E.t0 + nowRel;
-      html += `<div class="cmp-col"><h3>${esc(E.tl.title)}</h3><div class="sub">${esc(meta ? meta.sub : "")} · text released ${fmtEtShort(E.t0)} ET</div>${cmpSpeech(E, now)}`;
+      html += `<div class="cmp-col"><h3>${esc(lastName(E.tl.speaker))} <span class="cmp-where">${esc(placeDate(E))}</span></h3><div class="sub">${esc(meta ? meta.sub.split(" · ").slice(1).join(" · ") : "")}${meta ? " · " : ""}text released ${fmtEtShort(E.t0)} ET</div>${cmpSpeech(E, now)}`;
       for (const r of rows) {
         const m = r.ms[i];
         if (!m) { html += `<div class="cmp-chart">missing ${esc(r.name)}</div>`; continue; }
@@ -1392,10 +1420,10 @@
         const w = Math.round((Math.abs(v) / maxAbs) * 50);
         return `<span class="skill"><span class="axis"></span><i class="${v < 0 ? "neg" : "pos"}" style="${v < 0 ? `right:50%` : `left:50%`};width:${w}%"></i></span>`;
       };
-      let h = `<p class="model-verdict">${esc(M.verdict)}</p>
+      let h = `<p class="model-verdict">${esc(String(M.verdict || "").replace(/^No model beats the base rate yet/, "No model beats simple guessing by a clear margin yet"))}</p>
         <p class="src note">Learned from <b>${M.n_events}</b> Fed Board speeches (Nov 2024 →), <b>${M.n_labeled}</b> contract windows where the market was active before the release, <b>${M.positives}</b> of which reacted. ${M.excluded_not_measurable} windows were too thin to judge and are left out.</p>
         <h4>Scoreboard · each speech predicted before the model saw it (${sb.n_events || 0} speeches)</h4>
-        <table class="scoreboard"><tr><th>predictor</th><th>vs simple guessing</th><th class="barcol"></th><th>log loss</th><th>clearly better?</th></tr>` +
+        <table class="scoreboard"><tr><th>predictor</th><th>vs simple guessing (Brier)</th><th class="barcol"></th><th>log loss</th><th>clearly better?</th></tr>` +
         names.sort((a, b) => models[a].log_loss - models[b].log_loss).map((n) => {
           const r = models[n], sk = r.brier_skill || 0;
           const ci = r.gain_vs_base_ci;
@@ -1405,7 +1433,7 @@
             <td class="num">${n === "base_rate" ? "baseline" : (sk >= 0 ? "" : "−") + Math.abs(Math.round(sk * 100)) + "% " + (sk >= 0 ? "better" : "worse")}</td>
             <td class="barcol">${n === "base_rate" ? "" : bar(sk)}</td><td class="num">${r.log_loss.toFixed(3)}</td><td>${verdict}</td></tr>`;
         }).join("") + `</table>
-        <p class="src note">"Better" = lower Brier score (squared error of the probability). "Clearly better" needs the whole bootstrap interval over ${sb.n_clusters || "—"} independent speech windows above zero, corrected for picking the best of ${Math.max(1, names.length - 1)} candidates. Hover a row for the interval.</p>`;
+        <p class="src note">"Better" compares Brier scores (squared error of the probability) with simple guessing. Log loss is the error the models are ranked by; lower is better. "Clearly better" needs the whole bootstrap interval of the log-loss gain over ${sb.n_clusters || "—"} independent speech windows above zero, corrected for picking the best of ${Math.max(1, names.length - 1)} candidates. Hover a row for the interval.</p>`;
       const w = M.logistic_weights;
       if (w) {
         const top = Object.entries(w).filter(([, v]) => Math.abs(v) >= 0.15).slice(0, 8);
@@ -1426,6 +1454,75 @@
     showDrawer("Model · predicting which markets react", body);
   }
 
+  // ---------- Insights: questions asked of Snowflake across every speech ----------
+  // The page reads data/tradio/insights.json (saved by `python -m tradio.warehouse snowflake-insights`),
+  // so it works offline; "Refresh from Snowflake" re-runs the queries through tradio/serve.py.
+  const CONTRACT_WORDS = { H0: "Hold", C25: "Cut 25 basis points", C26: "Cut more than 25 basis points",
+    H25: "Hike 25 basis points", H26: "Hike more than 25 basis points" };
+  const SURPRISE_WORDS = { "|z| >= 2": "Big surprise for the speaker", "1 <= |z| < 2": "Some surprise", "|z| < 1": "About as usual", "not scored": "Not scored" };
+  const ROLE_WORDS = { chair: "Fed Chair", vice_chair: "Vice Chair", governor: "Governor", vice_chair_supervision: "Vice Chair for Supervision" };
+
+  function insightsHtml(ins) {
+    if (!ins) return `<p class="src">No Snowflake answers saved yet. Press <b>Refresh from Snowflake</b> (needs <span class="mono">python tradio/serve.py</span> and Snowflake set up on this laptop).</p>`;
+    const q = (prefix) => ins.queries.find((x) => x.title.startsWith(prefix));
+    const col = (qq, name) => qq.columns.indexOf(name);
+    const bars = (rows, max) => `<div class="ins-bars">${rows.map(([label, v, note]) => `<div class="ins-bar"><span class="ins-lab">${esc(label)}</span>
+      <span class="ins-track"><i style="width:${Math.max(2, (100 * v) / max).toFixed(1)}%"></i></span><b class="num">${pct(v)}</b>${note ? `<small>${esc(note)}</small>` : ""}</div>`).join("")}</div>`;
+    let h = `<p class="ins-src">Asked of <b>Snowflake</b> across <b>${count(ins.events)}</b> Fed speeches · answers from ${esc(fmtEtShort(parseT(ins.ran_at)))} ET, ${esc(String(ins.ran_at).slice(0, 10))}</p>`;
+    const s = q("Reaction rate by stance surprise");
+    if (s) {
+      const order = ["|z| >= 2", "1 <= |z| < 2", "|z| < 1"];
+      const rows = order.map((k) => s.rows.find((r) => r[0] === k)).filter(Boolean)
+        .map((r) => [SURPRISE_WORDS[r[0]], r[col(s, "reaction_rate")], `${r[col(s, "speeches")]} speeches`]);
+      h += `<h4>Markets react more when the speech surprises</h4><p class="src">Share of busy Kalshi contracts that reacted, by how unusual the speech was for that speaker.</p>${bars(rows, Math.max(...rows.map((r) => r[1])))}`;
+    }
+    const r = q("Reaction rate by speaker role");
+    if (r) {
+      const rows = r.rows.filter((x) => x[0] && ROLE_WORDS[x[0]]).map((x) => [ROLE_WORDS[x[0]], x[col(r, "reaction_rate")], `${x[col(r, "speeches")]} speeches`]);
+      h += `<h4>Who moves markets</h4><p class="src">Same measure, by the speaker's role.</p>${bars(rows, Math.max(...rows.map((x) => x[1])))}`;
+    }
+    const f = q("How fast");
+    if (f) {
+      h += `<h4>How fast markets react</h4><table class="kv"><tr><th>Contract</th><td><b>Halfway</b> · <b>90% done</b> (median minutes after the release)</td></tr>` +
+        f.rows.map((x) => `<tr><th>${esc(CONTRACT_WORDS[x[0]] || x[0])} <small class="muted">(${x[col(f, "reactions")]} reactions)</small></th><td>${x[col(f, "median_t50_min")]} min · ${x[col(f, "median_t90_min")]} min</td></tr>`).join("") + `</table>`;
+    }
+    const m = q("Learner scoreboard");
+    if (m) {
+      h += `<h4>How good the prediction model is</h4><p class="src">Brier score: lower is better. Each prediction was made before the model saw that speech.</p><table class="kv">` +
+        m.rows.map((x) => `<tr><th>${esc(String(x[0]).replace(/_/g, " "))}</th><td class="num">${x[col(m, "brier")]}</td></tr>`).join("") + `</table>`;
+    }
+    return h + `<details><summary>The SQL behind these</summary>${ins.queries.map((x) => `<pre>${esc(x.sql)}</pre>`).join("")}</details>`;
+  }
+
+  async function openInsights(note) {
+    const ins = await fetchJson(DATA_ROOT + "insights.json", true);
+    showDrawer("Insights from Snowflake", `<div class="ins-actions"><button class="btn small" id="insRefresh">↻ Refresh from Snowflake</button><span class="muted" id="insNote">${esc(note || "")}</span></div>` + insightsHtml(ins));
+    $("insRefresh").addEventListener("click", refreshInsights);
+  }
+
+  async function refreshInsights() {
+    const btn = $("insRefresh"), note = $("insNote");
+    btn.disabled = true;
+    note.textContent = "Asking Snowflake…";
+    try {
+      await api("/api/start", { kind: "insights" });
+      for (let i = 0; i < 60; i++) {                       // up to a minute
+        await new Promise((r) => setTimeout(r, 1000));
+        const st = await api("/api/status");
+        const p = (st.processes || {}).insights;
+        if (p && !p.running) {
+          return openInsights(p.exit_code ? `Snowflake didn't answer: ${(p.log.slice(-1)[0] || "").slice(0, 120)}` : "Updated just now from Snowflake.");
+        }
+      }
+      note.textContent = "Still waiting on Snowflake. Try again in a moment.";
+    } catch (e) {
+      note.textContent = /404|Failed to fetch|forbidden/i.test(e.message)
+        ? "Refreshing needs the site to run through python tradio/serve.py. Showing the last saved answers."
+        : e.message;
+    }
+    btn.disabled = false;
+  }
+
   async function openPlaybook() {
     const pb = await fetchJson(DATA_ROOT + "playbook.json", true);
     let h;
@@ -1434,7 +1531,7 @@
     } else {
       const r = pb.rules || {};
       const row = (name, k, fmt) => (r[k] ? `<tr><th>${name}</th><td><b>${esc(fmt ? fmt(r[k].value) : JSON.stringify(r[k].value))}</b><div class="src">${esc(r[k].why)}</div></td></tr>` : "");
-      h = `<p class="src">${esc(pb.caveat)} Built ${esc(pb.built_at)}.</p><h4>Rules the desk follows <small>· <span class="mono">python live.py --playbook</span></small></h4><table>
+      h = `<p class="src">${esc(pb.caveat)} Built ${esc(fmtEtShort(parseT(pb.built_at)))} ET, ${esc(new Date(parseT(pb.built_at)).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "America/New_York" }))}.</p><h4>Rules the desk follows <small>· <span class="mono">python live.py --playbook</span></small></h4><table>
         ${row("Trade only if the surprise is at least (standard deviations)", "min_abs_z", (v) => v)}
         ${row("Contract types", "trade_kinds", (v) => v.join(", ").replace(/_/g, " "))}
         ${row("Liquidity", "tradeable_liquidity", (v) => v.join(", "))}
@@ -1443,10 +1540,10 @@
         ${row("Direction right", "direction_hit_rate", (v) => (v == null ? "—" : Math.round(v * 100) + "%"))}
         ${row("Hold side follows the regime", "hold_side_by_regime", (v) => (v ? "yes" : "no"))}
       </table><h4>What it learned from</h4><table><tr><th>event</th><th>top z</th><th>direction</th><th>market leaning</th><th>reacted</th></tr>` +
-        (pb.events || []).map((o) => `<tr><td>${esc(o.event)}</td><td>${sgn(o.top_z, 2)}</td><td>${esc(o.direction)}</td><td>${esc(o.regime || "—")}</td><td>${o.reacted ? "yes" : "no"}</td></tr>`).join("") + `</table>`;
+        (pb.events || []).map((o) => `<tr><td>${esc(eventName(o.event))}</td><td>${sgn(o.top_z, 2)}</td><td>${esc(o.direction)}</td><td>${esc(o.regime || "—")}</td><td>${o.reacted ? "yes" : "no"}</td></tr>`).join("") + `</table>`;
       if (pb.backtests) {
         h += `<h4>Backtest, leave-one-out <small>· each event traded with rules learned from the others</small></h4><table><tr><th>event</th><th>trades</th><th>profit / loss</th><th>capital</th></tr>` +
-          pb.backtests.map((b) => `<tr><td>${esc(b.event)}</td><td>${esc(b.trades)}</td><td>${money(b.total_pnl)}</td><td>$${(b.capital || 0).toFixed(2)}</td></tr>`).join("") +
+          pb.backtests.map((b) => `<tr><td>${esc(eventName(b.event))}</td><td>${esc(b.trades)}</td><td>${money(b.total_pnl)}</td><td>$${dollars(b.capital || 0)}</td></tr>`).join("") +
           `</table><p class="src">Real Kalshi 1-minute prices; entry 1 min after the release at the ask, exit at the bid, Kalshi taker fees on both legs. Not trading advice.</p>`;
       }
     }
@@ -1926,6 +2023,7 @@
     $("scrub").addEventListener("input", (e) => { touch(); setRel(+e.target.value); });
     $("drawerClose").addEventListener("click", closeDrawer);
     $("btnPlaybook").addEventListener("click", openPlaybook);
+    $("btnInsights").addEventListener("click", () => openInsights());
     $("btnModel").addEventListener("click", openModel);
     $("btnGuide").addEventListener("click", toggleGuide);
     $("guideClose").addEventListener("click", () => $("guide").close());

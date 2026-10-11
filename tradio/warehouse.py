@@ -10,6 +10,7 @@ tradio/data/ and web/data/tradio/, so the demo still runs offline.
     python -m tradio.warehouse tiger-query       # absorption curve, straight from Tiger
     python -m tradio.warehouse snowflake         # load into Snowflake (snowflake.txt)
     python -m tradio.warehouse snowflake-query   # the questions in tradio/sql/snowflake_insights.sql
+    python -m tradio.warehouse snowflake-insights  # same questions, saved for the page's Insights panel
 
 Who does what:
   * Tiger Data (TimescaleDB) holds the TIME SERIES: every 1-minute quote and every trade
@@ -353,6 +354,38 @@ def snowflake_queries() -> list:
 
 # ---------------------------------------------------------------- CLI
 
+INSIGHTS_PATHS = (os.path.join(DATA_DIR, "insights.json"),
+                  os.path.join(ROOT, "web", "data", "tradio", "insights.json"))
+
+
+def _jsonable(v):
+    if v is None or isinstance(v, (int, float, str, bool)):
+        return v
+    try:
+        return float(v)               # Snowflake returns NUMBER columns as Decimal
+    except (TypeError, ValueError):
+        return str(v)
+
+
+def save_insights(conn) -> dict:
+    """Run tradio/sql/snowflake_insights.sql on Snowflake and save the answers for the page.
+    The page reads this file, so the demo still works offline with the last saved answers."""
+    from datetime import datetime, timezone
+    cur = conn.cursor()
+    out = {"source": "Snowflake", "ran_at": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
+           "queries": []}
+    cur.execute("SELECT COUNT(*) FROM tradio_events")
+    out["events"] = int(cur.fetchone()[0])
+    for title, sql in snowflake_queries():
+        cur.execute(sql)
+        out["queries"].append({"title": title, "sql": sql, "columns": [d[0].lower() for d in cur.description],
+                               "rows": [[_jsonable(v) for v in r] for r in cur.fetchall()]})
+    for path in INSIGHTS_PATHS:
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(out, f, indent=1)
+    return out
+
+
 def _print_rows(header, rows):
     print("  " + " | ".join(header))
     for r in rows:
@@ -361,7 +394,7 @@ def _print_rows(header, rows):
 
 def main():
     parser = argparse.ArgumentParser(description="Load Tradio results into Tiger Data / Snowflake")
-    parser.add_argument("step", choices=["export", "tiger", "tiger-query", "snowflake", "snowflake-query"])
+    parser.add_argument("step", choices=["export", "tiger", "tiger-query", "snowflake", "snowflake-query", "snowflake-insights"])
     args = parser.parse_args()
 
     if args.step == "export":
@@ -392,6 +425,9 @@ def main():
     if args.step == "snowflake":
         for table, n in load_snowflake(conn, build_tables()).items():
             print(f"  {table}: {n} rows")
+    elif args.step == "snowflake-insights":
+        out = save_insights(conn)
+        print(f"saved {len(out['queries'])} answers from Snowflake ({out['events']} speeches) at {out['ran_at']}")
     else:
         cur = conn.cursor()
         for title, sql in snowflake_queries():

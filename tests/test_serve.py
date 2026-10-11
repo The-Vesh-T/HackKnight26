@@ -54,6 +54,13 @@ class RunnerValidationTest(unittest.TestCase):
         self.r.start({"kind": "archive", "event_id": "waller20991015", "title": "Waller, 2099-10-15"})
         self.assertEqual(self.spawned[0][1:], ["tradio/live.py", "archive", "waller20991015", "--title", "Waller, 2099-10-15"])
 
+    def test_insights_runs_only_the_snowflake_query(self):
+        with mock.patch.object(serve, "has", return_value=False):
+            self.assertIn("Snowflake", self.err({"kind": "insights"}))
+        with mock.patch.object(serve, "has", return_value=True):
+            self.r.start({"kind": "insights", "sql": "DROP TABLE x"})
+        self.assertEqual(self.spawned[0][1:], ["-m", "tradio.warehouse", "snowflake-insights"])
+
     def test_practice_runs_only_the_simulator(self):
         self.r.start({"kind": "practice", "event": "bowman20250623", "speed": 30})
         self.assertEqual(self.spawned[0][1:], ["tradio/live.py", "--simulate", "bowman20250623", "--speed", "30"])
