@@ -119,6 +119,23 @@ class LiveModeTest(unittest.TestCase):
             self.assertIsNone(live.video_start(url))
         self.assertIsNone(live.video_start("https://www.federalreserve.gov/live-broadcast.htm"))
 
+    def test_video_speaker_from_the_title_or_the_chair_on_that_date(self):
+        known = ["christopher_waller", "jerome_powell", "kevin_warsh"]
+        july = live.to_unix("2026-07-29T18:30:00Z")
+        self.assertEqual(live.video_speaker({"title": "LIVE: Fed Chair Kevin Warsh at Jackson Hole"}, july, known), "kevin_warsh")
+        self.assertEqual(live.video_speaker({"title": "Warsh and Waller", "description": "Chair Kevin Warsh and Governor "
+                                             "Christopher Waller"}, july, known), "kevin_warsh")
+        speeches = [{"role": "chair", "speaker": "jerome_powell", "t0": "2026-03-01T15:00:00Z"},
+                    {"role": "chair", "speaker": "kevin_warsh", "t0": "2026-07-14T12:30:00Z"},
+                    {"role": "governor", "speaker": "christopher_waller", "t0": "2026-07-20T12:30:00Z"}]
+        path = os.path.join(self.tmp.name, "speeches.json")
+        json.dump({"speeches": speeches}, open(path, "w"))      # the real file wraps the list
+        with mock.patch.object(live, "HISTORY_SPEECHES", path):
+            pc = {"title": "FOMC Press Conference, July 29, 2026", "description": "Transcript (PDF)"}
+            self.assertEqual(live.video_speaker(pc, july, known), "kevin_warsh")
+            self.assertEqual(live.video_speaker(pc, live.to_unix("2026-04-29T18:30:00Z"), known), "jerome_powell")
+            self.assertIsNone(live.video_speaker({"title": "Economic outlook panel"}, july, known))
+
     def test_live_once_writes_closed_candles_only_and_finds_next_meeting(self):
         state = self.write_state([{"time": "2026-10-03T13:41:02.000+00:00", "text": "Cut.", "role": "speaker",
                                    "stance": -0.6, "z": -1.6}])

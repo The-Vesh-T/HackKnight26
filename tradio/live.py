@@ -107,27 +107,84 @@ MIN_PRESS_CONF_S = 15 * 60               # shorter than this is a clip, not the 
 MONTHS = "January February March April May June July August September October November December".split()
 
 
-def video_start(url: str):
-    """When a recorded video's first second happened, or None for a live stream.
-    Returns (unix time, how we know). Only two cases are exact enough for market timing:
-      - a recording of a YouTube live stream: YouTube keeps the time the stream started;
-      - a Fed press conference: the date from the title (or upload date), at 2:30 p.m. ET on a
-        Fed decision day (the decision time comes from Kalshi's own event list).
-    Anything else raises ValueError: an upload time can be an hour after the event."""
+def video_info(url: str):
+    """yt-dlp's facts about a video link (no download), or None for the Fed's live-broadcast page."""
     from urllib.parse import urlparse
     if (urlparse(url).hostname or "").endswith("federalreserve.gov"):
-        return None                                   # the Fed's live-broadcast page
+        return None
     try:
         import yt_dlp
     except ImportError:
         raise ValueError("reading a video link needs yt-dlp (pip install yt-dlp)")
     try:
         with yt_dlp.YoutubeDL({"quiet": True, "no_warnings": True, "skip_download": True}) as y:
-            info = y.extract_info(url, download=False)
+            return y.extract_info(url, download=False)
     except Exception as e:
         msg = str(e).replace("ERROR: ", "")
         raise ValueError(f"couldn't open that video: {msg}" + (
             " (YouTube says it's private; open it in a private window to check)" if "Private video" in msg else ""))
+
+
+HISTORY_SPEECHES = os.path.join(DATA_DIR, "history", "speeches.json")
+
+
+def chair_at(t: int, known) -> str:
+    """Who was Fed Chair at time t: the speaker of the latest Chair speech on or before t
+    (tradio/history.py's speech list records each speaker's role)."""
+    try:
+        rows = read_json(HISTORY_SPEECHES)
+    except (OSError, json.JSONDecodeError):
+        return None
+    if isinstance(rows, dict):                        # {"speeches": [...], ...}
+        rows = rows.get("speeches", [])
+    best = None
+    for r in rows:
+        if r.get("role") != "chair" or r.get("speaker") not in known or not r.get("t0"):
+            continue
+        ts = to_unix(r["t0"])
+        if ts <= t and (best is None or ts > best[0]):
+            best = (ts, r["speaker"])
+    return best and best[1]
+
+
+def video_speaker(info: dict, t0: int, known) -> str:
+    """The speaker a recorded video is about: the one speaker with a stance baseline named in its
+    title or description (the one called "Chair" if several), else for a press conference the
+    Chair on that date. None if neither says."""
+    text = f"{info.get('title') or ''} {info.get('description') or ''}"
+    named = [k for k in known if re.search(r"\b" + r"\s+".join(map(re.escape, k.split("_"))) + r"\b", text, re.I)]
+    if len(named) > 1:
+        named = [k for k in named if re.search(r"\bChair(man)?\s+" + r"\s+".join(map(re.escape, k.split("_"))), text, re.I)]
+    if len(named) == 1:
+        return named[0]
+    if re.search(r"press conference", info.get("title") or "", re.I):
+        return chair_at(t0, known)
+    return None
+
+
+def recorded_video(url: str, known=()):
+    """None for a live stream; for a recorded video {"t0", "how", "speaker"} (see video_start
+    and video_speaker). Raises ValueError when the video can't be timed."""
+    info = video_info(url)
+    if info is None:
+        return None
+    rec = video_start(url, info)
+    if rec is None:
+        return None
+    return {"t0": rec[0], "how": rec[1], "speaker": video_speaker(info, rec[0], known)}
+
+
+def video_start(url: str, info: dict = None):
+    """When a recorded video's first second happened, or None for a live stream.
+    Returns (unix time, how we know). Only two cases are exact enough for market timing:
+      - a recording of a YouTube live stream: YouTube keeps the time the stream started;
+      - a Fed press conference: the date from the title (or upload date), at 2:30 p.m. ET on a
+        Fed decision day (the decision time comes from Kalshi's own event list).
+    Anything else raises ValueError: an upload time can be an hour after the event."""
+    if info is None:
+        info = video_info(url)
+        if info is None:
+            return None                               # the Fed's live-broadcast page
     status = info.get("live_status")
     if status in ("is_live", "is_upcoming") or (status is None and info.get("is_live")):
         return None

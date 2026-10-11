@@ -13,9 +13,9 @@ import speechtxt
 class AudioSourceTests(unittest.TestCase):
     def test_batch_file_cli_still_uses_one_shot_transcription(self):
         with tempfile.TemporaryDirectory() as folder:
-            audio = Path(folder) / "recording.mp3"
+            audio = Path(folder).resolve() / "recording.mp3"
             audio.write_bytes(b"placeholder")
-            output = Path(folder) / "batch.json"
+            output = Path(folder).resolve() / "batch.json"
             with patch.object(sys, "argv", ["speechtxt.py", "--file", str(audio),
                                             "--output", str(output)]), \
                  patch.object(speechtxt, "transcribe_file") as batch, \
@@ -26,9 +26,9 @@ class AudioSourceTests(unittest.TestCase):
 
     def test_realtime_file_cli_uses_streaming_transcription(self):
         with tempfile.TemporaryDirectory() as folder:
-            audio = Path(folder) / "recording.mp3"
+            audio = Path(folder).resolve() / "recording.mp3"
             audio.write_bytes(b"placeholder")
-            output = Path(folder) / "live.json"
+            output = Path(folder).resolve() / "live.json"
             with patch.object(sys, "argv", ["speechtxt.py", "--realtime-file", str(audio),
                                             "--output", str(output)]), \
                  patch.object(speechtxt, "transcribe_file") as batch, \

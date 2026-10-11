@@ -76,18 +76,22 @@ class RunnerValidationTest(unittest.TestCase):
 
     def test_recorded_video_runs_dry_with_its_own_clock(self):
         url = "https://www.youtube.com/watch?v=DLFXUkOc_7I"
-        rec = (1785349800, "Fed press conference, 2:30 p.m. ET on 2026-07-29")
+        rec = {"t0": 1785349800, "how": "Fed press conference, 2:30 p.m. ET on 2026-07-29", "speaker": "kevin_warsh"}
         with mock.patch.object(serve, "has", return_value=True), \
-                mock.patch("tradio.live.video_start", return_value=rec):
+                mock.patch.object(serve, "speakers", return_value=["kevin_warsh", "michelle_bowman"]), \
+                mock.patch("tradio.live.recorded_video", return_value=rec):
             self.assertIn("dry run", self.err({"kind": "live", "speaker": "michelle_bowman", "mode": "demo", "url": url}))
             self.r.start({"kind": "live", "speaker": "michelle_bowman", "mode": "dry", "url": url})
-        tape = self.spawned[2]
+        desk, tape = self.spawned[1], self.spawned[2]
         self.assertEqual(tape[tape.index("--video") + 1], url)
-        self.assertEqual(self.r.session["recorded"]["t0"], rec[0])
+        # the video's speaker replaces the menu's: scores are against that speaker's history
+        self.assertEqual(desk[desk.index("--speaker") + 1], "kevin_warsh")
+        self.assertEqual(self.r.session["speaker"], "kevin_warsh")
+        self.assertEqual(self.r.session["recorded"]["t0"], rec["t0"])
 
     def test_video_without_a_known_start_is_refused_before_starting(self):
         with mock.patch.object(serve, "has", return_value=True), \
-                mock.patch("tradio.live.video_start", side_effect=ValueError("can't tell when it was recorded")):
+                mock.patch("tradio.live.recorded_video", side_effect=ValueError("can't tell when it was recorded")):
             self.assertIn("can't tell", self.err({"kind": "live", "speaker": "michelle_bowman", "mode": "dry",
                                                   "url": "https://www.youtube.com/watch?v=x"}))
 
