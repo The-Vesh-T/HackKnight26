@@ -713,7 +713,7 @@
     const last = lastName(who);
     let h = `<div class="card-head"><h2>What's being said</h2><span class="meta" title="${esc(cardTitle(E))}">${esc(placeDate(E))}</span></div>`;
     if (!heard.length) {
-      return h + `<div class="pending-note">No speech passages yet. Start the live scorer on the laptop:<br><span class="mono">python live.py --speaker &lt;name&gt; --no-prewarm --mode dry</span><br>Passages appear here as they're scored. The market chart updates either way.</div>`;
+      return h + `<div class="pending-note">No speech passages yet. They appear here as the speech is transcribed and scored, usually within half a minute of the speaker starting. The market chart updates either way.</div>`;
     }
     const { cur, top, surprises } = liveNow(heard);
     h += `<div class="released-line"><span class="dot"></span><span><b class="num">${heard.length}</b> passage${heard.length === 1 ? "" : "s"} so far · <b class="num">${surprises}</b> surprise${surprises === 1 ? "" : "s"}${sp.status ? ` · ${esc(sp.status)}` : ""}</span></div>`;
