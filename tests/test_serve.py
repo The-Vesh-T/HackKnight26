@@ -74,6 +74,23 @@ class RunnerValidationTest(unittest.TestCase):
         self.assertEqual(desk[desk.index("--mode") + 1], "dry")
         self.assertIn("--playbook", desk)
 
+    def test_recorded_video_runs_dry_with_its_own_clock(self):
+        url = "https://www.youtube.com/watch?v=DLFXUkOc_7I"
+        rec = (1785349800, "Fed press conference, 2:30 p.m. ET on 2026-07-29")
+        with mock.patch.object(serve, "has", return_value=True), \
+                mock.patch("tradio.live.video_start", return_value=rec):
+            self.assertIn("dry run", self.err({"kind": "live", "speaker": "michelle_bowman", "mode": "demo", "url": url}))
+            self.r.start({"kind": "live", "speaker": "michelle_bowman", "mode": "dry", "url": url})
+        tape = self.spawned[2]
+        self.assertEqual(tape[tape.index("--video") + 1], url)
+        self.assertEqual(self.r.session["recorded"]["t0"], rec[0])
+
+    def test_video_without_a_known_start_is_refused_before_starting(self):
+        with mock.patch.object(serve, "has", return_value=True), \
+                mock.patch("tradio.live.video_start", side_effect=ValueError("can't tell when it was recorded")):
+            self.assertIn("can't tell", self.err({"kind": "live", "speaker": "michelle_bowman", "mode": "dry",
+                                                  "url": "https://www.youtube.com/watch?v=x"}))
+
 
 class ApiOriginTest(unittest.TestCase):
     @classmethod

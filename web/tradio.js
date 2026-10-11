@@ -157,7 +157,7 @@
   const moveText = (m, ticks) => (ticks == null ? "—" : sgn(ticks, 1, true) + (m.tick === 0.01 ? " percentage points" : " ticks"));
   const niceName = (s) => (s || "").replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
   // the LIVE banner already says "LIVE" / "SIMULATED LIVE", so the cards show just the event name
-  const cardTitle = (E) => (E.live ? String(E.tl.title || "").replace(/^(SIMULATED )?LIVE · /, "") : E.tl.title);
+  const cardTitle = (E) => (E.live ? String(E.tl.title || "").replace(/^((SIMULATED )?LIVE|RECORDED) · /, "") : E.tl.title);
   // Card label: place and date, e.g. "Warsh, Jackson Hole, 2026-08-28" -> "Jackson Hole · Aug 28, 2026"
   // (the speaker is already in the tab). Anything that doesn't match that shape is shown as is.
   function placeDate(E) {
@@ -1204,10 +1204,12 @@
     const el = $("liveBanner");
     if (!el) return;
     if (!E.live) { el.hidden = true; return; }
-    const sim = E.live.kind === "simulated";
+    const sim = E.live.kind === "simulated", rec = E.live.kind === "recorded";
     const age = Date.now() - parseT(E.live.updated_at);
     const stale = !sim && age > STALE_MS;
-    const badge = sim
+    const badge = rec && !stale
+      ? `<span class="chip indic" title="The clock runs from when the video was recorded, with the Kalshi prices from then">Recorded video · ${esc(String(E.live.source || "").replace(/^recorded video; /, ""))}</span>`
+      : sim
       ? `<span class="chip indic">Simulation · ${esc(String(E.live.source || "").replace(/replay of (\S+)/, (x, id) => { const ev = EVENTS.find((e) => e.id === id); return "replay of " + (ev ? ev.short + ", " + ev.sub.split(" · ")[0] : id); }))}</span>`
       : stale ? `<span class="chip candidate_inconsistency">STALE · last update ${Math.round(age / 1000)}s ago, is tradio/live.py running?</span>`
               : `<span class="chip live-chip"><span class="dot"></span>LIVE</span>`;
@@ -1796,7 +1798,7 @@
             ${opt("live", "Trade: REAL MONEY" + (!st.allow_live ? " · off (TRADIO_ALLOW_LIVE=1)" : !k.kalshi_live ? " · needs Kalshi keys" : ""), !(st.allow_live && k.kalshi_live))}
           </select>
           <label title="Turn the speech audio into text as it's spoken"><input type="checkbox" id="ctlTranscribe" checked> transcribe the audio</label>
-          <input id="ctlUrl" placeholder="video link (default: the Fed's live stream)" size="30" aria-label="Video link">
+          <input id="ctlUrl" placeholder="video link (default: the Fed's live stream)" size="30" aria-label="Video link" title="A live stream, or a past one: a recorded YouTube live stream or a full Fed press conference replays with the Kalshi prices from when it happened (guide only)">
           <input id="ctlConfirm" placeholder="type LIVE" size="9" hidden>
           <button class="btn" id="ctlLive">▶ Start live</button></div>
         <button class="btn stop" id="ctlStop">■ Stop</button>

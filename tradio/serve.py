@@ -162,6 +162,17 @@ class Runner:
                     raise ValueError("transcribing needs elevenapi.txt (ElevenLabs key)")
             if not has("gemapi.txt"):
                 raise ValueError("scoring needs gemapi.txt (Gemini key)")
+            # A recorded video replays with the Kalshi prices from when it was recorded, so it
+            # must have a known start time, and it can't trade (its orders would hit today's markets).
+            recorded = None
+            if transcribe:
+                if ROOT not in sys.path:
+                    sys.path.insert(0, ROOT)
+                from tradio.live import video_start
+                recorded = video_start(url)           # ValueError (private, no start time) -> shown on the page
+                if recorded and mode != "dry":
+                    raise ValueError("a recorded video can only run as a dry run (no orders): "
+                                     "its prices are from the past")
             self.stop_all()
             env = dict(os.environ, PYTHONUNBUFFERED="1")
             with self.lock:
@@ -172,9 +183,11 @@ class Runner:
                                                        "live": ", trading REAL MONEY"}[mode],
                             [py, "live.py", "--speaker", sp, "--fast", "--playbook", "--mode", mode,
                              "--venues", "kalshi"], env)
-                self._spawn("tape", "live Kalshi tape + reaction checks",
-                            [py, "tradio/live.py", "--speaker", sp, "--t0", "now"], env)
-                self.session = {"kind": "live", "speaker": sp, "mode": mode, "transcribe": transcribe, "url": url}
+                tape = [py, "tradio/live.py", "--speaker", sp, "--t0", "now"] + (["--video", url] if recorded else [])
+                self._spawn("tape", ("Kalshi prices from when the video was recorded" if recorded
+                                     else "live Kalshi tape") + " + reaction checks", tape, env)
+                self.session = {"kind": "live", "speaker": sp, "mode": mode, "transcribe": transcribe, "url": url,
+                                "recorded": recorded and {"t0": recorded[0], "how": recorded[1]}}
             return self.status()
         if kind == "archive":
             eid, title = req.get("event_id") or "", req.get("title") or ""

@@ -84,6 +84,41 @@ class LiveModeTest(unittest.TestCase):
         self.assertEqual([p["relevant"] for p in sp["paragraphs"]], [True, False])
         self.assertTrue(sp["arrives_over_time"])
 
+    def test_speech_from_state_shifts_a_recorded_videos_clock(self):
+        path = self.write_state([{"time": "2026-10-11T16:00:30+00:00", "text": "We held.", "role": "speaker",
+                                  "stance": 0.1, "z": 0.3}])
+        shift = live.to_unix("2026-10-11T16:00:00Z") - live.to_unix("2026-07-29T18:30:00Z")
+        sp = live.speech_from_state(path, shift)
+        self.assertEqual(sp["paragraphs"][0]["t"], "2026-07-29T18:30:30Z")
+
+    def test_next_decision_after_a_press_conference_is_the_following_meeting(self):
+        events = {"events": [{"event_ticker": "KXFEDDECISION-26SEP", "strike_date": "2026-09-16T18:00:00Z"},
+                             {"event_ticker": "KXFEDDECISION-26JUL", "strike_date": "2026-07-29T18:00:00Z"}]}
+        with mock.patch.object(im, "get_json", return_value=events):
+            self.assertEqual(live.fed_event_at(live.to_unix("2026-07-29T18:30:00Z")), "KXFEDDECISION-26SEP")
+            self.assertEqual(live.fed_event_at(live.to_unix("2026-07-20T14:00:00Z")), "KXFEDDECISION-26JUL")
+
+    def test_video_start_trusts_only_stream_starts_and_full_press_conferences(self):
+        events = {"events": [{"event_ticker": "KXFEDDECISION-26JUL", "strike_date": "2026-07-29T18:00:00Z"}]}
+
+        def info(**kw):
+            fake = mock.MagicMock()
+            fake.__enter__.return_value.extract_info.return_value = kw
+            return mock.patch("yt_dlp.YoutubeDL", return_value=fake)
+        url = "https://www.youtube.com/watch?v=x"
+        with info(live_status="was_live", release_timestamp=1787925857, title="LIVE: Warsh at Jackson Hole"):
+            self.assertEqual(live.video_start(url)[0], 1787925857)
+        with info(live_status="not_live", title="FOMC Press Conference, July 29, 2026", duration=2704), \
+                mock.patch.object(im, "get_json", return_value=events):
+            self.assertEqual(live.iso_from_unix(live.video_start(url)[0]), "2026-07-29T18:30:00Z")
+        with info(live_status="not_live", title="FOMC Press Conference, July 29, 2026", duration=121):
+            self.assertRaisesRegex(ValueError, "clip", live.video_start, url)
+        with info(live_status="not_live", title="Waller on the economy", timestamp=1785356671, duration=1800):
+            self.assertRaisesRegex(ValueError, "can't tell", live.video_start, url)
+        with info(live_status="is_live", title="Live now"):
+            self.assertIsNone(live.video_start(url))
+        self.assertIsNone(live.video_start("https://www.federalreserve.gov/live-broadcast.htm"))
+
     def test_live_once_writes_closed_candles_only_and_finds_next_meeting(self):
         state = self.write_state([{"time": "2026-10-03T13:41:02.000+00:00", "text": "Cut.", "role": "speaker",
                                    "stance": -0.6, "z": -1.6}])
