@@ -32,7 +32,7 @@
   const LIVE_POLL_MS = 3000;
   const STALE_MS = 90 * 1000;
   const COMPARE_PAIR = ["bowman20250623", "waller20250717"];
-  const COMPARE_SUFFIXES = [["-C25", "July cut 25 basis points"], ["-H0", "July hold"]];
+  const COMPARE_SUFFIXES = [["-C25", "Jul 2025: cut 25 basis points"], ["-H0", "Jul 2025: hold"]];
   const SPEEDS = [1, 10, 30, 60];
   const ALARM_STATUSES = new Set(["reacted", "alarm", "candidate_delay", "candidate_inconsistency"]);
   const MIN = 60000;
@@ -56,7 +56,7 @@
     candidate_delay: "A busy market that did move, but later than expected. A candidate to look at, not a conclusion.",
     candidate_inconsistency: "Related prices disagree (outcome odds don't add up, or Kalshi and Polymarket differ). A candidate, not a conclusion.",
     expected_no_reaction: "No lasting move out of its pre-speech range, which is what you'd expect for this market.",
-    watching: "Live only: no alarm so far. The final verdict comes when the 90-minute window closes.",
+    watching: "No verdict yet. On a replay it shows until the market's verdict time on the clock; live, until the 90-minute window closes.",
     cant_tell_illiquid: "Too little trading to tell a slow market from a quiet one, so Tradio says it can't tell instead of calling it slow.",
   };
   const STATUS_ORDER = ["reacted", "alarm", "candidate_delay", "candidate_inconsistency", "expected_no_reaction", "watching", "cant_tell_illiquid"];
@@ -147,11 +147,11 @@
     if (d == null || Number.isNaN(d)) return "";
     const c = d * 100, a = Math.abs(c);
     if (a < 0.05) return `<span class="flat">unchanged</span>`;
-    const t = (Math.abs(a - Math.round(a)) < 0.05 ? a.toFixed(0) : a.toFixed(1)) + "%";
+    const t = (Math.abs(a - Math.round(a)) < 0.05 ? a.toFixed(0) : a.toFixed(1)) + " pts";
     return `<span class="${c > 0 ? "up" : "dn"}">${c > 0 ? "▲" : "▼"} ${t}</span>`;
   }
   // Signed dollars: cents for small amounts, whole dollars with commas once it's in the hundreds.
-  const money = (x) => (x == null ? "—" : (x >= 0 ? "+$" : "−$") + dollars(Math.abs(x)));
+  const money = (x) => (x == null ? "—" : Math.abs(x) < 0.005 ? "$0.00" : (x > 0 ? "+$" : "−$") + dollars(Math.abs(x)));
   const dollars = (x) => (x >= 100 ? Math.round(x).toLocaleString("en-US") : x.toFixed(2));
   const count = (n) => Number(n).toLocaleString("en-US");
   const moveText = (m, ticks) => (ticks == null ? "—" : sgn(ticks, 1, true) + (m.tick === 0.01 ? " percentage points" : " ticks"));
@@ -166,6 +166,13 @@
     if (!m) return t;
     const d = new Date(Date.UTC(+m[2], +m[3] - 1, +m[4]));
     return `${m[1]} · ${d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })}`;
+  }
+  // Event id -> "Bowman · Jun 23, 2025" (ids look like bowman20250623); anything else is shown as is.
+  function eventName(id) {
+    const m = /^([a-z_]+?)(\d{4})(\d{2})(\d{2})$/.exec(String(id || ""));
+    if (!m) return String(id || "");
+    const d = new Date(Date.UTC(+m[2], +m[3] - 1, +m[4]));
+    return `${niceName(m[1])} · ${d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })}`;
   }
   const lastName = (s) => (niceName(s) || "the speaker").split(" ").pop();
   // Spell out trading shorthand for viewers: "25 bp" -> "25 basis points", ">25 bp" -> "more than 25 basis points".
@@ -429,7 +436,7 @@
     for (const k of marks) {
       k.w = k.label.length * 6.4 + 14;
       k.x0 = x(k.t) + 6;
-      if (k.x0 + k.w > W - R) k.x0 = x(k.t) - 6 - k.w;
+      if (k.x0 + k.w > W - R) k.x0 = Math.max(L, W - R - k.w); // still over its line, and keeps time order
     }
     const laneEnds = [];
     for (const k of marks.slice().sort((a, b) => a.x0 - b.x0)) {
@@ -1413,10 +1420,10 @@
         const w = Math.round((Math.abs(v) / maxAbs) * 50);
         return `<span class="skill"><span class="axis"></span><i class="${v < 0 ? "neg" : "pos"}" style="${v < 0 ? `right:50%` : `left:50%`};width:${w}%"></i></span>`;
       };
-      let h = `<p class="model-verdict">${esc(M.verdict)}</p>
+      let h = `<p class="model-verdict">${esc(String(M.verdict || "").replace(/^No model beats the base rate yet/, "No model beats simple guessing by a clear margin yet"))}</p>
         <p class="src note">Learned from <b>${M.n_events}</b> Fed Board speeches (Nov 2024 →), <b>${M.n_labeled}</b> contract windows where the market was active before the release, <b>${M.positives}</b> of which reacted. ${M.excluded_not_measurable} windows were too thin to judge and are left out.</p>
         <h4>Scoreboard · each speech predicted before the model saw it (${sb.n_events || 0} speeches)</h4>
-        <table class="scoreboard"><tr><th>predictor</th><th>vs simple guessing</th><th class="barcol"></th><th>log loss</th><th>clearly better?</th></tr>` +
+        <table class="scoreboard"><tr><th>predictor</th><th>vs simple guessing (Brier)</th><th class="barcol"></th><th>log loss</th><th>clearly better?</th></tr>` +
         names.sort((a, b) => models[a].log_loss - models[b].log_loss).map((n) => {
           const r = models[n], sk = r.brier_skill || 0;
           const ci = r.gain_vs_base_ci;
@@ -1426,7 +1433,7 @@
             <td class="num">${n === "base_rate" ? "baseline" : (sk >= 0 ? "" : "−") + Math.abs(Math.round(sk * 100)) + "% " + (sk >= 0 ? "better" : "worse")}</td>
             <td class="barcol">${n === "base_rate" ? "" : bar(sk)}</td><td class="num">${r.log_loss.toFixed(3)}</td><td>${verdict}</td></tr>`;
         }).join("") + `</table>
-        <p class="src note">"Better" = lower Brier score (squared error of the probability). "Clearly better" needs the whole bootstrap interval over ${sb.n_clusters || "—"} independent speech windows above zero, corrected for picking the best of ${Math.max(1, names.length - 1)} candidates. Hover a row for the interval.</p>`;
+        <p class="src note">"Better" compares Brier scores (squared error of the probability) with simple guessing. Log loss is the error the models are ranked by; lower is better. "Clearly better" needs the whole bootstrap interval of the log-loss gain over ${sb.n_clusters || "—"} independent speech windows above zero, corrected for picking the best of ${Math.max(1, names.length - 1)} candidates. Hover a row for the interval.</p>`;
       const w = M.logistic_weights;
       if (w) {
         const top = Object.entries(w).filter(([, v]) => Math.abs(v) >= 0.15).slice(0, 8);
@@ -1524,7 +1531,7 @@
     } else {
       const r = pb.rules || {};
       const row = (name, k, fmt) => (r[k] ? `<tr><th>${name}</th><td><b>${esc(fmt ? fmt(r[k].value) : JSON.stringify(r[k].value))}</b><div class="src">${esc(r[k].why)}</div></td></tr>` : "");
-      h = `<p class="src">${esc(pb.caveat)} Built ${esc(pb.built_at)}.</p><h4>Rules the desk follows <small>· <span class="mono">python live.py --playbook</span></small></h4><table>
+      h = `<p class="src">${esc(pb.caveat)} Built ${esc(fmtEtShort(parseT(pb.built_at)))} ET, ${esc(new Date(parseT(pb.built_at)).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "America/New_York" }))}.</p><h4>Rules the desk follows <small>· <span class="mono">python live.py --playbook</span></small></h4><table>
         ${row("Trade only if the surprise is at least (standard deviations)", "min_abs_z", (v) => v)}
         ${row("Contract types", "trade_kinds", (v) => v.join(", ").replace(/_/g, " "))}
         ${row("Liquidity", "tradeable_liquidity", (v) => v.join(", "))}
@@ -1533,10 +1540,10 @@
         ${row("Direction right", "direction_hit_rate", (v) => (v == null ? "—" : Math.round(v * 100) + "%"))}
         ${row("Hold side follows the regime", "hold_side_by_regime", (v) => (v ? "yes" : "no"))}
       </table><h4>What it learned from</h4><table><tr><th>event</th><th>top z</th><th>direction</th><th>market leaning</th><th>reacted</th></tr>` +
-        (pb.events || []).map((o) => `<tr><td>${esc(o.event)}</td><td>${sgn(o.top_z, 2)}</td><td>${esc(o.direction)}</td><td>${esc(o.regime || "—")}</td><td>${o.reacted ? "yes" : "no"}</td></tr>`).join("") + `</table>`;
+        (pb.events || []).map((o) => `<tr><td>${esc(eventName(o.event))}</td><td>${sgn(o.top_z, 2)}</td><td>${esc(o.direction)}</td><td>${esc(o.regime || "—")}</td><td>${o.reacted ? "yes" : "no"}</td></tr>`).join("") + `</table>`;
       if (pb.backtests) {
         h += `<h4>Backtest, leave-one-out <small>· each event traded with rules learned from the others</small></h4><table><tr><th>event</th><th>trades</th><th>profit / loss</th><th>capital</th></tr>` +
-          pb.backtests.map((b) => `<tr><td>${esc(b.event)}</td><td>${esc(b.trades)}</td><td>${money(b.total_pnl)}</td><td>$${(b.capital || 0).toFixed(2)}</td></tr>`).join("") +
+          pb.backtests.map((b) => `<tr><td>${esc(eventName(b.event))}</td><td>${esc(b.trades)}</td><td>${money(b.total_pnl)}</td><td>$${dollars(b.capital || 0)}</td></tr>`).join("") +
           `</table><p class="src">Real Kalshi 1-minute prices; entry 1 min after the release at the ask, exit at the bid, Kalshi taker fees on both legs. Not trading advice.</p>`;
       }
     }

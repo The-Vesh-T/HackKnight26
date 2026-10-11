@@ -553,7 +553,7 @@ mark.key { background: rgba(139, 139, 245, .18); color: inherit; padding: 1px 2p
   color: #c9cdd3;
 }
 .drawer details summary { cursor: pointer; color: var(--muted); font-size: 12.5px; margin-top: 4px; }
-.drawer .src { color: var(--faint); font-size: 12.5px; word-break: break-all; }
+.drawer .src { color: var(--faint); font-size: 12.5px; overflow-wrap: anywhere; }
 
 .loading, .error { padding: 80px 20px; text-align: center; color: var(--faint); }
 .error { color: var(--red); max-width: 800px; margin: 0 auto; }
@@ -621,6 +621,18 @@ mark.key { background: rgba(139, 139, 245, .18); color: inherit; padding: 1px 2p
   .stage { padding: 16px; }
   .dock-main, .dock-note { padding-left: 16px; padding-right: 16px; }
 }
+
+/* Phones: the top-bar buttons stay on one line, and the tab row fades at the edge to show it scrolls. */
+@media (max-width: 600px) {
+  .topbar { gap: 2px; padding: 8px 12px 0; }
+  .brand { margin-right: auto; }
+  .topbar > .btn { padding: 6px 8px; white-space: nowrap; }
+  .tab { padding: 0 9px; }
+  .tab::after { left: 9px; right: 9px; }
+  .tab b { font-size: 13.5px; white-space: nowrap; }
+  .tabs { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); }
+}
+@media (max-width: 420px) { .brand-text { display: none; } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
