@@ -293,6 +293,9 @@ def main(argv=None):
     srv = ThreadingHTTPServer(("127.0.0.1", a.port), make_handler(runner))
     print(f"Tradio: http://localhost:{a.port}/tradio.html   (LIVE tab has Start/Stop buttons)")
     print("real-money button: " + ("ENABLED (TRADIO_ALLOW_LIVE=1)" if runner.allow_live else "off"))
+    # `kill` (SIGTERM) stops the sessions too, like Ctrl+C: they run in their own process groups,
+    # so without this they'd outlive the server and clash with the next session's files.
+    signal.signal(signal.SIGTERM, lambda *_: (_ for _ in ()).throw(KeyboardInterrupt()))
     try:
         srv.serve_forever()
     except KeyboardInterrupt:
