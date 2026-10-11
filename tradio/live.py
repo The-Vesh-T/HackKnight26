@@ -27,6 +27,10 @@ Usage (on the laptop that has internet; the demo itself still runs offline):
   # 3. When it's over, keep it as a history event
   python tradio/live.py archive waller20261015 --title "Waller, 2026-10-15"
 
+  # A past video: T0 and the markets come from when it was recorded (a YouTube live-stream
+  # recording, or a full Fed press conference at 2:30 p.m. ET); the clock runs at the video's speed
+  python tradio/live.py --speaker kevin_warsh --video https://www.youtube.com/watch?v=dBbIiJ3rM7A
+
   # No speech on? Rehearse the LIVE tab offline by replaying a past event as if live:
   python tradio/live.py --simulate bowman20250623 --speed 30
 """
@@ -34,6 +38,7 @@ Usage (on the laptop that has internet; the demo itself still runs offline):
 import argparse
 import json
 import os
+import re
 import shutil
 import sys
 import time
@@ -68,11 +73,143 @@ def next_fed_event() -> str:
     return min(markets, key=lambda m: m.get("close_time") or "9999")["event_ticker"]
 
 
+def fed_decisions() -> list:
+    """Every Fed-decision event on Kalshi as (announcement unix time, event ticker), oldest first."""
+    from tradio import ingest_markets as im
+    data = im.get_json(f"{im.KALSHI}/events", {"series_ticker": "KXFEDDECISION", "limit": 200})
+    out = [(to_unix(e["strike_date"]), e["event_ticker"]) for e in data.get("events", []) if e.get("strike_date")]
+    return sorted(out)
+
+
+def fed_event_at(t: int) -> str:
+    """The next Fed decision as of time t: the first one announced after t. (At a 2:30 p.m.
+    press conference that day's decision is already out, so this is the following meeting.)"""
+    later = [ev for ts, ev in fed_decisions() if ts > t]
+    if not later:
+        raise SystemExit(f"Kalshi lists no Fed decision after {iso_from_unix(t)}; pass --event.")
+    return later[0]
+
+
 def event_tickers(event: str) -> list:
     from tradio import ingest_markets as im
     data = im.get_json(f"{im.KALSHI}/markets", {"event_ticker": event, "limit": 200})
-    have = {m["ticker"].rsplit("-", 1)[-1]: m["ticker"] for m in data.get("markets", [])}
+    markets = data.get("markets", [])
+    if not markets:                                   # settled long enough ago: moved to /historical
+        markets = im.get_json(f"{im.KALSHI}/historical/markets", {"event_ticker": event, "limit": 200}).get("markets", [])
+    have = {m["ticker"].rsplit("-", 1)[-1]: m["ticker"] for m in markets}
     return [have[leg] for leg in DECISION_LEGS if leg in have]
+
+
+# ------------------------------------------------------------------ recorded videos
+
+PRESS_CONF_AFTER_DECISION_S = 30 * 60   # the Chair's press conference starts 2:30 p.m. ET, 30 min after the decision
+MIN_PRESS_CONF_S = 15 * 60               # shorter than this is a clip, not the whole press conference
+MONTHS = "January February March April May June July August September October November December".split()
+
+
+def video_info(url: str):
+    """yt-dlp's facts about a video link (no download), or None for the Fed's live-broadcast page."""
+    from urllib.parse import urlparse
+    if (urlparse(url).hostname or "").endswith("federalreserve.gov"):
+        return None
+    try:
+        import yt_dlp
+    except ImportError:
+        raise ValueError("reading a video link needs yt-dlp (pip install yt-dlp)")
+    try:
+        with yt_dlp.YoutubeDL({"quiet": True, "no_warnings": True, "skip_download": True}) as y:
+            return y.extract_info(url, download=False)
+    except Exception as e:
+        msg = str(e).replace("ERROR: ", "")
+        raise ValueError(f"couldn't open that video: {msg}" + (
+            " (YouTube says it's private; open it in a private window to check)" if "Private video" in msg else ""))
+
+
+HISTORY_SPEECHES = os.path.join(DATA_DIR, "history", "speeches.json")
+
+
+def chair_at(t: int, known) -> str:
+    """Who was Fed Chair at time t: the speaker of the latest Chair speech on or before t
+    (tradio/history.py's speech list records each speaker's role)."""
+    try:
+        rows = read_json(HISTORY_SPEECHES)
+    except (OSError, json.JSONDecodeError):
+        return None
+    if isinstance(rows, dict):                        # {"speeches": [...], ...}
+        rows = rows.get("speeches", [])
+    best = None
+    for r in rows:
+        if r.get("role") != "chair" or r.get("speaker") not in known or not r.get("t0"):
+            continue
+        ts = to_unix(r["t0"])
+        if ts <= t and (best is None or ts > best[0]):
+            best = (ts, r["speaker"])
+    return best and best[1]
+
+
+def video_speaker(info: dict, t0: int, known) -> str:
+    """The speaker a recorded video is about: the one speaker with a stance baseline named in its
+    title or description (the one called "Chair" if several), else for a press conference the
+    Chair on that date. None if neither says."""
+    text = f"{info.get('title') or ''} {info.get('description') or ''}"
+    named = [k for k in known if re.search(r"\b" + r"\s+".join(map(re.escape, k.split("_"))) + r"\b", text, re.I)]
+    if len(named) > 1:
+        named = [k for k in named if re.search(r"\bChair(man)?\s+" + r"\s+".join(map(re.escape, k.split("_"))), text, re.I)]
+    if len(named) == 1:
+        return named[0]
+    if re.search(r"press conference", info.get("title") or "", re.I):
+        return chair_at(t0, known)
+    return None
+
+
+def recorded_video(url: str, known=()):
+    """None for a live stream; for a recorded video {"t0", "how", "speaker"} (see video_start
+    and video_speaker). Raises ValueError when the video can't be timed."""
+    info = video_info(url)
+    if info is None:
+        return None
+    rec = video_start(url, info)
+    if rec is None:
+        return None
+    return {"t0": rec[0], "how": rec[1], "speaker": video_speaker(info, rec[0], known)}
+
+
+def video_start(url: str, info: dict = None):
+    """When a recorded video's first second happened, or None for a live stream.
+    Returns (unix time, how we know). Only two cases are exact enough for market timing:
+      - a recording of a YouTube live stream: YouTube keeps the time the stream started;
+      - a Fed press conference: the date from the title (or upload date), at 2:30 p.m. ET on a
+        Fed decision day (the decision time comes from Kalshi's own event list).
+    Anything else raises ValueError: an upload time can be an hour after the event."""
+    if info is None:
+        info = video_info(url)
+        if info is None:
+            return None                               # the Fed's live-broadcast page
+    status = info.get("live_status")
+    if status in ("is_live", "is_upcoming") or (status is None and info.get("is_live")):
+        return None
+    if status in ("was_live", "post_live") and info.get("release_timestamp"):
+        return int(info["release_timestamp"]), "start of the YouTube live stream"
+    title = info.get("title") or ""
+    if re.search(r"press conference", title, re.I):
+        if (info.get("duration") or 0) < MIN_PRESS_CONF_S:
+            raise ValueError(f"“{title}” is only {round((info.get('duration') or 0) / 60)} min long, so it's a clip "
+                             "and its first second isn't the 2:30 p.m. start; use the full press conference")
+        m = re.search(r"(%s)\s+(\d{1,2}),\s*(\d{4})" % "|".join(MONTHS), title)
+        if m:
+            day = f"{m.group(3)}-{MONTHS.index(m.group(1)) + 1:02d}-{int(m.group(2)):02d}"
+        elif info.get("upload_date"):
+            u = info["upload_date"]
+            day = f"{u[:4]}-{u[4:6]}-{u[6:]}"
+        else:
+            day = None
+        for ts, ev in fed_decisions():
+            # the decision's date in ET (18:00 or 19:00 UTC is still the same day in New York)
+            if day and iso_from_unix(ts)[:10] == day:
+                return ts + PRESS_CONF_AFTER_DECISION_S, f"Fed press conference, 2:30 p.m. ET on {day}"
+        raise ValueError(f"“{title}” looks like a press conference, but {day or 'its date'} isn't a Fed decision day on Kalshi")
+    raise ValueError(f"can't tell when “{title or url}” was recorded: only YouTube live-stream recordings "
+                     "and Fed press conferences carry a reliable start time")
 
 
 def market_entry(ticker: str) -> dict:
@@ -117,9 +254,10 @@ class Tape:
 
 # ------------------------------------------------------------------ speech (live)
 
-def speech_from_state(path: str = LIVE_STATE):
+def speech_from_state(path: str = LIVE_STATE, shift: int = 0):
     """live_state.json -> timeline 'speech' block. Passages arrive over time,
-    so each paragraph carries its own time `t` (unlike a prepared text released at T0)."""
+    so each paragraph carries its own time `t` (unlike a prepared text released at T0).
+    `shift` (seconds) moves the desk's wall-clock stamps onto a recorded video's own clock."""
     if not os.path.isfile(path):
         return None
     try:
@@ -129,7 +267,7 @@ def speech_from_state(path: str = LIVE_STATE):
     paragraphs = []
     for i, c in enumerate(st.get("chunks", [])):
         try:
-            t = iso_from_unix(parse_ts(c["time"]).timestamp())
+            t = iso_from_unix(parse_ts(c["time"]).timestamp() - shift)
         except Exception:
             continue
         speaker = c.get("role") == "speaker" and c.get("z") is not None
@@ -268,26 +406,41 @@ def base_timeline(title, speaker, t0: int, start: int, now: int, kind: str, sour
 
 
 def run_live(a) -> None:
-    tickers = a.tickers or event_tickers(a.event or next_fed_event())
-    if not tickers:
-        raise SystemExit("No Kalshi decision contracts found for that event.")
     started = int(time.time())
-    if a.t0 and a.t0 != "now":
+    # A recorded video: the clock starts at the moment the video's first second happened and
+    # runs at the video's speed, so the market tape and the transcript stay lined up.
+    recorded = None
+    if a.video:
+        try:
+            recorded = video_start(a.video)
+        except ValueError as e:
+            raise SystemExit(str(e))
+    if recorded:
+        t0 = recorded[0]
+        log(f"recorded video: starts {iso_from_unix(t0)} ({recorded[1]})")
+    elif a.t0 and a.t0 != "now":
         t0 = to_unix(a.t0)
     else:
         t0 = started
+    shift = started - t0 if recorded else 0           # wall clock -> the video's own clock
+    tickers = a.tickers or event_tickers(a.event or (fed_event_at(t0) if recorded else next_fed_event()))
+    if not tickers:
+        raise SystemExit("No Kalshi decision contracts found for that event.")
     start = (t0 - PRE_S) // 60 * 60                  # candles end on whole minutes
-    title = a.title or f"LIVE · {(a.speaker or 'Fed speaker').replace('_', ' ').title()}"
+    who = (a.speaker or 'Fed speaker').replace('_', ' ').title()
+    title = a.title or (f"RECORDED · {who}, {iso_from_unix(t0)[:10]}" if recorded else f"LIVE · {who}")
+    kind, source = ("recorded", f"recorded video; {recorded[1]}") if recorded else ("live", "Kalshi public API")
     log(f"tracking {', '.join(tickers)}; T0 {iso_from_unix(t0)}; writing {LIVE_DIRS[1]}")
     tape = Tape(tickers, start)
     markets = [market_entry(t) for t in tickers]
     while True:
-        now = int(time.time())
+        now = int(time.time()) - shift
         quotes, trades, problems = tape.poll(now)
-        tl = base_timeline(title, a.speaker, t0, start, now, "live", "Kalshi public API")
-        speech = speech_from_state(a.state)
+        tl = base_timeline(title, a.speaker, t0, start, now, kind, source)
+        speech = speech_from_state(a.state, shift)
         st = read_state(a.state)
-        if st and st.get("trades"):
+        # A recorded video never feeds the desk: its orders would be on today's markets.
+        if st and st.get("trades") and not recorded:
             tl["desk"] = desk_from_state(st, quotes, now)
         if speech:
             tl["speech"] = speech
@@ -353,7 +506,7 @@ def archive(event_id: str, title: str = None, sub: str = None) -> None:
     if tl.get("live", {}).get("kind") == "simulated":
         raise SystemExit("That's a simulated run; archive only real live sessions.")
     tl["event_id"] = an["event_id"] = event_id
-    tl["title"] = title or tl.get("title", event_id).replace("LIVE · ", "")
+    tl["title"] = title or re.sub(r"^(LIVE|RECORDED) · ", "", tl.get("title", event_id))
     tl["recorded_live"] = tl.pop("live", {})
     if an.pop("provisional", False):
         print("note: the live window hadn't reached T0+90 min, so verdicts stay provisional "
@@ -395,6 +548,8 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description="Tradio live mode (see the module docstring)")
     ap.add_argument("--speaker", help="stance baseline key, e.g. christopher_waller (display only here)")
     ap.add_argument("--t0", help="ISO UTC time the speech starts, or 'now' (default)")
+    ap.add_argument("--video", help="link being transcribed; a recorded video sets T0 and the markets "
+                                    "from when it was recorded (see video_start)")
     ap.add_argument("--event", help="Kalshi event ticker, default = next Fed decision")
     ap.add_argument("--tickers", nargs="+", help="explicit Kalshi tickers instead of --event")
     ap.add_argument("--title")
